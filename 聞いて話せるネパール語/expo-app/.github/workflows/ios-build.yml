@@ -275,38 +275,18 @@ jobs:
 
       - name: Configure release signing in build.gradle
         run: |
-          cat > /tmp/patch-gradle.js <<'PATCH'
-          const fs = require('fs');
-          const path = 'android/app/build.gradle';
-          let content = fs.readFileSync(path, 'utf8');
+          echo "--- build.gradle BEFORE patch ---"
+          grep -n -A 20 "signingConfigs" android/app/build.gradle || true
+          echo ""
 
-          // 1. signingConfigs に release ブロックを追加（debug ブロックの直後）
-          if (!content.includes('release {')) {
-            content = content.replace(
-              /(signingConfigs\s*\{[\s\S]*?debug\s*\{[\s\S]*?\})(\s*\})/m,
-              `$1
-              release {
-                  storeFile file('release.keystore')
-                  storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
-                  keyAlias System.getenv("ANDROID_KEY_ALIAS")
-                  keyPassword System.getenv("ANDROID_KEY_PASSWORD")
-              }$2`
-            );
-          }
+          node scripts/patch-android-build.js
 
-          // 2. release buildType の signingConfig を release に変更
-          content = content.replace(
-            /(buildTypes\s*\{[\s\S]*?release\s*\{[\s\S]*?)signingConfig signingConfigs\.\w+/,
-            '$1signingConfig signingConfigs.release'
-          );
-
-          fs.writeFileSync(path, content);
-          console.log('build.gradle patched successfully');
-          PATCH
-
-          node /tmp/patch-gradle.js
-          echo "--- Updated signing section ---"
-          grep -A 10 "signingConfigs" android/app/build.gradle | head -30
+          echo ""
+          echo "--- build.gradle AFTER patch ---"
+          grep -n -A 25 "signingConfigs" android/app/build.gradle || true
+          echo ""
+          echo "--- buildTypes section ---"
+          grep -n -A 15 "buildTypes {" android/app/build.gradle || true
 
       - name: Set versionCode in build.gradle
         run: |
