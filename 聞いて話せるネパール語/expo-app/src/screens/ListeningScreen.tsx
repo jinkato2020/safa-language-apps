@@ -302,11 +302,11 @@ export default function ListeningScreen() {
   // レンダーごとに最新の advance を ref に保持
   advanceRef.current = advance;
 
-  // ── シーケンス開始（idle → first）──
-  // playing=true && phase='idle' の組み合わせで起動する
-  // (started=false の初期状態では playing=false なので何も起こらない)
+  // ── シーケンス開始（advance() 後の自動継続用）──
+  // 初回再生は handleStart で直接 play() するため、これは「2回目以降」用
+  // started=true && playing=true && phase='idle' で発火
   useEffect(() => {
-    if (!playing || !ex) return;
+    if (!started || !playing || !ex) return;
     if (phase !== 'idle') return;
 
     const firstPlayer = isJa2Ne ? jaPlayer : nePlayer;
@@ -326,21 +326,39 @@ export default function ListeningScreen() {
       if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playing, audioKey, isJa2Ne, phase]);
+  }, [started, playing, audioKey, isJa2Ne, phase]);
 
-  // ユーザータップで再生開始（iOS 自動再生制約への対策）
-  const handleStart = async () => {
+  // ユーザータップで再生開始（PracticeScreen と同じく同期的に play() 呼ぶ）
+  // iOS は「ユーザータップと同じ同期ブロック内の play()」を確実に許可する
+  const handleStart = () => {
     if (started) return;
-    // 音声セッションを明示的に設定
+
+    // 音声セッション設定（await しない: 同期ブロックを維持するため）
+    setAudioModeAsync({
+      playsInSilentMode: true,
+      shouldPlayInBackground: true,
+      interruptionMode: 'doNotMix',
+    }).catch(() => {});
+
+    // ★ ここで直接 play() 呼ぶ - state 経由しない
+    const firstPlayer = isJa2Ne ? jaPlayer : nePlayer;
     try {
-      await setAudioModeAsync({
-        playsInSilentMode: true,
-        shouldPlayInBackground: true,
-        interruptionMode: 'doNotMix',
-      });
+      firstPlayer.seekTo(0);
+      firstPlayer.playbackRate = listenSpeed;
+      firstPlayer.volume = 1.0;
+      firstPlayer.play();
     } catch {}
+
+    // 状態を直接更新（再レンダーで通常UIに切り替わる）
+    nePlayCountRef.current = 0;
+    jaHandledRef.current = false;
+    neHandledRef.current = false;
+    clearPlaybackTimer();
     setStarted(true);
-    setPlaying(true);  // これで上の useEffect が発火し、再生開始
+    setPlaying(true);
+    playingRef.current = true;
+    setPhase('first');
+    phaseRef.current = 'first';
   };
 
   // ── タイマーバックアップ: duration が分かったらカウントダウンセット ──
