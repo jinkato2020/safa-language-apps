@@ -230,9 +230,9 @@ export default function ListeningScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [started, playing, audioKey, isJa2Ne, phase]);
 
-  // ── didJustFinish を捕捉して次のフェーズへ ──
-  useEffect(() => {
-    if (!status.didJustFinish || !playingRef.current) return;
+  // ── 再生終了時の処理を関数化（status useEffect と addListener で共有）──
+  const handleAudioFinished = () => {
+    if (!playingRef.current) return;
     if (finishHandledRef.current) return;
     finishHandledRef.current = true;
 
@@ -242,7 +242,6 @@ export default function ListeningScreen() {
 
     if (p === 'first') {
       if (ja2ne) {
-        // JA終了 → NE再生
         gapTimerRef.current = setTimeout(() => {
           finishHandledRef.current = false;
           nePlayCountRef.current = 0;
@@ -251,11 +250,10 @@ export default function ListeningScreen() {
           phaseRef.current = 'second';
         }, GAP_AFTER_FIRST);
       } else {
-        // NE終了 → 繰り返し or JA
         nePlayCountRef.current++;
         if (nePlayCountRef.current < rep) {
           finishHandledRef.current = false;
-          playSrc(neSrcRef.current); // NE もう一度
+          playSrc(neSrcRef.current);
         } else {
           gapTimerRef.current = setTimeout(() => {
             finishHandledRef.current = false;
@@ -267,13 +265,11 @@ export default function ListeningScreen() {
       }
     } else if (p === 'second') {
       if (!ja2ne) {
-        // JA終了（2段目）→ 次の例題
         gapTimerRef.current = setTimeout(() => {
           finishHandledRef.current = false;
           advanceRef.current();
         }, GAP_AFTER_SECOND);
       } else {
-        // NE終了（2段目）→ 繰り返し or 次の例題
         nePlayCountRef.current++;
         if (nePlayCountRef.current < rep) {
           finishHandledRef.current = false;
@@ -286,8 +282,42 @@ export default function ListeningScreen() {
         }
       }
     }
+  };
+
+  const handleFinishRef = useRef(handleAudioFinished);
+  handleFinishRef.current = handleAudioFinished;
+
+  // ── 検出方法1: useAudioPlayerStatus 経由（React 状態更新） ──
+  useEffect(() => {
+    if (!status.didJustFinish) return;
+    handleFinishRef.current();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status.didJustFinish]);
+
+  // ── 検出方法2: addListener 経由（ネイティブイベント、React バッチングを回避） ──
+  // status.didJustFinish が React 状態として届かない場合のバックアップ
+  useEffect(() => {
+    const sub = player.addListener('playbackStatusUpdate', (s: any) => {
+      if (!s.didJustFinish) return;
+      handleFinishRef.current();
+    });
+    return () => sub.remove();
+  }, [player]);
+
+  // ── 検出方法3: セーフティタイマー（duration + バッファ後に強制進行） ──
+  // 上記2つでも検出できない場合の最終手段。再生開始から duration*1.5+2秒で強制 advance
+  useEffect(() => {
+    if (phase === 'idle' || !playing) return;
+    if (status.duration <= 0) return;
+    const ms = Math.ceil(status.duration / listenSpeedRef.current * 1000 * 1.5) + 2000;
+    const safetyTimer = setTimeout(() => {
+      if (!playingRef.current) return;
+      // まだ同じ phase で止まっていれば、handleAudioFinished を強制実行
+      handleFinishRef.current();
+    }, ms);
+    return () => clearTimeout(safetyTimer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, playing, status.duration, audioKey]);
 
   const togglePlay = () => {
     if (playing) {
