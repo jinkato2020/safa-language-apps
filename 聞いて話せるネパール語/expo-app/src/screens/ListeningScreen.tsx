@@ -146,9 +146,10 @@ export default function ListeningScreen() {
 
   const jaSrc = isGrammarSrc ? japaneseGrammarAudio[audioKey] : japaneseAudio[audioKey];
   const neSrc = isGrammarSrc ? nepaliGrammarAudio[audioKey] : nepaliAudio[audioKey];
-  // PracticeScreen と同じシンプルパターンで作成（オプションなし）
-  const jaPlayer = useAudioPlayer(jaSrc);
-  const nePlayer = useAudioPlayer(neSrc);
+  // keepAudioSessionActive: true で JA→NE 切り替え時に音声セッションを維持
+  // これがないと JA 終了時にセッションが非活性化され、NE 側の音が出ない
+  const jaPlayer = useAudioPlayer(jaSrc, { keepAudioSessionActive: true });
+  const nePlayer = useAudioPlayer(neSrc, { keepAudioSessionActive: true });
   const jaStatus = useAudioPlayerStatus(jaPlayer);
   const neStatus = useAudioPlayerStatus(nePlayer);
 
