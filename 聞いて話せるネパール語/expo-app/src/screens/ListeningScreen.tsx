@@ -164,6 +164,8 @@ export default function ListeningScreen() {
 
   // didJustFinish の二重処理を防ぐフラグ
   const finishHandledRef = useRef(false);
+  // 最後に play() を呼んだ時刻（直後の遅延イベントを無視するガード）
+  const lastPlayStartRef = useRef(0);
 
   // 単一プレイヤー: 指定ソースをロード（必要なら）→ 先頭から再生
   const playSrc = (src: number) => {
@@ -174,6 +176,7 @@ export default function ListeningScreen() {
       }
       player.seekTo(0);
       player.play();
+      lastPlayStartRef.current = Date.now();
     } catch {}
   };
 
@@ -234,6 +237,9 @@ export default function ListeningScreen() {
   const handleAudioFinished = () => {
     if (!playingRef.current) return;
     if (finishHandledRef.current) return;
+    // 再生開始から1秒以内の終了イベントは「前の音声の遅延イベント」とみなし無視
+    // player.replace() の直後に古いソースの didJustFinish が発火することがあるため
+    if (Date.now() - lastPlayStartRef.current < 1000) return;
     finishHandledRef.current = true;
 
     const p = phaseRef.current;
