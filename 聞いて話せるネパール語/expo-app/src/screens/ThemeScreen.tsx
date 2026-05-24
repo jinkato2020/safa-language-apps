@@ -70,8 +70,6 @@ export default function ThemeScreen() {
       contentContainerStyle={styles.container}
       ListHeaderComponent={
         <View style={styles.head}>
-          <Text style={styles.kicker}>{modeLabel}</Text>
-          <Text style={styles.title}>{titleText}</Text>
           <Text style={styles.desc}>{headerText}</Text>
           {showLevelPills && (
             <View style={styles.levelPillRow}>

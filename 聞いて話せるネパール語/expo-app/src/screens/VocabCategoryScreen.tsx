@@ -15,7 +15,6 @@ export default function VocabCategoryScreen() {
       contentContainerStyle={styles.container}
       ListHeaderComponent={
         <View style={styles.head}>
-          <Text style={styles.title}>テーマを選択</Text>
           <Text style={styles.desc}>テーマを1つ選んで、ネパール語の語彙を増やしましょう。</Text>
         </View>
       }

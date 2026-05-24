@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
-import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
+import { useFocusEffect, useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
+import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Svg, { Circle, Path, Polygon, Polyline, Rect } from 'react-native-svg';
 import { colors, spacing, radius } from '../theme';
@@ -143,8 +143,10 @@ export default function ListeningScreen() {
 
   const jaSrc = isGrammarSrc ? japaneseGrammarAudio[audioKey] : japaneseAudio[audioKey];
   const neSrc = isGrammarSrc ? nepaliGrammarAudio[audioKey] : nepaliAudio[audioKey];
-  const jaPlayer = useAudioPlayer(jaSrc);
-  const nePlayer = useAudioPlayer(neSrc);
+  // 重要: keepAudioSessionActive: true で iOS 音声セッションの活性化/非活性化サイクルを防ぐ
+  // これがないと、ja → ne の切り替え時にセッションが落ち、音声が出なくなる
+  const jaPlayer = useAudioPlayer(jaSrc, { keepAudioSessionActive: true });
+  const nePlayer = useAudioPlayer(neSrc, { keepAudioSessionActive: true });
   const jaStatus = useAudioPlayerStatus(jaPlayer);
   const neStatus = useAudioPlayerStatus(nePlayer);
 
@@ -297,31 +299,55 @@ export default function ListeningScreen() {
   // レンダーごとに最新の advance を ref に保持
   advanceRef.current = advance;
 
-  // ── シーケンス開始（idle → first）: isLoaded を確認してから play() ──
-  useEffect(() => {
+  // ── シーケンス開始（idle → first）: useFocusEffect でナビゲーション完了後に起動 ──
+  // useEffect だと「画面マウント直後」に走るが、その時点では iOS の遷移アニメ中で
+  // 音声セッションが安定していないことがある。useFocusEffect は遷移完了後に走る。
+  useFocusEffect(useCallback(() => {
     if (!playing || !ex) return;
     if (phase !== 'idle') return;
-    // 音声がロードされるまで待機（マウント直後は未ロードの場合がある）
-    const firstLoaded = isJa2Ne ? jaStatus.isLoaded : neStatus.isLoaded;
-    if (!firstLoaded) return;
 
-    const firstPlayer = isJa2Ne ? jaPlayer : nePlayer;
-    try {
-      firstPlayer.seekTo(0);
-      firstPlayer.playbackRate = listenSpeed;
-      firstPlayer.play();
-      if (!isJa2Ne) nePlayCountRef.current = 0;
-      jaHandledRef.current = false;
-      neHandledRef.current = false;
-      clearPlaybackTimer();
-      setPhase('first');
-      phaseRef.current = 'first';
-    } catch {}
+    let cancelled = false;
+
+    const start = async () => {
+      // 音声セッションを毎回明示的に設定（VideoSplash や他の player の影響を打ち消す）
+      try {
+        await setAudioModeAsync({
+          playsInSilentMode: true,
+          shouldPlayInBackground: true,
+          interruptionMode: 'doNotMix',
+        });
+      } catch {}
+
+      if (cancelled) return;
+
+      // ナビゲーション遷移と AVPlayer の初期化が完全に終わるのを待つ
+      await new Promise(r => setTimeout(r, 400));
+
+      if (cancelled || phaseRef.current !== 'idle' || !playingRef.current) return;
+
+      const firstPlayer = isJa2Ne ? jaPlayer : nePlayer;
+      try {
+        firstPlayer.seekTo(0);
+        firstPlayer.playbackRate = listenSpeed;
+        firstPlayer.volume = 1.0;
+        firstPlayer.play();
+        if (!isJa2Ne) nePlayCountRef.current = 0;
+        jaHandledRef.current = false;
+        neHandledRef.current = false;
+        clearPlaybackTimer();
+        setPhase('first');
+        phaseRef.current = 'first';
+      } catch {}
+    };
+
+    start();
+
     return () => {
+      cancelled = true;
       if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playing, audioKey, isJa2Ne, phase, jaStatus.isLoaded, neStatus.isLoaded]);
+  }, [playing, audioKey, isJa2Ne, phase]));
 
   // ── タイマーバックアップ: duration が分かったらカウントダウンセット ──
   // addListener / useAudioPlayerStatus の didJustFinish が発火しない端末でも確実に進行

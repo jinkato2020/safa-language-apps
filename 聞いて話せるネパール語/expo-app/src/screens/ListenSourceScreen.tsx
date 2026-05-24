@@ -35,11 +35,6 @@ export default function ListenSourceScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.head}>
-        <Text style={styles.title}>聞き流しの内容を選択</Text>
-        <Text style={styles.desc}>音声を繰り返し聞いて、自然なネパール語表現を身につけましょう。</Text>
-      </View>
-
       <View style={styles.grid}>
         <Pressable
           style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
