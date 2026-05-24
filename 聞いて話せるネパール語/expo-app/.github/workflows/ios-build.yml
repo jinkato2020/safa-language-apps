@@ -339,11 +339,36 @@ jobs:
         env:
           SA_JSON_B64: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON_BASE64 }}
         run: |
-          printf '%s' "$SA_JSON_B64" | base64 --decode > /tmp/service-account.json
-          if [ ! -s /tmp/service-account.json ]; then
+          # base64 をデコード
+          printf '%s' "$SA_JSON_B64" | base64 --decode > /tmp/service-account-raw.json
+          if [ ! -s /tmp/service-account-raw.json ]; then
             echo "::error::Decoded service account JSON is empty"
             exit 1
           fi
+
+          # ファイルサイズと先頭バイトを確認（デバッグ用、秘密情報は出さない）
+          echo "::notice::Decoded file size: $(wc -c < /tmp/service-account-raw.json) bytes"
+          echo "First 4 bytes (hex): $(head -c 4 /tmp/service-account-raw.json | xxd -p)"
+
+          # Node.js で BOM や不正な文字を除去し、クリーンな JSON として書き直す
+          node -e "
+            const fs = require('fs');
+            let content = fs.readFileSync('/tmp/service-account-raw.json', 'utf8');
+            // UTF-8 BOM を除去
+            if (content.charCodeAt(0) === 0xFEFF) {
+              console.log('Removed BOM from JSON');
+              content = content.slice(1);
+            }
+            // 前後の空白を除去
+            content = content.trim();
+            // パースして検証
+            const parsed = JSON.parse(content);
+            console.log('JSON validated. Keys:', Object.keys(parsed).join(', '));
+            // クリーンな JSON として書き直す
+            fs.writeFileSync('/tmp/service-account.json', JSON.stringify(parsed));
+            console.log('Clean JSON written. Size:', fs.statSync('/tmp/service-account.json').size, 'bytes');
+          "
+
           echo "SA_JSON_PATH=/tmp/service-account.json" >> $GITHUB_ENV
 
       - name: Upload to Google Play (Internal Testing)
