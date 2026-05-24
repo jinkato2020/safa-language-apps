@@ -1,19 +1,32 @@
-name: Build iOS and Submit to TestFlight
+name: Build iOS and Android
 
 on:
   workflow_dispatch:
     inputs:
       submit:
-        description: 'Submit to TestFlight after build?'
+        description: 'Submit to TestFlight / Play Store after build?'
         required: false
         default: 'true'
         type: choice
         options:
           - 'true'
           - 'false'
+      platform:
+        description: 'Which platform(s) to build?'
+        required: false
+        default: 'both'
+        type: choice
+        options:
+          - 'both'
+          - 'ios'
+          - 'android'
 
 jobs:
-  build:
+  # ─────────────────────────────────────────────────────────────────────────
+  # iOS Build
+  # ─────────────────────────────────────────────────────────────────────────
+  build-ios:
+    if: ${{ github.event.inputs.platform != 'android' }}
     runs-on: macos-26
     timeout-minutes: 90
 
@@ -25,10 +38,6 @@ jobs:
         run: |
           echo "Default Xcode:"
           xcodebuild -version
-          echo ""
-          echo "Available Xcode versions:"
-          ls /Applications/ | grep -i xcode || true
-          echo ""
           echo "Current SDK:"
           xcodebuild -showsdks | grep iphoneos || true
 
@@ -54,7 +63,6 @@ jobs:
 
       - name: Detect Xcode project name
         run: |
-          # .xcodeproj は prebuild 直後に存在する (.xcworkspace は pod install 後)
           XCODEPROJ=$(ls -d ios/*.xcodeproj 2>/dev/null | head -1)
           if [ -z "$XCODEPROJ" ]; then
             echo "::error::No .xcodeproj found in ios/ directory after prebuild"
@@ -84,7 +92,6 @@ jobs:
           CERT_B64: ${{ secrets.IOS_DIST_CERT_BASE64 }}
           CERT_PWD: ${{ secrets.IOS_DIST_CERT_PASSWORD }}
         run: |
-          # 末尾の改行/空白を除去（Secret に末尾改行が入っていることがある）
           CERT_PWD_CLEAN=$(printf '%s' "$CERT_PWD" | tr -d '\r\n[:space:]')
 
           KEYCHAIN_PATH="$RUNNER_TEMP/build.keychain-db"
@@ -94,7 +101,6 @@ jobs:
 
           printf '%s' "$CERT_B64" | base64 --decode > cert.p12
 
-          # .p12 ファイルの中身が正しくデコードできたか確認
           if [ ! -s cert.p12 ]; then
             echo "::error::Decoded .p12 file is empty"
             exit 1
@@ -216,3 +222,144 @@ jobs:
             --apiIssuer "$ISSUER_ID"
 
           rm -rf ~/.appstoreconnect
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Android Build
+  # ─────────────────────────────────────────────────────────────────────────
+  build-android:
+    if: ${{ github.event.inputs.platform != 'ios' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Calculate version code
+        run: |
+          # 既存 EAS ビルドの最大 versionCode は 5。100+ から始めて確実に超える。
+          VERSION_CODE=$((100 + GITHUB_RUN_NUMBER))
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          echo "::notice::Android versionCode: $VERSION_CODE"
+
+      - name: Expo prebuild
+        env:
+          EXPO_NO_TELEMETRY: '1'
+        run: npx expo prebuild --platform android --clean
+
+      - name: Decode and place keystore
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          printf '%s' "$KEYSTORE_B64" | base64 --decode > android/app/release.keystore
+          if [ ! -s android/app/release.keystore ]; then
+            echo "::error::Decoded keystore is empty"
+            exit 1
+          fi
+          echo "::notice::Keystore placed: $(wc -c < android/app/release.keystore) bytes"
+
+      - name: Configure release signing in build.gradle
+        run: |
+          cat > /tmp/patch-gradle.js <<'PATCH'
+          const fs = require('fs');
+          const path = 'android/app/build.gradle';
+          let content = fs.readFileSync(path, 'utf8');
+
+          // 1. signingConfigs に release ブロックを追加（debug ブロックの直後）
+          if (!content.includes('release {')) {
+            content = content.replace(
+              /(signingConfigs\s*\{[\s\S]*?debug\s*\{[\s\S]*?\})(\s*\})/m,
+              `$1
+              release {
+                  storeFile file('release.keystore')
+                  storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+                  keyAlias System.getenv("ANDROID_KEY_ALIAS")
+                  keyPassword System.getenv("ANDROID_KEY_PASSWORD")
+              }$2`
+            );
+          }
+
+          // 2. release buildType の signingConfig を release に変更
+          content = content.replace(
+            /(buildTypes\s*\{[\s\S]*?release\s*\{[\s\S]*?)signingConfig signingConfigs\.\w+/,
+            '$1signingConfig signingConfigs.release'
+          );
+
+          fs.writeFileSync(path, content);
+          console.log('build.gradle patched successfully');
+          PATCH
+
+          node /tmp/patch-gradle.js
+          echo "--- Updated signing section ---"
+          grep -A 10 "signingConfigs" android/app/build.gradle | head -30
+
+      - name: Set versionCode in build.gradle
+        run: |
+          sed -i.bak "s/versionCode [0-9]\+/versionCode $VERSION_CODE/" android/app/build.gradle
+          grep -E "versionCode|versionName" android/app/build.gradle | head -5
+
+      - name: Build AAB
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew bundleRelease --no-daemon
+
+          AAB_PATH=$(find app/build/outputs/bundle/release -name "*.aab" | head -1)
+          if [ -z "$AAB_PATH" ]; then
+            echo "::error::AAB build failed - file not found"
+            ls -la app/build/outputs/bundle/release/ || true
+            exit 1
+          fi
+          echo "::notice::AAB created: android/$AAB_PATH"
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: android-aab-${{ env.VERSION_CODE }}
+          path: android/app/build/outputs/bundle/release/*.aab
+          retention-days: 30
+
+      - name: Decode service account JSON
+        if: ${{ github.event.inputs.submit != 'false' }}
+        env:
+          SA_JSON_B64: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON_BASE64 }}
+        run: |
+          printf '%s' "$SA_JSON_B64" | base64 --decode > /tmp/service-account.json
+          if [ ! -s /tmp/service-account.json ]; then
+            echo "::error::Decoded service account JSON is empty"
+            exit 1
+          fi
+          echo "SA_JSON_PATH=/tmp/service-account.json" >> $GITHUB_ENV
+
+      - name: Upload to Google Play (Internal Testing)
+        if: ${{ github.event.inputs.submit != 'false' }}
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: ${{ env.SA_JSON_PATH }}
+          packageName: com.safa.nepali.jp
+          releaseFiles: android/app/build/outputs/bundle/release/*.aab
+          track: internal
+          status: completed
+
+      - name: Cleanup service account
+        if: always()
+        run: rm -f /tmp/service-account.json
