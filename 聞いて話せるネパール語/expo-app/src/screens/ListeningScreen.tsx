@@ -146,10 +146,9 @@ export default function ListeningScreen() {
 
   const jaSrc = isGrammarSrc ? japaneseGrammarAudio[audioKey] : japaneseAudio[audioKey];
   const neSrc = isGrammarSrc ? nepaliGrammarAudio[audioKey] : nepaliAudio[audioKey];
-  // 重要: keepAudioSessionActive: true で iOS 音声セッションの活性化/非活性化サイクルを防ぐ
-  // これがないと、ja → ne の切り替え時にセッションが落ち、音声が出なくなる
-  const jaPlayer = useAudioPlayer(jaSrc, { keepAudioSessionActive: true });
-  const nePlayer = useAudioPlayer(neSrc, { keepAudioSessionActive: true });
+  // PracticeScreen と同じシンプルパターンで作成（オプションなし）
+  const jaPlayer = useAudioPlayer(jaSrc);
+  const nePlayer = useAudioPlayer(neSrc);
   const jaStatus = useAudioPlayerStatus(jaPlayer);
   const neStatus = useAudioPlayerStatus(nePlayer);
 
@@ -303,8 +302,7 @@ export default function ListeningScreen() {
   advanceRef.current = advance;
 
   // ── シーケンス開始（advance() 後の自動継続用）──
-  // 初回再生は handleStart で直接 play() するため、これは「2回目以降」用
-  // started=true && playing=true && phase='idle' で発火
+  // 初回再生は handleStart で直接 play()。これは advance() による「2回目以降」用
   useEffect(() => {
     if (!started || !playing || !ex) return;
     if (phase !== 'idle') return;
@@ -312,8 +310,6 @@ export default function ListeningScreen() {
     const firstPlayer = isJa2Ne ? jaPlayer : nePlayer;
     try {
       firstPlayer.seekTo(0);
-      firstPlayer.playbackRate = listenSpeed;
-      firstPlayer.volume = 1.0;
       firstPlayer.play();
       if (!isJa2Ne) nePlayCountRef.current = 0;
       jaHandledRef.current = false;
@@ -328,28 +324,20 @@ export default function ListeningScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [started, playing, audioKey, isJa2Ne, phase]);
 
-  // ユーザータップで再生開始（PracticeScreen と同じく同期的に play() 呼ぶ）
-  // iOS は「ユーザータップと同じ同期ブロック内の play()」を確実に許可する
+  // ユーザータップで再生開始
+  // PracticeScreen と同じ最小限のパターン: seekTo(0) → play() のみ
+  // 余計な処理（setAudioModeAsync, volume, playbackRate）を入れると音が出ないことが判明
   const handleStart = () => {
     if (started) return;
 
-    // 音声セッション設定（await しない: 同期ブロックを維持するため）
-    setAudioModeAsync({
-      playsInSilentMode: true,
-      shouldPlayInBackground: true,
-      interruptionMode: 'doNotMix',
-    }).catch(() => {});
-
-    // ★ ここで直接 play() 呼ぶ - state 経由しない
+    // ★ PracticeScreen と完全に同じパターン
     const firstPlayer = isJa2Ne ? jaPlayer : nePlayer;
     try {
       firstPlayer.seekTo(0);
-      firstPlayer.playbackRate = listenSpeed;
-      firstPlayer.volume = 1.0;
       firstPlayer.play();
     } catch {}
 
-    // 状態を直接更新（再レンダーで通常UIに切り替わる）
+    // 状態を直接更新
     nePlayCountRef.current = 0;
     jaHandledRef.current = false;
     neHandledRef.current = false;
@@ -363,14 +351,17 @@ export default function ListeningScreen() {
 
   // ── タイマーバックアップ: duration が分かったらカウントダウンセット ──
   // addListener / useAudioPlayerStatus の didJustFinish が発火しない端末でも確実に進行
+  // duration が取れない場合も最大15秒のセーフティタイマーで進行
   useEffect(() => {
     if (phase === 'idle' || !playing) { clearPlaybackTimer(); return; }
     if (playbackTimerRef.current) return; // 既にタイマーあり
     const dur = phase === 'first'
       ? (isJa2Ne ? jaStatus.duration : neStatus.duration)
       : (isJa2Ne ? neStatus.duration : jaStatus.duration);
-    if (dur <= 0) return; // duration 未確定
-    const ms = Math.ceil(dur / listenSpeedRef.current * 1000) + 1200;
+    // duration が 0 でもセーフティで 8秒後に進む、取れれば duration+1.2s
+    const ms = dur > 0
+      ? Math.ceil(dur / listenSpeedRef.current * 1000) + 1200
+      : 8000; // セーフティタイマー
     playbackTimerRef.current = setTimeout(() => {
       playbackTimerRef.current = null;
       if (!playingRef.current) return;
@@ -677,10 +668,11 @@ const styles = StyleSheet.create({
   metaCur: { color: colors.ink, fontWeight: '700' },
   card: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: radius.lg, padding: spacing.lg, marginBottom: spacing.md },
   cardJaActive: { borderColor: colors.accentJa, shadowColor: colors.accentJa, shadowOpacity: 0.15, shadowRadius: 12, elevation: 4 },
-  cardNeActive: { borderColor: colors.accentNe, shadowColor: colors.accentNe, shadowOpacity: 0.15, shadowRadius: 12, elevation: 4 },
+  // 日本語・ネパール語ともに同じ青色で統一（ユーザー要望）
+  cardNeActive: { borderColor: colors.accentJa, shadowColor: colors.accentJa, shadowOpacity: 0.15, shadowRadius: 12, elevation: 4 },
   tag: { fontFamily: 'Courier', fontSize: 11, color: colors.inkQuiet, letterSpacing: 1.5, marginBottom: spacing.sm },
   tagJaActive: { color: colors.accentJa, fontWeight: '700' },
-  tagNeActive: { color: colors.accentNe, fontWeight: '700' },
+  tagNeActive: { color: colors.accentJa, fontWeight: '700' },
   textJa: { fontSize: 20, lineHeight: 30, color: colors.ink },
   textNe: { fontSize: 26, lineHeight: 38, color: colors.ink, fontWeight: '600' },
   romaji: { fontFamily: 'Courier', fontSize: 14, color: colors.inkQuiet, fontStyle: 'italic', marginTop: 6, lineHeight: 22 },
