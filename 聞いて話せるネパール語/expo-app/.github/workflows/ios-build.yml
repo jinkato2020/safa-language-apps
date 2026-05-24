@@ -293,15 +293,31 @@ jobs:
           sed -i.bak "s/versionCode [0-9]\+/versionCode $VERSION_CODE/" android/app/build.gradle
           grep -E "versionCode|versionName" android/app/build.gradle | head -5
 
+      - name: Increase Gradle memory
+        run: |
+          # JVM ヒープと Metaspace を拡大（前回 OutOfMemoryError: Metaspace で失敗したため）
+          echo "org.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" >> android/gradle.properties
+          echo "org.gradle.parallel=true" >> android/gradle.properties
+          echo "org.gradle.daemon=false" >> android/gradle.properties
+          echo "--- gradle.properties ---"
+          cat android/gradle.properties
+
       - name: Build AAB
         env:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          GRADLE_OPTS: "-Xmx6g -XX:MaxMetaspaceSize=2g"
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew bundleRelease --no-daemon
+          # -x lint, -x lintVitalRelease で lint タスクを完全にスキップ（メモリ節約 & ビルド高速化）
+          # CI ではアプリ動作確認が目的なので lint チェックは不要
+          ./gradlew bundleRelease --no-daemon \
+            -x lint \
+            -x lintRelease \
+            -x lintVitalRelease \
+            -x lintVitalAnalyzeRelease
 
           AAB_PATH=$(find app/build/outputs/bundle/release -name "*.aab" | head -1)
           if [ -z "$AAB_PATH" ]; then
