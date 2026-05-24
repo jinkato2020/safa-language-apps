@@ -326,13 +326,23 @@ export default function ListeningScreen() {
   }, [started, playing, audioKey, isJa2Ne, phase]);
 
   // ユーザータップで再生開始
-  // PracticeScreen と同じ最小限のパターン: seekTo(0) → play() のみ
-  // 余計な処理（setAudioModeAsync, volume, playbackRate）を入れると音が出ないことが判明
   const handleStart = () => {
     if (started) return;
 
-    // ★ PracticeScreen と完全に同じパターン
     const firstPlayer = isJa2Ne ? jaPlayer : nePlayer;
+    const secondPlayer = isJa2Ne ? nePlayer : jaPlayer;
+
+    // ★ 重要: secondPlayer も「ユーザータップ文脈」で1回 play() しておく
+    // iOS は「ユーザータップ直後に play() されたプレイヤー」しか優遇しないため、
+    // 後から呼ばれる NE が無音になる問題があった。muted=true で音を出さずにプライム。
+    try {
+      secondPlayer.muted = true;
+      secondPlayer.play();
+      secondPlayer.pause();
+      secondPlayer.muted = false;
+    } catch {}
+
+    // first player（実際に音を出す）
     try {
       firstPlayer.seekTo(0);
       firstPlayer.play();
