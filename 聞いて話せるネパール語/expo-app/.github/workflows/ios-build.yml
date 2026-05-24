@@ -14,12 +14,23 @@ on:
 
 jobs:
   build:
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 90
 
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+
+      - name: Verify Xcode version
+        run: |
+          echo "Default Xcode:"
+          xcodebuild -version
+          echo ""
+          echo "Available Xcode versions:"
+          ls /Applications/ | grep -i xcode || true
+          echo ""
+          echo "Current SDK:"
+          xcodebuild -showsdks | grep iphoneos || true
 
       - name: Setup Node.js
         uses: actions/setup-node@v5
