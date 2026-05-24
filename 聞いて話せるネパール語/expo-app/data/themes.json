@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "name": "自己紹介",
+    "free": true
+  },
+  {
+    "id": 2,
+    "name": "挨拶と礼儀",
+    "free": true
+  },
+  {
+    "id": 3,
+    "name": "家族",
+    "free": true
+  },
+  {
+    "id": 4,
+    "name": "数字と時間",
+    "free": true
+  },
+  {
+    "id": 5,
+    "name": "食べ物と飲み物",
+    "free": true
+  },
+  {
+    "id": 6,
+    "name": "買い物",
+    "free": true
+  },
+  {
+    "id": 7,
+    "name": "交通と道案内",
+    "free": true
+  },
+  {
+    "id": 8,
+    "name": "天気",
+    "free": true
+  },
+  {
+    "id": 9,
+    "name": "仕事と職業",
+    "free": true
+  },
+  {
+    "id": 10,
+    "name": "趣味と余暇",
+    "free": true
+  },
+  {
+    "id": 11,
+    "name": "体と健康",
+    "free": true
+  },
+  {
+    "id": 12,
+    "name": "感情と気持ち",
+    "free": true
+  },
+  {
+    "id": 13,
+    "name": "学校と勉強",
+    "free": true
+  },
+  {
+    "id": 14,
+    "name": "旅行と観光",
+    "free": true
+  },
+  {
+    "id": 15,
+    "name": "ホテルと宿泊",
+    "free": true
+  },
+  {
+    "id": 16,
+    "name": "レストランと注文",
+    "free": true
+  },
+  {
+    "id": 17,
+    "name": "電話と連絡",
+    "free": true
+  },
+  {
+    "id": 18,
+    "name": "色と形",
+    "free": true
+  },
+  {
+    "id": 19,
+    "name": "動物と自然",
+    "free": true
+  },
+  {
+    "id": 20,
+    "name": "スポーツ",
+    "free": true
+  },
+  {
+    "id": 21,
+    "name": "音楽と芸術",
+    "free": true
+  },
+  {
+    "id": 22,
+    "name": "服と買い物",
+    "free": true
+  },
+  {
+    "id": 23,
+    "name": "家と住まい",
+    "free": true
+  },
+  {
+    "id": 24,
+    "name": "友達と人間関係",
+    "free": true
+  },
+  {
+    "id": 25,
+    "name": "お祝いと行事",
+    "free": true
+  },
+  {
+    "id": 26,
+    "name": "緊急と安全",
+    "free": true
+  },
+  {
+    "id": 27,
+    "name": "お金と銀行",
+    "free": true
+  },
+  {
+    "id": 28,
+    "name": "インターネットとIT",
+    "free": true
+  },
+  {
+    "id": 29,
+    "name": "宗教と文化",
+    "free": true
+  },
+  {
+    "id": 30,
+    "name": "ネパールの生活",
+    "free": true
+  }
+]
