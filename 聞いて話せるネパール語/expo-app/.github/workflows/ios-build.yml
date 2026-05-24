@@ -43,7 +43,18 @@ jobs:
 
       - name: Detect Xcode project name
         run: |
-          PROJECT_NAME=$(basename "$(ls -d ios/*.xcworkspace)" .xcworkspace)
+          # .xcodeproj は prebuild 直後に存在する (.xcworkspace は pod install 後)
+          XCODEPROJ=$(ls -d ios/*.xcodeproj 2>/dev/null | head -1)
+          if [ -z "$XCODEPROJ" ]; then
+            echo "::error::No .xcodeproj found in ios/ directory after prebuild"
+            ls -la ios/ || true
+            exit 1
+          fi
+          PROJECT_NAME=$(basename "$XCODEPROJ" .xcodeproj)
+          if [ -z "$PROJECT_NAME" ]; then
+            echo "::error::Could not extract project name from $XCODEPROJ"
+            exit 1
+          fi
           echo "PROJECT_NAME=$PROJECT_NAME" >> $GITHUB_ENV
           echo "::notice::Detected project name: $PROJECT_NAME"
 
