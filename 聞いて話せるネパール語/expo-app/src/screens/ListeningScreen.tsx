@@ -246,42 +246,48 @@ export default function ListeningScreen() {
     const ja2ne = isJa2NeRef.current;
     const rep = nepaliRepeatRef.current;
 
+    // パターン: 順序が重要
+    // 1) phaseRef を新フェーズに先に更新 → 遅延イベントが旧フェーズで誤動作しない
+    // 2) playSrc() → lastPlayStartRef が今に更新
+    // 3) finishHandledRef = false → 1秒ガードが効くので安全に再開可能
     if (p === 'first') {
       if (ja2ne) {
         gapTimerRef.current = setTimeout(() => {
-          finishHandledRef.current = false;
+          phaseRef.current = 'second';
+          setPhase('second');
           nePlayCountRef.current = 0;
           playSrc(neSrcRef.current);
-          setPhase('second');
-          phaseRef.current = 'second';
+          finishHandledRef.current = false;
         }, GAP_AFTER_FIRST);
       } else {
         nePlayCountRef.current++;
         if (nePlayCountRef.current < rep) {
-          finishHandledRef.current = false;
           playSrc(neSrcRef.current);
+          finishHandledRef.current = false;
         } else {
           gapTimerRef.current = setTimeout(() => {
-            finishHandledRef.current = false;
-            playSrc(jaSrcRef.current);
-            setPhase('second');
             phaseRef.current = 'second';
+            setPhase('second');
+            playSrc(jaSrcRef.current);
+            finishHandledRef.current = false;
           }, GAP_AFTER_SECOND);
         }
       }
     } else if (p === 'second') {
       if (!ja2ne) {
         gapTimerRef.current = setTimeout(() => {
+          phaseRef.current = 'idle';
           finishHandledRef.current = false;
           advanceRef.current();
         }, GAP_AFTER_SECOND);
       } else {
         nePlayCountRef.current++;
         if (nePlayCountRef.current < rep) {
-          finishHandledRef.current = false;
           playSrc(neSrcRef.current);
+          finishHandledRef.current = false;
         } else {
           gapTimerRef.current = setTimeout(() => {
+            phaseRef.current = 'idle';
             finishHandledRef.current = false;
             advanceRef.current();
           }, GAP_AFTER_SECOND);
