@@ -35,6 +35,15 @@ yarn-error.*
 .env.*
 !.env.example
 
+# EAS / Apple credentials (NEVER commit these to a public repo)
+credentials.json
+credentials/
+*.p12
+*.p8
+*.mobileprovision
+*.cer
+*.key
+
 # typescript
 *.tsbuildinfo
 
