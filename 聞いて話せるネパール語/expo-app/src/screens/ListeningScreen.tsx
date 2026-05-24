@@ -120,8 +120,10 @@ export default function ListeningScreen() {
   const [levelId, setLevelId] = useState<number>(initial.levelId ?? 1);
   const [index, setIndex] = useState(initial.startIndex ?? 0);
   const [phase, setPhase] = useState<'idle' | 'first' | 'second'>('idle');
-  const [started, setStarted] = useState(false);
-  const [playing, setPlaying] = useState(false);
+  // 自動再生: 単一プレイヤー方式なら iOS の自動再生制約を回避できる
+  // useEffect が mount 後に発火して自動再生開始する
+  const [started, setStarted] = useState(true);
+  const [playing, setPlaying] = useState(true);
   const nePlayCountRef = useRef(0);
   const gapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -146,7 +148,7 @@ export default function ListeningScreen() {
 
   // Ref: stale closure 回避用
   const phaseRef = useRef<'idle' | 'first' | 'second'>('idle');
-  const playingRef = useRef(false);
+  const playingRef = useRef(true);
   const isJa2NeRef = useRef(isJa2Ne);
   const nepaliRepeatRef = useRef(nepaliRepeat);
   const listenSpeedRef = useRef(listenSpeed);
@@ -227,20 +229,6 @@ export default function ListeningScreen() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [started, playing, audioKey, isJa2Ne, phase]);
-
-  // ── ユーザータップで再生開始 ──
-  const handleStart = () => {
-    if (started) return;
-    const firstSrc = isJa2Ne ? jaSrc : neSrc;
-    playSrc(firstSrc);
-    nePlayCountRef.current = 0;
-    finishHandledRef.current = false;
-    setStarted(true);
-    setPlaying(true);
-    playingRef.current = true;
-    setPhase('first');
-    phaseRef.current = 'first';
-  };
 
   // ── didJustFinish を捕捉して次のフェーズへ ──
   useEffect(() => {
@@ -347,29 +335,6 @@ export default function ListeningScreen() {
   };
 
   if (!ex) return null;
-
-  // 初回タップ前: 大きな再生開始ボタンのみ表示
-  if (!started) {
-    return (
-      <View style={styles.startContainer}>
-        <Text style={styles.startHint}>
-          {themeName} · {levelName}
-        </Text>
-        <Pressable
-          style={({ pressed }) => [styles.startBtn, pressed && styles.startBtnPressed]}
-          onPress={handleStart}
-        >
-          <Svg width={48} height={48} viewBox="0 0 24 24" fill="#fff">
-            <Path d="M8 5.5v13c0 .8.9 1.3 1.6.9l10.5-6.5c.6-.4.6-1.3 0-1.7L9.6 4.6C8.9 4.2 8 4.7 8 5.5z" />
-          </Svg>
-          <Text style={styles.startBtnText}>タップして再生開始</Text>
-        </Pressable>
-        <Text style={styles.startNote}>
-          自動再生ループが始まります
-        </Text>
-      </View>
-    );
-  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
