@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
-import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
+import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Svg, { Circle, Path, Polygon, Polyline, Rect } from 'react-native-svg';
 import { colors, spacing, radius } from '../theme';
@@ -58,15 +58,10 @@ function PauseIcon({ size = 30 }: { size?: number }) {
   );
 }
 
-// 会話の次の (theme, level, idx) を計算
-//   テーマ優先: 同じレベルで全テーマを横断 → 次のレベル
-//   例: 分野1の初級 → 分野2の初級 → … → 分野30の初級 → 分野1の中級 …
 function findNextConversation(themeId: number, levelId: number, index: number, loop: boolean) {
   let t = themeId, l = levelId, i = index + 1;
   const exs = getExamples(t, l);
   if (i < exs.length) return { themeId: t, levelId: l, index: i, ended: false };
-
-  // 同じレベルで次のテーマを探す
   i = 0;
   t = t + 1;
   while (t <= THEMES.length) {
@@ -75,8 +70,6 @@ function findNextConversation(themeId: number, levelId: number, index: number, l
     }
     t++;
   }
-
-  // 同レベルの全テーマ終わり → 次のレベルでテーマ1から
   l = l + 1;
   if (l <= LEVELS.length) {
     t = 1;
@@ -87,15 +80,12 @@ function findNextConversation(themeId: number, levelId: number, index: number, l
       t++;
     }
   }
-
-  // 全部終わった → loop なら最初に戻る
   if (loop) {
     return { themeId: THEMES.find(th => th.free)?.id ?? 1, levelId: 1, index: 0, ended: false };
   }
   return { themeId, levelId, index, ended: true };
 }
 
-// 文法の次の (theme, idx) を計算（分野順送り、ループ）
 function findNextGrammar(themeId: number, index: number, loop: boolean) {
   let t = themeId, i = index + 1;
   const exs = getGrammarExamples(t);
@@ -126,13 +116,10 @@ export default function ListeningScreen() {
   } = useSettings();
   const isJa2Ne = listenDirection === 'ja2ne';
 
-  // 進行カーソル
   const [themeId, setThemeId] = useState(initial.themeId);
   const [levelId, setLevelId] = useState<number>(initial.levelId ?? 1);
   const [index, setIndex] = useState(initial.startIndex ?? 0);
   const [phase, setPhase] = useState<'idle' | 'first' | 'second'>('idle');
-  // iOS の自動再生制約のため、最初の1タップだけユーザーに要求する
-  // タップ後は started=true になり、自動再生ループが開始する
   const [started, setStarted] = useState(false);
   const [playing, setPlaying] = useState(false);
   const nePlayCountRef = useRef(0);
@@ -146,129 +133,55 @@ export default function ListeningScreen() {
 
   const jaSrc = isGrammarSrc ? japaneseGrammarAudio[audioKey] : japaneseAudio[audioKey];
   const neSrc = isGrammarSrc ? nepaliGrammarAudio[audioKey] : nepaliAudio[audioKey];
-  // keepAudioSessionActive: true で JA→NE 切り替え時に音声セッションを維持
-  // これがないと JA 終了時にセッションが非活性化され、NE 側の音が出ない
-  const jaPlayer = useAudioPlayer(jaSrc, { keepAudioSessionActive: true });
-  const nePlayer = useAudioPlayer(neSrc, { keepAudioSessionActive: true });
-  const jaStatus = useAudioPlayerStatus(jaPlayer);
-  const neStatus = useAudioPlayerStatus(nePlayer);
 
-  // ── Ref（リスナー内でのstale closure回避）──
-  // レンダー中に同期更新することで、リスナーが常に最新値を参照できる
+  // ★★★ 単一プレイヤー方式 ★★★
+  // 「2つの AudioPlayer インスタンスで JA/NE 切替時に iOS 音声システムが詰まる」問題を回避するため、
+  // 1つのプレイヤーで player.replace(newSrc) でソースを切り替える方式に変更。
+  // 初期 source は mount 時に固定（useRef で1回だけ捕捉）して、player 自体を安定化させる。
+  const initialSrcRef = useRef<number>(isJa2Ne ? jaSrc : neSrc);
+  const player = useAudioPlayer(initialSrcRef.current, { keepAudioSessionActive: true });
+  const status = useAudioPlayerStatus(player);
+  // 現在 player に loaded されているソースを追跡
+  const loadedSrcRef = useRef<number>(initialSrcRef.current);
+
+  // Ref: stale closure 回避用
   const phaseRef = useRef<'idle' | 'first' | 'second'>('idle');
   const playingRef = useRef(false);
   const isJa2NeRef = useRef(isJa2Ne);
   const nepaliRepeatRef = useRef(nepaliRepeat);
   const listenSpeedRef = useRef(listenSpeed);
+  const jaSrcRef = useRef(jaSrc);
+  const neSrcRef = useRef(neSrc);
   phaseRef.current = phase;
   playingRef.current = playing;
   isJa2NeRef.current = isJa2Ne;
   nepaliRepeatRef.current = nepaliRepeat;
   listenSpeedRef.current = listenSpeed;
+  jaSrcRef.current = jaSrc;
+  neSrcRef.current = neSrc;
 
-  // advance 関数をリスナーから呼べるよう ref 経由で参照
-  const advanceRef = useRef<() => void>(() => {});
-  // タイマーバックアップ用
-  const playbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const clearPlaybackTimer = () => {
-    if (playbackTimerRef.current) { clearTimeout(playbackTimerRef.current); playbackTimerRef.current = null; }
+  // didJustFinish の二重処理を防ぐフラグ
+  const finishHandledRef = useRef(false);
+
+  // 単一プレイヤー: 指定ソースをロード（必要なら）→ 先頭から再生
+  const playSrc = (src: number) => {
+    try {
+      if (loadedSrcRef.current !== src) {
+        player.replace(src);
+        loadedSrcRef.current = src;
+      }
+      player.seekTo(0);
+      player.play();
+    } catch {}
   };
 
-  // ── useAudioPlayerStatus フォールバック（addListener が発火しない端末対応）──
-  // addListener と二重にトリガーされないよう、処理済みフラグで制御
-  const jaHandledRef = useRef(false);
-  const neHandledRef = useRef(false);
-
-  useEffect(() => {
-    if (!jaStatus.didJustFinish || !playingRef.current) return;
-    if (jaHandledRef.current) return;
-    jaHandledRef.current = true;
-    const p = phaseRef.current;
-    const ja2ne = isJa2NeRef.current;
-    if (p === 'first' && ja2ne) {
-      if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
-      gapTimerRef.current = setTimeout(() => {
-        jaHandledRef.current = false;
-        neHandledRef.current = false;
-        try {
-          nePlayCountRef.current = 0;
-          nePlayer.seekTo(0);
-          nePlayer.playbackRate = listenSpeedRef.current;
-          nePlayer.play();
-        } catch {}
-        setPhase('second'); phaseRef.current = 'second';
-      }, GAP_AFTER_FIRST);
-    } else if (p === 'second' && !ja2ne) {
-      if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
-      gapTimerRef.current = setTimeout(() => {
-        jaHandledRef.current = false;
-        neHandledRef.current = false;
-        advanceRef.current();
-      }, GAP_AFTER_SECOND);
-    } else {
-      jaHandledRef.current = false;
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [jaStatus.didJustFinish]);
-
-  useEffect(() => {
-    if (!neStatus.didJustFinish || !playingRef.current) return;
-    if (neHandledRef.current) return;
-    neHandledRef.current = true;
-    const p = phaseRef.current;
-    const ja2ne = isJa2NeRef.current;
-    const rep = nepaliRepeatRef.current;
-    if (p === 'first' && !ja2ne) {
-      nePlayCountRef.current++;
-      if (nePlayCountRef.current < rep) {
-        neHandledRef.current = false;
-        try { nePlayer.seekTo(0); nePlayer.play(); } catch {}
-      } else {
-        if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
-        gapTimerRef.current = setTimeout(() => {
-          jaHandledRef.current = false;
-          neHandledRef.current = false;
-          try {
-            jaPlayer.seekTo(0);
-            jaPlayer.playbackRate = listenSpeedRef.current;
-            jaPlayer.play();
-          } catch {}
-          setPhase('second'); phaseRef.current = 'second';
-        }, GAP_AFTER_SECOND);
-      }
-    } else if (p === 'second' && ja2ne) {
-      nePlayCountRef.current++;
-      if (nePlayCountRef.current < rep) {
-        neHandledRef.current = false;
-        try { nePlayer.seekTo(0); nePlayer.play(); } catch {}
-      } else {
-        if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
-        gapTimerRef.current = setTimeout(() => {
-          jaHandledRef.current = false;
-          neHandledRef.current = false;
-          advanceRef.current();
-        }, GAP_AFTER_SECOND);
-      }
-    } else {
-      neHandledRef.current = false;
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [neStatus.didJustFinish]);
-
-  // 速度反映
-  useEffect(() => {
-    try {
-      jaPlayer.playbackRate = listenSpeed;
-      nePlayer.playbackRate = listenSpeed;
-    } catch {}
-  }, [listenSpeed, jaPlayer, nePlayer, audioKey]);
+  const advanceRef = useRef<() => void>(() => {});
 
   const themeName = isGrammarSrc
     ? GRAMMAR_THEMES.find(t => t.id === themeId)?.name ?? ''
     : THEMES.find(t => t.id === themeId)?.name ?? '';
   const levelName = isGrammarSrc ? '文法' : LEVELS.find(l => l.id === levelId)?.name ?? '';
 
-  // 現在 active な言語（UI ハイライト用）
   const activeLang: 'ja' | 'ne' | null = (() => {
     if (phase === 'idle') return null;
     if (isJa2Ne) return phase === 'first' ? 'ja' : 'ne';
@@ -295,64 +208,33 @@ export default function ListeningScreen() {
     setPhase('idle');
     phaseRef.current = 'idle';
     nePlayCountRef.current = 0;
-    jaHandledRef.current = false;
-    neHandledRef.current = false;
-    clearPlaybackTimer();
+    finishHandledRef.current = false;
   };
-  // レンダーごとに最新の advance を ref に保持
   advanceRef.current = advance;
 
-  // ── シーケンス開始（advance() 後の自動継続用）──
-  // 初回再生は handleStart で直接 play()。これは advance() による「2回目以降」用
+  // ── advance 後の自動継続: phase='idle' で playing=true なら新しい first を再生 ──
   useEffect(() => {
     if (!started || !playing || !ex) return;
     if (phase !== 'idle') return;
-
-    const firstPlayer = isJa2Ne ? jaPlayer : nePlayer;
-    try {
-      firstPlayer.seekTo(0);
-      firstPlayer.play();
-      if (!isJa2Ne) nePlayCountRef.current = 0;
-      jaHandledRef.current = false;
-      neHandledRef.current = false;
-      clearPlaybackTimer();
-      setPhase('first');
-      phaseRef.current = 'first';
-    } catch {}
+    const firstSrc = isJa2Ne ? jaSrc : neSrc;
+    playSrc(firstSrc);
+    nePlayCountRef.current = 0;
+    finishHandledRef.current = false;
+    setPhase('first');
+    phaseRef.current = 'first';
     return () => {
       if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [started, playing, audioKey, isJa2Ne, phase]);
 
-  // ユーザータップで再生開始
+  // ── ユーザータップで再生開始 ──
   const handleStart = () => {
     if (started) return;
-
-    const firstPlayer = isJa2Ne ? jaPlayer : nePlayer;
-    const secondPlayer = isJa2Ne ? nePlayer : jaPlayer;
-
-    // ★ 重要: secondPlayer も「ユーザータップ文脈」で1回 play() しておく
-    // iOS は「ユーザータップ直後に play() されたプレイヤー」しか優遇しないため、
-    // 後から呼ばれる NE が無音になる問題があった。muted=true で音を出さずにプライム。
-    try {
-      secondPlayer.muted = true;
-      secondPlayer.play();
-      secondPlayer.pause();
-      secondPlayer.muted = false;
-    } catch {}
-
-    // first player（実際に音を出す）
-    try {
-      firstPlayer.seekTo(0);
-      firstPlayer.play();
-    } catch {}
-
-    // 状態を直接更新
+    const firstSrc = isJa2Ne ? jaSrc : neSrc;
+    playSrc(firstSrc);
     nePlayCountRef.current = 0;
-    jaHandledRef.current = false;
-    neHandledRef.current = false;
-    clearPlaybackTimer();
+    finishHandledRef.current = false;
     setStarted(true);
     setPlaying(true);
     playingRef.current = true;
@@ -360,175 +242,81 @@ export default function ListeningScreen() {
     phaseRef.current = 'first';
   };
 
-  // ── タイマーバックアップ: duration が分かったらカウントダウンセット ──
-  // addListener / useAudioPlayerStatus の didJustFinish が発火しない端末でも確実に進行
-  // duration が取れない場合も最大15秒のセーフティタイマーで進行
+  // ── didJustFinish を捕捉して次のフェーズへ ──
   useEffect(() => {
-    if (phase === 'idle' || !playing) { clearPlaybackTimer(); return; }
-    if (playbackTimerRef.current) return; // 既にタイマーあり
-    const dur = phase === 'first'
-      ? (isJa2Ne ? jaStatus.duration : neStatus.duration)
-      : (isJa2Ne ? neStatus.duration : jaStatus.duration);
-    // duration が 0 でもセーフティで 8秒後に進む、取れれば duration+1.2s
-    const ms = dur > 0
-      ? Math.ceil(dur / listenSpeedRef.current * 1000) + 1200
-      : 8000; // セーフティタイマー
-    playbackTimerRef.current = setTimeout(() => {
-      playbackTimerRef.current = null;
-      if (!playingRef.current) return;
-      const p = phaseRef.current;
-      const ja2ne = isJa2NeRef.current;
-      const rep = nepaliRepeatRef.current;
-      if (p === 'first') {
-        if (ja2ne) {
-          if (!jaHandledRef.current) {
-            jaHandledRef.current = true;
-            neHandledRef.current = false;
-            gapTimerRef.current = setTimeout(() => {
-              try { nePlayCountRef.current = 0; nePlayer.seekTo(0); nePlayer.playbackRate = listenSpeedRef.current; nePlayer.play(); } catch {}
-              setPhase('second'); phaseRef.current = 'second';
-            }, GAP_AFTER_FIRST);
-          }
+    if (!status.didJustFinish || !playingRef.current) return;
+    if (finishHandledRef.current) return;
+    finishHandledRef.current = true;
+
+    const p = phaseRef.current;
+    const ja2ne = isJa2NeRef.current;
+    const rep = nepaliRepeatRef.current;
+
+    if (p === 'first') {
+      if (ja2ne) {
+        // JA終了 → NE再生
+        gapTimerRef.current = setTimeout(() => {
+          finishHandledRef.current = false;
+          nePlayCountRef.current = 0;
+          playSrc(neSrcRef.current);
+          setPhase('second');
+          phaseRef.current = 'second';
+        }, GAP_AFTER_FIRST);
+      } else {
+        // NE終了 → 繰り返し or JA
+        nePlayCountRef.current++;
+        if (nePlayCountRef.current < rep) {
+          finishHandledRef.current = false;
+          playSrc(neSrcRef.current); // NE もう一度
         } else {
-          if (!neHandledRef.current) {
-            neHandledRef.current = true;
-            nePlayCountRef.current++;
-            if (nePlayCountRef.current < rep) {
-              neHandledRef.current = false;
-              try { nePlayer.seekTo(0); nePlayer.play(); } catch {}
-            } else {
-              jaHandledRef.current = false;
-              gapTimerRef.current = setTimeout(() => {
-                try { jaPlayer.seekTo(0); jaPlayer.playbackRate = listenSpeedRef.current; jaPlayer.play(); } catch {}
-                setPhase('second'); phaseRef.current = 'second';
-              }, GAP_AFTER_SECOND);
-            }
-          }
-        }
-      } else if (p === 'second') {
-        if (!ja2ne) {
-          if (!jaHandledRef.current) {
-            jaHandledRef.current = true;
-            gapTimerRef.current = setTimeout(() => advanceRef.current(), GAP_AFTER_SECOND);
-          }
-        } else {
-          if (!neHandledRef.current) {
-            neHandledRef.current = true;
-            nePlayCountRef.current++;
-            if (nePlayCountRef.current < rep) {
-              neHandledRef.current = false;
-              try { nePlayer.seekTo(0); nePlayer.play(); } catch {}
-            } else {
-              gapTimerRef.current = setTimeout(() => advanceRef.current(), GAP_AFTER_SECOND);
-            }
-          }
+          gapTimerRef.current = setTimeout(() => {
+            finishHandledRef.current = false;
+            playSrc(jaSrcRef.current);
+            setPhase('second');
+            phaseRef.current = 'second';
+          }, GAP_AFTER_SECOND);
         }
       }
-    }, ms);
-    return () => clearPlaybackTimer();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase, playing, jaStatus.duration, neStatus.duration]);
-
-  // ── 音声終了を addListener で確実に捕捉（React バッチングで didJustFinish を取りこぼさない）──
-  useEffect(() => {
-    const onJa = (status: any) => {
-      if (!status.didJustFinish || !playingRef.current) return;
-      if (jaHandledRef.current) return;
-      jaHandledRef.current = true;
-      const p = phaseRef.current;
-      const ja2ne = isJa2NeRef.current;
-      if (p === 'first' && ja2ne) {
-        if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
+    } else if (p === 'second') {
+      if (!ja2ne) {
+        // JA終了（2段目）→ 次の例題
         gapTimerRef.current = setTimeout(() => {
-          jaHandledRef.current = false;
-          neHandledRef.current = false;
-          try {
-            nePlayCountRef.current = 0;
-            nePlayer.seekTo(0);
-            nePlayer.playbackRate = listenSpeedRef.current;
-            nePlayer.play();
-          } catch {}
-          setPhase('second'); phaseRef.current = 'second';
-        }, GAP_AFTER_FIRST);
-      } else if (p === 'second' && !ja2ne) {
-        if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
-        gapTimerRef.current = setTimeout(() => {
-          jaHandledRef.current = false;
-          neHandledRef.current = false;
+          finishHandledRef.current = false;
           advanceRef.current();
         }, GAP_AFTER_SECOND);
       } else {
-        jaHandledRef.current = false;
-      }
-    };
-
-    const onNe = (status: any) => {
-      if (!status.didJustFinish || !playingRef.current) return;
-      if (neHandledRef.current) return;
-      neHandledRef.current = true;
-      const p = phaseRef.current;
-      const ja2ne = isJa2NeRef.current;
-      const rep = nepaliRepeatRef.current;
-      if (p === 'first' && !ja2ne) {
+        // NE終了（2段目）→ 繰り返し or 次の例題
         nePlayCountRef.current++;
         if (nePlayCountRef.current < rep) {
-          neHandledRef.current = false;
-          try { nePlayer.seekTo(0); nePlayer.play(); } catch {}
+          finishHandledRef.current = false;
+          playSrc(neSrcRef.current);
         } else {
-          if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
           gapTimerRef.current = setTimeout(() => {
-            jaHandledRef.current = false;
-            neHandledRef.current = false;
-            try {
-              jaPlayer.seekTo(0);
-              jaPlayer.playbackRate = listenSpeedRef.current;
-              jaPlayer.play();
-            } catch {}
-            setPhase('second'); phaseRef.current = 'second';
-          }, GAP_AFTER_SECOND);
-        }
-      } else if (p === 'second' && ja2ne) {
-        nePlayCountRef.current++;
-        if (nePlayCountRef.current < rep) {
-          neHandledRef.current = false;
-          try { nePlayer.seekTo(0); nePlayer.play(); } catch {}
-        } else {
-          if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
-          gapTimerRef.current = setTimeout(() => {
-            jaHandledRef.current = false;
-            neHandledRef.current = false;
+            finishHandledRef.current = false;
             advanceRef.current();
           }, GAP_AFTER_SECOND);
         }
-      } else {
-        neHandledRef.current = false;
       }
-    };
-
-    const jaSub = jaPlayer.addListener('playbackStatusUpdate', onJa);
-    const neSub = nePlayer.addListener('playbackStatusUpdate', onNe);
-    return () => { jaSub.remove(); neSub.remove(); };
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [jaPlayer, nePlayer]);
+  }, [status.didJustFinish]);
 
   const togglePlay = () => {
     if (playing) {
-      jaPlayer.pause();
-      nePlayer.pause();
+      try { player.pause(); } catch {}
       if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
-      clearPlaybackTimer();
       setPlaying(false);
+      playingRef.current = false;
     } else {
       setPhase('idle');
       setPlaying(true);
+      playingRef.current = true;
     }
   };
 
   const go = (delta: number) => {
-    jaPlayer.pause();
-    nePlayer.pause();
+    try { player.pause(); } catch {}
     if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
-    clearPlaybackTimer();
     if (delta > 0) {
       if (isGrammarSrc) {
         const nxt = findNextGrammar(themeId, index, listenLoop);
@@ -550,8 +338,7 @@ export default function ListeningScreen() {
     }
     setPhase('idle');
     nePlayCountRef.current = 0;
-    jaHandledRef.current = false;
-    neHandledRef.current = false;
+    finishHandledRef.current = false;
   };
 
   const cycleSpeed = () => {
@@ -679,7 +466,6 @@ const styles = StyleSheet.create({
   metaCur: { color: colors.ink, fontWeight: '700' },
   card: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: radius.lg, padding: spacing.lg, marginBottom: spacing.md },
   cardJaActive: { borderColor: colors.accentJa, shadowColor: colors.accentJa, shadowOpacity: 0.15, shadowRadius: 12, elevation: 4 },
-  // 日本語・ネパール語ともに同じ青色で統一（ユーザー要望）
   cardNeActive: { borderColor: colors.accentJa, shadowColor: colors.accentJa, shadowOpacity: 0.15, shadowRadius: 12, elevation: 4 },
   tag: { fontFamily: 'Courier', fontSize: 11, color: colors.inkQuiet, letterSpacing: 1.5, marginBottom: spacing.sm },
   tagJaActive: { color: colors.accentJa, fontWeight: '700' },
