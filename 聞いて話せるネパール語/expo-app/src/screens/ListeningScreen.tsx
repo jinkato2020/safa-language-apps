@@ -331,6 +331,30 @@ export default function ListeningScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, playing, status.duration, audioKey]);
 
+  // ── 再生開始の検証＆リトライ ──
+  // 稀に player.play() を呼んでも実際には再生が始まらないケースがある（iOS の一時的問題）
+  // 1秒後に player.playing をチェックし、開始していなければ1度だけリトライ
+  const retriedRef = useRef(false);
+  useEffect(() => {
+    retriedRef.current = false; // フェーズ変更ごとにリセット
+    if (phase === 'idle' || !playing) return;
+    const verifyTimer = setTimeout(() => {
+      if (retriedRef.current) return;
+      if (!playingRef.current || phaseRef.current === 'idle') return;
+      // すでに再生中ならOK
+      if (player.playing) return;
+      // 再生が始まっていない場合のみリトライ
+      retriedRef.current = true;
+      try {
+        player.seekTo(0);
+        player.play();
+        lastPlayStartRef.current = Date.now();
+      } catch {}
+    }, 1000);
+    return () => clearTimeout(verifyTimer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, audioKey]);
+
   const togglePlay = () => {
     if (playing) {
       try { player.pause(); } catch {}
