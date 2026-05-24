@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useFocusEffect, useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
+import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Svg, { Circle, Path, Polygon, Polyline, Rect } from 'react-native-svg';
@@ -131,7 +131,10 @@ export default function ListeningScreen() {
   const [levelId, setLevelId] = useState<number>(initial.levelId ?? 1);
   const [index, setIndex] = useState(initial.startIndex ?? 0);
   const [phase, setPhase] = useState<'idle' | 'first' | 'second'>('idle');
-  const [playing, setPlaying] = useState(true);
+  // iOS の自動再生制約のため、最初の1タップだけユーザーに要求する
+  // タップ後は started=true になり、自動再生ループが開始する
+  const [started, setStarted] = useState(false);
+  const [playing, setPlaying] = useState(false);
   const nePlayCountRef = useRef(0);
   const gapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -153,7 +156,7 @@ export default function ListeningScreen() {
   // ── Ref（リスナー内でのstale closure回避）──
   // レンダー中に同期更新することで、リスナーが常に最新値を参照できる
   const phaseRef = useRef<'idle' | 'first' | 'second'>('idle');
-  const playingRef = useRef(true);
+  const playingRef = useRef(false);
   const isJa2NeRef = useRef(isJa2Ne);
   const nepaliRepeatRef = useRef(nepaliRepeat);
   const listenSpeedRef = useRef(listenSpeed);
@@ -299,55 +302,46 @@ export default function ListeningScreen() {
   // レンダーごとに最新の advance を ref に保持
   advanceRef.current = advance;
 
-  // ── シーケンス開始（idle → first）: useFocusEffect でナビゲーション完了後に起動 ──
-  // useEffect だと「画面マウント直後」に走るが、その時点では iOS の遷移アニメ中で
-  // 音声セッションが安定していないことがある。useFocusEffect は遷移完了後に走る。
-  useFocusEffect(useCallback(() => {
+  // ── シーケンス開始（idle → first）──
+  // playing=true && phase='idle' の組み合わせで起動する
+  // (started=false の初期状態では playing=false なので何も起こらない)
+  useEffect(() => {
     if (!playing || !ex) return;
     if (phase !== 'idle') return;
 
-    let cancelled = false;
-
-    const start = async () => {
-      // 音声セッションを毎回明示的に設定（VideoSplash や他の player の影響を打ち消す）
-      try {
-        await setAudioModeAsync({
-          playsInSilentMode: true,
-          shouldPlayInBackground: true,
-          interruptionMode: 'doNotMix',
-        });
-      } catch {}
-
-      if (cancelled) return;
-
-      // ナビゲーション遷移と AVPlayer の初期化が完全に終わるのを待つ
-      await new Promise(r => setTimeout(r, 400));
-
-      if (cancelled || phaseRef.current !== 'idle' || !playingRef.current) return;
-
-      const firstPlayer = isJa2Ne ? jaPlayer : nePlayer;
-      try {
-        firstPlayer.seekTo(0);
-        firstPlayer.playbackRate = listenSpeed;
-        firstPlayer.volume = 1.0;
-        firstPlayer.play();
-        if (!isJa2Ne) nePlayCountRef.current = 0;
-        jaHandledRef.current = false;
-        neHandledRef.current = false;
-        clearPlaybackTimer();
-        setPhase('first');
-        phaseRef.current = 'first';
-      } catch {}
-    };
-
-    start();
-
+    const firstPlayer = isJa2Ne ? jaPlayer : nePlayer;
+    try {
+      firstPlayer.seekTo(0);
+      firstPlayer.playbackRate = listenSpeed;
+      firstPlayer.volume = 1.0;
+      firstPlayer.play();
+      if (!isJa2Ne) nePlayCountRef.current = 0;
+      jaHandledRef.current = false;
+      neHandledRef.current = false;
+      clearPlaybackTimer();
+      setPhase('first');
+      phaseRef.current = 'first';
+    } catch {}
     return () => {
-      cancelled = true;
       if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playing, audioKey, isJa2Ne, phase]));
+  }, [playing, audioKey, isJa2Ne, phase]);
+
+  // ユーザータップで再生開始（iOS 自動再生制約への対策）
+  const handleStart = async () => {
+    if (started) return;
+    // 音声セッションを明示的に設定
+    try {
+      await setAudioModeAsync({
+        playsInSilentMode: true,
+        shouldPlayInBackground: true,
+        interruptionMode: 'doNotMix',
+      });
+    } catch {}
+    setStarted(true);
+    setPlaying(true);  // これで上の useEffect が発火し、再生開始
+  };
 
   // ── タイマーバックアップ: duration が分かったらカウントダウンセット ──
   // addListener / useAudioPlayerStatus の didJustFinish が発火しない端末でも確実に進行
@@ -547,6 +541,29 @@ export default function ListeningScreen() {
 
   if (!ex) return null;
 
+  // 初回タップ前: 大きな再生開始ボタンのみ表示
+  if (!started) {
+    return (
+      <View style={styles.startContainer}>
+        <Text style={styles.startHint}>
+          {themeName} · {levelName}
+        </Text>
+        <Pressable
+          style={({ pressed }) => [styles.startBtn, pressed && styles.startBtnPressed]}
+          onPress={handleStart}
+        >
+          <Svg width={48} height={48} viewBox="0 0 24 24" fill="#fff">
+            <Path d="M8 5.5v13c0 .8.9 1.3 1.6.9l10.5-6.5c.6-.4.6-1.3 0-1.7L9.6 4.6C8.9 4.2 8 4.7 8 5.5z" />
+          </Svg>
+          <Text style={styles.startBtnText}>タップして再生開始</Text>
+        </Pressable>
+        <Text style={styles.startNote}>
+          自動再生ループが始まります
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
@@ -603,6 +620,39 @@ export default function ListeningScreen() {
 }
 
 const styles = StyleSheet.create({
+  // 初回再生開始画面
+  startContainer: {
+    flex: 1,
+    backgroundColor: colors.bg,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: spacing.xl,
+    gap: spacing.lg,
+  },
+  startHint: {
+    fontFamily: 'Courier',
+    fontSize: 13,
+    color: colors.inkMute,
+    letterSpacing: 1.5,
+  },
+  startBtn: {
+    backgroundColor: colors.ink,
+    borderRadius: 100,
+    width: 140,
+    height: 140,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    shadowColor: colors.ink,
+    shadowOpacity: 0.3,
+    shadowRadius: 20,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 8,
+  },
+  startBtnPressed: { backgroundColor: colors.inkSoft, transform: [{ scale: 0.96 }] },
+  startBtnText: { fontSize: 11, fontWeight: '600', color: '#fff', letterSpacing: 0.5, position: 'absolute', bottom: -28, width: 200, textAlign: 'center' },
+  startNote: { fontSize: 13, color: colors.inkQuiet, marginTop: spacing.xl },
+
   container: { padding: spacing.lg, paddingBottom: spacing.xxl },
   metaRow: { paddingBottom: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.line, marginBottom: spacing.xl },
   metaText: { fontFamily: 'Courier', fontSize: 12, color: colors.inkMute },
