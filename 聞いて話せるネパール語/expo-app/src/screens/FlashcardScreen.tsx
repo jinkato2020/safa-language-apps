@@ -35,14 +35,23 @@ function ShuffleIcon({ active }: { active: boolean }) {
 }
 
 export default function FlashcardScreen() {
-  const { categoryId, direction } = useRoute<R>().params;
-  const cat = WORD_CATEGORIES.find(c => c.id === categoryId);
-  const allWords = useMemo(() => getWords(categoryId), [categoryId]);
+  const { categoryId: initialCategoryId, direction } = useRoute<R>().params;
   const { romaji, autoFlip } = useSettings();
+  const [currentCategoryId, setCurrentCategoryId] = useState(initialCategoryId);
+  const cat = WORD_CATEGORIES.find(c => c.id === currentCategoryId);
+  const allWords = useMemo(() => getWords(currentCategoryId), [currentCategoryId]);
   const [shuffled, setShuffled] = useState(false);
   const [order, setOrder] = useState<number[]>(() => allWords.map((_, i) => i));
   const [cursor, setCursor] = useState(0);
   const [flipped, setFlipped] = useState(false);
+
+  // カテゴリが変わったら順序とカーソルをリセット
+  useEffect(() => {
+    setOrder(allWords.map((_, i) => i));
+    setCursor(0);
+    setFlipped(false);
+    setShuffled(false);
+  }, [currentCategoryId, allWords]);
 
   // autoFlip: カード変化時に自動で裏返す
   useEffect(() => {
@@ -74,17 +83,47 @@ export default function FlashcardScreen() {
   };
 
   const go = (delta: number) => {
-    const next = cursor + delta;
-    if (next < 0 || next >= order.length) return;
-    setCursor(next);
-    setFlipped(false);
+    if (delta > 0) {
+      if (cursor + 1 < order.length) {
+        setCursor(cursor + 1);
+        setFlipped(false);
+      } else {
+        // 次のカテゴリ
+        for (let c = currentCategoryId + 1; c <= WORD_CATEGORIES.length; c++) {
+          const w = getWords(c);
+          if (w.length > 0) {
+            setCurrentCategoryId(c);
+            return;
+          }
+        }
+      }
+    } else {
+      if (cursor > 0) {
+        setCursor(cursor - 1);
+        setFlipped(false);
+      } else {
+        // 前のカテゴリの最後の単語
+        for (let c = currentCategoryId - 1; c >= 1; c--) {
+          const w = getWords(c);
+          if (w.length > 0) {
+            setCurrentCategoryId(c);
+            // useEffect で order がリセットされた後、最後の要素に移動するのは難しいので
+            // とりあえず先頭から始める（ユーザー要望に応じて調整）
+            return;
+          }
+        }
+      }
+    }
   };
+
+  const atFirst = cursor === 0 && currentCategoryId === 1;
+  const atLast = cursor >= order.length - 1 && currentCategoryId >= WORD_CATEGORIES.length;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
         <Text style={styles.metaText}>
-          {cat?.name} · {direction === 'ne2ja' ? 'ネ→日' : '日→ネ'} · <Text style={styles.metaCur}>{cursor + 1}</Text> / {order.length}
+          <Text style={styles.metaCur}>{currentCategoryId}.</Text> {cat?.name} · {direction === 'ne2ja' ? 'ネ→日' : '日→ネ'} · <Text style={styles.metaCur}>{cursor + 1}</Text> / {order.length}
         </Text>
       </View>
 
@@ -102,14 +141,13 @@ export default function FlashcardScreen() {
         <Text style={styles.hint}>タップで{flipped ? '戻す' : '反転'}</Text>
       </Pressable>
 
-      {/* 前へ / 番号 / 次へ（中央配置） */}
+      {/* 前へ / 次へ（位置固定、カテゴリ跨ぎ可能） */}
       <View style={styles.navRow}>
-        <Pressable style={({ pressed }) => [styles.navBtn, cursor === 0 && styles.navDisabled, pressed && styles.navPressed]} disabled={cursor === 0} onPress={() => go(-1)}>
-          <Text style={[styles.navText, cursor === 0 && styles.navTextDisabled]}>← 前へ</Text>
+        <Pressable style={({ pressed }) => [styles.navBtn, atFirst && styles.navDisabled, pressed && styles.navPressed]} disabled={atFirst} onPress={() => go(-1)}>
+          <Text style={[styles.navText, atFirst && styles.navTextDisabled]}>← 前へ</Text>
         </Pressable>
-        <Text style={styles.position}>{cursor + 1} / {order.length}</Text>
-        <Pressable style={({ pressed }) => [styles.navBtn, cursor >= order.length - 1 && styles.navDisabled, pressed && styles.navPressed]} disabled={cursor >= order.length - 1} onPress={() => go(1)}>
-          <Text style={[styles.navText, cursor >= order.length - 1 && styles.navTextDisabled]}>次へ →</Text>
+        <Pressable style={({ pressed }) => [styles.navBtn, atLast && styles.navDisabled, pressed && styles.navPressed]} disabled={atLast} onPress={() => go(1)}>
+          <Text style={[styles.navText, atLast && styles.navTextDisabled]}>次へ →</Text>
         </Pressable>
       </View>
 

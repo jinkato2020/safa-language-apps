@@ -6,7 +6,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Svg, { Line, Path, Polyline } from 'react-native-svg';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
-import { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples } from '../dataLoader';
+import { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, isCombinationFree, isGrammarThemeFree } from '../dataLoader';
 import { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio } from '../../data/audioMap';
 import { useSettings, type Direction } from '../SettingsContext';
 import { sentenceToRomaji } from '../transliterate';
@@ -50,10 +50,17 @@ function FlipIcon({ size = 18 }: { size?: number }) {
 
 export default function PracticeScreen() {
   const navigation = useNavigation<Nav>();
-  const { themeId, levelId, startIndex, mode } = useRoute<R>().params;
+  const { themeId: initialThemeId, levelId: initialLevelId, startIndex, mode } = useRoute<R>().params;
   const isGrammar = mode === 'grammar';
+
+  // テーマを跨いだナビゲーションのため、themeId/levelId/index を state にする
+  const [themeId, setThemeId] = useState(initialThemeId);
+  const [levelId, setLevelId] = useState<number>(initialLevelId ?? 1);
+  const [index, setIndex] = useState(startIndex ?? 0);
+  const [revealed, setRevealed] = useState(false);
+
   const examples = useMemo(
-    () => (isGrammar ? getGrammarExamples(themeId) : getExamples(themeId, levelId ?? 1)),
+    () => (isGrammar ? getGrammarExamples(themeId) : getExamples(themeId, levelId)),
     [isGrammar, themeId, levelId],
   );
   const themeName = isGrammar
@@ -62,8 +69,6 @@ export default function PracticeScreen() {
   const levelName = isGrammar ? '文法' : LEVELS.find(l => l.id === levelId)?.name ?? '';
 
   const { practiceDirection, setPracticeDirection, romaji } = useSettings();
-  const [index, setIndex] = useState(startIndex ?? 0);
-  const [revealed, setRevealed] = useState(false);
 
   useLayoutEffect(() => {
     navigation.setOptions({ title: isGrammar ? '文法練習' : '会話練習' });
@@ -90,12 +95,106 @@ export default function PracticeScreen() {
     } catch {}
   };
 
+  // テーマを跨いで次/前へ進む
   const go = (delta: number) => {
-    const next = index + delta;
-    if (next < 0 || next >= examples.length) return;
-    setIndex(next);
+    if (delta > 0) {
+      // 次へ
+      if (index + 1 < examples.length) {
+        setIndex(index + 1);
+      } else {
+        // 次のテーマ（文法は同一系列、会話は同レベル → 次レベル）
+        if (isGrammar) {
+          for (let t = themeId + 1; t <= GRAMMAR_THEMES.length; t++) {
+            if (isGrammarThemeFree(t) && getGrammarExamples(t).length > 0) {
+              setThemeId(t);
+              setIndex(0);
+              setRevealed(false);
+              return;
+            }
+          }
+        } else {
+          // 同レベルで次のテーマ
+          for (let t = themeId + 1; t <= THEMES.length; t++) {
+            if (isCombinationFree('conversation', t, levelId) && getExamples(t, levelId).length > 0) {
+              setThemeId(t);
+              setIndex(0);
+              setRevealed(false);
+              return;
+            }
+          }
+          // 全テーマ終わり → 次のレベルの先頭テーマへ
+          if (levelId < LEVELS.length) {
+            for (let t = 1; t <= THEMES.length; t++) {
+              if (isCombinationFree('conversation', t, levelId + 1) && getExamples(t, levelId + 1).length > 0) {
+                setThemeId(t);
+                setLevelId(levelId + 1);
+                setIndex(0);
+                setRevealed(false);
+                return;
+              }
+            }
+          }
+        }
+      }
+    } else {
+      // 前へ
+      if (index > 0) {
+        setIndex(index - 1);
+      } else {
+        // 前のテーマの最終例題
+        if (isGrammar) {
+          for (let t = themeId - 1; t >= 1; t--) {
+            if (isGrammarThemeFree(t)) {
+              const exs = getGrammarExamples(t);
+              if (exs.length > 0) {
+                setThemeId(t);
+                setIndex(exs.length - 1);
+                setRevealed(false);
+                return;
+              }
+            }
+          }
+        } else {
+          for (let t = themeId - 1; t >= 1; t--) {
+            if (isCombinationFree('conversation', t, levelId)) {
+              const exs = getExamples(t, levelId);
+              if (exs.length > 0) {
+                setThemeId(t);
+                setIndex(exs.length - 1);
+                setRevealed(false);
+                return;
+              }
+            }
+          }
+          // 前のレベルの末尾テーマへ
+          if (levelId > 1) {
+            for (let t = THEMES.length; t >= 1; t--) {
+              if (isCombinationFree('conversation', t, levelId - 1)) {
+                const exs = getExamples(t, levelId - 1);
+                if (exs.length > 0) {
+                  setThemeId(t);
+                  setLevelId(levelId - 1);
+                  setIndex(exs.length - 1);
+                  setRevealed(false);
+                  return;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     setRevealed(false);
   };
+
+  // 端判定（無効化用）
+  const atFirst = index === 0 && themeId === 1 && (isGrammar || levelId === 1);
+  const atLast = (() => {
+    if (index < examples.length - 1) return false;
+    if (isGrammar) return themeId >= GRAMMAR_THEMES.length;
+    if (themeId < THEMES.length) return false;
+    return levelId >= LEVELS.length;
+  })();
 
   const toggleDirection = () => {
     const next: Direction = practiceDirection === 'ja2ne' ? 'ne2ja' : 'ja2ne';
@@ -117,7 +216,7 @@ export default function PracticeScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
         <Text style={styles.metaText}>
-          {themeName} · {levelName} · 例題 <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
+          <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · 例題 <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
         </Text>
       </View>
 
@@ -151,22 +250,21 @@ export default function PracticeScreen() {
         </Pressable>
       </View>
 
-      {/* 前へ / 番号 / 次へ */}
+      {/* 前へ / 次へ（位置固定、テーマ跨ぎ可能） */}
       <View style={styles.navRow}>
         <Pressable
-          style={({ pressed }) => [styles.navBtn, index === 0 && styles.navDisabled, pressed && styles.navPressed]}
-          disabled={index === 0}
+          style={({ pressed }) => [styles.navBtn, atFirst && styles.navDisabled, pressed && styles.navPressed]}
+          disabled={atFirst}
           onPress={() => go(-1)}
         >
-          <Text style={[styles.navText, index === 0 && styles.navTextDisabled]}>← 前へ</Text>
+          <Text style={[styles.navText, atFirst && styles.navTextDisabled]}>← 前へ</Text>
         </Pressable>
-        <Text style={styles.navCount}>{index + 1} / {examples.length}</Text>
         <Pressable
-          style={({ pressed }) => [styles.navBtn, index >= examples.length - 1 && styles.navDisabled, pressed && styles.navPressed]}
-          disabled={index >= examples.length - 1}
+          style={({ pressed }) => [styles.navBtn, atLast && styles.navDisabled, pressed && styles.navPressed]}
+          disabled={atLast}
           onPress={() => go(1)}
         >
-          <Text style={[styles.navText, index >= examples.length - 1 && styles.navTextDisabled]}>次へ →</Text>
+          <Text style={[styles.navText, atLast && styles.navTextDisabled]}>次へ →</Text>
         </Pressable>
       </View>
 

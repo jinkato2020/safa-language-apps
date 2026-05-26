@@ -104,6 +104,37 @@ function findNextGrammar(themeId: number, index: number, loop: boolean) {
   return { themeId, index, ended: true };
 }
 
+// 前へ: 同レベル内で前 → 前テーマの最後 → 前レベルの最後テーマ
+function findPrevConversation(themeId: number, levelId: number, index: number) {
+  if (index > 0) return { themeId, levelId, index: index - 1, ended: false };
+  for (let t = themeId - 1; t >= 1; t--) {
+    if (isCombinationFree('listening', t, levelId)) {
+      const exs = getExamples(t, levelId);
+      if (exs.length > 0) return { themeId: t, levelId, index: exs.length - 1, ended: false };
+    }
+  }
+  if (levelId > 1) {
+    for (let t = THEMES.length; t >= 1; t--) {
+      if (isCombinationFree('listening', t, levelId - 1)) {
+        const exs = getExamples(t, levelId - 1);
+        if (exs.length > 0) return { themeId: t, levelId: levelId - 1, index: exs.length - 1, ended: false };
+      }
+    }
+  }
+  return { themeId, levelId, index, ended: true };
+}
+
+function findPrevGrammar(themeId: number, index: number) {
+  if (index > 0) return { themeId, index: index - 1, ended: false };
+  for (let t = themeId - 1; t >= 1; t--) {
+    if (isGrammarThemeFree(t)) {
+      const exs = getGrammarExamples(t);
+      if (exs.length > 0) return { themeId: t, index: exs.length - 1, ended: false };
+    }
+  }
+  return { themeId, index, ended: true };
+}
+
 export default function ListeningScreen() {
   const route = useRoute<R>();
   const initial = route.params;
@@ -332,12 +363,19 @@ export default function ListeningScreen() {
 
   const togglePlay = () => {
     if (playing) {
+      // 一時停止: 音声と gap タイマーを止めるが、phase は維持
       try { player.pause(); } catch {}
-      if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
+      if (gapTimerRef.current) {
+        clearTimeout(gapTimerRef.current);
+        gapTimerRef.current = null;
+      }
       setPlaying(false);
       playingRef.current = false;
     } else {
-      setPhase('idle');
+      // 再開: phase が idle なら useEffect が初回再生、それ以外なら途中から続行
+      if (phase !== 'idle') {
+        try { player.play(); } catch {}
+      }
       setPlaying(true);
       playingRef.current = true;
     }
@@ -362,8 +400,21 @@ export default function ListeningScreen() {
         }
       }
     } else {
-      const newIdx = Math.max(0, index - 1);
-      setIndex(newIdx);
+      // 前へ: テーマを跨いで遡る
+      if (isGrammarSrc) {
+        const prv = findPrevGrammar(themeId, index);
+        if (!prv.ended) {
+          setThemeId(prv.themeId);
+          setIndex(prv.index);
+        }
+      } else {
+        const prv = findPrevConversation(themeId, levelId, index);
+        if (!prv.ended) {
+          setThemeId(prv.themeId);
+          setLevelId(prv.levelId);
+          setIndex(prv.index);
+        }
+      }
     }
     setPhase('idle');
     nePlayCountRef.current = 0;
@@ -381,7 +432,7 @@ export default function ListeningScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
         <Text style={styles.metaText}>
-          {themeName} · {levelName} · 例題 <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
+          <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · 例題 <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
         </Text>
       </View>
 
