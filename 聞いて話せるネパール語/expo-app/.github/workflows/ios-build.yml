@@ -1,6 +1,7 @@
 name: Build iOS and Android
 
 on:
+  # 手動トリガー（プラットフォーム選択可能）
   workflow_dispatch:
     inputs:
       submit:
@@ -20,6 +21,23 @@ on:
           - 'both'
           - 'ios'
           - 'android'
+  # main に push されると自動ビルド（アプリの実体に関わるパスのみ）
+  # コミットメッセージに [skip ci] を含めるとスキップ可能
+  push:
+    branches:
+      - main
+    paths:
+      - 'App.tsx'
+      - 'index.ts'
+      - 'app.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
+      - 'src/**'
+      - 'assets/**'
+      - 'data/**'
+      - 'scripts/**'
+      - '.github/workflows/**'
 
 jobs:
   # ─────────────────────────────────────────────────────────────────────────
