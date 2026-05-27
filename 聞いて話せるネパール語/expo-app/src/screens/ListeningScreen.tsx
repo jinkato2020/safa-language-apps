@@ -104,36 +104,8 @@ function findNextGrammar(themeId: number, index: number, loop: boolean) {
   return { themeId, index, ended: true };
 }
 
-// 前へ: 同レベル内で前 → 前テーマの最後 → 前レベルの最後テーマ
-function findPrevConversation(themeId: number, levelId: number, index: number) {
-  if (index > 0) return { themeId, levelId, index: index - 1, ended: false };
-  for (let t = themeId - 1; t >= 1; t--) {
-    if (isCombinationFree('listening', t, levelId)) {
-      const exs = getExamples(t, levelId);
-      if (exs.length > 0) return { themeId: t, levelId, index: exs.length - 1, ended: false };
-    }
-  }
-  if (levelId > 1) {
-    for (let t = THEMES.length; t >= 1; t--) {
-      if (isCombinationFree('listening', t, levelId - 1)) {
-        const exs = getExamples(t, levelId - 1);
-        if (exs.length > 0) return { themeId: t, levelId: levelId - 1, index: exs.length - 1, ended: false };
-      }
-    }
-  }
-  return { themeId, levelId, index, ended: true };
-}
-
-function findPrevGrammar(themeId: number, index: number) {
-  if (index > 0) return { themeId, index: index - 1, ended: false };
-  for (let t = themeId - 1; t >= 1; t--) {
-    if (isGrammarThemeFree(t)) {
-      const exs = getGrammarExamples(t);
-      if (exs.length > 0) return { themeId: t, index: exs.length - 1, ended: false };
-    }
-  }
-  return { themeId, index, ended: true };
-}
+// 注: 聞き流しモードの ◀ は「現在の例題を頭から再生」に変更したため、
+// findPrev 関数は削除されました（go(-1) は themeId/index を変更しません）。
 
 export default function ListeningScreen() {
   const route = useRoute<R>();
@@ -372,8 +344,23 @@ export default function ListeningScreen() {
       setPlaying(false);
       playingRef.current = false;
     } else {
-      // 再開: phase が idle なら useEffect が初回再生、それ以外なら途中から続行
+      // 再開
       if (phase !== 'idle') {
+        // 音声が終端にある = JA-NE 間や NE-次例題 間のギャップで一時停止していた
+        // この場合 player.play() は何も起こらないので、handleAudioFinished を再呼び出しして
+        // 次フェーズのタイマーを再スケジュールする必要がある
+        const dur = player.duration;
+        const cur = player.currentTime;
+        const isAtEnd = dur > 0 && cur >= dur - 0.1;
+        if (isAtEnd) {
+          // ギャップ中の一時停止からの復帰
+          playingRef.current = true;          // ガード解除のため先に更新
+          setPlaying(true);
+          finishHandledRef.current = false;   // 再ハンドリングを許可
+          handleFinishRef.current();          // 次フェーズの設定を再実行
+          return;
+        }
+        // 通常の途中停止からの再開: 同じソースを途中から
         try { player.play(); } catch {}
       }
       setPlaying(true);
@@ -385,6 +372,7 @@ export default function ListeningScreen() {
     try { player.pause(); } catch {}
     if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
     if (delta > 0) {
+      // ▶: 次の例題へ
       if (isGrammarSrc) {
         const nxt = findNextGrammar(themeId, index, listenLoop);
         if (!nxt.ended) {
@@ -399,26 +387,17 @@ export default function ListeningScreen() {
           setIndex(nxt.index);
         }
       }
-    } else {
-      // 前へ: テーマを跨いで遡る
-      if (isGrammarSrc) {
-        const prv = findPrevGrammar(themeId, index);
-        if (!prv.ended) {
-          setThemeId(prv.themeId);
-          setIndex(prv.index);
-        }
-      } else {
-        const prv = findPrevConversation(themeId, levelId, index);
-        if (!prv.ended) {
-          setThemeId(prv.themeId);
-          setLevelId(prv.levelId);
-          setIndex(prv.index);
-        }
-      }
     }
+    // ◀ (delta < 0): 現在の例題を頭から再生（前例題には戻らない）
+    // → themeId/levelId/index は変更せず、setPhase('idle') で先頭から再生
     setPhase('idle');
     nePlayCountRef.current = 0;
     finishHandledRef.current = false;
+    // 一時停止中だった場合は再生を再開
+    if (!playing) {
+      setPlaying(true);
+      playingRef.current = true;
+    }
   };
 
   const cycleSpeed = () => {
