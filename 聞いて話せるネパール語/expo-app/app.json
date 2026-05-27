@@ -2,7 +2,7 @@
   "expo": {
     "name": "聞いて話せるネパール語",
     "slug": "LearningNepali",
-    "version": "1.5.17",
+    "version": "1.5.18",
     "runtimeVersion": {
       "policy": "appVersion"
     },
