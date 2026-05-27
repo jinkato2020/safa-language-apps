@@ -383,11 +383,31 @@ export default function ListeningScreen() {
   handleFinishRef.current = handleAudioFinished;
 
   // ── 検出方法1: useAudioPlayerStatus 経由（React 状態更新） ──
+  // フォアグラウンド時の主経路。React の render サイクルで動作。
   useEffect(() => {
     if (!status.didJustFinish) return;
     handleFinishRef.current();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status.didJustFinish]);
+
+  // ── 検出方法2: ネイティブイベント直接購読（バックグラウンド対応） ──
+  // React の render サイクルが停止していてもネイティブイベントが直接配送される。
+  // Android で画面オフ時の例題遷移を確実にするため必須。
+  // 重複呼び出しは finishHandledRef のガードで吸収される。
+  useEffect(() => {
+    const sub = (player as any).addListener?.(
+      'playbackStatusUpdate',
+      (s: any) => {
+        if (s?.didJustFinish) {
+          handleFinishRef.current();
+        }
+      }
+    );
+    return () => {
+      try { sub?.remove?.(); } catch {}
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [player]);
 
   // ── 再生速度を player にリアルタイム反映 ──
   // 設定変更時に即座に現在再生中の音声に速度を反映
