@@ -265,6 +265,41 @@ export default function ListeningScreen() {
   };
   advanceRef.current = advance;
 
+  // ── Android バックグラウンド再生: AudioControlsService を起動 ──
+  // expo-audio は player.setActiveForLockScreen(true, metadata) を呼ぶことで
+  // Android の AudioControlsService（フォアグラウンドサービス）を起動し、
+  // ロックスクリーン/通知バーにメディアコントロールを表示する。
+  // これにより画面オフ後も Android が音声プロセスを生かし続ける。
+  // setAudioModeAsync({ shouldPlayInBackground: true }) だけでは不十分。
+  useEffect(() => {
+    try {
+      (player as any).setActiveForLockScreen?.(true, {
+        title: `例題 ${index + 1} / ${examples.length}`,
+        artist: `${themeName} · ${levelName}`,
+        albumTitle: '聞いて話せるネパール語',
+      });
+    } catch {}
+    return () => {
+      try {
+        (player as any).setActiveForLockScreen?.(false);
+      } catch {}
+    };
+    // mount/unmount 時のみ実行
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [player]);
+
+  // ── メタデータ更新: 例題変更時にロックスクリーン情報を更新 ──
+  useEffect(() => {
+    try {
+      (player as any).updateLockScreenMetadata?.({
+        title: `例題 ${index + 1} / ${examples.length}`,
+        artist: `${themeName} · ${levelName}`,
+        albumTitle: '聞いて話せるネパール語',
+      });
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [themeId, levelId, index, examples.length, themeName, levelName]);
+
   // ── advance 後の自動継続: phase='idle' で playing=true なら新しい first を再生 ──
   useEffect(() => {
     if (!started || !playing || !ex) return;
