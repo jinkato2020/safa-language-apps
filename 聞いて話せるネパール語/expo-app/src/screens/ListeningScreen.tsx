@@ -104,8 +104,45 @@ function findNextGrammar(themeId: number, index: number, loop: boolean) {
   return { themeId, index, ended: true };
 }
 
-// 注: 聞き流しモードの ◀ は「現在の例題を頭から再生」に変更したため、
-// findPrev 関数は削除されました（go(-1) は themeId/index を変更しません）。
+// ◀ ダブルタップで前の例題に戻るための findPrev 関数群
+function findPrevConversation(themeId: number, levelId: number, index: number) {
+  // 同じ theme/level 内で前 index
+  if (index - 1 >= 0) {
+    return { themeId, levelId, index: index - 1 };
+  }
+  // 前の theme（同じ level）の最後の例題
+  for (let t = themeId - 1; t >= 1; t--) {
+    if (isCombinationFree('listening', t, levelId)) {
+      const exs = getExamples(t, levelId);
+      if (exs.length > 0) return { themeId: t, levelId, index: exs.length - 1 };
+    }
+  }
+  // 前の level の最後の theme の最後の例題
+  for (let l = levelId - 1; l >= 1; l--) {
+    for (let t = THEMES.length; t >= 1; t--) {
+      if (isCombinationFree('listening', t, l)) {
+        const exs = getExamples(t, l);
+        if (exs.length > 0) return { themeId: t, levelId: l, index: exs.length - 1 };
+      }
+    }
+  }
+  return null;
+}
+
+function findPrevGrammar(themeId: number, index: number) {
+  if (index - 1 >= 0) return { themeId, index: index - 1 };
+  for (let t = themeId - 1; t >= 1; t--) {
+    if (isGrammarThemeFree(t)) {
+      const exs = getGrammarExamples(t);
+      if (exs.length > 0) return { themeId: t, index: exs.length - 1 };
+    }
+  }
+  return null;
+}
+
+// ◀ ダブルタップ検出のための時間ウィンドウ（ms）
+// この時間内に2回押されたら「素早く2回」とみなす
+const BACK_DOUBLE_TAP_MS = 1200;
 
 export default function ListeningScreen() {
   const route = useRoute<R>();
@@ -171,6 +208,7 @@ export default function ListeningScreen() {
   const lastPlayStartRef = useRef(0);
 
   // 単一プレイヤー: 指定ソースをロード（必要なら）→ 先頭から再生
+  // 再生速度は毎回明示的に設定（replace() で reset される可能性に対応）
   const playSrc = (src: number) => {
     try {
       if (loadedSrcRef.current !== src) {
@@ -178,6 +216,13 @@ export default function ListeningScreen() {
         loadedSrcRef.current = src;
       }
       player.seekTo(0);
+      // 再生速度を適用（プロパティとメソッドの両方を試す）
+      try {
+        (player as any).playbackRate = listenSpeedRef.current;
+      } catch {}
+      try {
+        (player as any).setPlaybackRate?.(listenSpeedRef.current);
+      } catch {}
       player.play();
       lastPlayStartRef.current = Date.now();
     } catch {}
@@ -309,6 +354,18 @@ export default function ListeningScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status.didJustFinish]);
 
+  // ── 再生速度を player にリアルタイム反映 ──
+  // 設定変更時に即座に現在再生中の音声に速度を反映
+  useEffect(() => {
+    try {
+      (player as any).playbackRate = listenSpeed;
+    } catch {}
+    try {
+      (player as any).setPlaybackRate?.(listenSpeed);
+    } catch {}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listenSpeed]);
+
   // ── 再生開始の検証＆リトライ ──
   // 稀に player.play() を呼んでも実際には再生が始まらないケースがある（iOS の一時的問題）
   // 500ms 後に player.playing をチェックし、開始していなければ1度だけリトライ
@@ -368,11 +425,15 @@ export default function ListeningScreen() {
     }
   };
 
+  // ◀ ダブルタップ検出用: 最後に ◀ を押した時刻
+  const lastBackTapRef = useRef(0);
+
   const go = (delta: number) => {
     try { player.pause(); } catch {}
     if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
     if (delta > 0) {
       // ▶: 次の例題へ
+      lastBackTapRef.current = 0; // ▶ を押したら ◀ ダブルタップ状態をリセット
       if (isGrammarSrc) {
         const nxt = findNextGrammar(themeId, index, listenLoop);
         if (!nxt.ended) {
@@ -387,9 +448,31 @@ export default function ListeningScreen() {
           setIndex(nxt.index);
         }
       }
+    } else {
+      // ◀: 1回目 → 現在の例題を頭から再生 / 2回目（素早く） → 前の例題へ
+      const now = Date.now();
+      const isQuickSecondTap = now - lastBackTapRef.current < BACK_DOUBLE_TAP_MS;
+      lastBackTapRef.current = now;
+
+      if (isQuickSecondTap) {
+        // ダブルタップ: 前の例題へ
+        if (isGrammarSrc) {
+          const prv = findPrevGrammar(themeId, index);
+          if (prv) {
+            setThemeId(prv.themeId);
+            setIndex(prv.index);
+          }
+        } else {
+          const prv = findPrevConversation(themeId, levelId, index);
+          if (prv) {
+            setThemeId(prv.themeId);
+            setLevelId(prv.levelId);
+            setIndex(prv.index);
+          }
+        }
+      }
+      // 1回目 or 2回目どちらも: setPhase('idle') で頭から再生
     }
-    // ◀ (delta < 0): 現在の例題を頭から再生（前例題には戻らない）
-    // → themeId/levelId/index は変更せず、setPhase('idle') で先頭から再生
     setPhase('idle');
     nePlayCountRef.current = 0;
     finishHandledRef.current = false;
