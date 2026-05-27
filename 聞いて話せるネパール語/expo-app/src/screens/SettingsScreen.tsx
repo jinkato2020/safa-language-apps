@@ -7,7 +7,8 @@ import {
   type GapMode, type ThemeMode, type FontMode,
 } from '../SettingsContext';
 
-const APP_VERSION = '1.3.0';
+// app.json から動的に取得（ハードコードしないことでバージョン bump 時の修正漏れ防止）
+const APP_VERSION: string = (require('../../app.json') as { expo: { version: string } }).expo.version;
 
 function Icon({ children, size = 16 }: { children: React.ReactNode; size?: number }) {
   return (
