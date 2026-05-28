@@ -78,6 +78,16 @@ export default function SettingsScreen() {
   const s = useSettings();
   const { t, lang, setLang } = useI18n();
   const ss = useScaleStyle();
+  const isJaUI = lang === 'ja';
+
+  // UI 言語に応じたピル順序: ネパール語 UI の時はネパール語側を先頭に
+  const langItems: { value: Lang; label: string }[] = isJaUI
+    ? [{ value: 'ja', label: '日本語' }, { value: 'ne', label: 'नेपाली' }]
+    : [{ value: 'ne', label: 'नेपाली' }, { value: 'ja', label: '日本語' }];
+
+  const directionItems: { value: Direction; label: string }[] = isJaUI
+    ? [{ value: 'ja2ne', label: t('directions.ja2ne') }, { value: 'ne2ja', label: t('directions.ne2ja') }]
+    : [{ value: 'ne2ja', label: t('directions.ne2ja') }, { value: 'ja2ne', label: t('directions.ja2ne') }];
 
   const onShare = async () => {
     try {
@@ -116,7 +126,7 @@ export default function SettingsScreen() {
       <Section title={t('settings.sectionLang')} icon={<LangIcon />} ss={ss}>
         <Row label={t('settings.language')} desc={t('settings.languageDesc')} ss={ss}>
           <PillGroup<Lang>
-            items={[{ value: 'ja', label: '日本語' }, { value: 'ne', label: 'नेपाली' }]}
+            items={langItems}
             value={lang}
             onChange={setLang}
             ss={ss}
@@ -147,7 +157,7 @@ export default function SettingsScreen() {
         </Row>
         <Row label={t('settings.convDirection')} desc={t('settings.convDirectionDesc')} ss={ss}>
           <PillGroup<Direction>
-            items={[{ value: 'ja2ne', label: t('directions.ja2ne') }, { value: 'ne2ja', label: t('directions.ne2ja') }]}
+            items={directionItems}
             value={s.practiceDirection}
             onChange={s.setPracticeDirection}
             ss={ss}
@@ -155,7 +165,7 @@ export default function SettingsScreen() {
         </Row>
         <Row label={t('settings.listenOrder')} desc={t('settings.listenOrderDesc')} ss={ss}>
           <PillGroup<Direction>
-            items={[{ value: 'ja2ne', label: t('directions.ja2ne') }, { value: 'ne2ja', label: t('directions.ne2ja') }]}
+            items={directionItems}
             value={s.listenDirection}
             onChange={s.setListenDirection}
             ss={ss}

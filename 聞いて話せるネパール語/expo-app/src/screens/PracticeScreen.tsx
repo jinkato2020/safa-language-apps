@@ -318,10 +318,11 @@ export default function PracticeScreen() {
                 <View key={i} style={[styles.wordRow, unknown && styles.wordRowUnknown]}>
                   <Text style={styles.wordNum}>{String(i + 1).padStart(2, '0')}</Text>
                   <View style={styles.wordContent}>
-                    <Text style={[isJaUI ? styles.wordDeva : styles.wordJa, ss(20)]}>{primary}</Text>
+                    {/* 単語と意味のフォントサイズを統一 (16px) */}
+                    <Text style={[isJaUI ? styles.wordDeva : styles.wordJa, ss(16)]}>{primary}</Text>
                     {romaji && primaryRom ? <Text style={[styles.wordRom, ss(11)]}>{primaryRom}</Text> : null}
                   </View>
-                  <Text style={[styles.wordMeaning, unknown && styles.wordMeaningDim, ss(13)]}>
+                  <Text style={[styles.wordMeaning, unknown && styles.wordMeaningDim, ss(16)]}>
                     {meaning || t('practice.noDictionary')}
                   </Text>
                 </View>

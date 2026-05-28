@@ -145,7 +145,8 @@ const BACK_DOUBLE_TAP_MS = 1200;
 
 export default function ListeningScreen() {
   const route = useRoute<R>();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
+  const isJaUI = lang === 'ja';
   const initial = route.params;
   const isGrammarSrc = initial.source === 'grammar';
   const {
@@ -156,6 +157,13 @@ export default function ListeningScreen() {
     romaji,
   } = useSettings();
   const isJa2Ne = listenDirection === 'ja2ne';
+  // 繰り返し対象 = UI 言語の反対側 (ja UI → ne を繰り返し、ne UI → ja を繰り返し)
+  const repeatLang: 'ja' | 'ne' = isJaUI ? 'ne' : 'ja';
+  // 各フェーズの言語
+  const firstLang: 'ja' | 'ne' = isJa2Ne ? 'ja' : 'ne';
+  const secondLang: 'ja' | 'ne' = isJa2Ne ? 'ne' : 'ja';
+  const firstRepeats = firstLang === repeatLang;
+  const secondRepeats = secondLang === repeatLang;
   const ss = useScaleStyle();
 
   const [themeId, setThemeId] = useState(initial.themeId);
@@ -197,6 +205,8 @@ export default function ListeningScreen() {
   const gapRef = useRef(gap);
   const jaSrcRef = useRef(jaSrc);
   const neSrcRef = useRef(neSrc);
+  const firstRepeatsRef = useRef(firstRepeats);
+  const secondRepeatsRef = useRef(secondRepeats);
   phaseRef.current = phase;
   playingRef.current = playing;
   isJa2NeRef.current = isJa2Ne;
@@ -205,6 +215,8 @@ export default function ListeningScreen() {
   gapRef.current = gap;
   jaSrcRef.current = jaSrc;
   neSrcRef.current = neSrc;
+  firstRepeatsRef.current = firstRepeats;
+  secondRepeatsRef.current = secondRepeats;
 
   // didJustFinish の二重処理を防ぐフラグ
   const finishHandledRef = useRef(false);
@@ -335,56 +347,64 @@ export default function ListeningScreen() {
     const ja2ne = isJa2NeRef.current;
     const rep = nepaliRepeatRef.current;
     const gaps = GAP_TABLE[gapRef.current];
+    const firstRep = firstRepeatsRef.current;
+    const secondRep = secondRepeatsRef.current;
+    // 現在のフェーズに対応するソース
+    const firstSrc = ja2ne ? jaSrcRef.current : neSrcRef.current;
+    const secondSrc = ja2ne ? neSrcRef.current : jaSrcRef.current;
 
     // パターン: 順序が重要
     // 1) phaseRef を新フェーズに先に更新 → 遅延イベントが旧フェーズで誤動作しない
     // 2) playSrc() → lastPlayStartRef が今に更新
     // 3) finishHandledRef = false → 200ms ガードが効くので安全に再開可能
     if (p === 'first') {
-      if (ja2ne) {
+      if (firstRep) {
+        // 第1言語が繰り返し対象 (UI言語の反対側)
+        nePlayCountRef.current++;
+        if (nePlayCountRef.current < rep) {
+          playSrc(firstSrc);
+          finishHandledRef.current = false;
+        } else {
+          // 繰り返し終了 → 言語間ギャップで第2言語へ
+          gapTimerRef.current = setTimeout(() => {
+            phaseRef.current = 'second';
+            setPhase('second');
+            playSrc(secondSrc);
+            finishHandledRef.current = false;
+          }, gaps.first);
+        }
+      } else {
+        // 第1言語は繰り返しなし → ギャップ後に第2言語へ
         gapTimerRef.current = setTimeout(() => {
           phaseRef.current = 'second';
           setPhase('second');
           nePlayCountRef.current = 0;
-          playSrc(neSrcRef.current);
+          playSrc(secondSrc);
           finishHandledRef.current = false;
         }, gaps.first);
-      } else {
-        nePlayCountRef.current++;
-        if (nePlayCountRef.current < rep) {
-          playSrc(neSrcRef.current);
-          finishHandledRef.current = false;
-        } else {
-          // ne2ja モードで ne→ja の言語間ギャップ:
-          // ja2ne モードの ja→ne で gaps.first を使うのと対称になるよう、
-          // ここも gaps.first (短い言語間ポーズ) を使う。
-          gapTimerRef.current = setTimeout(() => {
-            phaseRef.current = 'second';
-            setPhase('second');
-            playSrc(jaSrcRef.current);
-            finishHandledRef.current = false;
-          }, gaps.first);
-        }
       }
     } else if (p === 'second') {
-      if (!ja2ne) {
-        gapTimerRef.current = setTimeout(() => {
-          phaseRef.current = 'idle';
-          finishHandledRef.current = false;
-          advanceRef.current();
-        }, gaps.second);
-      } else {
+      if (secondRep) {
+        // 第2言語が繰り返し対象
         nePlayCountRef.current++;
         if (nePlayCountRef.current < rep) {
-          playSrc(neSrcRef.current);
+          playSrc(secondSrc);
           finishHandledRef.current = false;
         } else {
+          // 繰り返し終了 → 例題間ギャップで次の例題へ
           gapTimerRef.current = setTimeout(() => {
             phaseRef.current = 'idle';
             finishHandledRef.current = false;
             advanceRef.current();
           }, gaps.second);
         }
+      } else {
+        // 第2言語は繰り返しなし → 例題間ギャップで次の例題へ
+        gapTimerRef.current = setTimeout(() => {
+          phaseRef.current = 'idle';
+          finishHandledRef.current = false;
+          advanceRef.current();
+        }, gaps.second);
       }
     }
   };
@@ -563,15 +583,32 @@ export default function ListeningScreen() {
         </Text>
       </View>
 
-      <View style={[styles.card, activeLang === 'ja' && styles.cardJaActive]}>
-        <Text style={[styles.tag, activeLang === 'ja' && styles.tagJaActive, ss(11)]}>{t('listening.tagJa')}</Text>
-        <Text style={[styles.textJa, ss(20, 30)]}>{ex.jp}</Text>
-      </View>
-      <View style={[styles.card, activeLang === 'ne' && styles.cardNeActive]}>
-        <Text style={[styles.tag, activeLang === 'ne' && styles.tagNeActive, ss(11)]}>{t('listening.tagNe')}</Text>
-        <Text style={[styles.textNe, ss(26, 38)]}>{ex.ne}</Text>
-        {romaji && <Text style={[styles.romaji, ss(14, 22)]}>{sentenceToRomaji(ex.ne)}</Text>}
-      </View>
+      {/* UI 言語に応じて表示順を切り替え: ja UI は ja 上、ne UI は ne 上 */}
+      {isJaUI ? (
+        <>
+          <View style={[styles.card, activeLang === 'ja' && styles.cardJaActive]}>
+            <Text style={[styles.tag, activeLang === 'ja' && styles.tagJaActive, ss(11)]}>{t('listening.tagJa')}</Text>
+            <Text style={[styles.textJa, ss(20, 30)]}>{ex.jp}</Text>
+          </View>
+          <View style={[styles.card, activeLang === 'ne' && styles.cardNeActive]}>
+            <Text style={[styles.tag, activeLang === 'ne' && styles.tagNeActive, ss(11)]}>{t('listening.tagNe')}</Text>
+            <Text style={[styles.textNe, ss(26, 38)]}>{ex.ne}</Text>
+            {romaji && <Text style={[styles.romaji, ss(14, 22)]}>{sentenceToRomaji(ex.ne)}</Text>}
+          </View>
+        </>
+      ) : (
+        <>
+          <View style={[styles.card, activeLang === 'ne' && styles.cardNeActive]}>
+            <Text style={[styles.tag, activeLang === 'ne' && styles.tagNeActive, ss(11)]}>{t('listening.tagNe')}</Text>
+            <Text style={[styles.textNe, ss(26, 38)]}>{ex.ne}</Text>
+            {romaji && <Text style={[styles.romaji, ss(14, 22)]}>{sentenceToRomaji(ex.ne)}</Text>}
+          </View>
+          <View style={[styles.card, activeLang === 'ja' && styles.cardJaActive]}>
+            <Text style={[styles.tag, activeLang === 'ja' && styles.tagJaActive, ss(11)]}>{t('listening.tagJa')}</Text>
+            <Text style={[styles.textJa, ss(20, 30)]}>{ex.jp}</Text>
+          </View>
+        </>
+      )}
 
       <View style={styles.controls}>
         <Pressable style={({ pressed }) => [styles.ctrlBtn, pressed && styles.ctrlPressed]} onPress={() => go(-1)} hitSlop={8}>
