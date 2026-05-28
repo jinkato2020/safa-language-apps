@@ -3,42 +3,42 @@ import { useNavigation, useRoute, type RouteProp } from '@react-navigation/nativ
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
+import { useI18n } from '../i18n';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Paywall'>;
 type R = RouteProp<RootStackParamList, 'Paywall'>;
 
 export default function PaywallScreen() {
   const navigation = useNavigation<Nav>();
+  const { t } = useI18n();
   const { feature } = useRoute<R>().params;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.head}>
         <Text style={styles.icon}>🔒</Text>
-        <Text style={styles.title}>プレミアム機能</Text>
-        <Text style={styles.desc}>
-          「{feature}」を含む全コンテンツはプレミアム版で開放されます。
-        </Text>
+        <Text style={styles.title}>{t('paywall.title')}</Text>
+        <Text style={styles.desc}>{t('paywall.desc', { feature })}</Text>
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>プレミアムで使えるもの</Text>
-        <Text style={styles.feature}>✓ 全30テーマ × 3レベル = 1,800例題</Text>
-        <Text style={styles.feature}>✓ 文法 全30分野 × 20例題 = 600例題</Text>
-        <Text style={styles.feature}>✓ 全例題の日本語・ネパール語音声</Text>
-        <Text style={styles.feature}>✓ 全30分野 × 1,000単語のフラッシュカード</Text>
-        <Text style={styles.feature}>✓ 聞き流しモード：全テーマ横断ノンストップ再生</Text>
-        <Text style={styles.feature}>✓ 広告なし</Text>
+        <Text style={styles.cardTitle}>{t('paywall.cardTitle')}</Text>
+        <Text style={styles.feature}>{t('paywall.feature1')}</Text>
+        <Text style={styles.feature}>{t('paywall.feature2')}</Text>
+        <Text style={styles.feature}>{t('paywall.feature3')}</Text>
+        <Text style={styles.feature}>{t('paywall.feature4')}</Text>
+        <Text style={styles.feature}>{t('paywall.feature5')}</Text>
+        <Text style={styles.feature}>{t('paywall.feature6')}</Text>
       </View>
 
       <View style={styles.priceCard}>
-        <Text style={styles.priceLabel}>月額プレミアム（予定）</Text>
+        <Text style={styles.priceLabel}>{t('paywall.priceLabel')}</Text>
         <Text style={styles.price}>¥500/月</Text>
-        <Text style={styles.priceNote}>正式リリース後にApp内課金で提供予定</Text>
+        <Text style={styles.priceNote}>{t('paywall.priceNote')}</Text>
       </View>
 
       <Pressable style={({ pressed }) => [styles.closeBtn, pressed && styles.closeBtnPressed]} onPress={() => navigation.goBack()}>
-        <Text style={styles.closeText}>戻る</Text>
+        <Text style={styles.closeText}>{t('common.back')}</Text>
       </Pressable>
     </ScrollView>
   );

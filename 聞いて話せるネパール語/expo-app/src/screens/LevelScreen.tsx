@@ -5,29 +5,33 @@ import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { LEVELS, THEMES, getExamples, isCombinationFree } from '../dataLoader';
 import { useSettings, type Direction, type NepaliRepeat } from '../SettingsContext';
+import { useI18n } from '../i18n';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Level'>;
 type R = RouteProp<RootStackParamList, 'Level'>;
 
 export default function LevelScreen() {
   const navigation = useNavigation<Nav>();
+  const { t } = useI18n();
   const { mode, themeId } = useRoute<R>().params;
-  const themeName = THEMES.find(t => t.id === themeId)?.name ?? '';
+  const themeName = t(`themes.${themeId}`);
   const isListening = mode === 'listening';
 
   const { listenDirection, setListenDirection, nepaliRepeat, setNepaliRepeat } = useSettings();
 
+  const levelDesc = (id: number): string => t(`levels.desc${id}`);
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.head}>
-        <Text style={styles.title}>レベルを選択</Text>
-        <Text style={styles.desc}>{themeName} のテーマで、難易度を選んでください。</Text>
+        <Text style={styles.title}>{t('levelScreen.title')}</Text>
+        <Text style={styles.desc}>{t('levelScreen.desc', { theme: themeName })}</Text>
       </View>
 
       {isListening && (
         <View style={styles.settings}>
           <View style={styles.settingRow}>
-            <Text style={styles.settingLabel}>🔊 再生の順序:</Text>
+            <Text style={styles.settingLabel}>{t('levelScreen.playOrder')}</Text>
             <View style={styles.pills}>
               {(['ja2ne', 'ne2ja'] as Direction[]).map(d => (
                 <Pressable
@@ -36,14 +40,14 @@ export default function LevelScreen() {
                   onPress={() => setListenDirection(d)}
                 >
                   <Text style={[styles.pillText, listenDirection === d && styles.pillTextOn]}>
-                    {d === 'ja2ne' ? '🇯🇵 → 🇳🇵' : '🇳🇵 → 🇯🇵'}
+                    {t(`directions.${d}`)}
                   </Text>
                 </Pressable>
               ))}
             </View>
           </View>
           <View style={styles.settingRow}>
-            <Text style={styles.settingLabel}>🔁 ネパール語の再生回数:</Text>
+            <Text style={styles.settingLabel}>{t('levelScreen.nepaliRepeat')}</Text>
             <View style={styles.pills}>
               {([1, 2, 3] as NepaliRepeat[]).map(n => (
                 <Pressable
@@ -52,7 +56,7 @@ export default function LevelScreen() {
                   onPress={() => setNepaliRepeat(n)}
                 >
                   <Text style={[styles.pillText, nepaliRepeat === n && styles.pillTextOn]}>
-                    {n}回
+                    {t('levelScreen.repeat', { n })}
                   </Text>
                 </Pressable>
               ))}
@@ -65,9 +69,10 @@ export default function LevelScreen() {
         {LEVELS.map(lv => {
           const free = isCombinationFree(mode, themeId, lv.id);
           const exs = getExamples(themeId, lv.id);
+          const lvName = t(`levels.${lv.id}`);
           const onPress = () => {
             if (!free) {
-              navigation.navigate('Paywall', { feature: `${themeName} ${lv.name}` });
+              navigation.navigate('Paywall', { feature: `${themeName} ${lvName}` });
               return;
             }
             navigation.navigate(mode === 'conversation' ? 'Practice' : 'Listening', {
@@ -84,11 +89,13 @@ export default function LevelScreen() {
             >
               <Text style={styles.levelKicker}>LEVEL {lv.id}</Text>
               <View style={styles.row}>
-                <Text style={[styles.name, !free && styles.nameLocked]}>{lv.name}</Text>
-                {!free && <Text style={styles.lock}>🔒</Text>}
+                <Text style={[styles.name, !free && styles.nameLocked]}>{lvName}</Text>
+                {!free && <Text style={styles.lock}>{t('common.lock')}</Text>}
               </View>
-              <Text style={styles.cardDesc}>{lv.desc}</Text>
-              <Text style={styles.meta}>{free ? `例題 ${exs.length} 問` : 'プレミアム'}</Text>
+              <Text style={styles.cardDesc}>{levelDesc(lv.id)}</Text>
+              <Text style={styles.meta}>
+                {free ? t('common.questionsCount', { count: exs.length }) : t('common.premium')}
+              </Text>
             </Pressable>
           );
         })}

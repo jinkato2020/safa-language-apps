@@ -9,6 +9,7 @@ import type { RootStackParamList } from '../types';
 import { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, isCombinationFree, isGrammarThemeFree } from '../dataLoader';
 import { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio } from '../../data/audioMap';
 import { useSettings, type Direction } from '../SettingsContext';
+import { useI18n } from '../i18n';
 import { sentenceToRomaji } from '../transliterate';
 import vocabData from '../../data/vocab.json';
 
@@ -50,6 +51,7 @@ function FlipIcon({ size = 18 }: { size?: number }) {
 
 export default function PracticeScreen() {
   const navigation = useNavigation<Nav>();
+  const { t } = useI18n();
   const { themeId: initialThemeId, levelId: initialLevelId, startIndex, mode } = useRoute<R>().params;
   const isGrammar = mode === 'grammar';
 
@@ -64,15 +66,15 @@ export default function PracticeScreen() {
     [isGrammar, themeId, levelId],
   );
   const themeName = isGrammar
-    ? GRAMMAR_THEMES.find(t => t.id === themeId)?.name ?? ''
-    : THEMES.find(t => t.id === themeId)?.name ?? '';
-  const levelName = isGrammar ? '文法' : LEVELS.find(l => l.id === levelId)?.name ?? '';
+    ? t(`grammarThemes.${themeId}`)
+    : t(`themes.${themeId}`);
+  const levelName = isGrammar ? t('practice.grammarLabel') : t(`levels.${levelId}`);
 
   const { practiceDirection, setPracticeDirection, romaji } = useSettings();
 
   useLayoutEffect(() => {
-    navigation.setOptions({ title: isGrammar ? '文法練習' : '会話練習' });
-  }, [navigation, isGrammar]);
+    navigation.setOptions({ title: isGrammar ? t('practice.titleGrammar') : t('practice.titleConv') });
+  }, [navigation, isGrammar, t]);
 
   const ex = examples[index];
   const isJa2Ne = practiceDirection === 'ja2ne';
@@ -216,7 +218,7 @@ export default function PracticeScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
         <Text style={styles.metaText}>
-          <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · 例題 <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
+          <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · {t('practice.exampleCounter')} <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
         </Text>
       </View>
 
@@ -225,7 +227,7 @@ export default function PracticeScreen() {
         style={({ pressed }) => [styles.sentenceCard, pressed && styles.sentenceCardPressed]}
         onPress={() => setRevealed(r => !r)}
       >
-        <Text style={styles.cardHint}>{revealed ? '答え' : '問題'} · タップで切り替え</Text>
+        <Text style={styles.cardHint}>{t('practice.cardHint', { state: revealed ? t('practice.answer') : t('practice.question') })}</Text>
         <Text style={displayIsNe ? styles.neText : styles.jaText}>{displayText}</Text>
         {displayIsNe && romaji && (
           <Text style={styles.romaji}>{sentenceToRomaji(ex.ne)}</Text>
@@ -239,14 +241,14 @@ export default function PracticeScreen() {
           onPress={() => playOnce(currentPlayer)}
         >
           <SpeakerIcon size={17} />
-          <Text style={styles.actionBtnText}>音声を再生</Text>
+          <Text style={styles.actionBtnText}>{t('practice.playAudio')}</Text>
         </Pressable>
         <Pressable
           style={({ pressed }) => [styles.actionBtn, pressed && styles.actionBtnPressed]}
           onPress={toggleDirection}
         >
           <FlipIcon size={17} />
-          <Text style={styles.actionBtnText}>言語反転</Text>
+          <Text style={styles.actionBtnText}>{t('practice.flipLang')}</Text>
         </Pressable>
       </View>
 
@@ -257,14 +259,14 @@ export default function PracticeScreen() {
           disabled={atFirst}
           onPress={() => go(-1)}
         >
-          <Text style={[styles.navText, atFirst && styles.navTextDisabled]}>← 前へ</Text>
+          <Text style={[styles.navText, atFirst && styles.navTextDisabled]}>{t('common.prev')}</Text>
         </Pressable>
         <Pressable
           style={({ pressed }) => [styles.navBtn, atLast && styles.navDisabled, pressed && styles.navPressed]}
           disabled={atLast}
           onPress={() => go(1)}
         >
-          <Text style={[styles.navText, atLast && styles.navTextDisabled]}>次へ →</Text>
+          <Text style={[styles.navText, atLast && styles.navTextDisabled]}>{t('common.next')}</Text>
         </Pressable>
       </View>
 
@@ -275,8 +277,8 @@ export default function PracticeScreen() {
           <View style={styles.wordsSection}>
             <View style={styles.wordHeader}>
               <Text style={styles.wordHeaderNum}>#</Text>
-              <Text style={styles.wordHeaderLabel}>単語</Text>
-              <Text style={styles.wordHeaderLabel}>意味</Text>
+              <Text style={styles.wordHeaderLabel}>{t('practice.wordsHeader')}</Text>
+              <Text style={styles.wordHeaderLabel}>{t('practice.meaningHeader')}</Text>
             </View>
             {tokens.map((word, i) => {
               const info = VOCAB[word] ?? {};
@@ -291,7 +293,7 @@ export default function PracticeScreen() {
                     {romaji && wordRom ? <Text style={styles.wordRom}>{wordRom}</Text> : null}
                   </View>
                   <Text style={[styles.wordMeaning, unknown && styles.wordMeaningDim]}>
-                    {meaning || '(辞書未登録)'}
+                    {meaning || t('practice.noDictionary')}
                   </Text>
                 </View>
               );

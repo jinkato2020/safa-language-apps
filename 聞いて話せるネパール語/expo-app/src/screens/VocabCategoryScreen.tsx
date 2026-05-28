@@ -4,42 +4,47 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { WORD_CATEGORIES } from '../dataLoader';
+import { useI18n } from '../i18n';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'VocabCategory'>;
 
 export default function VocabCategoryScreen() {
   const navigation = useNavigation<Nav>();
+  const { t } = useI18n();
 
   return (
     <FlatList
       contentContainerStyle={styles.container}
       ListHeaderComponent={
         <View style={styles.head}>
-          <Text style={styles.desc}>テーマを1つ選んで、ネパール語の語彙を増やしましょう。</Text>
+          <Text style={styles.desc}>{t('vocab.themeSelectDesc')}</Text>
         </View>
       }
       data={WORD_CATEGORIES}
       keyExtractor={(item) => String(item.id)}
-      renderItem={({ item }) => (
-        <Pressable
-          style={({ pressed }) => [styles.card, !item.free && styles.cardLocked, pressed && styles.cardPressed]}
-          onPress={() => {
-            if (!item.free) {
-              navigation.navigate('Paywall', { feature: item.name });
-              return;
-            }
-            navigation.navigate('Flashcard', { categoryId: item.id, direction: 'ne2ja' });
-          }}
-        >
-          <Text style={styles.num}>{String(item.id).padStart(2, '0')}</Text>
-          <Text style={[styles.name, !item.free && styles.nameLocked]}>{item.name}</Text>
-          {item.free ? (
-            <Text style={styles.count}>{item.wordCount}語</Text>
-          ) : (
-            <Text style={styles.lock}>🔒</Text>
-          )}
-        </Pressable>
-      )}
+      renderItem={({ item }) => {
+        const catName = t(`vocabCategories.${item.id}`);
+        return (
+          <Pressable
+            style={({ pressed }) => [styles.card, !item.free && styles.cardLocked, pressed && styles.cardPressed]}
+            onPress={() => {
+              if (!item.free) {
+                navigation.navigate('Paywall', { feature: catName });
+                return;
+              }
+              navigation.navigate('Flashcard', { categoryId: item.id, direction: 'ne2ja' });
+            }}
+          >
+            <Text style={styles.num}>{String(item.id).padStart(2, '0')}</Text>
+            <Text style={[styles.name, !item.free && styles.nameLocked]}>{catName}</Text>
+            {item.free ? (
+              <Text style={styles.count}>{t('common.wordsCount', { count: item.wordCount })}</Text>
+            ) : (
+              <Text style={styles.lock}>{t('common.lock')}</Text>
+            )}
+          </Pressable>
+        );
+      }}
     />
   );
 }

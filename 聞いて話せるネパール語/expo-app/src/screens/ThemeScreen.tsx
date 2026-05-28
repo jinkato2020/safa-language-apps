@@ -5,26 +5,26 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { THEMES, GRAMMAR_THEMES, LEVELS } from '../dataLoader';
+import { useI18n } from '../i18n';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Theme'>;
 type R = RouteProp<RootStackParamList, 'Theme'>;
 
 export default function ThemeScreen() {
   const navigation = useNavigation<Nav>();
+  const { t } = useI18n();
   const { mode, source } = useRoute<R>().params;
   const isGrammarMode = mode === 'grammar';
   const isGrammarListen = mode === 'listening' && source === 'grammar';
   const isConversationListen = mode === 'listening' && !isGrammarListen;
   const useGrammarThemes = isGrammarMode || isGrammarListen;
-  const modeLabel = mode === 'conversation' ? '会話' : mode === 'grammar' ? '文法'
-    : isGrammarListen ? '聞き流し / 文法' : '聞き流し / 会話';
   const items = useGrammarThemes ? GRAMMAR_THEMES : THEMES;
 
   // 会話モードおよび聞き流し×会話モードでレベルピルを表示
   const showLevelPills = mode === 'conversation' || isConversationListen;
   const [selectedLevel, setSelectedLevel] = useState(1);
 
-  const titleText = 'テーマを選択';
+  const titleText = t('themeScreen.title');
 
   useLayoutEffect(() => {
     navigation.setOptions({ title: titleText });
@@ -32,14 +32,16 @@ export default function ThemeScreen() {
 
   let headerText: string;
   if (isGrammarMode) {
-    headerText = 'テーマを1つ選んで、文法の構造を学びましょう。';
-  } else if (isGrammarListen) {
-    headerText = 'テーマを1つ選んで、聞き流しを始めましょう。';
-  } else if (mode === 'listening') {
-    headerText = 'テーマを1つ選んで、聞き流しを始めましょう。';
+    headerText = t('themeScreen.headerGrammar');
+  } else if (isGrammarListen || mode === 'listening') {
+    headerText = t('themeScreen.headerListen');
   } else {
-    headerText = 'テーマを1つ選んで、会話文を表現する練習を始めましょう。';
+    headerText = t('themeScreen.headerConv');
   }
+
+  const getThemeDisplayName = (id: number): string => {
+    return useGrammarThemes ? t(`grammarThemes.${id}`) : t(`themes.${id}`);
+  };
 
   const onPressItem = (id: number, free: boolean) => {
     if (!free) {
@@ -47,23 +49,17 @@ export default function ThemeScreen() {
       return;
     }
     if (mode === 'grammar') {
-      // 文法モード: レベル選択をスキップして Practice へ
       navigation.navigate('Practice', { themeId: id, mode: 'grammar' });
     } else if (mode === 'listening' && source === 'grammar') {
-      // 文法聞き流し: レベル選択をスキップして Listening へ
       navigation.navigate('Listening', { themeId: id, source: 'grammar' });
     } else if (mode === 'conversation') {
-      // 会話モード: レベルピルで選択したレベルで直接 Practice へ
       navigation.navigate('Practice', { themeId: id, levelId: selectedLevel });
     } else if (isConversationListen) {
-      // 聞き流し×会話: レベルピルで選択したレベルで直接 Listening へ
       navigation.navigate('Listening', { themeId: id, levelId: selectedLevel });
     } else {
       navigation.navigate('Level', { mode, themeId: id });
     }
   };
-
-  const levelLabels: Record<number, string> = { 1: '初級', 2: '中級', 3: '上級' };
 
   return (
     <FlatList
@@ -80,7 +76,7 @@ export default function ThemeScreen() {
                   onPress={() => setSelectedLevel(lv.id)}
                 >
                   <Text style={[styles.levelPillText, selectedLevel === lv.id && styles.levelPillTextOn]}>
-                    {levelLabels[lv.id] ?? lv.name}
+                    {t(`levels.${lv.id}`)}
                   </Text>
                 </Pressable>
               ))}
@@ -100,8 +96,8 @@ export default function ThemeScreen() {
           onPress={() => onPressItem(item.id, item.free)}
         >
           <Text style={styles.num}>{String(item.id).padStart(2, '0')}</Text>
-          <Text style={[styles.name, !item.free && styles.nameLocked]}>{item.name}</Text>
-          {!item.free && <Text style={styles.lock}>🔒</Text>}
+          <Text style={[styles.name, !item.free && styles.nameLocked]}>{getThemeDisplayName(item.id)}</Text>
+          {!item.free && <Text style={styles.lock}>{t('common.lock')}</Text>}
         </Pressable>
       )}
     />

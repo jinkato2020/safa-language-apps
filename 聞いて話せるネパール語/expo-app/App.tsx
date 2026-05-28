@@ -22,6 +22,7 @@ import PaywallScreen from './src/screens/PaywallScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import { colors } from './src/theme';
 import { SettingsProvider, useSettings } from './src/SettingsContext';
+import { I18nProvider, useI18n } from './src/i18n';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from './src/types';
 
@@ -115,7 +116,7 @@ function ConversationStackNav() {
       <ConvStack.Screen name="Theme" component={ThemeScreen} initialParams={{ mode: 'conversation' }} />
       <ConvStack.Screen name="Level" component={LevelScreen} initialParams={{ mode: 'conversation' }} />
       <ConvStack.Screen name="Practice" component={PracticeScreen} />
-      <ConvStack.Screen name="Paywall" component={PaywallScreen} options={{ title: 'プレミアム', presentation: 'modal' }} />
+      <ConvStack.Screen name="Paywall" component={PaywallScreen} options={{ title: '', presentation: 'modal' }} />
       <ConvStack.Screen name="SettingsMain" component={SettingsScreen} />
     </ConvStack.Navigator>
   );
@@ -126,7 +127,7 @@ function GrammarStackNav() {
     <GramStack.Navigator screenOptions={defaultStackOptions}>
       <GramStack.Screen name="Theme" component={ThemeScreen} initialParams={{ mode: 'grammar' }} />
       <GramStack.Screen name="Practice" component={PracticeScreen} initialParams={{ mode: 'grammar' }} />
-      <GramStack.Screen name="Paywall" component={PaywallScreen} options={{ title: 'プレミアム', presentation: 'modal' }} />
+      <GramStack.Screen name="Paywall" component={PaywallScreen} options={{ title: '', presentation: 'modal' }} />
       <GramStack.Screen name="SettingsMain" component={SettingsScreen} />
     </GramStack.Navigator>
   );
@@ -139,7 +140,7 @@ function ListeningStackNav() {
       <ListenStack.Screen name="Theme" component={ThemeScreen} initialParams={{ mode: 'listening' }} />
       <ListenStack.Screen name="Level" component={LevelScreen} initialParams={{ mode: 'listening' }} />
       <ListenStack.Screen name="Listening" component={ListeningScreen} />
-      <ListenStack.Screen name="Paywall" component={PaywallScreen} options={{ title: 'プレミアム', presentation: 'modal' }} />
+      <ListenStack.Screen name="Paywall" component={PaywallScreen} options={{ title: '', presentation: 'modal' }} />
       <ListenStack.Screen name="SettingsMain" component={SettingsScreen} />
     </ListenStack.Navigator>
   );
@@ -151,7 +152,7 @@ function VocabularyStackNav() {
       <VocabStack.Screen name="VocabCategory" component={VocabCategoryScreen} />
       <VocabStack.Screen name="VocabDirection" component={VocabDirectionScreen} />
       <VocabStack.Screen name="Flashcard" component={FlashcardScreen} />
-      <VocabStack.Screen name="Paywall" component={PaywallScreen} options={{ title: 'プレミアム', presentation: 'modal' }} />
+      <VocabStack.Screen name="Paywall" component={PaywallScreen} options={{ title: '', presentation: 'modal' }} />
       <VocabStack.Screen name="SettingsMain" component={SettingsScreen} />
     </VocabStack.Navigator>
   );
@@ -160,6 +161,7 @@ function VocabularyStackNav() {
 // ─── ボトムタブ ─────────────────────────────
 function MainTabs() {
   const { bottom } = useSafeAreaInsets();
+  const { t } = useI18n();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -173,22 +175,22 @@ function MainTabs() {
       <Tab.Screen
         name="ConversationTab"
         component={ConversationStackNav}
-        options={{ title: '会話', tabBarIcon: ChatIcon }}
+        options={{ title: t('nav.conversation'), tabBarIcon: ChatIcon }}
       />
       <Tab.Screen
         name="GrammarTab"
         component={GrammarStackNav}
-        options={{ title: '文法', tabBarIcon: GrammarIcon }}
+        options={{ title: t('nav.grammar'), tabBarIcon: GrammarIcon }}
       />
       <Tab.Screen
         name="ListeningTab"
         component={ListeningStackNav}
-        options={{ title: '聞き流し', tabBarIcon: HeadphonesIcon }}
+        options={{ title: t('nav.listening'), tabBarIcon: HeadphonesIcon }}
       />
       <Tab.Screen
         name="VocabularyTab"
         component={VocabularyStackNav}
-        options={{ title: '単語', tabBarIcon: CardsIcon }}
+        options={{ title: t('nav.vocabulary'), tabBarIcon: CardsIcon }}
       />
     </Tab.Navigator>
   );
@@ -266,13 +268,15 @@ export default function App() {
   }
 
   return (
-    <SettingsProvider>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <StatusBar style="dark" />
-          <MainTabs />
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </SettingsProvider>
+    <I18nProvider>
+      <SettingsProvider>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <StatusBar style="dark" />
+            <MainTabs />
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </SettingsProvider>
+    </I18nProvider>
   );
 }

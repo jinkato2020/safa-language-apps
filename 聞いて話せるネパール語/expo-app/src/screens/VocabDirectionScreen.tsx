@@ -3,21 +3,22 @@ import { useNavigation, useRoute, type RouteProp } from '@react-navigation/nativ
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
-import { WORD_CATEGORIES } from '../dataLoader';
+import { useI18n } from '../i18n';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'VocabDirection'>;
 type R = RouteProp<RootStackParamList, 'VocabDirection'>;
 
 export default function VocabDirectionScreen() {
   const navigation = useNavigation<Nav>();
+  const { t } = useI18n();
   const { categoryId } = useRoute<R>().params;
-  const cat = WORD_CATEGORIES.find(c => c.id === categoryId);
+  const catName = t(`vocabCategories.${categoryId}`);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.head}>
-        <Text style={styles.title}>出題方向を選択</Text>
-        <Text style={styles.desc}>{cat?.name} のカードをどちら向きで学習しますか？</Text>
+        <Text style={styles.title}>{t('vocab.directionTitle')}</Text>
+        <Text style={styles.desc}>{t('vocab.directionDesc', { category: catName })}</Text>
       </View>
       <View style={styles.grid}>
         <Pressable
@@ -25,22 +26,22 @@ export default function VocabDirectionScreen() {
           onPress={() => navigation.navigate('Flashcard', { categoryId, direction: 'ne2ja' })}
         >
           <View style={styles.row}>
-            <Text style={styles.lang}>🇳🇵 ネパール語</Text>
+            <Text style={styles.lang}>{t('vocab.neLang')}</Text>
             <Text style={styles.arrow}>→</Text>
-            <Text style={styles.lang}>🇯🇵 日本語</Text>
+            <Text style={styles.lang}>{t('vocab.jaLang')}</Text>
           </View>
-          <Text style={styles.cardDesc}>ネパール語が表示され、タップで日本語訳を確認。読解力を鍛えます。</Text>
+          <Text style={styles.cardDesc}>{t('vocab.neToJaDesc')}</Text>
         </Pressable>
         <Pressable
           style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
           onPress={() => navigation.navigate('Flashcard', { categoryId, direction: 'ja2ne' })}
         >
           <View style={styles.row}>
-            <Text style={styles.lang}>🇯🇵 日本語</Text>
+            <Text style={styles.lang}>{t('vocab.jaLang')}</Text>
             <Text style={styles.arrow}>→</Text>
-            <Text style={styles.lang}>🇳🇵 ネパール語</Text>
+            <Text style={styles.lang}>{t('vocab.neLang')}</Text>
           </View>
-          <Text style={styles.cardDesc}>日本語が表示され、タップでネパール語を確認。瞬発力を鍛えます。</Text>
+          <Text style={styles.cardDesc}>{t('vocab.jaToNeDesc')}</Text>
         </Pressable>
       </View>
     </ScrollView>

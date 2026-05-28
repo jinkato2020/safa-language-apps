@@ -5,6 +5,7 @@ import Svg, { Line, Path } from 'react-native-svg';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { THEMES, GRAMMAR_THEMES } from '../dataLoader';
+import { useI18n } from '../i18n';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'ListenSource'>;
 
@@ -29,9 +30,10 @@ function GrammarIcon() {
 
 export default function ListenSourceScreen() {
   const navigation = useNavigation<Nav>();
+  const { t } = useI18n();
 
   const totalConvEx = THEMES.length * 3 * 20; // 表示用の概数 (1800)
-  const totalGrammarEx = GRAMMAR_THEMES.reduce((s, t) => s + t.exampleCount, 0);
+  const totalGrammarEx = GRAMMAR_THEMES.reduce((s, th) => s + th.exampleCount, 0);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -42,11 +44,11 @@ export default function ListenSourceScreen() {
         >
           <ChatIcon />
           <View style={styles.cardBody}>
-            <Text style={styles.name}>会話</Text>
+            <Text style={styles.name}>{t('listenSource.convName')}</Text>
             <Text style={styles.cardDesc}>
-              {THEMES.length}テーマ × 3レベル = {totalConvEx}例題
+              {t('listenSource.convDesc', { themes: THEMES.length, total: totalConvEx })}
             </Text>
-            <Text style={styles.meta}>{totalConvEx}例題</Text>
+            <Text style={styles.meta}>{t('listenSource.convMeta', { total: totalConvEx })}</Text>
           </View>
         </Pressable>
 
@@ -56,11 +58,11 @@ export default function ListenSourceScreen() {
         >
           <GrammarIcon />
           <View style={styles.cardBody}>
-            <Text style={styles.name}>文法</Text>
+            <Text style={styles.name}>{t('listenSource.grammarName')}</Text>
             <Text style={styles.cardDesc}>
-              {GRAMMAR_THEMES.length}分野 × 20例題 = {totalGrammarEx}例題
+              {t('listenSource.grammarDesc', { themes: GRAMMAR_THEMES.length, total: totalGrammarEx })}
             </Text>
-            <Text style={styles.meta}>{totalGrammarEx}例題</Text>
+            <Text style={styles.meta}>{t('listenSource.grammarMeta', { total: totalGrammarEx })}</Text>
           </View>
         </Pressable>
       </View>

@@ -6,6 +6,7 @@ import {
   type Direction, type NepaliRepeat, type ListenSpeed,
   type GapMode, type ThemeMode, type FontMode,
 } from '../SettingsContext';
+import { useI18n, type Lang } from '../i18n';
 
 // app.json から動的に取得（ハードコードしないことでバージョン bump 時の修正漏れ防止）
 const APP_VERSION: string = (require('../../app.json') as { expo: { version: string } }).expo.version;
@@ -24,6 +25,7 @@ function EyeIcon() { return <Icon><Path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-
 function CapIcon() { return <Icon><Path d="M22 10 12 5 2 10l10 5 10-5z" /><Path d="M6 12v5c3 3 9 3 12 0v-5" /></Icon>; }
 function DataIcon() { return <Icon><Ellipse cx={12} cy={5} rx={9} ry={3} /><Path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" /><Path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /></Icon>; }
 function InfoIcon() { return <Icon><Circle cx={12} cy={12} r={10} /><Line x1={12} y1={16} x2={12} y2={12} /><Line x1={12} y1={8} x2={12.01} y2={8} /></Icon>; }
+function LangIcon() { return <Icon><Circle cx={12} cy={12} r={10} /><Line x1={2} y1={12} x2={22} y2={12} /><Path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></Icon>; }
 
 // Pill (ピル選択)
 function PillGroup<T extends string | number>({ items, value, onChange }: {
@@ -72,136 +74,162 @@ function Section({ title, icon, children }: { title: string; icon: React.ReactNo
 
 export default function SettingsScreen() {
   const s = useSettings();
+  const { t, lang, setLang } = useI18n();
 
   const onShare = async () => {
     try {
       await Share.share({
-        message: '聞いて話せるネパール語 — 日本語からネパール語の瞬間作文トレーニングアプリ',
+        message: t('app.shareMessage') || t('app.name'),
       });
     } catch {}
   };
 
   const onReset = () => {
-    Alert.alert('設定をリセット', '全ての設定を初期値に戻しますか？', [
-      { text: 'キャンセル', style: 'cancel' },
-      { text: 'リセット', style: 'destructive', onPress: () => s.resetSettings() },
+    Alert.alert(t('settings.resetConfirmTitle'), t('settings.resetConfirmDesc'), [
+      { text: t('common.cancel'), style: 'cancel' },
+      { text: t('common.reset'), style: 'destructive', onPress: () => s.resetSettings() },
     ]);
   };
 
   const onPrivacy = () => {
-    // プライバシーポリシーのURL (実際のURLに置き換える)
-    Linking.openURL('https://example.com/privacy-policy').catch(() => {
-      Alert.alert('エラー', 'プライバシーポリシーを開けませんでした。');
+    Linking.openURL('https://www.safa-lang.com/nepali/privacy/').catch(() => {
+      Alert.alert(t('common.error'), t('settings.privacyError'));
     });
   };
 
   const onContact = () => {
-    Linking.openURL('mailto:jw.psalms34.8@gmail.com?subject=聞いて話せるネパール語 お問い合わせ').catch(() => {
-      Alert.alert('エラー', 'メールアプリを開けませんでした。');
+    Linking.openURL(`mailto:contact@safa-lang.com?subject=${encodeURIComponent(t('settings.mailSubject'))}`).catch(() => {
+      Alert.alert(t('common.error'), t('settings.mailError'));
     });
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.head}>
-        <Text style={styles.title}>設定</Text>
-        <Text style={styles.desc}>学習体験をカスタマイズできます。設定は自動的に保存されます。</Text>
+        <Text style={styles.title}>{t('settings.title')}</Text>
+        <Text style={styles.desc}>{t('settings.desc')}</Text>
       </View>
 
-      <Section title="音声" icon={<SoundIcon />}>
-        <Row label="音声再生スピード" desc="全モード共通の再生速度">
+      <Section title={t('settings.sectionLang')} icon={<LangIcon />}>
+        <Row label={t('settings.language')} desc={t('settings.languageDesc')}>
+          <PillGroup<Lang>
+            items={[{ value: 'ja', label: '日本語' }, { value: 'ne', label: 'नेपाली' }]}
+            value={lang}
+            onChange={setLang}
+          />
+        </Row>
+      </Section>
+
+      <Section title={t('settings.sectionAudio')} icon={<SoundIcon />}>
+        <Row label={t('settings.playbackSpeed')} desc={t('settings.playbackSpeedDesc')}>
           <PillGroup<ListenSpeed>
             items={[{ value: 0.8, label: '×0.8' }, { value: 1.0, label: '×1.0' }, { value: 1.2, label: '×1.2' }, { value: 1.5, label: '×1.5' }]}
             value={s.listenSpeed}
             onChange={s.setListenSpeed}
           />
         </Row>
-        <Row label="ネパール語の繰り返し回数" desc="聞き流し時にネパール語を何回再生するか">
+        <Row label={t('settings.nepaliRepeat')} desc={t('settings.nepaliRepeatDesc')}>
           <PillGroup<NepaliRepeat>
-            items={[{ value: 1, label: '1回' }, { value: 2, label: '2回' }, { value: 3, label: '3回' }]}
+            items={[
+              { value: 1, label: t('levelScreen.repeat', { n: 1 }) },
+              { value: 2, label: t('levelScreen.repeat', { n: 2 }) },
+              { value: 3, label: t('levelScreen.repeat', { n: 3 }) },
+            ]}
             value={s.nepaliRepeat}
             onChange={s.setNepaliRepeat}
           />
         </Row>
-        <Row label="会話の出題方向" desc="会話モードのデフォルト翻訳方向">
+        <Row label={t('settings.convDirection')} desc={t('settings.convDirectionDesc')}>
           <PillGroup<Direction>
-            items={[{ value: 'ja2ne', label: '🇯🇵 → 🇳🇵' }, { value: 'ne2ja', label: '🇳🇵 → 🇯🇵' }]}
+            items={[{ value: 'ja2ne', label: t('directions.ja2ne') }, { value: 'ne2ja', label: t('directions.ne2ja') }]}
             value={s.practiceDirection}
             onChange={s.setPracticeDirection}
           />
         </Row>
-        <Row label="聞き流しの再生順序" desc="聞き流しモードでどちらを先に再生するか">
+        <Row label={t('settings.listenOrder')} desc={t('settings.listenOrderDesc')}>
           <PillGroup<Direction>
-            items={[{ value: 'ja2ne', label: '🇯🇵 → 🇳🇵' }, { value: 'ne2ja', label: '🇳🇵 → 🇯🇵' }]}
+            items={[{ value: 'ja2ne', label: t('directions.ja2ne') }, { value: 'ne2ja', label: t('directions.ne2ja') }]}
             value={s.listenDirection}
             onChange={s.setListenDirection}
           />
         </Row>
-        <Row label="聞き流しループ再生" desc="最後まで再生したら最初に戻る">
+        <Row label={t('settings.listenLoop')} desc={t('settings.listenLoopDesc')}>
           <Switch value={s.listenLoop} onValueChange={s.setListenLoop} trackColor={{ false: colors.line, true: colors.ink }} />
         </Row>
-        <Row label="音声間の間隔" desc="日本語と次の音声の間の待ち時間">
+        <Row label={t('settings.gap')} desc={t('settings.gapDesc')}>
           <PillGroup<GapMode>
-            items={[{ value: 'short', label: '短め' }, { value: 'normal', label: '標準' }, { value: 'long', label: '長め' }]}
+            items={[
+              { value: 'short', label: t('settings.gapShort') },
+              { value: 'normal', label: t('settings.gapNormal') },
+              { value: 'long', label: t('settings.gapLong') },
+            ]}
             value={s.gap}
             onChange={s.setGap}
           />
         </Row>
       </Section>
 
-      <Section title="表示" icon={<EyeIcon />}>
-        <Row label="ローマ字表記の表示" desc="ネパール語の発音をローマ字で表示">
+      <Section title={t('settings.sectionDisplay')} icon={<EyeIcon />}>
+        <Row label={t('settings.romaji')} desc={t('settings.romajiDesc')}>
           <Switch value={s.romaji} onValueChange={s.setRomaji} trackColor={{ false: colors.line, true: colors.ink }} />
         </Row>
-        <Row label="ダークモード" desc="画面の配色">
+        <Row label={t('settings.darkMode')} desc={t('settings.darkModeDesc')}>
           <PillGroup<ThemeMode>
-            items={[{ value: 'light', label: 'ライト' }, { value: 'dark', label: 'ダーク' }, { value: 'system', label: 'システム' }]}
+            items={[
+              { value: 'light', label: t('settings.themeLight') },
+              { value: 'dark', label: t('settings.themeDark') },
+              { value: 'system', label: t('settings.themeSystem') },
+            ]}
             value={s.themeMode}
             onChange={s.setThemeMode}
           />
         </Row>
-        <Row label="文字サイズ" desc="全体の文字の大きさ">
+        <Row label={t('settings.fontSize')} desc={t('settings.fontSizeDesc')}>
           <PillGroup<FontMode>
-            items={[{ value: 'small', label: '小' }, { value: 'medium', label: '中' }, { value: 'large', label: '大' }]}
+            items={[
+              { value: 'small', label: t('settings.fontSmall') },
+              { value: 'medium', label: t('settings.fontMedium') },
+              { value: 'large', label: t('settings.fontLarge') },
+            ]}
             value={s.fontMode}
             onChange={s.setFontMode}
           />
         </Row>
       </Section>
 
-      <Section title="学習" icon={<CapIcon />}>
-        <Row label="単語フラッシュカード自動反転" desc="フラッシュカードを自動で裏返す">
+      <Section title={t('settings.sectionLearn')} icon={<CapIcon />}>
+        <Row label={t('settings.autoFlip')} desc={t('settings.autoFlipDesc')}>
           <Switch value={s.autoFlip} onValueChange={s.setAutoFlip} trackColor={{ false: colors.line, true: colors.ink }} />
         </Row>
-        <Row label="単語シャッフル" desc="フラッシュカードを毎回シャッフル">
+        <Row label={t('settings.shuffle')} desc={t('settings.shuffleDesc')}>
           <Switch value={s.shuffle} onValueChange={s.setShuffle} trackColor={{ false: colors.line, true: colors.ink }} />
         </Row>
       </Section>
 
-      <Section title="データ管理" icon={<DataIcon />}>
-        <Row label="設定をリセット" desc="全設定を初期値に戻す">
+      <Section title={t('settings.sectionData')} icon={<DataIcon />}>
+        <Row label={t('settings.resetSettings')} desc={t('settings.resetSettingsDesc')}>
           <Pressable style={[styles.btn, styles.btnDanger]} onPress={onReset}>
-            <Text style={styles.btnTextDanger}>リセット</Text>
+            <Text style={styles.btnTextDanger}>{t('common.reset')}</Text>
           </Pressable>
         </Row>
       </Section>
 
-      <Section title="アプリについて" icon={<InfoIcon />}>
-        <Row label="バージョン"><Text style={styles.valueText}>{APP_VERSION}</Text></Row>
-        <Row label="このアプリを共有">
+      <Section title={t('settings.sectionAbout')} icon={<InfoIcon />}>
+        <Row label={t('settings.version')}><Text style={styles.valueText}>{APP_VERSION}</Text></Row>
+        <Row label={t('settings.shareApp')}>
           <Pressable style={styles.btn} onPress={onShare}>
-            <Text style={styles.btnText}>共有</Text>
+            <Text style={styles.btnText}>{t('common.share')}</Text>
           </Pressable>
         </Row>
-        <Row label="プライバシーポリシー">
-          <Pressable onPress={onPrivacy}><Text style={styles.linkText}>開く ↗</Text></Pressable>
+        <Row label={t('settings.privacy')}>
+          <Pressable onPress={onPrivacy}><Text style={styles.linkText}>{t('common.open')}</Text></Pressable>
         </Row>
-        <Row label="お問い合わせ">
-          <Pressable onPress={onContact}><Text style={styles.linkText}>メール ↗</Text></Pressable>
+        <Row label={t('settings.contact')}>
+          <Pressable onPress={onContact}><Text style={styles.linkText}>{t('common.mail')}</Text></Pressable>
         </Row>
       </Section>
 
-      <Text style={styles.versionFooter}>聞いて話せるネパール語 v{APP_VERSION}</Text>
+      <Text style={styles.versionFooter}>{t('app.name')} v{APP_VERSION}</Text>
     </ScrollView>
   );
 }

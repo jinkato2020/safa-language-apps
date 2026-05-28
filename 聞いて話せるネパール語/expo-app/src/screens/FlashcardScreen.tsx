@@ -6,6 +6,7 @@ import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { WORD_CATEGORIES, getWords } from '../dataLoader';
 import { useSettings } from '../SettingsContext';
+import { useI18n } from '../i18n';
 import { toRomaji } from '../transliterate';
 
 type R = RouteProp<RootStackParamList, 'Flashcard'>;
@@ -35,10 +36,12 @@ function ShuffleIcon({ active }: { active: boolean }) {
 }
 
 export default function FlashcardScreen() {
+  const { t } = useI18n();
   const { categoryId: initialCategoryId, direction } = useRoute<R>().params;
   const { romaji, autoFlip } = useSettings();
   const [currentCategoryId, setCurrentCategoryId] = useState(initialCategoryId);
   const cat = WORD_CATEGORIES.find(c => c.id === currentCategoryId);
+  const catName = t(`vocabCategories.${currentCategoryId}`);
   const allWords = useMemo(() => getWords(currentCategoryId), [currentCategoryId]);
   const [shuffled, setShuffled] = useState(false);
   const [order, setOrder] = useState<number[]>(() => allWords.map((_, i) => i));
@@ -67,8 +70,8 @@ export default function FlashcardScreen() {
   const frontIsNe = direction === 'ne2ja';
   const frontText = frontIsNe ? word.ne : word.ja;
   const backText = frontIsNe ? word.ja : word.ne;
-  const frontTag = frontIsNe ? 'NE · ネパール語' : 'JA · 日本語';
-  const backTag = frontIsNe ? 'JA · 日本語' : 'NE · ネパール語';
+  const frontTag = frontIsNe ? t('flashcard.tagNe') : t('flashcard.tagJa');
+  const backTag = frontIsNe ? t('flashcard.tagJa') : t('flashcard.tagNe');
 
   const toggleShuffle = () => {
     if (shuffled) {
@@ -123,7 +126,7 @@ export default function FlashcardScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
         <Text style={styles.metaText}>
-          <Text style={styles.metaCur}>{currentCategoryId}.</Text> {cat?.name} · {direction === 'ne2ja' ? 'ネ→日' : '日→ネ'} · <Text style={styles.metaCur}>{cursor + 1}</Text> / {order.length}
+          <Text style={styles.metaCur}>{currentCategoryId}.</Text> {catName} · {direction === 'ne2ja' ? t('directions.neToJa') : t('directions.jaToNe')} · <Text style={styles.metaCur}>{cursor + 1}</Text> / {order.length}
         </Text>
       </View>
 
@@ -138,16 +141,16 @@ export default function FlashcardScreen() {
         {romaji && ((frontIsNe && !flipped) || (!frontIsNe && flipped)) && (
           <Text style={styles.cardRom}>{toRomaji(word.ne)}</Text>
         )}
-        <Text style={styles.hint}>タップで{flipped ? '戻す' : '反転'}</Text>
+        <Text style={styles.hint}>{t('flashcard.tapToFlip', { action: flipped ? t('flashcard.unflip') : t('flashcard.flip') })}</Text>
       </Pressable>
 
       {/* 前へ / 次へ（位置固定、カテゴリ跨ぎ可能） */}
       <View style={styles.navRow}>
         <Pressable style={({ pressed }) => [styles.navBtn, atFirst && styles.navDisabled, pressed && styles.navPressed]} disabled={atFirst} onPress={() => go(-1)}>
-          <Text style={[styles.navText, atFirst && styles.navTextDisabled]}>← 前へ</Text>
+          <Text style={[styles.navText, atFirst && styles.navTextDisabled]}>{t('common.prev')}</Text>
         </Pressable>
         <Pressable style={({ pressed }) => [styles.navBtn, atLast && styles.navDisabled, pressed && styles.navPressed]} disabled={atLast} onPress={() => go(1)}>
-          <Text style={[styles.navText, atLast && styles.navTextDisabled]}>次へ →</Text>
+          <Text style={[styles.navText, atLast && styles.navTextDisabled]}>{t('common.next')}</Text>
         </Pressable>
       </View>
 
@@ -155,7 +158,7 @@ export default function FlashcardScreen() {
       <Pressable style={({ pressed }) => [styles.pill, shuffled && styles.pillOn, pressed && styles.pillPressed]} onPress={toggleShuffle}>
         <View style={styles.pillInner}>
           <ShuffleIcon active={shuffled} />
-          <Text style={[styles.pillText, shuffled && styles.pillTextOn]}>シャッフル {shuffled ? 'ON' : 'OFF'}</Text>
+          <Text style={[styles.pillText, shuffled && styles.pillTextOn]}>{shuffled ? t('flashcard.shuffleOn') : t('flashcard.shuffleOff')}</Text>
         </View>
       </Pressable>
     </ScrollView>

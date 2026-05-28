@@ -16,6 +16,7 @@ import {
   nepaliGrammarAudio, japaneseGrammarAudio,
 } from '../../data/audioMap';
 import { useSettings, type ListenSpeed } from '../SettingsContext';
+import { useI18n } from '../i18n';
 import { sentenceToRomaji } from '../transliterate';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Listening'>;
@@ -146,6 +147,7 @@ const BACK_DOUBLE_TAP_MS = 1200;
 
 export default function ListeningScreen() {
   const route = useRoute<R>();
+  const { t } = useI18n();
   const initial = route.params;
   const isGrammarSrc = initial.source === 'grammar';
   const {
@@ -231,9 +233,9 @@ export default function ListeningScreen() {
   const advanceRef = useRef<() => void>(() => {});
 
   const themeName = isGrammarSrc
-    ? GRAMMAR_THEMES.find(t => t.id === themeId)?.name ?? ''
-    : THEMES.find(t => t.id === themeId)?.name ?? '';
-  const levelName = isGrammarSrc ? '文法' : LEVELS.find(l => l.id === levelId)?.name ?? '';
+    ? t(`grammarThemes.${themeId}`)
+    : t(`themes.${themeId}`);
+  const levelName = isGrammarSrc ? t('practice.grammarLabel') : t(`levels.${levelId}`);
 
   const activeLang: 'ja' | 'ne' | null = (() => {
     if (phase === 'idle') return null;
@@ -549,16 +551,16 @@ export default function ListeningScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
         <Text style={styles.metaText}>
-          <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · 例題 <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
+          <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · {t('listening.exampleCounter')} <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
         </Text>
       </View>
 
       <View style={[styles.card, activeLang === 'ja' && styles.cardJaActive]}>
-        <Text style={[styles.tag, activeLang === 'ja' && styles.tagJaActive]}>JA · 日本語</Text>
+        <Text style={[styles.tag, activeLang === 'ja' && styles.tagJaActive]}>{t('listening.tagJa')}</Text>
         <Text style={styles.textJa}>{ex.jp}</Text>
       </View>
       <View style={[styles.card, activeLang === 'ne' && styles.cardNeActive]}>
-        <Text style={[styles.tag, activeLang === 'ne' && styles.tagNeActive]}>NE · ネパール語</Text>
+        <Text style={[styles.tag, activeLang === 'ne' && styles.tagNeActive]}>{t('listening.tagNe')}</Text>
         <Text style={styles.textNe}>{ex.ne}</Text>
         {romaji && <Text style={styles.romaji}>{sentenceToRomaji(ex.ne)}</Text>}
       </View>
@@ -586,14 +588,14 @@ export default function ListeningScreen() {
             <Polyline points="7 23 3 19 7 15" />
             <Path d="M21 13v2a4 4 0 0 1-4 4H3" />
           </Svg>
-          <Text style={[styles.pillText, listenLoop && styles.pillTextOn]}>ノンストップ</Text>
+          <Text style={[styles.pillText, listenLoop && styles.pillTextOn]}>{t('listening.nonstop')}</Text>
         </Pressable>
         <Pressable style={styles.pill} onPress={cycleSpeed}>
           <Svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke={colors.inkMute} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
             <Circle cx={12} cy={12} r={10} />
             <Polyline points="12 6 12 12 16 14" />
           </Svg>
-          <Text style={styles.pillText}>速度 ×{listenSpeed.toFixed(1)}</Text>
+          <Text style={styles.pillText}>{t('listening.speed', { speed: listenSpeed.toFixed(1) })}</Text>
         </Pressable>
       </View>
     </ScrollView>
