@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Text } from '../Text';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -9,13 +10,12 @@ import type { RootStackParamList } from '../types';
 import {
   LEVELS, THEMES, GRAMMAR_THEMES,
   getExamples, getGrammarExamples,
-  isCombinationFree, isGrammarThemeFree,
 } from '../dataLoader';
 import {
   nepaliAudio, japaneseAudio,
   nepaliGrammarAudio, japaneseGrammarAudio,
 } from '../../data/audioMap';
-import { useSettings, useFontScale, type ListenSpeed } from '../SettingsContext';
+import { useSettings, useScaleStyle, type ListenSpeed } from '../SettingsContext';
 import { useI18n } from '../i18n';
 import { sentenceToRomaji } from '../transliterate';
 
@@ -70,7 +70,7 @@ function findNextConversation(themeId: number, levelId: number, index: number, l
   i = 0;
   t = t + 1;
   while (t <= THEMES.length) {
-    if (isCombinationFree('listening', t, l) && getExamples(t, l).length > 0) {
+    if (getExamples(t, l).length > 0) {
       return { themeId: t, levelId: l, index: i, ended: false };
     }
     t++;
@@ -79,14 +79,14 @@ function findNextConversation(themeId: number, levelId: number, index: number, l
   if (l <= LEVELS.length) {
     t = 1;
     while (t <= THEMES.length) {
-      if (isCombinationFree('listening', t, l) && getExamples(t, l).length > 0) {
+      if (getExamples(t, l).length > 0) {
         return { themeId: t, levelId: l, index: i, ended: false };
       }
       t++;
     }
   }
   if (loop) {
-    return { themeId: THEMES.find(th => th.free)?.id ?? 1, levelId: 1, index: 0, ended: false };
+    return { themeId: 1, levelId: 1, index: 0, ended: false };
   }
   return { themeId, levelId, index, ended: true };
 }
@@ -98,13 +98,13 @@ function findNextGrammar(themeId: number, index: number, loop: boolean) {
   i = 0;
   t = t + 1;
   while (t <= GRAMMAR_THEMES.length) {
-    if (isGrammarThemeFree(t) && getGrammarExamples(t).length > 0) {
+    if (getGrammarExamples(t).length > 0) {
       return { themeId: t, index: i, ended: false };
     }
     t++;
   }
   if (loop) {
-    return { themeId: GRAMMAR_THEMES.find(th => th.free)?.id ?? 1, index: 0, ended: false };
+    return { themeId: 1, index: 0, ended: false };
   }
   return { themeId, index, ended: true };
 }
@@ -117,18 +117,14 @@ function findPrevConversation(themeId: number, levelId: number, index: number) {
   }
   // 前の theme（同じ level）の最後の例題
   for (let t = themeId - 1; t >= 1; t--) {
-    if (isCombinationFree('listening', t, levelId)) {
-      const exs = getExamples(t, levelId);
-      if (exs.length > 0) return { themeId: t, levelId, index: exs.length - 1 };
-    }
+    const exs = getExamples(t, levelId);
+    if (exs.length > 0) return { themeId: t, levelId, index: exs.length - 1 };
   }
   // 前の level の最後の theme の最後の例題
   for (let l = levelId - 1; l >= 1; l--) {
     for (let t = THEMES.length; t >= 1; t--) {
-      if (isCombinationFree('listening', t, l)) {
-        const exs = getExamples(t, l);
-        if (exs.length > 0) return { themeId: t, levelId: l, index: exs.length - 1 };
-      }
+      const exs = getExamples(t, l);
+      if (exs.length > 0) return { themeId: t, levelId: l, index: exs.length - 1 };
     }
   }
   return null;
@@ -137,10 +133,8 @@ function findPrevConversation(themeId: number, levelId: number, index: number) {
 function findPrevGrammar(themeId: number, index: number) {
   if (index - 1 >= 0) return { themeId, index: index - 1 };
   for (let t = themeId - 1; t >= 1; t--) {
-    if (isGrammarThemeFree(t)) {
-      const exs = getGrammarExamples(t);
-      if (exs.length > 0) return { themeId: t, index: exs.length - 1 };
-    }
+    const exs = getGrammarExamples(t);
+    if (exs.length > 0) return { themeId: t, index: exs.length - 1 };
   }
   return null;
 }
@@ -162,7 +156,7 @@ export default function ListeningScreen() {
     romaji,
   } = useSettings();
   const isJa2Ne = listenDirection === 'ja2ne';
-  const fontScale = useFontScale();
+  const ss = useScaleStyle();
 
   const [themeId, setThemeId] = useState(initial.themeId);
   const [levelId, setLevelId] = useState<number>(initial.levelId ?? 1);
@@ -561,19 +555,19 @@ export default function ListeningScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
-        <Text style={styles.metaText}>
+        <Text style={[styles.metaText, ss(12)]}>
           <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · {t('listening.exampleCounter')} <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
         </Text>
       </View>
 
       <View style={[styles.card, activeLang === 'ja' && styles.cardJaActive]}>
-        <Text style={[styles.tag, activeLang === 'ja' && styles.tagJaActive]}>{t('listening.tagJa')}</Text>
-        <Text style={[styles.textJa, { fontSize: 20 * fontScale, lineHeight: 30 * fontScale }]}>{ex.jp}</Text>
+        <Text style={[styles.tag, activeLang === 'ja' && styles.tagJaActive, ss(11)]}>{t('listening.tagJa')}</Text>
+        <Text style={[styles.textJa, ss(20, 30)]}>{ex.jp}</Text>
       </View>
       <View style={[styles.card, activeLang === 'ne' && styles.cardNeActive]}>
-        <Text style={[styles.tag, activeLang === 'ne' && styles.tagNeActive]}>{t('listening.tagNe')}</Text>
-        <Text style={[styles.textNe, { fontSize: 26 * fontScale, lineHeight: 38 * fontScale }]}>{ex.ne}</Text>
-        {romaji && <Text style={[styles.romaji, { fontSize: 14 * fontScale, lineHeight: 22 * fontScale }]}>{sentenceToRomaji(ex.ne)}</Text>}
+        <Text style={[styles.tag, activeLang === 'ne' && styles.tagNeActive, ss(11)]}>{t('listening.tagNe')}</Text>
+        <Text style={[styles.textNe, ss(26, 38)]}>{ex.ne}</Text>
+        {romaji && <Text style={[styles.romaji, ss(14, 22)]}>{sentenceToRomaji(ex.ne)}</Text>}
       </View>
 
       <View style={styles.controls}>
@@ -599,14 +593,14 @@ export default function ListeningScreen() {
             <Polyline points="7 23 3 19 7 15" />
             <Path d="M21 13v2a4 4 0 0 1-4 4H3" />
           </Svg>
-          <Text style={[styles.pillText, listenLoop && styles.pillTextOn]}>{t('listening.nonstop')}</Text>
+          <Text style={[styles.pillText, listenLoop && styles.pillTextOn, ss(12)]}>{t('listening.nonstop')}</Text>
         </Pressable>
         <Pressable style={styles.pill} onPress={cycleSpeed}>
           <Svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke={colors.inkMute} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
             <Circle cx={12} cy={12} r={10} />
             <Polyline points="12 6 12 12 16 14" />
           </Svg>
-          <Text style={styles.pillText}>{t('listening.speed', { speed: listenSpeed.toFixed(1) })}</Text>
+          <Text style={[styles.pillText, ss(12)]}>{t('listening.speed', { speed: listenSpeed.toFixed(1) })}</Text>
         </Pressable>
       </View>
     </ScrollView>

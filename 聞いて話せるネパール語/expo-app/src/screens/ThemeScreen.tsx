@@ -1,10 +1,12 @@
 import { useLayoutEffect, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../Text';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { THEMES, GRAMMAR_THEMES, LEVELS } from '../dataLoader';
+import { useScaleStyle } from '../SettingsContext';
 import { useI18n } from '../i18n';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Theme'>;
@@ -13,6 +15,7 @@ type R = RouteProp<RootStackParamList, 'Theme'>;
 export default function ThemeScreen() {
   const navigation = useNavigation<Nav>();
   const { t } = useI18n();
+  const ss = useScaleStyle();
   const { mode, source } = useRoute<R>().params;
   const isGrammarMode = mode === 'grammar';
   const isGrammarListen = mode === 'listening' && source === 'grammar';
@@ -43,11 +46,7 @@ export default function ThemeScreen() {
     return useGrammarThemes ? t(`grammarThemes.${id}`) : t(`themes.${id}`);
   };
 
-  const onPressItem = (id: number, free: boolean) => {
-    if (!free) {
-      navigation.navigate('Paywall', { feature: mode });
-      return;
-    }
+  const onPressItem = (id: number) => {
     if (mode === 'grammar') {
       navigation.navigate('Practice', { themeId: id, mode: 'grammar' });
     } else if (mode === 'listening' && source === 'grammar') {
@@ -66,7 +65,7 @@ export default function ThemeScreen() {
       contentContainerStyle={styles.container}
       ListHeaderComponent={
         <View style={styles.head}>
-          <Text style={styles.desc}>{headerText}</Text>
+          <Text style={[styles.desc, ss(14, 21)]}>{headerText}</Text>
           {showLevelPills && (
             <View style={styles.levelPillRow}>
               {LEVELS.map(lv => (
@@ -75,7 +74,7 @@ export default function ThemeScreen() {
                   style={[styles.levelPill, selectedLevel === lv.id && styles.levelPillOn]}
                   onPress={() => setSelectedLevel(lv.id)}
                 >
-                  <Text style={[styles.levelPillText, selectedLevel === lv.id && styles.levelPillTextOn]}>
+                  <Text style={[styles.levelPillText, selectedLevel === lv.id && styles.levelPillTextOn, ss(13)]}>
                     {t(`levels.${lv.id}`)}
                   </Text>
                 </Pressable>
@@ -90,14 +89,12 @@ export default function ThemeScreen() {
         <Pressable
           style={({ pressed }) => [
             styles.card,
-            !item.free && styles.cardLocked,
             pressed && styles.cardPressed,
           ]}
-          onPress={() => onPressItem(item.id, item.free)}
+          onPress={() => onPressItem(item.id)}
         >
           <Text style={styles.num}>{String(item.id).padStart(2, '0')}</Text>
-          <Text style={[styles.name, !item.free && styles.nameLocked]}>{getThemeDisplayName(item.id)}</Text>
-          {!item.free && <Text style={styles.lock}>{t('common.lock')}</Text>}
+          <Text style={[styles.name, ss(14)]}>{getThemeDisplayName(item.id)}</Text>
         </Pressable>
       )}
     />
@@ -135,9 +132,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   cardPressed: { backgroundColor: colors.bgSoft, borderColor: colors.ink },
-  cardLocked: { backgroundColor: colors.bgDisabled, opacity: 0.75 },
   num: { fontFamily: 'Courier', fontSize: 11, color: colors.inkFaint, width: 24 },
   name: { flex: 1, fontSize: 14, fontWeight: '500', color: colors.ink },
-  nameLocked: { color: colors.inkFaint },
-  lock: { fontSize: 14 },
 });

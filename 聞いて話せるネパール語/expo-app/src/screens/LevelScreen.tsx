@@ -1,10 +1,11 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Text } from '../Text';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
-import { LEVELS, THEMES, getExamples, isCombinationFree } from '../dataLoader';
-import { useSettings, type Direction, type NepaliRepeat } from '../SettingsContext';
+import { LEVELS, getExamples } from '../dataLoader';
+import { useSettings, useScaleStyle, type Direction, type NepaliRepeat } from '../SettingsContext';
 import { useI18n } from '../i18n';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Level'>;
@@ -18,6 +19,7 @@ export default function LevelScreen() {
   const isListening = mode === 'listening';
 
   const { listenDirection, setListenDirection, nepaliRepeat, setNepaliRepeat } = useSettings();
+  const ss = useScaleStyle();
 
   const levelDesc = (id: number): string => t(`levels.desc${id}`);
 
@@ -25,13 +27,13 @@ export default function LevelScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.head}>
         <Text style={styles.title}>{t('levelScreen.title')}</Text>
-        <Text style={styles.desc}>{t('levelScreen.desc', { theme: themeName })}</Text>
+        <Text style={[styles.desc, ss(14, 21)]}>{t('levelScreen.desc', { theme: themeName })}</Text>
       </View>
 
       {isListening && (
         <View style={styles.settings}>
           <View style={styles.settingRow}>
-            <Text style={styles.settingLabel}>{t('levelScreen.playOrder')}</Text>
+            <Text style={[styles.settingLabel, ss(13)]}>{t('levelScreen.playOrder')}</Text>
             <View style={styles.pills}>
               {(['ja2ne', 'ne2ja'] as Direction[]).map(d => (
                 <Pressable
@@ -39,7 +41,7 @@ export default function LevelScreen() {
                   style={[styles.pill, listenDirection === d && styles.pillOn]}
                   onPress={() => setListenDirection(d)}
                 >
-                  <Text style={[styles.pillText, listenDirection === d && styles.pillTextOn]}>
+                  <Text style={[styles.pillText, listenDirection === d && styles.pillTextOn, ss(12)]}>
                     {t(`directions.${d}`)}
                   </Text>
                 </Pressable>
@@ -47,7 +49,7 @@ export default function LevelScreen() {
             </View>
           </View>
           <View style={styles.settingRow}>
-            <Text style={styles.settingLabel}>{t('levelScreen.nepaliRepeat')}</Text>
+            <Text style={[styles.settingLabel, ss(13)]}>{t('levelScreen.nepaliRepeat')}</Text>
             <View style={styles.pills}>
               {([1, 2, 3] as NepaliRepeat[]).map(n => (
                 <Pressable
@@ -55,7 +57,7 @@ export default function LevelScreen() {
                   style={[styles.pill, nepaliRepeat === n && styles.pillOn]}
                   onPress={() => setNepaliRepeat(n)}
                 >
-                  <Text style={[styles.pillText, nepaliRepeat === n && styles.pillTextOn]}>
+                  <Text style={[styles.pillText, nepaliRepeat === n && styles.pillTextOn, ss(12)]}>
                     {t('levelScreen.repeat', { n })}
                   </Text>
                 </Pressable>
@@ -67,14 +69,9 @@ export default function LevelScreen() {
 
       <View style={styles.grid}>
         {LEVELS.map(lv => {
-          const free = isCombinationFree(mode, themeId, lv.id);
           const exs = getExamples(themeId, lv.id);
           const lvName = t(`levels.${lv.id}`);
           const onPress = () => {
-            if (!free) {
-              navigation.navigate('Paywall', { feature: `${themeName} ${lvName}` });
-              return;
-            }
             navigation.navigate(mode === 'conversation' ? 'Practice' : 'Listening', {
               themeId,
               levelId: lv.id,
@@ -84,17 +81,16 @@ export default function LevelScreen() {
           return (
             <Pressable
               key={lv.id}
-              style={({ pressed }) => [styles.card, !free && styles.cardLocked, pressed && styles.cardPressed]}
+              style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
               onPress={onPress}
             >
               <Text style={styles.levelKicker}>LEVEL {lv.id}</Text>
               <View style={styles.row}>
-                <Text style={[styles.name, !free && styles.nameLocked]}>{lvName}</Text>
-                {!free && <Text style={styles.lock}>{t('common.lock')}</Text>}
+                <Text style={[styles.name, ss(24, 32)]}>{lvName}</Text>
               </View>
-              <Text style={styles.cardDesc}>{levelDesc(lv.id)}</Text>
+              <Text style={[styles.cardDesc, ss(13, 20)]}>{levelDesc(lv.id)}</Text>
               <Text style={styles.meta}>
-                {free ? t('common.questionsCount', { count: exs.length }) : t('common.premium')}
+                {t('common.questionsCount', { count: exs.length })}
               </Text>
             </Pressable>
           );
@@ -135,12 +131,9 @@ const styles = StyleSheet.create({
   grid: { gap: spacing.md },
   card: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: radius.lg, padding: spacing.lg },
   cardPressed: { backgroundColor: colors.bgSoft, borderColor: colors.ink },
-  cardLocked: { backgroundColor: colors.bgDisabled, opacity: 0.75 },
   levelKicker: { fontFamily: 'Courier', fontSize: 11, color: colors.inkFaint, letterSpacing: 1.5, marginBottom: spacing.xs },
   row: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginBottom: spacing.xs },
   name: { fontSize: 24, fontWeight: '700', color: colors.ink, letterSpacing: -0.3 },
-  nameLocked: { color: colors.inkFaint },
-  lock: { fontSize: 18 },
   cardDesc: { fontSize: 13, color: colors.inkMute, lineHeight: 20, marginBottom: spacing.sm },
   meta: { fontFamily: 'Courier', fontSize: 11, color: colors.inkQuiet, letterSpacing: 0.5 },
 });

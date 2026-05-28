@@ -18,10 +18,9 @@ import ListeningScreen from './src/screens/ListeningScreen';
 import VocabCategoryScreen from './src/screens/VocabCategoryScreen';
 import VocabDirectionScreen from './src/screens/VocabDirectionScreen';
 import FlashcardScreen from './src/screens/FlashcardScreen';
-import PaywallScreen from './src/screens/PaywallScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import { colors } from './src/theme';
-import { SettingsProvider, useSettings } from './src/SettingsContext';
+import { SettingsProvider, useSettings, useGlobalScaleStyle } from './src/SettingsContext';
 import { I18nProvider, useI18n } from './src/i18n';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from './src/types';
@@ -116,7 +115,6 @@ function ConversationStackNav() {
       <ConvStack.Screen name="Theme" component={ThemeScreen} initialParams={{ mode: 'conversation' }} />
       <ConvStack.Screen name="Level" component={LevelScreen} initialParams={{ mode: 'conversation' }} />
       <ConvStack.Screen name="Practice" component={PracticeScreen} />
-      <ConvStack.Screen name="Paywall" component={PaywallScreen} options={{ title: '', presentation: 'modal' }} />
       <ConvStack.Screen name="SettingsMain" component={SettingsScreen} />
     </ConvStack.Navigator>
   );
@@ -127,7 +125,6 @@ function GrammarStackNav() {
     <GramStack.Navigator screenOptions={defaultStackOptions}>
       <GramStack.Screen name="Theme" component={ThemeScreen} initialParams={{ mode: 'grammar' }} />
       <GramStack.Screen name="Practice" component={PracticeScreen} initialParams={{ mode: 'grammar' }} />
-      <GramStack.Screen name="Paywall" component={PaywallScreen} options={{ title: '', presentation: 'modal' }} />
       <GramStack.Screen name="SettingsMain" component={SettingsScreen} />
     </GramStack.Navigator>
   );
@@ -140,7 +137,6 @@ function ListeningStackNav() {
       <ListenStack.Screen name="Theme" component={ThemeScreen} initialParams={{ mode: 'listening' }} />
       <ListenStack.Screen name="Level" component={LevelScreen} initialParams={{ mode: 'listening' }} />
       <ListenStack.Screen name="Listening" component={ListeningScreen} />
-      <ListenStack.Screen name="Paywall" component={PaywallScreen} options={{ title: '', presentation: 'modal' }} />
       <ListenStack.Screen name="SettingsMain" component={SettingsScreen} />
     </ListenStack.Navigator>
   );
@@ -152,7 +148,6 @@ function VocabularyStackNav() {
       <VocabStack.Screen name="VocabCategory" component={VocabCategoryScreen} />
       <VocabStack.Screen name="VocabDirection" component={VocabDirectionScreen} />
       <VocabStack.Screen name="Flashcard" component={FlashcardScreen} />
-      <VocabStack.Screen name="Paywall" component={PaywallScreen} options={{ title: '', presentation: 'modal' }} />
       <VocabStack.Screen name="SettingsMain" component={SettingsScreen} />
     </VocabStack.Navigator>
   );
@@ -162,6 +157,7 @@ function VocabularyStackNav() {
 function MainTabs() {
   const { bottom } = useSafeAreaInsets();
   const { t } = useI18n();
+  const ss = useGlobalScaleStyle();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -169,7 +165,7 @@ function MainTabs() {
         tabBarActiveTintColor: colors.ink,
         tabBarInactiveTintColor: colors.inkFaint,
         tabBarStyle: { backgroundColor: colors.bg, borderTopColor: colors.line, height: 64 + bottom, paddingTop: 8, paddingBottom: 8 + bottom },
-        tabBarLabelStyle: { fontSize: 11, fontWeight: '500' },
+        tabBarLabelStyle: { ...ss(11), fontWeight: '500' },
       }}
     >
       <Tab.Screen

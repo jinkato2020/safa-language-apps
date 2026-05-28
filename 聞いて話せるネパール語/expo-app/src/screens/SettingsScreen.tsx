@@ -1,8 +1,9 @@
-import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Switch, Text, View } from 'react-native';
+import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Switch, View } from 'react-native';
 import Svg, { Circle, Ellipse, Line, Path, Polygon } from 'react-native-svg';
+import { Text } from '../Text';
 import { colors, spacing, radius } from '../theme';
 import {
-  useSettings,
+  useSettings, useScaleStyle,
   type Direction, type NepaliRepeat, type ListenSpeed,
   type GapMode, type ThemeMode, type FontMode,
 } from '../SettingsContext';
@@ -28,10 +29,11 @@ function InfoIcon() { return <Icon><Circle cx={12} cy={12} r={10} /><Line x1={12
 function LangIcon() { return <Icon><Circle cx={12} cy={12} r={10} /><Line x1={2} y1={12} x2={22} y2={12} /><Path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></Icon>; }
 
 // Pill (ピル選択)
-function PillGroup<T extends string | number>({ items, value, onChange }: {
+function PillGroup<T extends string | number>({ items, value, onChange, ss }: {
   items: { value: T; label: string }[];
   value: T;
   onChange: (v: T) => void;
+  ss: (fs: number, lh?: number) => { fontSize: number; lineHeight?: number };
 }) {
   return (
     <View style={styles.pillGroup}>
@@ -41,31 +43,31 @@ function PillGroup<T extends string | number>({ items, value, onChange }: {
           style={[styles.pill, value === it.value && styles.pillOn]}
           onPress={() => onChange(it.value)}
         >
-          <Text style={[styles.pillText, value === it.value && styles.pillTextOn]}>{it.label}</Text>
+          <Text style={[styles.pillText, value === it.value && styles.pillTextOn, ss(12)]}>{it.label}</Text>
         </Pressable>
       ))}
     </View>
   );
 }
 
-function Row({ label, desc, children }: { label: string; desc?: string; children: React.ReactNode }) {
+function Row({ label, desc, children, ss }: { label: string; desc?: string; children: React.ReactNode; ss: (fs: number, lh?: number) => { fontSize: number; lineHeight?: number } }) {
   return (
     <View style={styles.item}>
       <View style={styles.itemLabelCol}>
-        <Text style={styles.itemLabel}>{label}</Text>
-        {desc ? <Text style={styles.itemDesc}>{desc}</Text> : null}
+        <Text style={[styles.itemLabel, ss(14)]}>{label}</Text>
+        {desc ? <Text style={[styles.itemDesc, ss(12)]}>{desc}</Text> : null}
       </View>
       <View style={styles.itemControl}>{children}</View>
     </View>
   );
 }
 
-function Section({ title, icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) {
+function Section({ title, icon, children, ss }: { title: string; icon: React.ReactNode; children: React.ReactNode; ss: (fs: number, lh?: number) => { fontSize: number; lineHeight?: number } }) {
   return (
     <View style={styles.section}>
       <View style={styles.sectionHeader}>
         {icon}
-        <Text style={styles.sectionTitle}>{title}</Text>
+        <Text style={[styles.sectionTitle, ss(13)]}>{title}</Text>
       </View>
       {children}
     </View>
@@ -75,6 +77,7 @@ function Section({ title, icon, children }: { title: string; icon: React.ReactNo
 export default function SettingsScreen() {
   const s = useSettings();
   const { t, lang, setLang } = useI18n();
+  const ss = useScaleStyle();
 
   const onShare = async () => {
     try {
@@ -110,25 +113,27 @@ export default function SettingsScreen() {
         <Text style={styles.desc}>{t('settings.desc')}</Text>
       </View>
 
-      <Section title={t('settings.sectionLang')} icon={<LangIcon />}>
-        <Row label={t('settings.language')} desc={t('settings.languageDesc')}>
+      <Section title={t('settings.sectionLang')} icon={<LangIcon />} ss={ss}>
+        <Row label={t('settings.language')} desc={t('settings.languageDesc')} ss={ss}>
           <PillGroup<Lang>
             items={[{ value: 'ja', label: '日本語' }, { value: 'ne', label: 'नेपाली' }]}
             value={lang}
             onChange={setLang}
+            ss={ss}
           />
         </Row>
       </Section>
 
-      <Section title={t('settings.sectionAudio')} icon={<SoundIcon />}>
-        <Row label={t('settings.playbackSpeed')} desc={t('settings.playbackSpeedDesc')}>
+      <Section title={t('settings.sectionAudio')} icon={<SoundIcon />} ss={ss}>
+        <Row label={t('settings.playbackSpeed')} desc={t('settings.playbackSpeedDesc')} ss={ss}>
           <PillGroup<ListenSpeed>
             items={[{ value: 0.8, label: '×0.8' }, { value: 1.0, label: '×1.0' }, { value: 1.2, label: '×1.2' }, { value: 1.5, label: '×1.5' }]}
             value={s.listenSpeed}
             onChange={s.setListenSpeed}
+            ss={ss}
           />
         </Row>
-        <Row label={t('settings.nepaliRepeat')} desc={t('settings.nepaliRepeatDesc')}>
+        <Row label={t('settings.nepaliRepeat')} desc={t('settings.nepaliRepeatDesc')} ss={ss}>
           <PillGroup<NepaliRepeat>
             items={[
               { value: 1, label: t('levelScreen.repeat', { n: 1 }) },
@@ -137,26 +142,29 @@ export default function SettingsScreen() {
             ]}
             value={s.nepaliRepeat}
             onChange={s.setNepaliRepeat}
+            ss={ss}
           />
         </Row>
-        <Row label={t('settings.convDirection')} desc={t('settings.convDirectionDesc')}>
+        <Row label={t('settings.convDirection')} desc={t('settings.convDirectionDesc')} ss={ss}>
           <PillGroup<Direction>
             items={[{ value: 'ja2ne', label: t('directions.ja2ne') }, { value: 'ne2ja', label: t('directions.ne2ja') }]}
             value={s.practiceDirection}
             onChange={s.setPracticeDirection}
+            ss={ss}
           />
         </Row>
-        <Row label={t('settings.listenOrder')} desc={t('settings.listenOrderDesc')}>
+        <Row label={t('settings.listenOrder')} desc={t('settings.listenOrderDesc')} ss={ss}>
           <PillGroup<Direction>
             items={[{ value: 'ja2ne', label: t('directions.ja2ne') }, { value: 'ne2ja', label: t('directions.ne2ja') }]}
             value={s.listenDirection}
             onChange={s.setListenDirection}
+            ss={ss}
           />
         </Row>
-        <Row label={t('settings.listenLoop')} desc={t('settings.listenLoopDesc')}>
+        <Row label={t('settings.listenLoop')} desc={t('settings.listenLoopDesc')} ss={ss}>
           <Switch value={s.listenLoop} onValueChange={s.setListenLoop} trackColor={{ false: colors.line, true: colors.ink }} />
         </Row>
-        <Row label={t('settings.gap')} desc={t('settings.gapDesc')}>
+        <Row label={t('settings.gap')} desc={t('settings.gapDesc')} ss={ss}>
           <PillGroup<GapMode>
             items={[
               { value: 'short', label: t('settings.gapShort') },
@@ -165,15 +173,16 @@ export default function SettingsScreen() {
             ]}
             value={s.gap}
             onChange={s.setGap}
+            ss={ss}
           />
         </Row>
       </Section>
 
-      <Section title={t('settings.sectionDisplay')} icon={<EyeIcon />}>
-        <Row label={t('settings.romaji')} desc={t('settings.romajiDesc')}>
+      <Section title={t('settings.sectionDisplay')} icon={<EyeIcon />} ss={ss}>
+        <Row label={t('settings.romaji')} desc={t('settings.romajiDesc')} ss={ss}>
           <Switch value={s.romaji} onValueChange={s.setRomaji} trackColor={{ false: colors.line, true: colors.ink }} />
         </Row>
-        <Row label={t('settings.darkMode')} desc={t('settings.darkModeDesc')}>
+        <Row label={t('settings.darkMode')} desc={t('settings.darkModeDesc')} ss={ss}>
           <PillGroup<ThemeMode>
             items={[
               { value: 'light', label: t('settings.themeLight') },
@@ -182,9 +191,10 @@ export default function SettingsScreen() {
             ]}
             value={s.themeMode}
             onChange={s.setThemeMode}
+            ss={ss}
           />
         </Row>
-        <Row label={t('settings.fontSize')} desc={t('settings.fontSizeDesc')}>
+        <Row label={t('settings.fontSize')} desc={t('settings.fontSizeDesc')} ss={ss}>
           <PillGroup<FontMode>
             items={[
               { value: 'small', label: t('settings.fontSmall') },
@@ -193,38 +203,39 @@ export default function SettingsScreen() {
             ]}
             value={s.fontMode}
             onChange={s.setFontMode}
+            ss={ss}
           />
         </Row>
       </Section>
 
-      <Section title={t('settings.sectionLearn')} icon={<CapIcon />}>
-        <Row label={t('settings.autoFlip')} desc={t('settings.autoFlipDesc')}>
+      <Section title={t('settings.sectionLearn')} icon={<CapIcon />} ss={ss}>
+        <Row label={t('settings.autoFlip')} desc={t('settings.autoFlipDesc')} ss={ss}>
           <Switch value={s.autoFlip} onValueChange={s.setAutoFlip} trackColor={{ false: colors.line, true: colors.ink }} />
         </Row>
-        <Row label={t('settings.shuffle')} desc={t('settings.shuffleDesc')}>
+        <Row label={t('settings.shuffle')} desc={t('settings.shuffleDesc')} ss={ss}>
           <Switch value={s.shuffle} onValueChange={s.setShuffle} trackColor={{ false: colors.line, true: colors.ink }} />
         </Row>
       </Section>
 
-      <Section title={t('settings.sectionData')} icon={<DataIcon />}>
-        <Row label={t('settings.resetSettings')} desc={t('settings.resetSettingsDesc')}>
+      <Section title={t('settings.sectionData')} icon={<DataIcon />} ss={ss}>
+        <Row label={t('settings.resetSettings')} desc={t('settings.resetSettingsDesc')} ss={ss}>
           <Pressable style={[styles.btn, styles.btnDanger]} onPress={onReset}>
             <Text style={styles.btnTextDanger}>{t('common.reset')}</Text>
           </Pressable>
         </Row>
       </Section>
 
-      <Section title={t('settings.sectionAbout')} icon={<InfoIcon />}>
-        <Row label={t('settings.version')}><Text style={styles.valueText}>{APP_VERSION}</Text></Row>
-        <Row label={t('settings.shareApp')}>
+      <Section title={t('settings.sectionAbout')} icon={<InfoIcon />} ss={ss}>
+        <Row label={t('settings.version')} ss={ss}><Text style={styles.valueText}>{APP_VERSION}</Text></Row>
+        <Row label={t('settings.shareApp')} ss={ss}>
           <Pressable style={styles.btn} onPress={onShare}>
             <Text style={styles.btnText}>{t('common.share')}</Text>
           </Pressable>
         </Row>
-        <Row label={t('settings.privacy')}>
+        <Row label={t('settings.privacy')} ss={ss}>
           <Pressable onPress={onPrivacy}><Text style={styles.linkText}>{t('common.open')}</Text></Pressable>
         </Row>
-        <Row label={t('settings.contact')}>
+        <Row label={t('settings.contact')} ss={ss}>
           <Pressable onPress={onContact}><Text style={styles.linkText}>{t('common.mail')}</Text></Pressable>
         </Row>
       </Section>

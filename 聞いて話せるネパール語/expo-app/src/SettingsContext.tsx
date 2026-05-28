@@ -8,18 +8,69 @@ export type GapMode = 'short' | 'normal' | 'long';
 export type ThemeMode = 'light' | 'dark' | 'system';
 export type FontMode = 'small' | 'medium' | 'large';
 
-// FontMode → 学習テキストの文字サイズ倍率
-// 例題文・カード本文等の主要テキストに適用される
-export const FONT_SCALE: Record<FontMode, number> = {
-  small: 0.85,
-  medium: 1.0,
-  large: 1.2,
+// FontMode → 「強さ」係数
+// この値 delta が大きいほど、小さい文字に対してより強くスケールが効く。
+// 大きい文字 (>= 30px) には効果が薄く、すでに大きい文字はほぼそのまま。
+export const FONT_DELTA: Record<FontMode, number> = {
+  small: -0.15, // 「小」: 小さい文字をさらに -15% 縮める (バランス維持)
+  medium: 0,    // 「中」: 変化なし
+  large: 0.25,  // 「大」: 小さい文字を +25% 拡大する
 };
 
-// 便利フック: 現在の fontScale を取得
+// ベースサイズが小さいほど fontMode の影響を強く受け、
+// 大きいほど影響が弱くなる「カーブ」スケーリング。
+//
+//   baseSize <= 14: factor = 1.0    (全効果適用)
+//   baseSize 14-20: factor 1.0 → 0.3 (徐々に弱まる)
+//   baseSize 20-30: factor 0.3 → 0  (ほぼ無効化)
+//   baseSize >= 30: factor = 0       (変化なし)
+//
+// 例 (fontMode = 'large', delta = +0.25):
+//   12px UI → 12 * (1 + 0.25 * 1.0)  = 15px    (約 25% 拡大)
+//   14px ラベル → 14 * (1 + 0.25 * 1.0) = 17.5px (約 25% 拡大)
+//   20px 例文 → 20 * (1 + 0.25 * 0.3) = 21.5px (約 7% 拡大)
+//   30px ネ文 → 30 * (1 + 0.25 * 0)   = 30px   (変化なし)
+function scaledFontSize(baseSize: number, delta: number): number {
+  if (delta === 0) return baseSize;
+  let factor: number;
+  if (baseSize <= 14) factor = 1.0;
+  else if (baseSize <= 20) factor = 1.0 - ((baseSize - 14) / 6) * 0.7;
+  else if (baseSize <= 30) factor = 0.3 - ((baseSize - 20) / 10) * 0.3;
+  else factor = 0;
+  return Math.round(baseSize * (1 + delta * factor) * 10) / 10; // 0.1px 単位で丸め
+}
+
+// アプリ全体のフォントスケールは Text ラッパー (src/Text.tsx) が一括で行うため、
+// useScaleFont / useScaleStyle はパススルー（noop）にしている。二重スケール防止。
+// 既存の ss(14, 21) のような呼び出しはそのまま動くが、実質は raw 値を返すだけ。
+// Text ラッパーが受け取った fontSize/lineHeight に対して curve-based スケールを適用する。
+export function useScaleFont(): (baseSize: number) => number {
+  return (baseSize: number) => baseSize;
+}
+
+export function useScaleStyle(): (fontSize: number, lineHeight?: number) => { fontSize: number; lineHeight?: number } {
+  return (fontSize: number, lineHeight?: number) => {
+    if (lineHeight === undefined) return { fontSize };
+    return { fontSize, lineHeight };
+  };
+}
+
+// Text ラッパーが内部で使う実スケーラー
+export function useGlobalScaleStyle(): (fontSize: number, lineHeight?: number) => { fontSize: number; lineHeight?: number } {
+  const { fontMode } = useSettings();
+  const delta = FONT_DELTA[fontMode];
+  return (fontSize: number, lineHeight?: number) => {
+    const newFs = scaledFontSize(fontSize, delta);
+    if (lineHeight === undefined) return { fontSize: newFs };
+    const ratio = newFs / fontSize;
+    return { fontSize: newFs, lineHeight: lineHeight * ratio };
+  };
+}
+
+// 後方互換: 旧 API
 export function useFontScale(): number {
   const { fontMode } = useSettings();
-  return FONT_SCALE[fontMode];
+  return 1 + FONT_DELTA[fontMode];
 }
 
 type Settings = {

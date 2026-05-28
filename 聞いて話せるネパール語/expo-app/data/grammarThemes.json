@@ -2,181 +2,151 @@
   {
     "id": 1,
     "name": "現在形（肯定文）",
-    "free": true,
     "exampleCount": 20
   },
   {
     "id": 2,
     "name": "現在形（否定文）",
-    "free": true,
     "exampleCount": 20
   },
   {
     "id": 3,
     "name": "過去形（肯定文）",
-    "free": true,
     "exampleCount": 20
   },
   {
     "id": 4,
     "name": "過去形（否定文）",
-    "free": true,
     "exampleCount": 20
   },
   {
     "id": 5,
     "name": "未来形",
-    "free": true,
     "exampleCount": 20
   },
   {
     "id": 6,
     "name": "疑問文",
-    "free": true,
     "exampleCount": 20
   },
   {
     "id": 7,
     "name": "依頼文",
-    "free": true,
     "exampleCount": 20
   },
   {
     "id": 8,
-    "name": "感嘆文",
-    "free": true,
+    "name": "命令形（〜しなさい）",
     "exampleCount": 20
   },
   {
     "id": 9,
-    "name": "〜したい（願望表現）",
-    "free": true,
+    "name": "禁止表現（〜してはいけない）",
     "exampleCount": 20
   },
   {
     "id": 10,
-    "name": "〜できる（可能表現）",
-    "free": true,
+    "name": "感嘆文",
     "exampleCount": 20
   },
   {
     "id": 11,
     "name": "〜している（進行形）",
-    "free": true,
     "exampleCount": 20
   },
   {
     "id": 12,
-    "name": "〜しなければならない（義務）",
-    "free": true,
+    "name": "〜になる／〜くなる（状態変化）",
     "exampleCount": 20
   },
   {
     "id": 13,
-    "name": "〜してもいい（許可）",
-    "free": true,
+    "name": "形容詞の使い方",
     "exampleCount": 20
   },
   {
     "id": 14,
-    "name": "〜したことがある（経験）",
-    "free": true,
+    "name": "副詞の使い方",
     "exampleCount": 20
   },
   {
     "id": 15,
-    "name": "〜と思う（推量・意見）",
-    "free": true,
+    "name": "〜したい（願望表現）",
     "exampleCount": 20
   },
   {
     "id": 16,
-    "name": "受動表現",
-    "free": true,
+    "name": "〜できる（可能表現）",
     "exampleCount": 20
   },
   {
     "id": 17,
-    "name": "接続詞",
-    "free": true,
+    "name": "〜しなければならない（義務）",
     "exampleCount": 20
   },
   {
     "id": 18,
-    "name": "〜ながら（同時動作）",
-    "free": true,
+    "name": "〜してもいい（許可）",
     "exampleCount": 20
   },
   {
     "id": 19,
-    "name": "〜てから（順序）",
-    "free": true,
+    "name": "〜と思う（推量・意見）",
     "exampleCount": 20
   },
   {
     "id": 20,
-    "name": "〜ために（目的）",
-    "free": true,
+    "name": "〜かもしれない（推量・可能性）",
     "exampleCount": 20
   },
   {
     "id": 21,
-    "name": "条件文（もし〜なら）",
-    "free": true,
+    "name": "〜したことがある（経験）",
     "exampleCount": 20
   },
   {
     "id": 22,
     "name": "比較表現",
-    "free": true,
     "exampleCount": 20
   },
   {
     "id": 23,
-    "name": "間接話法",
-    "free": true,
+    "name": "接続詞",
     "exampleCount": 20
   },
   {
     "id": 24,
-    "name": "関係節と複文",
-    "free": true,
+    "name": "〜ながら（同時動作）",
     "exampleCount": 20
   },
   {
     "id": 25,
-    "name": "形容詞の使い方",
-    "free": true,
+    "name": "〜てから（順序）",
     "exampleCount": 20
   },
   {
     "id": 26,
-    "name": "副詞の使い方",
-    "free": true,
+    "name": "〜ために（目的）",
     "exampleCount": 20
   },
   {
     "id": 27,
-    "name": "代名詞（人称・指示）",
-    "free": true,
+    "name": "条件文（もし〜なら）",
     "exampleCount": 20
   },
   {
     "id": 28,
-    "name": "数詞と助数詞",
-    "free": true,
+    "name": "受動表現",
     "exampleCount": 20
   },
   {
     "id": 29,
-    "name": "格助詞の用法",
-    "free": true,
+    "name": "使役表現（〜させる）",
     "exampleCount": 20
   },
   {
     "id": 30,
-    "name": "尊敬語と丁寧語",
-    "free": true,
+    "name": "間接話法",
     "exampleCount": 20
   }
 ]

@@ -4811,3 +4811,7 @@ export const japaneseGrammarAudio: Record<string, number> = {
   '9-8': require('../assets/audio/japanese-grammar/9-8.mp3'),
   '9-9': require('../assets/audio/japanese-grammar/9-9.mp3'),
 };
+
+// 聞き流しモード用結合音声 (バックグラウンド再生対応)
+export const listeningAudio: Record<string, number> = {
+};

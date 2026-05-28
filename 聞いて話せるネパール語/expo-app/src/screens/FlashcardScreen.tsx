@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Text } from '../Text';
 import { useRoute, type RouteProp } from '@react-navigation/native';
 import Svg, { Path, Rect } from 'react-native-svg';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { WORD_CATEGORIES, getWords } from '../dataLoader';
-import { useSettings, useFontScale } from '../SettingsContext';
+import { useSettings, useScaleStyle } from '../SettingsContext';
 import { useI18n } from '../i18n';
 import { toRomaji } from '../transliterate';
 
@@ -39,7 +40,7 @@ export default function FlashcardScreen() {
   const { t } = useI18n();
   const { categoryId: initialCategoryId, direction } = useRoute<R>().params;
   const { romaji, autoFlip } = useSettings();
-  const fontScale = useFontScale();
+  const ss = useScaleStyle();
   const [currentCategoryId, setCurrentCategoryId] = useState(initialCategoryId);
   const cat = WORD_CATEGORIES.find(c => c.id === currentCategoryId);
   const catName = t(`vocabCategories.${currentCategoryId}`);
@@ -140,15 +141,13 @@ export default function FlashcardScreen() {
           frontIsNe && !flipped ? styles.textNe : (frontIsNe && flipped ? styles.textJa : (!frontIsNe && flipped ? styles.textNe : styles.textJa)),
           (() => {
             const isNeShown = (frontIsNe && !flipped) || (!frontIsNe && flipped);
-            const baseSize = isNeShown ? 40 : 32;
-            const baseLine = isNeShown ? 56 : 44;
-            return { fontSize: baseSize * fontScale, lineHeight: baseLine * fontScale };
+            return ss(isNeShown ? 40 : 32, isNeShown ? 56 : 44);
           })(),
         ]}>
           {flipped ? backText : frontText}
         </Text>
         {romaji && ((frontIsNe && !flipped) || (!frontIsNe && flipped)) && (
-          <Text style={[styles.cardRom, { fontSize: 15 * fontScale }]}>{toRomaji(word.ne)}</Text>
+          <Text style={[styles.cardRom, ss(15)]}>{toRomaji(word.ne)}</Text>
         )}
         <Text style={styles.hint}>{t('flashcard.tapToFlip', { action: flipped ? t('flashcard.unflip') : t('flashcard.flip') })}</Text>
       </Pressable>

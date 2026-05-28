@@ -2,7 +2,6 @@
 export const colors = {
   bg: '#ffffff',
   bgSoft: '#fafafa',
-  bgDisabled: '#f4f4f5',
   surface: '#ffffff',
   ink: '#000000',
   inkSoft: '#18181b',
@@ -15,8 +14,6 @@ export const colors = {
   // 単語フラッシュカード用アクセント
   accentJa: '#2563eb',
   accentNe: '#dc143c',
-  premium: '#a16207',
-  premiumBg: '#fef3c7',
 };
 
 export const spacing = {

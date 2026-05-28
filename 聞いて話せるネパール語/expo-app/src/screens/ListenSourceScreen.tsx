@@ -1,10 +1,12 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Text } from '../Text';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Svg, { Line, Path } from 'react-native-svg';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { THEMES, GRAMMAR_THEMES } from '../dataLoader';
+import { useScaleStyle } from '../SettingsContext';
 import { useI18n } from '../i18n';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'ListenSource'>;
@@ -31,6 +33,7 @@ function GrammarIcon() {
 export default function ListenSourceScreen() {
   const navigation = useNavigation<Nav>();
   const { t } = useI18n();
+  const ss = useScaleStyle();
 
   const totalConvEx = THEMES.length * 3 * 20; // 表示用の概数 (1800)
   const totalGrammarEx = GRAMMAR_THEMES.reduce((s, th) => s + th.exampleCount, 0);
@@ -44,11 +47,11 @@ export default function ListenSourceScreen() {
         >
           <ChatIcon />
           <View style={styles.cardBody}>
-            <Text style={styles.name}>{t('listenSource.convName')}</Text>
-            <Text style={styles.cardDesc}>
+            <Text style={[styles.name, ss(16)]}>{t('listenSource.convName')}</Text>
+            <Text style={[styles.cardDesc, ss(12, 18)]}>
               {t('listenSource.convDesc', { themes: THEMES.length, total: totalConvEx })}
             </Text>
-            <Text style={styles.meta}>{t('listenSource.convMeta', { total: totalConvEx })}</Text>
+            <Text style={[styles.meta, ss(11)]}>{t('listenSource.convMeta', { total: totalConvEx })}</Text>
           </View>
         </Pressable>
 
@@ -58,11 +61,11 @@ export default function ListenSourceScreen() {
         >
           <GrammarIcon />
           <View style={styles.cardBody}>
-            <Text style={styles.name}>{t('listenSource.grammarName')}</Text>
-            <Text style={styles.cardDesc}>
+            <Text style={[styles.name, ss(16)]}>{t('listenSource.grammarName')}</Text>
+            <Text style={[styles.cardDesc, ss(12, 18)]}>
               {t('listenSource.grammarDesc', { themes: GRAMMAR_THEMES.length, total: totalGrammarEx })}
             </Text>
-            <Text style={styles.meta}>{t('listenSource.grammarMeta', { total: totalGrammarEx })}</Text>
+            <Text style={[styles.meta, ss(11)]}>{t('listenSource.grammarMeta', { total: totalGrammarEx })}</Text>
           </View>
         </Pressable>
       </View>

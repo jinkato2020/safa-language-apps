@@ -1,4 +1,5 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../Text';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { colors, spacing, radius } from '../theme';
@@ -26,22 +27,14 @@ export default function VocabCategoryScreen() {
         const catName = t(`vocabCategories.${item.id}`);
         return (
           <Pressable
-            style={({ pressed }) => [styles.card, !item.free && styles.cardLocked, pressed && styles.cardPressed]}
+            style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
             onPress={() => {
-              if (!item.free) {
-                navigation.navigate('Paywall', { feature: catName });
-                return;
-              }
               navigation.navigate('Flashcard', { categoryId: item.id, direction: 'ne2ja' });
             }}
           >
             <Text style={styles.num}>{String(item.id).padStart(2, '0')}</Text>
-            <Text style={[styles.name, !item.free && styles.nameLocked]}>{catName}</Text>
-            {item.free ? (
-              <Text style={styles.count}>{t('common.wordsCount', { count: item.wordCount })}</Text>
-            ) : (
-              <Text style={styles.lock}>{t('common.lock')}</Text>
-            )}
+            <Text style={styles.name}>{catName}</Text>
+            <Text style={styles.count}>{t('common.wordsCount', { count: item.wordCount })}</Text>
           </Pressable>
         );
       }}
@@ -56,10 +49,7 @@ const styles = StyleSheet.create({
   desc: { fontSize: 14, color: colors.inkMute, lineHeight: 21 },
   card: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: radius.md, paddingVertical: spacing.md, paddingHorizontal: spacing.md, marginBottom: spacing.sm },
   cardPressed: { backgroundColor: colors.bgSoft, borderColor: colors.ink },
-  cardLocked: { backgroundColor: colors.bgDisabled, opacity: 0.75 },
   num: { fontFamily: 'Courier', fontSize: 11, color: colors.inkFaint, width: 24 },
   name: { flex: 1, fontSize: 14, fontWeight: '500', color: colors.ink },
-  nameLocked: { color: colors.inkFaint },
   count: { fontFamily: 'Courier', fontSize: 11, color: colors.inkFaint, paddingHorizontal: spacing.sm, paddingVertical: 3, borderWidth: 1, borderColor: colors.line, borderRadius: 99 },
-  lock: { fontSize: 14 },
 });

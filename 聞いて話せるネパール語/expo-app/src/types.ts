@@ -5,7 +5,6 @@ export type Mode = 'conversation' | 'listening' | 'grammar' | 'vocabulary';
 export interface ThemeMeta {
   id: number;
   name: string;
-  free: boolean;
 }
 
 export interface LevelMeta {
@@ -22,7 +21,6 @@ export interface Example {
 export interface WordCategoryMeta {
   id: number;
   name: string;
-  free: boolean;
   wordCount: number;
 }
 
@@ -34,17 +32,7 @@ export interface Word {
 export interface GrammarThemeMeta {
   id: number;
   name: string;
-  free: boolean;
   exampleCount: number;
-}
-
-export interface FreeTier {
-  conversationThemes: number[];
-  conversationLevels: number[];
-  listeningThemes: number[];
-  listeningLevels: number[];
-  wordCategories: number[];
-  grammarThemes: number[];
 }
 
 // ナビゲーション
@@ -80,6 +68,5 @@ export type RootStackParamList = {
   VocabCategory: undefined;
   VocabDirection: { categoryId: number };
   Flashcard: { categoryId: number; direction: 'ne2ja' | 'ja2ne' };
-  Paywall: { feature: string };
   SettingsMain: undefined;
 };

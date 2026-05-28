@@ -1,19 +1,38 @@
 import { useLayoutEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Text } from '../Text';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import { useAudioPlayer } from 'expo-audio';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Svg, { Line, Path, Polyline } from 'react-native-svg';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
-import { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, isCombinationFree, isGrammarThemeFree } from '../dataLoader';
+import { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples } from '../dataLoader';
 import { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio } from '../../data/audioMap';
-import { useSettings, useFontScale, type Direction } from '../SettingsContext';
+import { useSettings, useScaleStyle, type Direction } from '../SettingsContext';
 import { useI18n } from '../i18n';
 import { sentenceToRomaji } from '../transliterate';
 import vocabData from '../../data/vocab.json';
 
 const VOCAB = vocabData as Record<string, { ja: string; rom: string }>;
+
+// 中級・上級で除外する助詞 (postposition) と代名詞 (pronoun)
+// 文法構造をすでに知っている学習者向けに、内容語のみを単語リストに残す
+const NE_PARTICLES_AND_PRONOUNS = new Set<string>([
+  // 助詞・後置詞
+  'मा', 'बाट', 'लाई', 'को', 'का', 'की', 'ले', 'सँग', 'सित', 'देखि', 'सम्म',
+  'पनि', 'मात्र', 'मात्रै', 'त', 'र', 'अनि', 'तर', 'वा', 'कि', 'भने', 'नै', 'कै',
+  // 人称代名詞
+  'म', 'तँ', 'तिमी', 'तपाईं', 'ऊ', 'उनी', 'उहाँ',
+  'हामी', 'हामीहरू', 'तिमीहरू', 'तपाईंहरू', 'उनीहरू',
+  // 指示・疑問代名詞
+  'यो', 'त्यो', 'यी', 'ती', 'के', 'कुन', 'कस्तो', 'कहाँ', 'कहिले', 'किन', 'कसरी', 'कति',
+  // 所有・反射
+  'आफ्नो', 'आफू', 'मेरो', 'मेरा', 'तिम्रो', 'तिम्रा', 'उसको', 'उहाँको',
+  'हाम्रो', 'हाम्रा', 'तपाईंको', 'उनको', 'उनीहरूको',
+  // 与格代名詞
+  'मलाई', 'तिमीलाई', 'तपाईंलाई', 'उसलाई', 'उनलाई', 'हामीलाई', 'उनीहरूलाई',
+]);
 
 function tokenize(text: string): string[] {
   return text
@@ -51,7 +70,8 @@ function FlipIcon({ size = 18 }: { size?: number }) {
 
 export default function PracticeScreen() {
   const navigation = useNavigation<Nav>();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
+  const isJaUI = lang === 'ja';
   const { themeId: initialThemeId, levelId: initialLevelId, startIndex, mode } = useRoute<R>().params;
   const isGrammar = mode === 'grammar';
 
@@ -71,7 +91,7 @@ export default function PracticeScreen() {
   const levelName = isGrammar ? t('practice.grammarLabel') : t(`levels.${levelId}`);
 
   const { practiceDirection, setPracticeDirection, romaji } = useSettings();
-  const fontScale = useFontScale();
+  const ss = useScaleStyle();
 
   useLayoutEffect(() => {
     navigation.setOptions({ title: isGrammar ? t('practice.titleGrammar') : t('practice.titleConv') });
@@ -108,7 +128,7 @@ export default function PracticeScreen() {
         // 次のテーマ（文法は同一系列、会話は同レベル → 次レベル）
         if (isGrammar) {
           for (let t = themeId + 1; t <= GRAMMAR_THEMES.length; t++) {
-            if (isGrammarThemeFree(t) && getGrammarExamples(t).length > 0) {
+            if (getGrammarExamples(t).length > 0) {
               setThemeId(t);
               setIndex(0);
               setRevealed(false);
@@ -118,7 +138,7 @@ export default function PracticeScreen() {
         } else {
           // 同レベルで次のテーマ
           for (let t = themeId + 1; t <= THEMES.length; t++) {
-            if (isCombinationFree('conversation', t, levelId) && getExamples(t, levelId).length > 0) {
+            if (getExamples(t, levelId).length > 0) {
               setThemeId(t);
               setIndex(0);
               setRevealed(false);
@@ -128,7 +148,7 @@ export default function PracticeScreen() {
           // 全テーマ終わり → 次のレベルの先頭テーマへ
           if (levelId < LEVELS.length) {
             for (let t = 1; t <= THEMES.length; t++) {
-              if (isCombinationFree('conversation', t, levelId + 1) && getExamples(t, levelId + 1).length > 0) {
+              if (getExamples(t, levelId + 1).length > 0) {
                 setThemeId(t);
                 setLevelId(levelId + 1);
                 setIndex(0);
@@ -147,40 +167,34 @@ export default function PracticeScreen() {
         // 前のテーマの最終例題
         if (isGrammar) {
           for (let t = themeId - 1; t >= 1; t--) {
-            if (isGrammarThemeFree(t)) {
-              const exs = getGrammarExamples(t);
-              if (exs.length > 0) {
-                setThemeId(t);
-                setIndex(exs.length - 1);
-                setRevealed(false);
-                return;
-              }
+            const exs = getGrammarExamples(t);
+            if (exs.length > 0) {
+              setThemeId(t);
+              setIndex(exs.length - 1);
+              setRevealed(false);
+              return;
             }
           }
         } else {
           for (let t = themeId - 1; t >= 1; t--) {
-            if (isCombinationFree('conversation', t, levelId)) {
-              const exs = getExamples(t, levelId);
-              if (exs.length > 0) {
-                setThemeId(t);
-                setIndex(exs.length - 1);
-                setRevealed(false);
-                return;
-              }
+            const exs = getExamples(t, levelId);
+            if (exs.length > 0) {
+              setThemeId(t);
+              setIndex(exs.length - 1);
+              setRevealed(false);
+              return;
             }
           }
           // 前のレベルの末尾テーマへ
           if (levelId > 1) {
             for (let t = THEMES.length; t >= 1; t--) {
-              if (isCombinationFree('conversation', t, levelId - 1)) {
-                const exs = getExamples(t, levelId - 1);
-                if (exs.length > 0) {
-                  setThemeId(t);
-                  setLevelId(levelId - 1);
-                  setIndex(exs.length - 1);
-                  setRevealed(false);
-                  return;
-                }
+              const exs = getExamples(t, levelId - 1);
+              if (exs.length > 0) {
+                setThemeId(t);
+                setLevelId(levelId - 1);
+                setIndex(exs.length - 1);
+                setRevealed(false);
+                return;
               }
             }
           }
@@ -218,7 +232,7 @@ export default function PracticeScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
-        <Text style={styles.metaText}>
+        <Text style={[styles.metaText, ss(12)]}>
           <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · {t('practice.exampleCounter')} <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
         </Text>
       </View>
@@ -228,13 +242,13 @@ export default function PracticeScreen() {
         style={({ pressed }) => [styles.sentenceCard, pressed && styles.sentenceCardPressed]}
         onPress={() => setRevealed(r => !r)}
       >
-        <Text style={styles.cardHint}>{t('practice.cardHint', { state: revealed ? t('practice.answer') : t('practice.question') })}</Text>
+        <Text style={[styles.cardHint, ss(10)]}>{t('practice.cardHint', { state: revealed ? t('practice.answer') : t('practice.question') })}</Text>
         <Text style={[
           displayIsNe ? styles.neText : styles.jaText,
-          { fontSize: (displayIsNe ? 30 : 26) * fontScale, lineHeight: (displayIsNe ? 44 : 40) * fontScale },
+          ss(displayIsNe ? 30 : 26, displayIsNe ? 44 : 40),
         ]}>{displayText}</Text>
         {displayIsNe && romaji && (
-          <Text style={[styles.romaji, { fontSize: 14 * fontScale, lineHeight: 22 * fontScale }]}>{sentenceToRomaji(ex.ne)}</Text>
+          <Text style={[styles.romaji, ss(14, 22)]}>{sentenceToRomaji(ex.ne)}</Text>
         )}
       </Pressable>
 
@@ -245,14 +259,14 @@ export default function PracticeScreen() {
           onPress={() => playOnce(currentPlayer)}
         >
           <SpeakerIcon size={17} />
-          <Text style={styles.actionBtnText}>{t('practice.playAudio')}</Text>
+          <Text style={[styles.actionBtnText, ss(13)]}>{t('practice.playAudio')}</Text>
         </Pressable>
         <Pressable
           style={({ pressed }) => [styles.actionBtn, pressed && styles.actionBtnPressed]}
           onPress={toggleDirection}
         >
           <FlipIcon size={17} />
-          <Text style={styles.actionBtnText}>{t('practice.flipLang')}</Text>
+          <Text style={[styles.actionBtnText, ss(13)]}>{t('practice.flipLang')}</Text>
         </Pressable>
       </View>
 
@@ -274,9 +288,14 @@ export default function PracticeScreen() {
         </Pressable>
       </View>
 
-      {/* 単語と意味 */}
-      {(() => {
-        const tokens = tokenize(ex.ne).filter(w => !isPunct(w));
+      {/* 単語と意味
+            会話モード: 中級・上級では助詞・代名詞を除外
+            日本語 UI: ネパール語 (デーヴァナーガリー) + ローマ字 / 意味=日本語
+            ネパール語 UI: 日本語 (各 ne 単語の ja 訳) / 意味=ネパール語  */}
+      {!isGrammar && (() => {
+        const filterParticles = levelId >= 2;
+        const all = tokenize(ex.ne).filter(w => !isPunct(w));
+        const tokens = filterParticles ? all.filter(w => !NE_PARTICLES_AND_PRONOUNS.has(w)) : all;
         return (
           <View style={styles.wordsSection}>
             <View style={styles.wordHeader}>
@@ -286,17 +305,21 @@ export default function PracticeScreen() {
             </View>
             {tokens.map((word, i) => {
               const info = VOCAB[word] ?? {};
-              const meaning = info.ja ?? '';
-              const wordRom = info.rom ?? '';
-              const unknown = !meaning;
+              const jaTrans = info.ja ?? '';
+              const neRom = info.rom ?? '';
+              const unknown = !jaTrans;
+              // UI 言語で主表示／意味を反転（ローマ字は ne→roman のみ持っている）
+              const primary = isJaUI ? word : (jaTrans || word);
+              const primaryRom = isJaUI ? neRom : '';
+              const meaning = isJaUI ? jaTrans : word;
               return (
                 <View key={i} style={[styles.wordRow, unknown && styles.wordRowUnknown]}>
                   <Text style={styles.wordNum}>{String(i + 1).padStart(2, '0')}</Text>
                   <View style={styles.wordContent}>
-                    <Text style={[styles.wordDeva, { fontSize: 20 * fontScale }]}>{word}</Text>
-                    {romaji && wordRom ? <Text style={styles.wordRom}>{wordRom}</Text> : null}
+                    <Text style={[isJaUI ? styles.wordDeva : styles.wordJa, ss(20)]}>{primary}</Text>
+                    {romaji && primaryRom ? <Text style={[styles.wordRom, ss(11)]}>{primaryRom}</Text> : null}
                   </View>
-                  <Text style={[styles.wordMeaning, unknown && styles.wordMeaningDim, { fontSize: 13 * fontScale }]}>
+                  <Text style={[styles.wordMeaning, unknown && styles.wordMeaningDim, ss(13)]}>
                     {meaning || t('practice.noDictionary')}
                   </Text>
                 </View>
@@ -400,6 +423,7 @@ const styles = StyleSheet.create({
   wordNum: { fontFamily: 'Courier', fontSize: 12, color: colors.inkQuiet, width: 32 },
   wordContent: { flex: 1, gap: 3 },
   wordDeva: { fontSize: 20, fontWeight: '500', color: colors.ink },
+  wordJa: { fontSize: 20, fontWeight: '500', color: colors.ink },
   wordRom: { fontFamily: 'Courier', fontSize: 11, color: colors.inkFaint, fontStyle: 'italic' },
   wordMeaning: { flex: 1, fontSize: 13, color: colors.ink },
   wordMeaningDim: { color: colors.inkFaint, fontStyle: 'italic' },
