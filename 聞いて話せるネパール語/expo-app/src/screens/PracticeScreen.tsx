@@ -290,10 +290,12 @@ export default function PracticeScreen() {
 
       {/* 単語と意味
             会話モード: 中級・上級では助詞・代名詞を除外
+            文法モード: フィルタなし (全単語を表示)
             日本語 UI: ネパール語 (デーヴァナーガリー) + ローマ字 / 意味=日本語
             ネパール語 UI: 日本語 (各 ne 単語の ja 訳) / 意味=ネパール語  */}
-      {!isGrammar && (() => {
-        const filterParticles = levelId >= 2;
+      {(() => {
+        // 会話の中級・上級だけ助詞・代名詞を除外
+        const filterParticles = !isGrammar && levelId >= 2;
         const all = tokenize(ex.ne).filter(w => !isPunct(w));
         const tokens = filterParticles ? all.filter(w => !NE_PARTICLES_AND_PRONOUNS.has(w)) : all;
         return (

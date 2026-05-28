@@ -355,12 +355,15 @@ export default function ListeningScreen() {
           playSrc(neSrcRef.current);
           finishHandledRef.current = false;
         } else {
+          // ne2ja モードで ne→ja の言語間ギャップ:
+          // ja2ne モードの ja→ne で gaps.first を使うのと対称になるよう、
+          // ここも gaps.first (短い言語間ポーズ) を使う。
           gapTimerRef.current = setTimeout(() => {
             phaseRef.current = 'second';
             setPhase('second');
             playSrc(jaSrcRef.current);
             finishHandledRef.current = false;
-          }, gaps.second);
+          }, gaps.first);
         }
       }
     } else if (p === 'second') {
