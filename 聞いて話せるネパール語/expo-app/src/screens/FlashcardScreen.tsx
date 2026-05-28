@@ -5,7 +5,7 @@ import Svg, { Path, Rect } from 'react-native-svg';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { WORD_CATEGORIES, getWords } from '../dataLoader';
-import { useSettings } from '../SettingsContext';
+import { useSettings, useFontScale } from '../SettingsContext';
 import { useI18n } from '../i18n';
 import { toRomaji } from '../transliterate';
 
@@ -39,6 +39,7 @@ export default function FlashcardScreen() {
   const { t } = useI18n();
   const { categoryId: initialCategoryId, direction } = useRoute<R>().params;
   const { romaji, autoFlip } = useSettings();
+  const fontScale = useFontScale();
   const [currentCategoryId, setCurrentCategoryId] = useState(initialCategoryId);
   const cat = WORD_CATEGORIES.find(c => c.id === currentCategoryId);
   const catName = t(`vocabCategories.${currentCategoryId}`);
@@ -135,11 +136,19 @@ export default function FlashcardScreen() {
         onPress={() => setFlipped(f => !f)}
       >
         <Text style={styles.label}>{flipped ? backTag : frontTag}</Text>
-        <Text style={frontIsNe && !flipped ? styles.textNe : (frontIsNe && flipped ? styles.textJa : (!frontIsNe && flipped ? styles.textNe : styles.textJa))}>
+        <Text style={[
+          frontIsNe && !flipped ? styles.textNe : (frontIsNe && flipped ? styles.textJa : (!frontIsNe && flipped ? styles.textNe : styles.textJa)),
+          (() => {
+            const isNeShown = (frontIsNe && !flipped) || (!frontIsNe && flipped);
+            const baseSize = isNeShown ? 40 : 32;
+            const baseLine = isNeShown ? 56 : 44;
+            return { fontSize: baseSize * fontScale, lineHeight: baseLine * fontScale };
+          })(),
+        ]}>
           {flipped ? backText : frontText}
         </Text>
         {romaji && ((frontIsNe && !flipped) || (!frontIsNe && flipped)) && (
-          <Text style={styles.cardRom}>{toRomaji(word.ne)}</Text>
+          <Text style={[styles.cardRom, { fontSize: 15 * fontScale }]}>{toRomaji(word.ne)}</Text>
         )}
         <Text style={styles.hint}>{t('flashcard.tapToFlip', { action: flipped ? t('flashcard.unflip') : t('flashcard.flip') })}</Text>
       </Pressable>

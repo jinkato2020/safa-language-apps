@@ -8,7 +8,7 @@ import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, isCombinationFree, isGrammarThemeFree } from '../dataLoader';
 import { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio } from '../../data/audioMap';
-import { useSettings, type Direction } from '../SettingsContext';
+import { useSettings, useFontScale, type Direction } from '../SettingsContext';
 import { useI18n } from '../i18n';
 import { sentenceToRomaji } from '../transliterate';
 import vocabData from '../../data/vocab.json';
@@ -71,6 +71,7 @@ export default function PracticeScreen() {
   const levelName = isGrammar ? t('practice.grammarLabel') : t(`levels.${levelId}`);
 
   const { practiceDirection, setPracticeDirection, romaji } = useSettings();
+  const fontScale = useFontScale();
 
   useLayoutEffect(() => {
     navigation.setOptions({ title: isGrammar ? t('practice.titleGrammar') : t('practice.titleConv') });
@@ -228,9 +229,12 @@ export default function PracticeScreen() {
         onPress={() => setRevealed(r => !r)}
       >
         <Text style={styles.cardHint}>{t('practice.cardHint', { state: revealed ? t('practice.answer') : t('practice.question') })}</Text>
-        <Text style={displayIsNe ? styles.neText : styles.jaText}>{displayText}</Text>
+        <Text style={[
+          displayIsNe ? styles.neText : styles.jaText,
+          { fontSize: (displayIsNe ? 30 : 26) * fontScale, lineHeight: (displayIsNe ? 44 : 40) * fontScale },
+        ]}>{displayText}</Text>
         {displayIsNe && romaji && (
-          <Text style={styles.romaji}>{sentenceToRomaji(ex.ne)}</Text>
+          <Text style={[styles.romaji, { fontSize: 14 * fontScale, lineHeight: 22 * fontScale }]}>{sentenceToRomaji(ex.ne)}</Text>
         )}
       </Pressable>
 
@@ -289,10 +293,10 @@ export default function PracticeScreen() {
                 <View key={i} style={[styles.wordRow, unknown && styles.wordRowUnknown]}>
                   <Text style={styles.wordNum}>{String(i + 1).padStart(2, '0')}</Text>
                   <View style={styles.wordContent}>
-                    <Text style={styles.wordDeva}>{word}</Text>
+                    <Text style={[styles.wordDeva, { fontSize: 20 * fontScale }]}>{word}</Text>
                     {romaji && wordRom ? <Text style={styles.wordRom}>{wordRom}</Text> : null}
                   </View>
-                  <Text style={[styles.wordMeaning, unknown && styles.wordMeaningDim]}>
+                  <Text style={[styles.wordMeaning, unknown && styles.wordMeaningDim, { fontSize: 13 * fontScale }]}>
                     {meaning || t('practice.noDictionary')}
                   </Text>
                 </View>

@@ -15,15 +15,19 @@ import {
   nepaliAudio, japaneseAudio,
   nepaliGrammarAudio, japaneseGrammarAudio,
 } from '../../data/audioMap';
-import { useSettings, type ListenSpeed } from '../SettingsContext';
+import { useSettings, useFontScale, type ListenSpeed } from '../SettingsContext';
 import { useI18n } from '../i18n';
 import { sentenceToRomaji } from '../transliterate';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Listening'>;
 type R = RouteProp<RootStackParamList, 'Listening'>;
 
-const GAP_AFTER_FIRST = 400;
-const GAP_AFTER_SECOND = 1200;
+// gap モードごとの間隔 (ms): JA→NE の間、NE→次例題の間
+const GAP_TABLE: Record<'short' | 'normal' | 'long', { first: number; second: number }> = {
+  short: { first: 200, second: 600 },
+  normal: { first: 400, second: 1200 },
+  long: { first: 800, second: 2400 },
+};
 const SPEEDS: ListenSpeed[] = [0.8, 1.0, 1.2, 1.5];
 
 // ── アイコン ──
@@ -154,9 +158,11 @@ export default function ListeningScreen() {
     listenDirection, nepaliRepeat,
     listenLoop, setListenLoop,
     listenSpeed, setListenSpeed,
+    gap,
     romaji,
   } = useSettings();
   const isJa2Ne = listenDirection === 'ja2ne';
+  const fontScale = useFontScale();
 
   const [themeId, setThemeId] = useState(initial.themeId);
   const [levelId, setLevelId] = useState<number>(initial.levelId ?? 1);
@@ -194,6 +200,7 @@ export default function ListeningScreen() {
   const isJa2NeRef = useRef(isJa2Ne);
   const nepaliRepeatRef = useRef(nepaliRepeat);
   const listenSpeedRef = useRef(listenSpeed);
+  const gapRef = useRef(gap);
   const jaSrcRef = useRef(jaSrc);
   const neSrcRef = useRef(neSrc);
   phaseRef.current = phase;
@@ -201,6 +208,7 @@ export default function ListeningScreen() {
   isJa2NeRef.current = isJa2Ne;
   nepaliRepeatRef.current = nepaliRepeat;
   listenSpeedRef.current = listenSpeed;
+  gapRef.current = gap;
   jaSrcRef.current = jaSrc;
   neSrcRef.current = neSrc;
 
@@ -322,19 +330,22 @@ export default function ListeningScreen() {
   const handleAudioFinished = () => {
     if (!playingRef.current) return;
     if (finishHandledRef.current) return;
-    // 再生開始から1秒以内の終了イベントは「前の音声の遅延イベント」とみなし無視
+    // 再生開始から 200ms 以内の終了イベントは「前の音声の遅延イベント」とみなし無視
     // player.replace() の直後に古いソースの didJustFinish が発火することがあるため
-    if (Date.now() - lastPlayStartRef.current < 1000) return;
+    // 注: 短い音声（「正しいです」「間違いです」等 < 1 秒）でも動作するよう
+    //     1000ms → 200ms に短縮 (replace 直後の stale event は数十 ms 内に発生)
+    if (Date.now() - lastPlayStartRef.current < 200) return;
     finishHandledRef.current = true;
 
     const p = phaseRef.current;
     const ja2ne = isJa2NeRef.current;
     const rep = nepaliRepeatRef.current;
+    const gaps = GAP_TABLE[gapRef.current];
 
     // パターン: 順序が重要
     // 1) phaseRef を新フェーズに先に更新 → 遅延イベントが旧フェーズで誤動作しない
     // 2) playSrc() → lastPlayStartRef が今に更新
-    // 3) finishHandledRef = false → 1秒ガードが効くので安全に再開可能
+    // 3) finishHandledRef = false → 200ms ガードが効くので安全に再開可能
     if (p === 'first') {
       if (ja2ne) {
         gapTimerRef.current = setTimeout(() => {
@@ -343,7 +354,7 @@ export default function ListeningScreen() {
           nePlayCountRef.current = 0;
           playSrc(neSrcRef.current);
           finishHandledRef.current = false;
-        }, GAP_AFTER_FIRST);
+        }, gaps.first);
       } else {
         nePlayCountRef.current++;
         if (nePlayCountRef.current < rep) {
@@ -355,7 +366,7 @@ export default function ListeningScreen() {
             setPhase('second');
             playSrc(jaSrcRef.current);
             finishHandledRef.current = false;
-          }, GAP_AFTER_SECOND);
+          }, gaps.second);
         }
       }
     } else if (p === 'second') {
@@ -364,7 +375,7 @@ export default function ListeningScreen() {
           phaseRef.current = 'idle';
           finishHandledRef.current = false;
           advanceRef.current();
-        }, GAP_AFTER_SECOND);
+        }, gaps.second);
       } else {
         nePlayCountRef.current++;
         if (nePlayCountRef.current < rep) {
@@ -375,7 +386,7 @@ export default function ListeningScreen() {
             phaseRef.current = 'idle';
             finishHandledRef.current = false;
             advanceRef.current();
-          }, GAP_AFTER_SECOND);
+          }, gaps.second);
         }
       }
     }
@@ -557,12 +568,12 @@ export default function ListeningScreen() {
 
       <View style={[styles.card, activeLang === 'ja' && styles.cardJaActive]}>
         <Text style={[styles.tag, activeLang === 'ja' && styles.tagJaActive]}>{t('listening.tagJa')}</Text>
-        <Text style={styles.textJa}>{ex.jp}</Text>
+        <Text style={[styles.textJa, { fontSize: 20 * fontScale, lineHeight: 30 * fontScale }]}>{ex.jp}</Text>
       </View>
       <View style={[styles.card, activeLang === 'ne' && styles.cardNeActive]}>
         <Text style={[styles.tag, activeLang === 'ne' && styles.tagNeActive]}>{t('listening.tagNe')}</Text>
-        <Text style={styles.textNe}>{ex.ne}</Text>
-        {romaji && <Text style={styles.romaji}>{sentenceToRomaji(ex.ne)}</Text>}
+        <Text style={[styles.textNe, { fontSize: 26 * fontScale, lineHeight: 38 * fontScale }]}>{ex.ne}</Text>
+        {romaji && <Text style={[styles.romaji, { fontSize: 14 * fontScale, lineHeight: 22 * fontScale }]}>{sentenceToRomaji(ex.ne)}</Text>}
       </View>
 
       <View style={styles.controls}>

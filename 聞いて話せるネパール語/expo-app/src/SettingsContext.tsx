@@ -8,6 +8,20 @@ export type GapMode = 'short' | 'normal' | 'long';
 export type ThemeMode = 'light' | 'dark' | 'system';
 export type FontMode = 'small' | 'medium' | 'large';
 
+// FontMode → 学習テキストの文字サイズ倍率
+// 例題文・カード本文等の主要テキストに適用される
+export const FONT_SCALE: Record<FontMode, number> = {
+  small: 0.85,
+  medium: 1.0,
+  large: 1.2,
+};
+
+// 便利フック: 現在の fontScale を取得
+export function useFontScale(): number {
+  const { fontMode } = useSettings();
+  return FONT_SCALE[fontMode];
+}
+
 type Settings = {
   // 音声
   practiceDirection: Direction;
