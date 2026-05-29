@@ -197,7 +197,10 @@ function VideoSplash({ source, onDone }: { source: number; onDone: () => void })
   });
 
   useEffect(() => {
+    let done = false;
     const handleDone = async () => {
+      if (done) return;
+      done = true;
       try {
         await setAudioModeAsync({
           playsInSilentMode: true,
@@ -208,7 +211,13 @@ function VideoSplash({ source, onDone }: { source: number; onDone: () => void })
       onDone();
     };
     const sub = player.addListener('playToEnd', () => { handleDone(); });
-    return () => sub.remove();
+    // safety fallback: 動画が再生できない/イベントが発火しない場合でも
+    // 10 秒で次の画面へ進む。ユーザーがスプラッシュで詰まらないようにする。
+    const timeout = setTimeout(() => { handleDone(); }, 10000);
+    return () => {
+      sub.remove();
+      clearTimeout(timeout);
+    };
   }, [player]);
 
   return (
