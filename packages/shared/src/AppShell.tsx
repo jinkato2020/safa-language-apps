@@ -15,7 +15,6 @@ import { setAudioModeAsync } from 'expo-audio';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-import ListenSourceScreen from './screens/ListenSourceScreen';
 import ThemeScreen from './screens/ThemeScreen';
 import LevelScreen from './screens/LevelScreen';
 import PracticeScreen from './screens/PracticeScreen';
@@ -27,6 +26,7 @@ import SettingsScreen from './screens/SettingsScreen';
 import { colors } from './theme';
 import { useGlobalScaleStyle } from './SettingsContext';
 import { useI18n } from './i18n';
+import { ListeningAudioProvider } from './ListeningAudioContext';
 import type { RootStackParamList } from './types';
 
 const Tab = createBottomTabNavigator();
@@ -124,9 +124,7 @@ function GrammarStackNav({ defaultStackOptions }: { defaultStackOptions: any }) 
 function ListeningStackNav({ defaultStackOptions }: { defaultStackOptions: any }) {
   return (
     <ListenStack.Navigator screenOptions={defaultStackOptions}>
-      <ListenStack.Screen name="ListenSource" component={ListenSourceScreen} />
       <ListenStack.Screen name="Theme" component={ThemeScreen} initialParams={{ mode: 'listening' }} />
-      <ListenStack.Screen name="Level" component={LevelScreen} initialParams={{ mode: 'listening' }} />
       <ListenStack.Screen name="Listening" component={ListeningScreen} />
       <ListenStack.Screen name="SettingsMain" component={SettingsScreen} />
     </ListenStack.Navigator>
@@ -261,7 +259,9 @@ export function AppShell({ splashSource, headerIconSource }: AppShellProps) {
     <SafeAreaProvider>
       <NavigationContainer>
         <StatusBar style="dark" />
-        <MainTabs defaultStackOptions={defaultStackOptions} />
+        <ListeningAudioProvider>
+          <MainTabs defaultStackOptions={defaultStackOptions} />
+        </ListeningAudioProvider>
       </NavigationContainer>
     </SafeAreaProvider>
   );

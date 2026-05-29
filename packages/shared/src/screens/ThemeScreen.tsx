@@ -18,9 +18,18 @@ export default function ThemeScreen() {
   const { t } = useI18n();
   const ss = useScaleStyle();
   const { mode, source } = useRoute<R>().params;
+  const isListening = mode === 'listening';
+  // 聞き流しモードでは画面内トグルで会話/文法を切り替える（route param は初期値として尊重）
+  const [listenSource, setListenSource] = useState<'conversation' | 'grammar'>(
+    source === 'grammar' ? 'grammar' : 'conversation'
+  );
+  const effectiveSource = isListening
+    ? (listenSource === 'grammar' ? 'grammar' : undefined)
+    : source;
+
   const isGrammarMode = mode === 'grammar';
-  const isGrammarListen = mode === 'listening' && source === 'grammar';
-  const isConversationListen = mode === 'listening' && !isGrammarListen;
+  const isGrammarListen = isListening && effectiveSource === 'grammar';
+  const isConversationListen = isListening && !isGrammarListen;
   const useGrammarThemes = isGrammarMode || isGrammarListen;
   const items = useGrammarThemes ? GRAMMAR_THEMES : THEMES;
 
@@ -50,12 +59,12 @@ export default function ThemeScreen() {
   const onPressItem = (id: number) => {
     if (mode === 'grammar') {
       navigation.navigate('Practice', { themeId: id, mode: 'grammar' });
-    } else if (mode === 'listening' && source === 'grammar') {
+    } else if (isGrammarListen) {
       navigation.navigate('Listening', { themeId: id, source: 'grammar' });
-    } else if (mode === 'conversation') {
-      navigation.navigate('Practice', { themeId: id, levelId: selectedLevel });
     } else if (isConversationListen) {
       navigation.navigate('Listening', { themeId: id, levelId: selectedLevel });
+    } else if (mode === 'conversation') {
+      navigation.navigate('Practice', { themeId: id, levelId: selectedLevel });
     } else {
       navigation.navigate('Level', { mode, themeId: id });
     }
@@ -66,6 +75,26 @@ export default function ThemeScreen() {
       contentContainerStyle={styles.container}
       ListHeaderComponent={
         <View style={styles.head}>
+          {isListening && (
+            <View style={styles.sourceToggle}>
+              <Pressable
+                style={[styles.sourceTab, listenSource === 'conversation' && styles.sourceTabOn]}
+                onPress={() => setListenSource('conversation')}
+              >
+                <Text style={[styles.sourceTabText, listenSource === 'conversation' && styles.sourceTabTextOn, ss(14)]}>
+                  {t('listenSource.convName')}
+                </Text>
+              </Pressable>
+              <Pressable
+                style={[styles.sourceTab, listenSource === 'grammar' && styles.sourceTabOn]}
+                onPress={() => setListenSource('grammar')}
+              >
+                <Text style={[styles.sourceTabText, listenSource === 'grammar' && styles.sourceTabTextOn, ss(14)]}>
+                  {t('listenSource.grammarName')}
+                </Text>
+              </Pressable>
+            </View>
+          )}
           <Text style={[styles.desc, ss(14, 21)]}>{headerText}</Text>
           {showLevelPills && (
             <View style={styles.levelPillRow}>
@@ -108,6 +137,20 @@ const styles = StyleSheet.create({
   kicker: { fontSize: 11, color: colors.inkQuiet, letterSpacing: 2, textTransform: 'uppercase', marginBottom: spacing.xs },
   title: { fontSize: 28, fontWeight: '700', color: colors.ink, marginBottom: spacing.xs, letterSpacing: -0.5 },
   desc: { fontSize: 14, color: colors.inkMute, lineHeight: 21, marginBottom: spacing.md },
+  sourceToggle: { flexDirection: 'row', gap: spacing.xs, marginBottom: spacing.md },
+  sourceTab: {
+    minWidth: 92,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: 9,
+    alignItems: 'center',
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.line,
+    borderRadius: radius.md,
+  },
+  sourceTabOn: { backgroundColor: colors.ink, borderColor: colors.ink },
+  sourceTabText: { fontSize: 14, fontWeight: '600', color: colors.inkMute },
+  sourceTabTextOn: { color: '#fff' },
   levelPillRow: { flexDirection: 'row', gap: spacing.xs, flexWrap: 'wrap', marginTop: spacing.xs },
   levelPill: {
     paddingHorizontal: spacing.md,
