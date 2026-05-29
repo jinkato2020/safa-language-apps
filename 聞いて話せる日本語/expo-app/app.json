@@ -44,7 +44,8 @@
         }
       ],
       "expo-video",
-      "expo-localization"
+      "expo-localization",
+      "expo-updates"
     ],
     "owner": "jinkato1914",
     "extra": {

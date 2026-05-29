@@ -16,7 +16,6 @@ config.resolver.nodeModulesPaths = [
   path.resolve(monorepoRoot, 'node_modules'),
 ];
 
-// App A 側と同じ理由で false (autolinking 互換性)。
-config.resolver.disableHierarchicalLookup = false;
+config.resolver.disableHierarchicalLookup = true;
 
 module.exports = config;

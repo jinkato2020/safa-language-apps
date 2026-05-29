@@ -7,8 +7,7 @@
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/f7a978ac-d672-46e5-9a16-1350a0e889a2",
-      "enabled": false
+      "url": "https://u.expo.dev/f7a978ac-d672-46e5-9a16-1350a0e889a2"
     },
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -48,7 +47,8 @@
         }
       ],
       "expo-video",
-      "expo-localization"
+      "expo-localization",
+      "expo-updates"
     ],
     "extra": {
       "eas": {
