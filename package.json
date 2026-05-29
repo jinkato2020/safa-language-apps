@@ -13,5 +13,12 @@
     "tsc:nepali": "tsc -p 聞いて話せるネパール語/expo-app/tsconfig.json --noEmit",
     "tsc:japanese": "tsc -p 聞いて話せる日本語/expo-app/tsconfig.json --noEmit",
     "tsc:all": "npm run tsc:shared && npm run tsc:nepali && npm run tsc:japanese"
+  },
+  "comments": {
+    "overrides": "expo-audio の peer 'expo-asset':'*' が最新(SDK56)の expo-asset を hoist し、それが expo-constants@56 を連れてくる。SDK54 (expo-modules-core 3.0.30) と native ABI が合わず NoClassDefFoundError でクラッシュするため、SDK54 版に固定する。"
+  },
+  "overrides": {
+    "expo-asset": "12.0.13",
+    "expo-constants": "18.0.13"
   }
 }

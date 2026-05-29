@@ -9,6 +9,7 @@ import {
 } from '../SettingsContext';
 import { useI18n, type Lang } from '../i18n';
 import { useAppData } from '../AppDataContext';
+import * as Application from 'expo-application';
 
 function Icon({ children, size = 16 }: { children: React.ReactNode; size?: number }) {
   return (
@@ -77,6 +78,8 @@ export default function SettingsScreen() {
   const { t, lang, setLang } = useI18n();
   const ss = useScaleStyle();
   const { version: APP_VERSION } = useAppData();
+  const buildNumber = Application.nativeBuildVersion;
+  const versionDisplay = buildNumber ? `${APP_VERSION} (${buildNumber})` : APP_VERSION;
   const isJaUI = lang === 'ja';
 
   // UI 言語に応じたピル順序: ネパール語 UI の時はネパール語側を先頭に
@@ -235,7 +238,7 @@ export default function SettingsScreen() {
       </Section>
 
       <Section title={t('settings.sectionAbout')} icon={<InfoIcon />} ss={ss}>
-        <Row label={t('settings.version')} ss={ss}><Text style={styles.valueText}>{APP_VERSION}</Text></Row>
+        <Row label={t('settings.version')} ss={ss}><Text style={styles.valueText}>{versionDisplay}</Text></Row>
         <Row label={t('settings.shareApp')} ss={ss}>
           <Pressable style={styles.btn} onPress={onShare}>
             <Text style={styles.btnText}>{t('common.share')}</Text>
@@ -249,7 +252,7 @@ export default function SettingsScreen() {
         </Row>
       </Section>
 
-      <Text style={styles.versionFooter}>{t('app.name')} v{APP_VERSION}</Text>
+      <Text style={styles.versionFooter}>{t('app.name')} v{versionDisplay}</Text>
     </ScrollView>
   );
 }
