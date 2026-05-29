@@ -7,7 +7,8 @@
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/f7a978ac-d672-46e5-9a16-1350a0e889a2"
+      "url": "https://u.expo.dev/f7a978ac-d672-46e5-9a16-1350a0e889a2",
+      "enabled": false
     },
     "orientation": "portrait",
     "icon": "./assets/icon.png",
