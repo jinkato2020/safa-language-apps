@@ -26,8 +26,8 @@ name: Build iOS and Android (Japanese)
 # 【Android - Play Console の Service Account に com.safa.japanese のアクセス権を追加】
 #   - GOOGLE_PLAY_SERVICE_ACCOUNT_JSON_BASE64 (App A と共有可、要権限付与)
 #
-# すべての secrets を設定したら、下の `push:` トリガー（コメントアウト中）を
-# 有効にすれば自動ビルドが始まる。
+# secrets 設定済み。下の `push:` トリガーにより main への push で自動ビルド + 提出する
+# （iOS → TestFlight / Android → Play 内部テスト draft）。App A (Nepali) と同じ構成。
 # =============================================================================
 
 on:
@@ -52,16 +52,17 @@ on:
           - 'ios'
           - 'android'
 
-  # TODO: App B の secrets を揃えたら以下のブロックをアンコメントして自動ビルド有効化
-  # push:
-  #   branches:
-  #     - main
-  #   paths:
-  #     - '聞いて話せる日本語/expo-app/**'
-  #     - 'packages/shared/**'
-  #     - 'package.json'
-  #     - 'package-lock.json'
-  #     - '.github/workflows/ios-build-japanese.yml'
+  # main に push されたら自動ビルド（App B の本体 + @safa/shared 経由でも反応）
+  # コミットメッセージに [skip ci] を含めるとスキップ可能
+  push:
+    branches:
+      - main
+    paths:
+      - '聞いて話せる日本語/expo-app/**'
+      - 'packages/shared/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/ios-build-japanese.yml'
 
 env:
   APP_DIR: 聞いて話せる日本語/expo-app
