@@ -78,6 +78,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          # commit count を build 番号計算に使うため full history が必要
+          fetch-depth: 0
 
       - name: Verify Xcode version
         run: |
@@ -97,7 +100,9 @@ jobs:
 
       - name: Calculate build number
         run: |
-          BUILD_NUMBER=$((100 + GITHUB_RUN_NUMBER))
+          # commit 総数 + 1000 オフセット (App A と同じ計算式)。
+          # 詳細は ios-build-nepali.yml の同箇所コメント参照。
+          BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD)))
           echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_ENV
           echo "::notice::Build number: $BUILD_NUMBER"
 
@@ -289,6 +294,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          # commit count を build 番号計算に使うため full history が必要
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v5
@@ -307,7 +315,8 @@ jobs:
 
       - name: Calculate version code
         run: |
-          VERSION_CODE=$((100 + GITHUB_RUN_NUMBER))
+          # commit 総数 + 1000 オフセット (App A と同じ計算式)。
+          VERSION_CODE=$((1000 + $(git rev-list --count HEAD)))
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
           echo "::notice::Android versionCode: $VERSION_CODE"
 

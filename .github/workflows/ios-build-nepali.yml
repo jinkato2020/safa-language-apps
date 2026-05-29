@@ -48,6 +48,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          # commit count を build 番号計算に使うため full history が必要
+          fetch-depth: 0
 
       - name: Verify Xcode version
         run: |
@@ -68,7 +71,10 @@ jobs:
 
       - name: Calculate build number
         run: |
-          BUILD_NUMBER=$((100 + GITHUB_RUN_NUMBER))
+          # commit 総数 + 1000 オフセット (monotonic 増加、workflow リネームで
+          # リセットされない)。旧 workflow で build 146 まで上がっていたため
+          # 1000+ 出発で確実にそれを超える。
+          BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD)))
           echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_ENV
           echo "::notice::Build number: $BUILD_NUMBER"
 
@@ -258,6 +264,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          # commit count を build 番号計算に使うため full history が必要
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v5
@@ -276,8 +285,9 @@ jobs:
 
       - name: Calculate version code
         run: |
-          # 既存 EAS ビルドの最大 versionCode は 5。100+ から始めて確実に超える。
-          VERSION_CODE=$((100 + GITHUB_RUN_NUMBER))
+          # commit 総数 + 1000 オフセット (iOS BUILD_NUMBER と同じ計算式で揃える)。
+          # Android versionCode 上限は 2.1B なので余裕。
+          VERSION_CODE=$((1000 + $(git rev-list --count HEAD)))
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
           echo "::notice::Android versionCode: $VERSION_CODE"
 
