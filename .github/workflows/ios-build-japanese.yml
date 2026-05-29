@@ -432,7 +432,9 @@ jobs:
           packageName: com.safa.japanese
           releaseFiles: ${{ env.APP_DIR }}/android/app/build/outputs/bundle/release/*.aab
           track: internal
-          status: completed
+          # draft でアップロード: Play Console で手動 publish。
+          # 詳細は ios-build-nepali.yml の同箇所コメント参照。
+          status: draft
 
       - name: Cleanup service account
         if: always()

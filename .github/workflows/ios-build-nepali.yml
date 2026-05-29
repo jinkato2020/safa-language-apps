@@ -409,7 +409,11 @@ jobs:
           packageName: com.safa.nepali.jp
           releaseFiles: ${{ env.APP_DIR }}/android/app/build/outputs/bundle/release/*.aab
           track: internal
-          status: completed
+          # draft でアップロード: AAB は Play Console に上がるが配信はしない。
+          # Play Console UI で「Review release」→「Start rollout」をクリックして公開。
+          # status: completed (自動ロールアウト) は互換性チェックで弾かれることがあるため
+          # 確実な draft を採用 (monorepo 化後に発生したエラー回避)。
+          status: draft
 
       - name: Cleanup service account
         if: always()
