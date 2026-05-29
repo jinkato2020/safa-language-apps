@@ -11,6 +11,7 @@ import vocabJson from '../data/vocab.json';
 import {
   nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio,
 } from '../data/audioMap';
+import appJson from '../app.json';
 import type {
   AppData, ThemeMeta, LevelMeta, Example, WordCategoryMeta, Word, GrammarThemeMeta,
 } from '@safa/shared';
@@ -25,6 +26,7 @@ const GRAMMAR_EXAMPLES = grammarExamplesJson as Record<string, Example[]>;
 const VOCAB = vocabJson as Record<string, { ja: string; rom: string }>;
 
 export const appData: AppData = {
+  version: appJson.expo.version,
   THEMES, LEVELS, EXAMPLES, WORD_CATEGORIES, WORDS,
   GRAMMAR_THEMES, GRAMMAR_EXAMPLES, VOCAB,
   audio: { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio },

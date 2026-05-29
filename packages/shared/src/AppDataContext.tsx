@@ -27,6 +27,8 @@ export type AudioBundle = {
 export type VocabEntry = { ja: string; rom: string };
 
 export type AppData = {
+  /** アプリの版数 (各アプリの app.json の expo.version) */
+  version: string;
   THEMES: ThemeMeta[];
   LEVELS: LevelMeta[];
   EXAMPLES: Record<string, Example[]>;

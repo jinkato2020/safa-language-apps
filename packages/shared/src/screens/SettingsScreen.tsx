@@ -8,9 +8,7 @@ import {
   type GapMode, type ThemeMode, type FontMode,
 } from '../SettingsContext';
 import { useI18n, type Lang } from '../i18n';
-
-// app.json から動的に取得（ハードコードしないことでバージョン bump 時の修正漏れ防止）
-const APP_VERSION: string = (require('../../app.json') as { expo: { version: string } }).expo.version;
+import { useAppData } from '../AppDataContext';
 
 function Icon({ children, size = 16 }: { children: React.ReactNode; size?: number }) {
   return (
@@ -78,6 +76,7 @@ export default function SettingsScreen() {
   const s = useSettings();
   const { t, lang, setLang } = useI18n();
   const ss = useScaleStyle();
+  const { version: APP_VERSION } = useAppData();
   const isJaUI = lang === 'ja';
 
   // UI 言語に応じたピル順序: ネパール語 UI の時はネパール語側を先頭に
