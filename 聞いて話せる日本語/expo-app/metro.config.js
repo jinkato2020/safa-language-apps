@@ -16,6 +16,9 @@ config.resolver.nodeModulesPaths = [
   path.resolve(monorepoRoot, 'node_modules'),
 ];
 
-config.resolver.disableHierarchicalLookup = true;
+// hierarchical lookup は有効のまま (false=default)。
+// react-native の内部依存 (@react-native/virtualized-lists 等) は
+// node_modules/react-native/node_modules/ にネストされるため、
+// Metro が親方向に辿れる hierarchical lookup が必要。
 
 module.exports = config;
