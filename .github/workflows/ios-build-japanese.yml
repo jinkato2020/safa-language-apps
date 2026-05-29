@@ -1,4 +1,34 @@
-name: Build iOS and Android (App A)
+name: Build iOS and Android (Japanese)
+
+# =============================================================================
+# App B: 聞いて話せる日本語 (com.safa.japanese)
+#
+# 必要な GitHub Secrets (まだ未設定の場合は Settings > Secrets and variables で追加):
+#
+# 【iOS - App A と共有可能（同じ Apple Developer Account 前提）】
+#   - IOS_DIST_CERT_BASE64
+#   - IOS_DIST_CERT_PASSWORD
+#   - IOS_TEAM_ID
+#   - APP_STORE_CONNECT_KEY_ID
+#   - APP_STORE_CONNECT_ISSUER_ID
+#   - APP_STORE_CONNECT_API_KEY_BASE64
+#
+# 【iOS - App B 専用（bundle ID が異なるため新規必須）】
+#   - IOS_PROVISIONING_PROFILE_JAPANESE_BASE64
+#   - IOS_BUNDLE_ID_JAPANESE  (値: com.safa.japanese)
+#
+# 【Android - App B 専用（別 keystore 推奨）】
+#   - ANDROID_KEYSTORE_JAPANESE_BASE64
+#   - ANDROID_KEYSTORE_PASSWORD_JAPANESE
+#   - ANDROID_KEY_ALIAS_JAPANESE
+#   - ANDROID_KEY_PASSWORD_JAPANESE
+#
+# 【Android - Play Console の Service Account に com.safa.japanese のアクセス権を追加】
+#   - GOOGLE_PLAY_SERVICE_ACCOUNT_JSON_BASE64 (App A と共有可、要権限付与)
+#
+# すべての secrets を設定したら、下の `push:` トリガー（コメントアウト中）を
+# 有効にすれば自動ビルドが始まる。
+# =============================================================================
 
 on:
   # 手動トリガー（プラットフォーム選択可能）
@@ -21,20 +51,20 @@ on:
           - 'both'
           - 'ios'
           - 'android'
-  # main に push されたら自動ビルド（App A の本体 + @safa/shared 経由でも反応）
-  # コミットメッセージに [skip ci] を含めるとスキップ可能
-  push:
-    branches:
-      - main
-    paths:
-      - '聞いて話せるネパール語/expo-app/**'
-      - 'packages/shared/**'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.github/workflows/ios-build.yml'
+
+  # TODO: App B の secrets を揃えたら以下のブロックをアンコメントして自動ビルド有効化
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - '聞いて話せる日本語/expo-app/**'
+  #     - 'packages/shared/**'
+  #     - 'package.json'
+  #     - 'package-lock.json'
+  #     - '.github/workflows/ios-build-japanese.yml'
 
 env:
-  APP_DIR: 聞いて話せるネパール語/expo-app
+  APP_DIR: 聞いて話せる日本語/expo-app
 
 jobs:
   # ─────────────────────────────────────────────────────────────────────────
@@ -63,7 +93,6 @@ jobs:
           cache: 'npm'
 
       - name: Install npm dependencies (monorepo root)
-        # workspaces により @safa/shared と App A 両方の依存が解決される
         run: npm ci
 
       - name: Calculate build number
@@ -134,7 +163,8 @@ jobs:
 
       - name: Install provisioning profile
         env:
-          PROFILE_B64: ${{ secrets.IOS_PROVISIONING_PROFILE_BASE64 }}
+          # App B 用の provisioning profile
+          PROFILE_B64: ${{ secrets.IOS_PROVISIONING_PROFILE_JAPANESE_BASE64 }}
         run: |
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           echo "$PROFILE_B64" | base64 --decode > profile.mobileprovision
@@ -150,7 +180,8 @@ jobs:
         working-directory: ${{ env.APP_DIR }}
         env:
           TEAM_ID_RAW: ${{ secrets.IOS_TEAM_ID }}
-          BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID }}
+          # App B 用の bundle ID (= com.safa.japanese)
+          BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID_JAPANESE }}
         run: |
           TEAM_ID=$(printf '%s' "$TEAM_ID_RAW" | tr -d '\r\n[:space:]')
           BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
@@ -218,7 +249,7 @@ jobs:
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v5
         with:
-          name: ios-ipa-build-${{ env.BUILD_NUMBER }}
+          name: ios-ipa-japanese-build-${{ env.BUILD_NUMBER }}
           path: ${{ env.APP_DIR }}/ios/build/*.ipa
           retention-days: 30
 
@@ -276,7 +307,6 @@ jobs:
 
       - name: Calculate version code
         run: |
-          # 既存 EAS ビルドの最大 versionCode は 5。100+ から始めて確実に超える。
           VERSION_CODE=$((100 + GITHUB_RUN_NUMBER))
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
           echo "::notice::Android versionCode: $VERSION_CODE"
@@ -290,7 +320,8 @@ jobs:
       - name: Decode and place keystore
         working-directory: ${{ env.APP_DIR }}
         env:
-          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          # App B 用の keystore
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_JAPANESE_BASE64 }}
         run: |
           printf '%s' "$KEYSTORE_B64" | base64 --decode > android/app/release.keystore
           if [ ! -s android/app/release.keystore ]; then
@@ -324,7 +355,6 @@ jobs:
       - name: Increase Gradle memory
         working-directory: ${{ env.APP_DIR }}
         run: |
-          # JVM ヒープと Metaspace を拡大（前回 OutOfMemoryError: Metaspace で失敗したため）
           echo "org.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" >> android/gradle.properties
           echo "org.gradle.parallel=true" >> android/gradle.properties
           echo "org.gradle.daemon=false" >> android/gradle.properties
@@ -334,15 +364,14 @@ jobs:
       - name: Build AAB
         working-directory: ${{ env.APP_DIR }}
         env:
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          # App B 用 keystore のパスワード等
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD_JAPANESE }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS_JAPANESE }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD_JAPANESE }}
           GRADLE_OPTS: "-Xmx6g -XX:MaxMetaspaceSize=2g"
         run: |
           cd android
           chmod +x gradlew
-          # -x lint, -x lintVitalRelease で lint タスクを完全にスキップ（メモリ節約 & ビルド高速化）
-          # CI ではアプリ動作確認が目的なので lint チェックは不要
           ./gradlew bundleRelease --no-daemon \
             -x lint \
             -x lintRelease \
@@ -360,7 +389,7 @@ jobs:
       - name: Upload AAB artifact
         uses: actions/upload-artifact@v5
         with:
-          name: android-aab-${{ env.VERSION_CODE }}
+          name: android-aab-japanese-${{ env.VERSION_CODE }}
           path: ${{ env.APP_DIR }}/android/app/build/outputs/bundle/release/*.aab
           retention-days: 30
 
@@ -369,32 +398,25 @@ jobs:
         env:
           SA_JSON_B64: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON_BASE64 }}
         run: |
-          # base64 をデコード
           printf '%s' "$SA_JSON_B64" | base64 --decode > /tmp/service-account-raw.json
           if [ ! -s /tmp/service-account-raw.json ]; then
             echo "::error::Decoded service account JSON is empty"
             exit 1
           fi
 
-          # ファイルサイズと先頭バイトを確認（デバッグ用、秘密情報は出さない）
           echo "::notice::Decoded file size: $(wc -c < /tmp/service-account-raw.json) bytes"
           echo "First 4 bytes (hex): $(head -c 4 /tmp/service-account-raw.json | xxd -p)"
 
-          # Node.js で BOM や不正な文字を除去し、クリーンな JSON として書き直す
           node -e "
             const fs = require('fs');
             let content = fs.readFileSync('/tmp/service-account-raw.json', 'utf8');
-            // UTF-8 BOM を除去
             if (content.charCodeAt(0) === 0xFEFF) {
               console.log('Removed BOM from JSON');
               content = content.slice(1);
             }
-            // 前後の空白を除去
             content = content.trim();
-            // パースして検証
             const parsed = JSON.parse(content);
             console.log('JSON validated. Keys:', Object.keys(parsed).join(', '));
-            // クリーンな JSON として書き直す
             fs.writeFileSync('/tmp/service-account.json', JSON.stringify(parsed));
             console.log('Clean JSON written. Size:', fs.statSync('/tmp/service-account.json').size, 'bytes');
           "
@@ -406,7 +428,8 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJson: ${{ env.SA_JSON_PATH }}
-          packageName: com.safa.nepali.jp
+          # App B の package name
+          packageName: com.safa.japanese
           releaseFiles: ${{ env.APP_DIR }}/android/app/build/outputs/bundle/release/*.aab
           track: internal
           status: completed
