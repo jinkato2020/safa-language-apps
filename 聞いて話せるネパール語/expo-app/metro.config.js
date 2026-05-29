@@ -18,7 +18,9 @@ config.resolver.nodeModulesPaths = [
   path.resolve(monorepoRoot, 'node_modules'),
 ];
 
-// 3) シンボリックリンクではなく実体パスを優先 (npm workspaces 用)
-config.resolver.disableHierarchicalLookup = true;
+// 3) 階層 lookup は有効のまま (false)。Expo の monorepo guide では true 推奨だが、
+//    expo-modules-autolinking が native module を見つけられず実機クラッシュする
+//    事例があるため、より緩い hierarchical lookup を採用。
+config.resolver.disableHierarchicalLookup = false;
 
 module.exports = config;
