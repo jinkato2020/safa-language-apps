@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Decomposition · Editorial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+Devanagari:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      :root {
+        --bg: #f6f1e7;
+        --bg-soft: #f0e9d8;
+        --paper: #fbf7eb;
+        --ink: #1c1916;
+        --ink-soft: #3a342d;
+        --ink-mute: #6b6358;
+        --ink-faint: #a39888;
+        --line: #d9cfb8;
+        --line-soft: #e3dac5;
+        --accent: #c2552c;
+        --accent-soft: rgba(194, 85, 44, 0.1);
+      }
+      html, body { background: var(--bg); color: var(--ink); font-family: 'Source Serif 4', 'Noto Serif JP', Georgia, serif; -webkit-font-smoothing: antialiased; min-height: 100%; overflow-x: hidden; }
+      body { background: radial-gradient(ellipse 60% 50% at 10% 5%, var(--bg-soft) 0%, transparent 50%), radial-gradient(ellipse 60% 50% at 90% 100%, var(--paper) 0%, transparent 50%), var(--bg); background-attachment: fixed; }
+      body::before { content: ''; position: fixed; inset: 0; pointer-events: none; opacity: 0.06; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); z-index: 1; }
+      .topbar { max-width: 920px; margin: 0 auto; padding: 32px 40px 0; display: flex; justify-content: space-between; align-items: baseline; position: relative; z-index: 2; }
+      .crumbs { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--ink-mute); letter-spacing: 0.04em; display: flex; align-items: center; gap: 14px; }
+      .crumbs .num { font-family: 'Source Serif 4', serif; font-style: italic; font-size: 14px; color: var(--accent); }
+      .crumbs .sep { color: var(--ink-faint); }
+      .imprint { font-family: 'Source Serif 4', serif; font-style: italic; font-size: 14px; color: var(--ink-faint); }
+      .layout { max-width: 920px; margin: 0 auto; padding: 56px 40px 100px; position: relative; z-index: 2; }
+      .hero { text-align: center; margin-bottom: 96px; }
+      .eyebrow { font-family: 'Source Serif 4', serif; font-style: italic; font-size: 16px; color: var(--accent); margin-bottom: 12px; }
+      .label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 48px; }
+      .hero-sentence { font-family: 'Noto Serif Devanagari', serif; font-size: clamp(26px, 3.8vw, 46px); font-weight: 500; line-height: 1.42; color: var(--ink); margin-bottom: 36px; }
+      .hero-jp { font-family: 'Source Serif 4', 'Noto Serif JP', serif; font-size: clamp(15px, 1.5vw, 18px); font-weight: 400; color: var(--ink-mute); line-height: 1.9; max-width: 640px; margin: 0 auto; font-style: italic; }
+      .hero-jp::before, .hero-jp::after { content: ''; display: block; width: 28px; height: 1px; background: var(--accent); margin: 18px auto; opacity: 0.6; }
+      .section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 32px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+      .section-title { display: flex; align-items: baseline; gap: 14px; }
+      .section-title .ch { font-family: 'Source Serif 4', serif; font-style: italic; font-size: 18px; color: var(--accent); }
+      .section-title .name { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--ink-soft); font-weight: 500; }
+      .section-meta { font-family: 'Source Serif 4', serif; font-style: italic; font-size: 13px; color: var(--ink-faint); }
+      .words { background: var(--paper); border: 1px solid var(--line); border-radius: 2px; margin-bottom: 80px; }
+      .word { display: grid; grid-template-columns: 52px 1fr auto 36px; gap: 24px; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--line-soft); cursor: pointer; transition: background 0.3s ease, padding-left 0.4s cubic-bezier(0.16,1,0.3,1); position: relative; }
+      .word:last-child { border-bottom: none; }
+      .word::before { content: ''; position: absolute; left: 0; top: 12%; bottom: 12%; width: 2px; background: var(--accent); opacity: 0; transition: opacity 0.3s; }
+      .word:hover { background: var(--bg-soft); padding-left: 32px; }
+      .word:hover::before { opacity: 1; }
+      .word-num { font-family: 'Source Serif 4', serif; font-style: italic; font-size: 20px; color: var(--ink-faint); text-align: center; }
+      .word:hover .word-num { color: var(--accent); }
+      .word-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+      .word-top { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+      .word-deva { font-family: 'Noto Serif Devanagari', serif; font-size: 28px; font-weight: 500; color: var(--ink); }
+      .word-roman { font-family: 'Source Serif 4', serif; font-style: italic; font-size: 14px; color: var(--ink-mute); }
+      .word-meaning { font-family: 'Noto Sans JP', sans-serif; font-size: 14px; color: var(--ink-soft); }
+      .word-pos { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--ink-mute); letter-spacing: 0.15em; padding: 5px 12px; border: 1px solid var(--line); border-radius: 2px; white-space: nowrap; }
+      .play { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); color: var(--ink-mute); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; }
+      .play:hover { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+      .play.playing { background: var(--accent); color: var(--paper); border-color: var(--accent); animation: pulse 1.2s infinite; }
+      .play svg { width: 11px; height: 11px; fill: currentColor; }
+      @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 var(--accent-soft)} 50%{box-shadow:0 0 0 8px transparent} }
+      .grammar { padding: 44px 48px; background: var(--paper); border: 1px solid var(--line); border-radius: 2px; }
+      .gram-quote { font-family: 'Noto Serif Devanagari', serif; font-size: 26px; font-weight: 500; text-align: center; color: var(--ink); margin-bottom: 8px; }
+      .gram-quote-jp { font-family: 'Source Serif 4', serif; font-style: italic; font-size: 17px; color: var(--accent); text-align: center; margin-bottom: 32px; }
+      .gram-explanation { font-family: 'Source Serif 4', 'Noto Serif JP', serif; font-size: 15px; line-height: 2; color: var(--ink-soft); max-width: 700px; margin: 0 auto; text-align: justify; }
+      .gram-explanation::first-letter { font-family: 'Source Serif 4', serif; font-size: 3.4em; font-weight: 500; float: left; line-height: 0.9; padding: 4px 10px 0 0; color: var(--accent); }
+      .gram-explanation strong { color: var(--accent); font-weight: 600; }
+      .gram-explanation em { font-style: italic; color: var(--ink); }
+      .gram-explanation .deva { font-family: 'Noto Serif Devanagari', serif; font-style: normal; color: var(--ink); font-weight: 500; }
+      .footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-family: 'Source Serif 4', serif; font-style: italic; font-size: 13px; color: var(--ink-faint); }
+      @keyframes rise { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+      .hero, .section-head, .words, .grammar, .footer { animation: rise 0.9s forwards cubic-bezier(0.16,1,0.3,1); opacity: 0; }
+      .section-head { animation-delay: 0.4s; }
+      .words { animation-delay: 0.5s; }
+      .grammar { animation-delay: 0.7s; }
+      .footer { animation-delay: 0.9s; }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="crumbs"><span class="num">01</span><span class="sep">·</span><span>自己紹介</span><span class="sep">·</span><span>上級14</span></div>
+      <div class="imprint">Nepali Sentence Atelier</div>
+    </header>
+    <div class="layout">
+      <section class="hero">
+        <div class="eyebrow">a study in self-introduction</div>
+        <div class="label">Sentence Decomposition</div>
+        <h1 class="hero-sentence">बाल्यकालमा भोगेका कठिनाइहरूले<br />आजको मलाई बनाएका छन् र ती अनुभवहरूलाई<br />पाथेय बनाएर दिनदिनै बढ्ने कोशिश गर्छु।</h1>
+        <div class="hero-jp">幼少期に経験した困難が今の自分を形成しており、その経験を糧に日々成長しようとしています。</div>
+      </section>
+      <div class="section-head">
+        <div class="section-title"><span class="ch">I.</span><span class="name">Morphemes</span></div>
+        <div class="section-meta">十六の語</div>
+      </div>
+      <section class="words" id="words"></section>
+      <div class="section-head" style="margin-top: 0;">
+        <div class="section-title"><span class="ch">II.</span><span class="name">Grammar</span></div>
+        <div class="section-meta">on form &amp; flow</div>
+      </div>
+      <section class="grammar">
+        <div class="gram-quote">कठिनाइहरूले मलाई बनाएका छन्</div>
+        <div class="gram-quote-jp">— 困難が私を形作った —</div>
+        <div class="gram-explanation">上級の長文だが構造は二つの節からなる。前半 <em>「कठिनाइहरूले … बनाएका छन्」</em> は <strong>能格構文</strong>で「困難が（主語）私を作った」を表し、能格助詞 <span class="deva">ले</span> が複数名詞 <span class="deva">कठिनाइहरू</span> に付く。後半は接続詞 <span class="deva">र</span> で繋がり、連用形 <span class="deva">बनाएर</span>（〜にして）が原因・手段を示す副詞節を作る。全体として<strong>「過去の困難 → 現在の自己形成 + 経験を糧にした継続的努力」</strong>という、自己紹介としては高度な抽象表現を実現している。</div>
+      </section>
+      <div class="footer"><div>カードをクリックで音声再生</div><div>Vol. I · Word-level Analysis</div></div>
+    </div>
+    <script>
+      const data = [
+        { d:'बाल्यकालमा', r:'baalyakaalamaa', m:'幼少期に', p:'名詞・処格' },
+        { d:'भोगेका', r:'bhogekaa', m:'経験した', p:'過去分詞' },
+        { d:'कठिनाइहरूले', r:'kaṭhinaaīharūle', m:'困難が（複数・能格）', p:'名詞・能格' },
+        { d:'आजको', r:'aajako', m:'今の', p:'属格' },
+        { d:'मलाई', r:'malaaī', m:'私を', p:'代名詞・対格' },
+        { d:'बनाएका', r:'banaaekaa', m:'作り上げた', p:'過去分詞' },
+        { d:'छन्', r:'chhan', m:'〜です（複数三人称）', p:'繋辞' },
+        { d:'र', r:'ra', m:'そして・〜と', p:'接続詞' },
+        { d:'ती', r:'tī', m:'それらの', p:'指示詞' },
+        { d:'अनुभवहरूलाई', r:'anubhavaharūlaaī', m:'経験を（複数・対格）', p:'名詞・対格' },
+        { d:'पाथेय', r:'paatheya', m:'糧', p:'名詞' },
+        { d:'बनाएर', r:'banaaera', m:'〜にして', p:'連用形' },
+        { d:'दिनदिनै', r:'dindinai', m:'日々', p:'副詞' },
+        { d:'बढ्ने', r:'baḍhne', m:'成長する', p:'連体形' },
+        { d:'कोशिश', r:'kośiś', m:'努力', p:'名詞' },
+        { d:'गर्छु', r:'garchu', m:'します（一人称現在）', p:'動詞・現在' },
+      ];
+      const list = document.getElementById('words');
+      data.forEach((w, i) => {
+        const el = document.createElement('article');
+        el.className = 'word';
+        el.dataset.text = w.d;
+        el.innerHTML = `<div class="word-num">${String(i+1).padStart(2,'0')}</div><div class="word-main"><div class="word-top"><div class="word-deva">${w.d}</div><div class="word-roman">${w.r}</div></div><div class="word-meaning">${w.m}</div></div><div class="word-pos">${w.p}</div><button class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>`;
+        list.appendChild(el);
+      });
+      function speak(t, b) {
+        if (!window.speechSynthesis) return;
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(t);
+        u.lang = 'hi-IN'; u.rate = 0.7;
+        b.classList.add('playing');
+        u.onend = u.onerror = () => b.classList.remove('playing');
+        speechSynthesis.speak(u);
+      }
+      document.querySelectorAll('.word').forEach(c => {
+        const b = c.querySelector('.play');
+        b.addEventListener('click', e => { e.stopPropagation(); speak(c.dataset.text, b); });
+        c.addEventListener('click', e => { if(!b.contains(e.target)) speak(c.dataset.text, b); });
+      });
+    </script>
+  </body>
+</html>

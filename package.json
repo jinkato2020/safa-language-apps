@@ -1,0 +1,17 @@
+{
+  "name": "kiite-hanaseru-series",
+  "private": true,
+  "version": "0.0.0",
+  "description": "「聞いて話せる」シリーズ monorepo (聞いて話せるネパール語 + 聞いて話せる日本語)",
+  "workspaces": [
+    "packages/*",
+    "聞いて話せるネパール語/expo-app",
+    "聞いて話せる日本語/expo-app"
+  ],
+  "scripts": {
+    "tsc:shared": "tsc -p packages/shared/tsconfig.json --noEmit",
+    "tsc:nepali": "tsc -p 聞いて話せるネパール語/expo-app/tsconfig.json --noEmit",
+    "tsc:japanese": "tsc -p 聞いて話せる日本語/expo-app/tsconfig.json --noEmit",
+    "tsc:all": "npm run tsc:shared && npm run tsc:nepali && npm run tsc:japanese"
+  }
+}

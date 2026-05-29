@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Decomposition — 01/14</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      :root {
+        --bg: #ffffff;
+        --bg-soft: #fafafa;
+        --surface: #ffffff;
+        --ink: #000000;
+        --ink-soft: #18181b;
+        --ink-mute: #52525b;
+        --ink-quiet: #71717a;
+        --ink-faint: #a1a1aa;
+        --ink-trace: #d4d4d8;
+        --line: #e4e4e7;
+        --line-soft: #f4f4f5;
+      }
+      html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; min-height: 100%; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+      body { font-feature-settings: 'cv11' 1, 'ss01' 1; }
+
+      .topbar { border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); z-index: 10; }
+      .topbar-inner { max-width: 1200px; margin: 0 auto; padding: 14px 32px; display: flex; justify-content: space-between; align-items: center; }
+      .crumbs { display: flex; align-items: center; gap: 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 450; color: var(--ink); }
+      .crumbs > span { padding: 4px 10px; }
+      .crumbs .num { color: var(--ink); border-right: 1px solid var(--line); padding-left: 0; }
+      .crumbs .name { color: var(--ink-mute); border-right: 1px solid var(--line); }
+      .crumbs .level { color: var(--ink); background: var(--bg-soft); border-radius: 4px; }
+      .imprint { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-quiet); display: flex; align-items: center; gap: 8px; }
+      .imprint .dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; }
+
+      .layout { max-width: 1200px; margin: 0 auto; padding: 80px 32px 120px; }
+      .hero { margin-bottom: 96px; display: grid; grid-template-columns: 200px 1fr; gap: 64px; align-items: start; }
+      .hero-side { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-faint); display: flex; flex-direction: column; gap: 16px; padding-top: 8px; }
+      .hero-side-item { display: flex; flex-direction: column; gap: 4px; }
+      .hero-side-item .key { color: var(--ink-quiet); text-transform: uppercase; letter-spacing: 0.1em; }
+      .hero-side-item .val { color: var(--ink); font-size: 13px; }
+      .hero-main {}
+      .hero-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-quiet); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 24px; }
+      .hero-sentence { font-family: 'Noto Sans Devanagari', sans-serif; font-size: clamp(28px, 3.8vw, 46px); font-weight: 600; line-height: 1.4; color: var(--ink); margin-bottom: 36px; letter-spacing: -0.012em; }
+      .hero-jp { font-family: 'Noto Sans JP', sans-serif; font-size: clamp(15px, 1.4vw, 18px); font-weight: 400; color: var(--ink-mute); line-height: 1.7; max-width: 720px; }
+
+      .section-head { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 32px; padding-bottom: 14px; border-bottom: 1px solid var(--ink); }
+      .section-title { display: flex; align-items: baseline; gap: 16px; }
+      .section-title .ix { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: var(--ink-quiet); }
+      .section-title .name { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; }
+      .section-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-faint); letter-spacing: 0.05em; }
+
+      .words { margin-bottom: 96px; border-top: 1px solid var(--line); }
+      .word-head { display: grid; grid-template-columns: 56px 1fr 200px 140px 40px; gap: 24px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; }
+      .word { display: grid; grid-template-columns: 56px 1fr 200px 140px 40px; gap: 24px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--line); cursor: pointer; transition: background 0.15s; position: relative; }
+      .word::before { content: ''; position: absolute; left: -16px; top: 12px; bottom: 12px; width: 2px; background: var(--ink); opacity: 0; transition: opacity 0.2s; }
+      .word:hover { background: var(--bg-soft); }
+      .word:hover::before { opacity: 1; }
+      .word-num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-quiet); }
+      .word-content { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+      .word-content-top { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+      .word-deva { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 24px; font-weight: 500; color: var(--ink); letter-spacing: -0.01em; }
+      .word-roman { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-faint); }
+      .word-meaning { font-family: 'Noto Sans JP', sans-serif; font-size: 13px; color: var(--ink-mute); }
+      .word-tag { font-family: 'Noto Sans JP', sans-serif; font-size: 12px; color: var(--ink); font-weight: 500; }
+      .word-pos { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; color: var(--ink); padding: 4px 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); display: inline-block; }
+      .play { width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink-mute); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+      .play:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+      .play.playing { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+      .play svg { width: 9px; height: 9px; fill: currentColor; }
+
+      .grammar { padding: 40px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 8px; }
+      .gram-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-quiet); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 20px; }
+      .gram-pattern { padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; margin-bottom: 28px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); }
+      .gram-token { padding: 4px 10px; border: 1px solid var(--line); border-radius: 4px; font-family: 'Noto Sans Devanagari', sans-serif; font-size: 14px; color: var(--ink); background: var(--surface); }
+      .gram-token.role { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--bg); background: var(--ink); border-color: var(--ink); letter-spacing: 0.08em; }
+      .gram-arrow { color: var(--ink-faint); }
+      .gram-explanation { font-family: 'Noto Sans JP', sans-serif; font-size: 14px; line-height: 1.85; color: var(--ink-mute); max-width: 760px; }
+      .gram-explanation strong { color: var(--ink); font-weight: 600; }
+      .gram-explanation em { font-style: normal; color: var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 0.92em; background: var(--surface); padding: 1px 6px; border-radius: 3px; border: 1px solid var(--line); }
+      .gram-explanation .deva { font-family: 'Noto Sans Devanagari', sans-serif; color: var(--ink); font-weight: 500; }
+
+      .footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-faint); }
+
+      @keyframes rise { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+      .hero, .section-head, .word, .word-head, .grammar, .footer { animation: rise 0.4s forwards; opacity: 0; }
+      .hero { animation-delay: 0s; }
+      .section-head { animation-delay: 0.2s; }
+      .grammar { animation-delay: 0.4s; }
+      .footer { animation-delay: 0.6s; }
+
+      @media (max-width: 900px) {
+        .hero { grid-template-columns: 1fr; gap: 32px; }
+        .word, .word-head { grid-template-columns: 40px 1fr 100px 32px; gap: 14px; }
+        .word .word-tag { display: none; }
+        .word-head > :nth-child(4) { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="crumbs"><span class="num">01</span><span class="name">自己紹介</span><span class="level">上級14</span></div>
+        <div class="imprint"><span class="dot"></span>parsed · 16 tokens</div>
+      </div>
+    </header>
+    <div class="layout">
+      <section class="hero">
+        <div class="hero-side">
+          <div class="hero-side-item"><span class="key">Theme</span><span class="val">自己紹介</span></div>
+          <div class="hero-side-item"><span class="key">Level</span><span class="val">上級</span></div>
+          <div class="hero-side-item"><span class="key">Index</span><span class="val">14</span></div>
+          <div class="hero-side-item"><span class="key">Tokens</span><span class="val">16</span></div>
+          <div class="hero-side-item"><span class="key">Clauses</span><span class="val">2</span></div>
+        </div>
+        <div class="hero-main">
+          <div class="hero-label">— Sentence —</div>
+          <h1 class="hero-sentence">बाल्यकालमा भोगेका कठिनाइहरूले आजको मलाई बनाएका छन् र ती अनुभवहरूलाई पाथेय बनाएर दिनदिनै बढ्ने कोशिश गर्छु।</h1>
+          <div class="hero-jp">幼少期に経験した困難が今の自分を形成しており、その経験を糧に日々成長しようとしています。</div>
+        </div>
+      </section>
+      <div class="section-head">
+        <div class="section-title"><span class="ix">01</span><span class="name">Morphemes</span></div>
+        <div class="section-meta">16 tokens</div>
+      </div>
+      <section class="words" id="wordsContainer">
+        <div class="word-head"><span>#</span><span>Token</span><span>Meaning</span><span>POS</span><span></span></div>
+        <div id="words"></div>
+      </section>
+      <div class="section-head">
+        <div class="section-title"><span class="ix">02</span><span class="name">Grammar &amp; Structure</span></div>
+        <div class="section-meta">2 clauses</div>
+      </div>
+      <section class="grammar">
+        <div class="gram-label">PATTERN</div>
+        <div class="gram-pattern">
+          <span class="gram-token role">SUBJ</span><span class="gram-token">कठिनाइहरूले</span><span class="gram-arrow">→</span>
+          <span class="gram-token role">OBJ</span><span class="gram-token">मलाई</span><span class="gram-arrow">→</span>
+          <span class="gram-token role">V</span><span class="gram-token">बनाएका छन्</span><span class="gram-arrow">+</span>
+          <span class="gram-token role">CONJ</span><span class="gram-token">र</span><span class="gram-arrow">→</span>
+          <span class="gram-token role">ADV</span><span class="gram-token">बनाएर</span><span class="gram-arrow">→</span>
+          <span class="gram-token role">V</span><span class="gram-token">गर्छु</span>
+        </div>
+        <div class="gram-explanation">この文は二つの節からなる。前半 <em>「कठिनाइहरूले … बनाएका छन्」</em> は <strong>能格構文</strong>で「困難が（主語）私を作った」を表す。能格助詞 <span class="deva">ले</span> が複数名詞に付き、コピュラ <span class="deva">छन्</span> は複数三人称現在で主語と一致する。後半は接続詞 <span class="deva">र</span> で繋がり、連用形 <span class="deva">बनाएर</span>（〜にして）が原因・手段を示す副詞節を作る。</div>
+      </section>
+      <div class="footer"><div>cards · click to playback</div><div>word_decomposition · v1.0</div></div>
+    </div>
+    <script>
+      const data = [
+        { d:'बाल्यकालमा', r:'baalyakaalamaa', m:'幼少期に', p:'名詞・処格' },
+        { d:'भोगेका', r:'bhogekaa', m:'経験した', p:'過去分詞' },
+        { d:'कठिनाइहरूले', r:'kaṭhinaaīharūle', m:'困難が（複数・能格）', p:'名詞・能格' },
+        { d:'आजको', r:'aajako', m:'今の', p:'属格' },
+        { d:'मलाई', r:'malaaī', m:'私を', p:'代名詞・対格' },
+        { d:'बनाएका', r:'banaaekaa', m:'作り上げた', p:'過去分詞' },
+        { d:'छन्', r:'chhan', m:'〜です（複数三人称）', p:'繋辞' },
+        { d:'र', r:'ra', m:'そして・〜と', p:'接続詞' },
+        { d:'ती', r:'tī', m:'それらの', p:'指示詞' },
+        { d:'अनुभवहरूलाई', r:'anubhavaharūlaaī', m:'経験を（複数・対格）', p:'名詞・対格' },
+        { d:'पाथेय', r:'paatheya', m:'糧', p:'名詞' },
+        { d:'बनाएर', r:'banaaera', m:'〜にして', p:'連用形' },
+        { d:'दिनदिनै', r:'dindinai', m:'日々', p:'副詞' },
+        { d:'बढ्ने', r:'baḍhne', m:'成長する', p:'連体形' },
+        { d:'कोशिश', r:'kośiś', m:'努力', p:'名詞' },
+        { d:'गर्छु', r:'garchu', m:'します（一人称現在）', p:'動詞・現在' },
+      ];
+      const list = document.getElementById('words');
+      data.forEach((w, i) => {
+        const el = document.createElement('div');
+        el.className = 'word';
+        el.dataset.text = w.d;
+        el.style.animation = `rise 0.3s ${0.3 + i * 0.025}s forwards`;
+        el.style.opacity = '0';
+        el.innerHTML = `<span class="word-num">${String(i+1).padStart(2,'0')}</span><div class="word-content"><div class="word-content-top"><div class="word-deva">${w.d}</div><div class="word-roman">${w.r}</div></div></div><span class="word-tag">${w.m}</span><span><span class="word-pos">${w.p}</span></span><button class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>`;
+        list.appendChild(el);
+      });
+      function speak(t, b) {
+        if (!window.speechSynthesis) return;
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(t);
+        u.lang = 'hi-IN'; u.rate = 0.7;
+        b.classList.add('playing');
+        u.onend = u.onerror = () => b.classList.remove('playing');
+        speechSynthesis.speak(u);
+      }
+      document.querySelectorAll('.word').forEach(c => {
+        const b = c.querySelector('.play');
+        b.addEventListener('click', e => { e.stopPropagation(); speak(c.dataset.text, b); });
+        c.addEventListener('click', e => { if(!b.contains(e.target)) speak(c.dataset.text, b); });
+      });
+    </script>
+  </body>
+</html>

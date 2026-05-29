@@ -1,0 +1,22 @@
+{
+  "name": "@safa/shared",
+  "version": "0.1.0",
+  "private": true,
+  "description": "「聞いて話せる」シリーズ共通コア (UI / Context / 設定)",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "@react-navigation/native": "*",
+    "@react-navigation/native-stack": "*",
+    "@react-navigation/bottom-tabs": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-svg": "*",
+    "expo-audio": "*",
+    "expo-video": "*",
+    "expo-localization": "*",
+    "expo-status-bar": "*",
+    "@react-native-async-storage/async-storage": "*"
+  }
+}

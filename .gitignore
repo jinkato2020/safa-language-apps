@@ -1,0 +1,74 @@
+# ─── monorepo root ────────────────────────────────────────────────
+# Node / npm
+node_modules/
+**/node_modules/
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# 環境変数（秘密鍵を含む）
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Expo
+.expo/
+**/.expo/
+dist/
+web-build/
+expo-env.d.ts
+.metro-health-check*
+
+# generated native folders (expo prebuild output)
+**/expo-app/ios/
+**/expo-app/android/
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# Excel 一時ファイル / バックアップ
+~$*.xlsx
+*.backup-*
+
+# EAS / Apple / Android 署名 (絶対にコミットしない)
+credentials.json
+credentials/
+*.p12
+*.p8
+*.mobileprovision
+*.cer
+*.key
+*.jks
+*.keystore
+*.pem
+
+# ─── アプリ別: 音声ソース・キャッシュ（再生成可能） ─────────────────
+# expo-app/assets/audio/ には bundled copy が入る (scripts/export-to-expo.mjs が生成)
+# 以下はソース MP3 で、TTS スクリプト + Excel から再生成可能なため git 管理外
+聞いて話せるネパール語/japanese/
+聞いて話せるネパール語/nepali/
+聞いて話せるネパール語/japanese-grammar/
+聞いて話せるネパール語/nepali-grammar/
+聞いて話せるネパール語/japanese2/
+聞いて話せる日本語/japanese/
+聞いて話せる日本語/nepali/
+聞いて話せる日本語/japanese-grammar/
+聞いて話せる日本語/nepali-grammar/
+聞いて話せる日本語/japanese2/
+
+# Listening mode 結合音声 (Android 起動不能のため v1.5.14 でロールバック、再生成可能)
+**/expo-app/assets/audio/listening/
+**/expo-app/data/listeningMetadata.json

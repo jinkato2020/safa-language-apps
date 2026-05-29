@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "name": "現在形（肯定文）",
+    "exampleCount": 20
+  },
+  {
+    "id": 2,
+    "name": "現在形（否定文）",
+    "exampleCount": 20
+  },
+  {
+    "id": 3,
+    "name": "過去形（肯定文）",
+    "exampleCount": 20
+  },
+  {
+    "id": 4,
+    "name": "過去形（否定文）",
+    "exampleCount": 20
+  },
+  {
+    "id": 5,
+    "name": "未来形",
+    "exampleCount": 20
+  },
+  {
+    "id": 6,
+    "name": "疑問文",
+    "exampleCount": 20
+  },
+  {
+    "id": 7,
+    "name": "依頼文",
+    "exampleCount": 20
+  },
+  {
+    "id": 8,
+    "name": "命令形（〜しなさい）",
+    "exampleCount": 20
+  },
+  {
+    "id": 9,
+    "name": "禁止表現（〜してはいけない）",
+    "exampleCount": 20
+  },
+  {
+    "id": 10,
+    "name": "感嘆文",
+    "exampleCount": 20
+  },
+  {
+    "id": 11,
+    "name": "〜している（進行形）",
+    "exampleCount": 20
+  },
+  {
+    "id": 12,
+    "name": "〜になる／〜くなる（状態変化）",
+    "exampleCount": 20
+  },
+  {
+    "id": 13,
+    "name": "形容詞の使い方",
+    "exampleCount": 20
+  },
+  {
+    "id": 14,
+    "name": "副詞の使い方",
+    "exampleCount": 20
+  },
+  {
+    "id": 15,
+    "name": "〜したい（願望表現）",
+    "exampleCount": 20
+  },
+  {
+    "id": 16,
+    "name": "〜できる（可能表現）",
+    "exampleCount": 20
+  },
+  {
+    "id": 17,
+    "name": "〜しなければならない（義務）",
+    "exampleCount": 20
+  },
+  {
+    "id": 18,
+    "name": "〜してもいい（許可）",
+    "exampleCount": 20
+  },
+  {
+    "id": 19,
+    "name": "〜と思う（推量・意見）",
+    "exampleCount": 20
+  },
+  {
+    "id": 20,
+    "name": "〜かもしれない（推量・可能性）",
+    "exampleCount": 20
+  },
+  {
+    "id": 21,
+    "name": "〜したことがある（経験）",
+    "exampleCount": 20
+  },
+  {
+    "id": 22,
+    "name": "比較表現",
+    "exampleCount": 20
+  },
+  {
+    "id": 23,
+    "name": "接続詞",
+    "exampleCount": 20
+  },
+  {
+    "id": 24,
+    "name": "〜ながら（同時動作）",
+    "exampleCount": 20
+  },
+  {
+    "id": 25,
+    "name": "〜てから（順序）",
+    "exampleCount": 20
+  },
+  {
+    "id": 26,
+    "name": "〜ために（目的）",
+    "exampleCount": 20
+  },
+  {
+    "id": 27,
+    "name": "条件文（もし〜なら）",
+    "exampleCount": 20
+  },
+  {
+    "id": 28,
+    "name": "受動表現",
+    "exampleCount": 20
+  },
+  {
+    "id": 29,
+    "name": "使役表現（〜させる）",
+    "exampleCount": 20
+  },
+  {
+    "id": 30,
+    "name": "間接話法",
+    "exampleCount": 20
+  }
+]

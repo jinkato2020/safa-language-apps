@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design Patterns · 5 Variants</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: #0a0a0f; color: #e4e4e7; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 48px 32px; }
+      .head { max-width: 1100px; margin: 0 auto 56px; text-align: center; }
+      .head .label { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #6366f1; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 12px; }
+      .head h1 { font-size: 36px; font-weight: 600; margin-bottom: 12px; }
+      .head p { color: #a1a1aa; font-size: 15px; font-family: 'Noto Sans JP', sans-serif; }
+      .grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+      .card { background: #16161d; border: 1px solid #27272a; border-radius: 16px; padding: 28px; cursor: pointer; transition: all 0.3s; text-decoration: none; color: inherit; display: block; }
+      .card:hover { transform: translateY(-4px); border-color: #6366f1; box-shadow: 0 16px 40px -16px rgba(99,102,241,0.3); }
+      .preview { height: 180px; border-radius: 8px; margin-bottom: 20px; position: relative; overflow: hidden; }
+      .preview-1 { background: linear-gradient(135deg, #f6f1e7, #faf6ed); border: 1px solid #d9cfb8; }
+      .preview-1::before { content: 'मेरो नाम'; position: absolute; top: 30px; left: 30px; font-family: serif; font-size: 28px; color: #1c1916; }
+      .preview-1::after { content: '— 田中 —'; position: absolute; bottom: 30px; left: 30px; font-family: serif; font-style: italic; color: #c2552c; font-size: 13px; letter-spacing: 0.1em; }
+      .preview-2 { background: #050608; border: 1px solid rgba(0,255,255,0.15); }
+      .preview-2::before { content: '> decompose'; position: absolute; top: 30px; left: 30px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #00ff66; }
+      .preview-2::after { content: 'मेरो नाम तानाका'; position: absolute; bottom: 30px; left: 30px; font-family: sans-serif; color: #00ffff; font-size: 18px; text-shadow: 0 0 12px rgba(0,255,255,0.5); }
+      .preview-3 { background: radial-gradient(ellipse at 20% 30%, #1a0b3d, #03051a 60%); border: 1px solid rgba(167,139,250,0.18); position: relative; }
+      .preview-3::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 70% 70%, rgba(167,139,250,0.4), transparent 50%); filter: blur(20px); }
+      .preview-3::after { content: 'embedding'; position: absolute; bottom: 30px; left: 30px; font-family: 'JetBrains Mono', monospace; color: #a78bfa; font-size: 14px; letter-spacing: 0.1em; }
+      .preview-4 { background: #fafafa; border: 1px solid #e4e4e7; }
+      .preview-4::before { content: '01  自己紹介  上級14'; position: absolute; top: 30px; left: 30px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #000; letter-spacing: 0.1em; }
+      .preview-4::after { content: 'Decomposition'; position: absolute; bottom: 30px; left: 30px; font-family: sans-serif; font-weight: 600; color: #000; font-size: 18px; }
+      .preview-5 { background: linear-gradient(135deg, #f5f3ff, #ecfeff, #fdf2f8); border: 1px solid rgba(99,102,241,0.18); position: relative; overflow: hidden; }
+      .preview-5::before { content: ''; position: absolute; top: -50%; left: -20%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 40%, rgba(192,132,252,0.5), transparent 30%), radial-gradient(circle at 70% 60%, rgba(94,234,212,0.4), transparent 30%); filter: blur(40px); }
+      .preview-5::after { content: 'Aurora'; position: absolute; bottom: 30px; left: 30px; font-family: sans-serif; font-weight: 600; font-size: 18px; background: linear-gradient(135deg, #c084fc, #60a5fa); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+      .card h2 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+      .card .num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6366f1; letter-spacing: 0.2em; margin-bottom: 8px; }
+      .card .desc { font-family: 'Noto Sans JP', sans-serif; font-size: 13px; color: #a1a1aa; line-height: 1.7; }
+      .footer { max-width: 1100px; margin: 56px auto 0; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #52525b; letter-spacing: 0.1em; }
+    </style>
+  </head>
+  <body>
+    <div class="head">
+      <div class="label">5 design variants</div>
+      <h1>Sentence Decomposition · Design Patterns</h1>
+      <p>同じコンテンツを異なる5つのデザイン言語で表現</p>
+    </div>
+    <div class="grid">
+      <a class="card" href="1-editorial.html">
+        <div class="preview preview-1"></div>
+        <div class="num">PATTERN / 01</div>
+        <h2>Editorial</h2>
+        <p class="desc">温かいクリーム色の紙質に深いインクと赤土色。Anthropic的な書物体・編集デザイン。</p>
+      </a>
+      <a class="card" href="2-terminal.html">
+        <div class="preview preview-2"></div>
+        <div class="num">PATTERN / 02</div>
+        <h2>Terminal · CRT</h2>
+        <p class="desc">漆黒の端末画面にネオン・シアン/マゼンタ。スキャンライン、フリッカー、ASCIIボーダー付き。</p>
+      </a>
+      <a class="card" href="3-neural.html">
+        <div class="preview preview-3"></div>
+        <div class="num">PATTERN / 03</div>
+        <h2>Latent Space</h2>
+        <p class="desc">深い宇宙のような紫黒背景に浮遊する粒子。埋め込みベクトル空間のメタファー。</p>
+      </a>
+      <a class="card" href="4-linear.html">
+        <div class="preview preview-4"></div>
+        <div class="num">PATTERN / 04</div>
+        <h2>Linear · Documentation</h2>
+        <p class="desc">純白に黒。極限まで削ぎ落とした技術文書。Linear / Vercel系のミニマル精密派。</p>
+      </a>
+      <a class="card" href="5-aurora.html">
+        <div class="preview preview-5"></div>
+        <div class="num">PATTERN / 05</div>
+        <h2>Aurora · Iridescent</h2>
+        <p class="desc">紫・青・ティール・桃色のグラデーション球が漂う。Apple Intelligence的な虹彩ガラスUI。</p>
+      </a>
+    </div>
+    <div class="footer">DESIGN INDEX · 5 VARIANTS · SAME CONTENT</div>
+  </body>
+</html>

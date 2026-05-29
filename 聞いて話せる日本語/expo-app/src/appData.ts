@@ -1,0 +1,34 @@
+// 聞いて話せる日本語 のアプリ固有データを集約し、@safa/shared の AppData として提供する。
+
+import themesJson from '../data/themes.json';
+import levelsJson from '../data/levels.json';
+import examplesJson from '../data/examples.json';
+import wordCategoriesJson from '../data/wordCategories.json';
+import wordsJson from '../data/words.json';
+import grammarThemesJson from '../data/grammarThemes.json';
+import grammarExamplesJson from '../data/grammarExamples.json';
+import vocabJson from '../data/vocab.json';
+import {
+  nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio,
+} from '../data/audioMap';
+import type {
+  AppData, ThemeMeta, LevelMeta, Example, WordCategoryMeta, Word, GrammarThemeMeta,
+} from '@safa/shared';
+
+const THEMES = themesJson as ThemeMeta[];
+const LEVELS = levelsJson as LevelMeta[];
+const EXAMPLES = examplesJson as Record<string, Example[]>;
+const WORD_CATEGORIES = wordCategoriesJson as WordCategoryMeta[];
+const WORDS = wordsJson as Record<string, Word[]>;
+const GRAMMAR_THEMES = grammarThemesJson as GrammarThemeMeta[];
+const GRAMMAR_EXAMPLES = grammarExamplesJson as Record<string, Example[]>;
+const VOCAB = vocabJson as Record<string, { ja: string; rom: string }>;
+
+export const appData: AppData = {
+  THEMES, LEVELS, EXAMPLES, WORD_CATEGORIES, WORDS,
+  GRAMMAR_THEMES, GRAMMAR_EXAMPLES, VOCAB,
+  audio: { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio },
+  getExamples: (themeId, levelId) => EXAMPLES[`${themeId}-${levelId}`] ?? [],
+  getWords: (categoryId) => WORDS[String(categoryId)] ?? [],
+  getGrammarExamples: (themeId) => GRAMMAR_EXAMPLES[String(themeId)] ?? [],
+};
