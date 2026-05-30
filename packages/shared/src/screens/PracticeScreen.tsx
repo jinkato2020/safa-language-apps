@@ -65,7 +65,7 @@ function FlipIcon({ size = 18 }: { size?: number }) {
 }
 
 export default function PracticeScreen() {
-  const { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, audio, VOCAB } = useAppData();
+  const { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, audio, VOCAB, GRAMMAR_VOCAB } = useAppData();
   const { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio } = audio;
   const navigation = useNavigation<Nav>();
   const { t, lang } = useI18n();
@@ -304,11 +304,20 @@ export default function PracticeScreen() {
               <Text style={styles.wordHeaderLabel}>{t('practice.meaningHeader')}</Text>
             </View>
             {tokens.map((word, i) => {
-              const info = VOCAB[word] ?? {};
-              const jaTrans = info.ja ?? '';
-              const neRom = info.rom ?? '';
+              // 文脈依存辞書 (文法モード時のみ) → なければ既存 VOCAB へフォールバック
+              const sentenceId = `${themeId}-${index + 1}`;
+              const gctxEntry = isGrammar ? GRAMMAR_VOCAB?.[word] : undefined;
+              const matchedCtx = gctxEntry?.contexts?.find(c => c.sentence_id === sentenceId)
+                              ?? gctxEntry?.contexts?.[0];
+
+              const fallback = VOCAB[word] ?? {};
+              const jaTrans = matchedCtx?.ja || fallback.ja || '';
+              const neRom = gctxEntry?.rom || fallback.rom || '';
+              const ctxNote = matchedCtx?.note;
+              const ctxPos = matchedCtx?.pos;
               const unknown = !jaTrans;
-              // UI 言語で主表示／意味を反転（ローマ字は ne→roman のみ持っている）
+
+              // UI 言語で主表示／意味を反転
               const primary = isJaUI ? word : (jaTrans || word);
               const primaryRom = isJaUI ? neRom : '';
               const meaning = isJaUI ? jaTrans : word;
@@ -316,13 +325,17 @@ export default function PracticeScreen() {
                 <View key={i} style={[styles.wordRow, unknown && styles.wordRowUnknown]}>
                   <Text style={styles.wordNum}>{String(i + 1).padStart(2, '0')}</Text>
                   <View style={styles.wordContent}>
-                    {/* 単語と意味のフォントサイズを統一 (16px) */}
                     <Text style={[isJaUI ? styles.wordDeva : styles.wordJa, ss(16)]}>{primary}</Text>
                     {romaji && primaryRom ? <Text style={[styles.wordRom, ss(11)]}>{primaryRom}</Text> : null}
                   </View>
-                  <Text style={[styles.wordMeaning, unknown && styles.wordMeaningDim, ss(16)]}>
-                    {meaning || t('practice.noDictionary')}
-                  </Text>
+                  <View style={styles.wordMeaningCol}>
+                    <Text style={[styles.wordMeaning, unknown && styles.wordMeaningDim, ss(16)]}>
+                      {meaning || t('practice.noDictionary')}
+                    </Text>
+                    {/* 文法モード時のみ 品詞・解説を補足表示 */}
+                    {isGrammar && ctxPos ? <Text style={[styles.wordCtxPos, ss(10)]}>{ctxPos}</Text> : null}
+                    {isGrammar && ctxNote ? <Text style={[styles.wordCtxNote, ss(10)]}>{ctxNote}</Text> : null}
+                  </View>
                 </View>
               );
             })}
@@ -413,9 +426,12 @@ const styles = StyleSheet.create({
   },
   wordHeaderNum: { fontFamily: 'Courier', fontSize: 10, color: colors.inkFaint, width: 32, letterSpacing: 1 },
   wordHeaderLabel: { flex: 1, fontFamily: 'Courier', fontSize: 10, color: colors.inkFaint, letterSpacing: 1 },
+  wordMeaningCol: { flex: 1, gap: 2 },
+  wordCtxPos: { fontFamily: 'Courier', fontSize: 10, color: colors.inkQuiet },
+  wordCtxNote: { fontSize: 10, color: colors.inkFaint, fontStyle: 'italic' },
   wordRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: colors.line,

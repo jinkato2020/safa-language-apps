@@ -9,7 +9,11 @@ export {
   type Direction, type NepaliRepeat, type ListenSpeed, type GapMode, type ThemeMode, type FontMode,
   type SettingsDefaults,
 } from './SettingsContext';
-export { AppDataProvider, useAppData, type AppData, type AudioBundle, type VocabEntry } from './AppDataContext';
+export {
+  AppDataProvider, useAppData,
+  type AppData, type AudioBundle, type VocabEntry,
+  type GrammarVocab, type GrammarVocabEntry, type GrammarVocabContext,
+} from './AppDataContext';
 
 // ── UI ヘルパー ──
 export { Text } from './Text';

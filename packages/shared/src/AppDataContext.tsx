@@ -26,6 +26,22 @@ export type AudioBundle = {
 
 export type VocabEntry = { ja: string; rom: string };
 
+// 文脈依存辞書 (Claude API で生成)
+// 同じ単語が文脈ごとに異なる訳・解説を持つ
+export type GrammarVocabContext = {
+  sentence_id: string;  // 例: "1-3" (themeId-exampleNo)
+  ja: string;
+  pos?: string | null;   // 品詞・活用情報
+  note?: string | null;  // 文法解説
+};
+export type GrammarVocabEntry = {
+  rom: string;
+  base_form?: string | null;    // 動詞の不定詞、形容詞の基本形等 (該当なし=null)
+  base_meaning?: string | null; // 辞書的な基本意味
+  contexts: GrammarVocabContext[];
+};
+export type GrammarVocab = Record<string, GrammarVocabEntry>;
+
 export type AppData = {
   /** アプリの版数 (各アプリの app.json の expo.version) */
   version: string;
@@ -37,6 +53,8 @@ export type AppData = {
   GRAMMAR_THEMES: GrammarThemeMeta[];
   GRAMMAR_EXAMPLES: Record<string, Example[]>;
   VOCAB: Record<string, VocabEntry>;
+  /** 文脈依存辞書 (文法モード用、Claude API 生成。シート単位で部分提供可) */
+  GRAMMAR_VOCAB?: GrammarVocab;
   audio: AudioBundle;
   // ── 派生ヘルパー (アプリ側で実装してもらう) ──
   getExamples: (themeId: number, levelId: number) => Example[];

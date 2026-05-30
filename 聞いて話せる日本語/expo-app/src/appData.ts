@@ -8,12 +8,14 @@ import wordsJson from '../data/words.json';
 import grammarThemesJson from '../data/grammarThemes.json';
 import grammarExamplesJson from '../data/grammarExamples.json';
 import vocabJson from '../data/vocab.json';
+import grammarVocabJson from '../data/grammar-vocab-context.json';
 import {
   nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio,
 } from '../data/audioMap';
 import appJson from '../app.json';
 import type {
   AppData, ThemeMeta, LevelMeta, Example, WordCategoryMeta, Word, GrammarThemeMeta,
+  GrammarVocab,
 } from '@safa/shared';
 
 const THEMES = themesJson as ThemeMeta[];
@@ -24,11 +26,12 @@ const WORDS = wordsJson as Record<string, Word[]>;
 const GRAMMAR_THEMES = grammarThemesJson as GrammarThemeMeta[];
 const GRAMMAR_EXAMPLES = grammarExamplesJson as Record<string, Example[]>;
 const VOCAB = vocabJson as Record<string, { ja: string; rom: string }>;
+const GRAMMAR_VOCAB = grammarVocabJson as GrammarVocab;
 
 export const appData: AppData = {
   version: appJson.expo.version,
   THEMES, LEVELS, EXAMPLES, WORD_CATEGORIES, WORDS,
-  GRAMMAR_THEMES, GRAMMAR_EXAMPLES, VOCAB,
+  GRAMMAR_THEMES, GRAMMAR_EXAMPLES, VOCAB, GRAMMAR_VOCAB,
   audio: { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio },
   getExamples: (themeId, levelId) => EXAMPLES[`${themeId}-${levelId}`] ?? [],
   getWords: (categoryId) => WORDS[String(categoryId)] ?? [],

@@ -52,6 +52,16 @@ export default function ThemeScreen() {
     headerText = t('themeScreen.headerConv');
   }
 
+  // 聞き流しは会話/文法トグルに依らず常に「聞き流しモード」見出し
+  let modeTitle: string;
+  if (mode === 'grammar') {
+    modeTitle = t('themeScreen.modeTitleGrammar');
+  } else if (mode === 'listening') {
+    modeTitle = t('themeScreen.modeTitleListen');
+  } else {
+    modeTitle = t('themeScreen.modeTitleConv');
+  }
+
   const getThemeDisplayName = (id: number): string => {
     return useGrammarThemes ? t(`grammarThemes.${id}`) : t(`themes.${id}`);
   };
@@ -75,6 +85,8 @@ export default function ThemeScreen() {
       contentContainerStyle={styles.container}
       ListHeaderComponent={
         <View style={styles.head}>
+          <Text style={[styles.modeTitle, ss(13)]}>{modeTitle}</Text>
+          <Text style={[styles.desc, ss(14, 21)]}>{headerText}</Text>
           {isListening && (
             <View style={styles.sourceToggle}>
               <Pressable
@@ -95,7 +107,6 @@ export default function ThemeScreen() {
               </Pressable>
             </View>
           )}
-          <Text style={[styles.desc, ss(14, 21)]}>{headerText}</Text>
           {showLevelPills && (
             <View style={styles.levelPillRow}>
               {LEVELS.map(lv => (
@@ -134,6 +145,7 @@ export default function ThemeScreen() {
 const styles = StyleSheet.create({
   container: { padding: spacing.lg, paddingBottom: spacing.xxl },
   head: { marginBottom: spacing.xl },
+  modeTitle: { fontSize: 13, fontWeight: '600', color: colors.inkQuiet, letterSpacing: 0.2, marginBottom: spacing.sm },
   kicker: { fontSize: 11, color: colors.inkQuiet, letterSpacing: 2, textTransform: 'uppercase', marginBottom: spacing.xs },
   title: { fontSize: 28, fontWeight: '700', color: colors.ink, marginBottom: spacing.xs, letterSpacing: -0.5 },
   desc: { fontSize: 14, color: colors.inkMute, lineHeight: 21, marginBottom: spacing.md },
