@@ -49,7 +49,7 @@ function PauseIcon({ size = 30 }: { size?: number }) {
 }
 
 export default function ListeningScreen() {
-  const { getExamples, getGrammarExamples } = useAppData();
+  const { getExamples, getGrammarExamples, JP_READING } = useAppData();
   const route = useRoute<R>();
   const { t, lang } = useI18n();
   const isJaUI = lang === 'ja';
@@ -90,6 +90,29 @@ export default function ListeningScreen() {
 
   if (!ex) return null;
 
+  // 日本語の読み補助 (かな+ローマ字)。言語=ネパール語のとき日本語カードに表示。
+  const reading = JP_READING?.[ex.jp];
+
+  // 日本語カード: 言語=ネパール語(!isJaUI)のとき、かな(常時)+ローマ字(ローマ字設定ON時)を補助表示。
+  const jaCard = (
+    <View style={[styles.card, activeLang === 'ja' && styles.cardJaActive]}>
+      <Text style={[styles.tag, activeLang === 'ja' && styles.tagJaActive, ss(11)]}>{t('listening.tagJa')}</Text>
+      <Text style={[styles.textJa, ss(20, 30)]}>{ex.jp}</Text>
+      {!isJaUI && reading?.kana ? <Text style={[styles.jaKana, ss(15, 23)]}>{reading.kana}</Text> : null}
+      {!isJaUI && romaji && reading?.romaji ? <Text style={[styles.romaji, ss(14, 22)]}>{reading.romaji}</Text> : null}
+    </View>
+  );
+
+  // ネパール語カード: ローマ字は 言語=日本語(isJaUI) かつ ローマ字設定ON のときだけ表示
+  // (ネパール語話者にはネパール語ローマ字は不要なため)。
+  const neCard = (
+    <View style={[styles.card, activeLang === 'ne' && styles.cardNeActive]}>
+      <Text style={[styles.tag, activeLang === 'ne' && styles.tagNeActive, ss(11)]}>{t('listening.tagNe')}</Text>
+      <Text style={[styles.textNe, ss(26, 38)]}>{ex.ne}</Text>
+      {isJaUI && romaji ? <Text style={[styles.romaji, ss(14, 22)]}>{sentenceToRomaji(ex.ne)}</Text> : null}
+    </View>
+  );
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
@@ -98,32 +121,8 @@ export default function ListeningScreen() {
         </Text>
       </View>
 
-      {/* UI 言語に応じて表示順を切り替え: ja UI は ja 上、ne UI は ne 上 */}
-      {isJaUI ? (
-        <>
-          <View style={[styles.card, activeLang === 'ja' && styles.cardJaActive]}>
-            <Text style={[styles.tag, activeLang === 'ja' && styles.tagJaActive, ss(11)]}>{t('listening.tagJa')}</Text>
-            <Text style={[styles.textJa, ss(20, 30)]}>{ex.jp}</Text>
-          </View>
-          <View style={[styles.card, activeLang === 'ne' && styles.cardNeActive]}>
-            <Text style={[styles.tag, activeLang === 'ne' && styles.tagNeActive, ss(11)]}>{t('listening.tagNe')}</Text>
-            <Text style={[styles.textNe, ss(26, 38)]}>{ex.ne}</Text>
-            {romaji && <Text style={[styles.romaji, ss(14, 22)]}>{sentenceToRomaji(ex.ne)}</Text>}
-          </View>
-        </>
-      ) : (
-        <>
-          <View style={[styles.card, activeLang === 'ne' && styles.cardNeActive]}>
-            <Text style={[styles.tag, activeLang === 'ne' && styles.tagNeActive, ss(11)]}>{t('listening.tagNe')}</Text>
-            <Text style={[styles.textNe, ss(26, 38)]}>{ex.ne}</Text>
-            {romaji && <Text style={[styles.romaji, ss(14, 22)]}>{sentenceToRomaji(ex.ne)}</Text>}
-          </View>
-          <View style={[styles.card, activeLang === 'ja' && styles.cardJaActive]}>
-            <Text style={[styles.tag, activeLang === 'ja' && styles.tagJaActive, ss(11)]}>{t('listening.tagJa')}</Text>
-            <Text style={[styles.textJa, ss(20, 30)]}>{ex.jp}</Text>
-          </View>
-        </>
-      )}
+      {/* UI 言語に応じて表示順を切替: ja UI は日本語が上、ne UI はネパール語が上 */}
+      {isJaUI ? <>{jaCard}{neCard}</> : <>{neCard}{jaCard}</>}
 
       <View style={styles.controls}>
         <Pressable style={({ pressed }) => [styles.ctrlBtn, pressed && styles.ctrlPressed]} onPress={() => go(-1)} hitSlop={8}>
@@ -174,6 +173,7 @@ const styles = StyleSheet.create({
   tagJaActive: { color: colors.accentJa, fontWeight: '700' },
   tagNeActive: { color: colors.accentJa, fontWeight: '700' },
   textJa: { fontSize: 20, lineHeight: 30, color: colors.ink },
+  jaKana: { fontSize: 15, lineHeight: 23, color: colors.inkMute, marginTop: 6 },
   textNe: { fontSize: 26, lineHeight: 38, color: colors.ink, fontWeight: '600' },
   romaji: { fontFamily: 'Courier', fontSize: 14, color: colors.inkQuiet, fontStyle: 'italic', marginTop: 6, lineHeight: 22 },
   controls: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: spacing.md, marginTop: spacing.xl },

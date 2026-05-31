@@ -13,6 +13,7 @@ export {
   AppDataProvider, useAppData,
   type AppData, type AudioBundle, type VocabEntry,
   type GrammarVocab, type GrammarVocabEntry, type GrammarVocabContext,
+  type JpReading, type JpReadingEntry,
 } from './AppDataContext';
 
 // ── UI ヘルパー ──

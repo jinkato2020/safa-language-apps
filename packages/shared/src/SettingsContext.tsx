@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useI18n } from './i18n';
 
 export type Direction = 'ja2ne' | 'ne2ja';
 export type NepaliRepeat = 1 | 2 | 3;
@@ -147,8 +148,14 @@ export function SettingsProvider({ children, defaults, storageKey = DEFAULT_STOR
   // BASE_DEFAULTS にアプリ別 defaults を上書きしたものが実効デフォルト
   const D = { ...BASE_DEFAULTS, ...(defaults ?? {}) };
 
+  // 言語設定 (聞き流しの再生順序の既定を言語に連動させるため)
+  const { lang } = useI18n();
+
   const [practiceDirection, setPracticeDirection] = useState<Direction>(D.practiceDirection);
-  const [listenDirection, setListenDirection] = useState<Direction>(D.listenDirection);
+  // 聞き流しの再生順序: ユーザーが明示的に変更したらその値を優先。
+  // 未変更なら言語に連動した既定 (ja→ja2ne / ne→ne2ja)。
+  const [listenDirectionRaw, setListenDirectionRaw] = useState<Direction>(D.listenDirection);
+  const [listenDirectionExplicit, setListenDirectionExplicit] = useState(false);
   const [nepaliRepeat, setNepaliRepeat] = useState<NepaliRepeat>(D.nepaliRepeat);
   const [listenLoop, setListenLoop] = useState(D.listenLoop);
   const [listenSpeed, setListenSpeed] = useState<ListenSpeed>(D.listenSpeed);
@@ -160,6 +167,15 @@ export function SettingsProvider({ children, defaults, storageKey = DEFAULT_STOR
   const [shuffle, setShuffle] = useState(D.shuffle);
   const [loaded, setLoaded] = useState(false);
 
+  // 実効的な再生順序: 明示変更済みなら raw 値、未変更なら言語連動の既定。
+  const listenDirection: Direction = listenDirectionExplicit
+    ? listenDirectionRaw
+    : (lang === 'ne' ? 'ne2ja' : 'ja2ne');
+  const setListenDirection = (d: Direction) => {
+    setListenDirectionRaw(d);
+    setListenDirectionExplicit(true);
+  };
+
   // 初回ロード
   useEffect(() => {
     (async () => {
@@ -168,7 +184,8 @@ export function SettingsProvider({ children, defaults, storageKey = DEFAULT_STOR
         if (raw) {
           const s = JSON.parse(raw);
           if (s.practiceDirection) setPracticeDirection(s.practiceDirection);
-          if (s.listenDirection) setListenDirection(s.listenDirection);
+          if (s.listenDirection) setListenDirectionRaw(s.listenDirection);
+          if (typeof s.listenDirectionExplicit === 'boolean') setListenDirectionExplicit(s.listenDirectionExplicit);
           if (s.nepaliRepeat) setNepaliRepeat(s.nepaliRepeat);
           if (typeof s.listenLoop === 'boolean') setListenLoop(s.listenLoop);
           if (s.listenSpeed) setListenSpeed(s.listenSpeed);
@@ -188,17 +205,18 @@ export function SettingsProvider({ children, defaults, storageKey = DEFAULT_STOR
   useEffect(() => {
     if (!loaded) return;
     const s = {
-      practiceDirection, listenDirection, nepaliRepeat,
+      practiceDirection, listenDirection: listenDirectionRaw, listenDirectionExplicit, nepaliRepeat,
       listenLoop, listenSpeed, gap,
       romaji, themeMode, fontMode,
       autoFlip, shuffle,
     };
     AsyncStorage.setItem(storageKey, JSON.stringify(s)).catch(() => {});
-  }, [storageKey, loaded, practiceDirection, listenDirection, nepaliRepeat, listenLoop, listenSpeed, gap, romaji, themeMode, fontMode, autoFlip, shuffle]);
+  }, [storageKey, loaded, practiceDirection, listenDirectionRaw, listenDirectionExplicit, nepaliRepeat, listenLoop, listenSpeed, gap, romaji, themeMode, fontMode, autoFlip, shuffle]);
 
   const resetSettings = () => {
     setPracticeDirection(D.practiceDirection);
-    setListenDirection(D.listenDirection);
+    setListenDirectionRaw(D.listenDirection);
+    setListenDirectionExplicit(false);
     setNepaliRepeat(D.nepaliRepeat);
     setListenLoop(D.listenLoop);
     setListenSpeed(D.listenSpeed);

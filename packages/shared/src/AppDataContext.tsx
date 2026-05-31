@@ -42,6 +42,14 @@ export type GrammarVocabEntry = {
 };
 export type GrammarVocab = Record<string, GrammarVocabEntry>;
 
+// 日本語文の読み補助 (ネパール語話者向け、Claude API 生成)
+// 聞き流しモードで言語=ネパール語のとき、日本語カードに かな+ローマ字 を表示する。
+export type JpReadingEntry = {
+  kana: string;    // 全文の読み仮名 (文脈に応じ ひらがな/カタカナ)
+  romaji: string;  // ヘボン式ローマ字
+};
+export type JpReading = Record<string, JpReadingEntry>;  // キー = 日本語文そのまま
+
 export type AppData = {
   /** アプリの版数 (各アプリの app.json の expo.version) */
   version: string;
@@ -55,6 +63,8 @@ export type AppData = {
   VOCAB: Record<string, VocabEntry>;
   /** 文脈依存辞書 (文法モード用、Claude API 生成。シート単位で部分提供可) */
   GRAMMAR_VOCAB?: GrammarVocab;
+  /** 日本語文の読み補助 (かな+ローマ字)。聞き流しのネパール語UI時に使用。Claude API 生成 */
+  JP_READING?: JpReading;
   /** アプリ評価リンク用のストア情報 (アプリ側で提供)。iosAppId が無ければ iOS では非表示。 */
   review?: { iosAppId?: string | null; androidPackage?: string | null };
   audio: AudioBundle;

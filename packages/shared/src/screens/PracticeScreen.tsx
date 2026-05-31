@@ -65,7 +65,7 @@ function FlipIcon({ size = 18 }: { size?: number }) {
 }
 
 export default function PracticeScreen() {
-  const { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, audio, VOCAB, GRAMMAR_VOCAB } = useAppData();
+  const { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, audio, VOCAB, GRAMMAR_VOCAB, JP_READING } = useAppData();
   const { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio } = audio;
   const navigation = useNavigation<Nav>();
   const { t, lang } = useI18n();
@@ -227,6 +227,9 @@ export default function PracticeScreen() {
   const displayIsNe = revealed ? isJa2Ne : !isJa2Ne;
   const currentPlayer = revealed ? answerPlayer : questionPlayer;
 
+  // 日本語文の読み補助 (かな+ローマ字)。言語=ネパール語で日本語カード表示時に使用。
+  const jpReading = JP_READING?.[ex.jp];
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
@@ -245,13 +248,21 @@ export default function PracticeScreen() {
           displayIsNe ? styles.neText : styles.jaText,
           ss(displayIsNe ? 30 : 26, displayIsNe ? 44 : 40),
         ]}>{displayText}</Text>
-        {displayIsNe && romaji && (
+        {/* ネパール語表示時のローマ字: 言語=日本語のときだけ (ネパール語話者には不要) */}
+        {displayIsNe && romaji && isJaUI && (
           <Text style={[styles.romaji, ss(14, 22)]}>
             {isGrammar
               ? sentenceToRomajiWithDict(ex.ne, (w) => GRAMMAR_VOCAB?.[w]?.rom ?? VOCAB[w]?.rom)
               : sentenceToRomaji(ex.ne)}
           </Text>
         )}
+        {/* 日本語表示時 & 言語=ネパール語: かな(常時) + ローマ字(ローマ字設定ON) */}
+        {!displayIsNe && !isJaUI && jpReading?.kana ? (
+          <Text style={[styles.jaKana, ss(15, 23)]}>{jpReading.kana}</Text>
+        ) : null}
+        {!displayIsNe && !isJaUI && romaji && jpReading?.romaji ? (
+          <Text style={[styles.romaji, ss(14, 22)]}>{jpReading.romaji}</Text>
+        ) : null}
       </Pressable>
 
       {/* 音声＋言語反転ボタン（横並び・中央） */}
@@ -372,6 +383,7 @@ const styles = StyleSheet.create({
   cardHint: { fontFamily: 'Courier', fontSize: 10, color: colors.inkFaint, letterSpacing: 1.5, marginBottom: spacing.md },
   jaText: { fontSize: 26, lineHeight: 40, color: colors.ink, textAlign: 'center', fontWeight: '400' },
   neText: { fontSize: 30, lineHeight: 44, color: colors.ink, textAlign: 'center', fontWeight: '600' },
+  jaKana: { fontSize: 15, lineHeight: 23, color: colors.inkMute, textAlign: 'center', marginTop: spacing.sm },
   romaji: { fontFamily: 'Courier', fontSize: 14, color: colors.inkQuiet, fontStyle: 'italic', textAlign: 'center', marginTop: spacing.sm, lineHeight: 22 },
 
   // 音声＋言語反転ボタン行

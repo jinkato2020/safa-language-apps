@@ -1,0 +1,175 @@
+name: Submit to App Store (manual)
+
+# =============================================================================
+# 手動専用。ビルドWF (Build iOS and Android) で TestFlight に上げた「最新ビルド」を
+# App Store の審査に提出し、審査通過後に自動公開する。
+#
+# ■ 使い方
+#   GitHub → Actions → "Submit to App Store (manual)" → Run workflow →
+#   app を選んで実行 (nepali / japanese / both)。
+#
+# ■ 前提条件 (満たしていないと失敗します)
+#   1. 先にビルドWFでビルド→TestFlightアップロード済みであること。
+#      (このWFは再ビルドせず、アップロード済みビルドを提出するだけ)
+#   2. app.json の expo.version を「まだ公開していない新バージョン」に上げてあること。
+#      例: 公開中が 1.0 なら 1.0.1 へ。同じ番号だと「すでに公開済み」で提出できない。
+#   3. App Store Connect 側に、その新バージョンの必須メタデータ
+#      (特に「このバージョンの新機能」=リリースノート) が入っていること。
+#      → このWFは skip_metadata=true で既存メタデータを流用するため。
+#
+# ■ 必要 Secrets (ビルドWFと共通)
+#   APP_STORE_CONNECT_KEY_ID / APP_STORE_CONNECT_ISSUER_ID / APP_STORE_CONNECT_API_KEY_BASE64
+#   IOS_BUNDLE_ID (Nepali) / IOS_BUNDLE_ID_JAPANESE (Japanese)
+#
+# ■ 注意
+#   アップロード直後はビルドが「処理中」で提出できないため、deliver を最大6回
+#   (約30分) リトライする。処理完了済みなら1回目で成功する。
+# =============================================================================
+
+on:
+  workflow_dispatch:
+    inputs:
+      app:
+        description: 'Which app to submit to the App Store?'
+        required: true
+        default: 'nepali'
+        type: choice
+        options:
+          - 'nepali'
+          - 'japanese'
+          - 'both'
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────────
+  submit-nepali:
+    if: ${{ github.event.inputs.app == 'nepali' || github.event.inputs.app == 'both' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      APP_DIR: 聞いて話せるネパール語/expo-app
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Install fastlane
+        run: gem install fastlane --no-document
+
+      - name: Submit to App Store (review + auto-release)
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          KEY_ID_RAW: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ISSUER_ID_RAW: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+          BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID }}
+        run: |
+          set -e
+          KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
+          ISSUER_ID=$(printf '%s' "$ISSUER_ID_RAW" | tr -d '\r\n[:space:]')
+          BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
+          APP_VERSION=$(node -p "require('./app.json').expo.version")
+          echo "::notice::App Store 提出: $BUNDLE_ID v$APP_VERSION (審査出し→通過後 自動公開)"
+
+          # App Store Connect API キー JSON を生成 (fastlane deliver 用)
+          printf '%s' "$KEY_B64" | base64 --decode > /tmp/AuthKey.p8
+          node -e "const fs=require('fs');const key=fs.readFileSync('/tmp/AuthKey.p8','utf8');fs.writeFileSync('/tmp/asc.json',JSON.stringify({key_id:'$KEY_ID',issuer_id:'$ISSUER_ID',key,in_house:false}));"
+
+          # ビルド処理待ち: 提出できるまで最大6回 (約30分) リトライ
+          n=0
+          until fastlane deliver \
+              --api_key_path /tmp/asc.json \
+              --app_identifier "$BUNDLE_ID" \
+              --app_version "$APP_VERSION" \
+              --submit_for_review true \
+              --automatic_release true \
+              --force true \
+              --skip_binary_upload true \
+              --skip_metadata true \
+              --skip_screenshots true \
+              --run_precheck_before_submit false \
+              --precheck_include_in_app_purchases false ; do
+            n=$((n+1))
+            if [ "$n" -ge 6 ]; then
+              echo "::error::deliver がリトライ上限に達しました。ビルド未処理 / バージョン重複 / メタデータ不足の可能性。"
+              exit 1
+            fi
+            echo "::notice::ビルド処理待ちか一時エラー。5分後に再試行 ($n/6)..."
+            sleep 300
+          done
+
+          rm -f /tmp/AuthKey.p8 /tmp/asc.json
+
+  # ─────────────────────────────────────────────────────────────────────────
+  submit-japanese:
+    if: ${{ github.event.inputs.app == 'japanese' || github.event.inputs.app == 'both' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      APP_DIR: 聞いて話せる日本語/expo-app
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Install fastlane
+        run: gem install fastlane --no-document
+
+      - name: Submit to App Store (review + auto-release)
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          KEY_ID_RAW: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ISSUER_ID_RAW: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+          BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID_JAPANESE }}
+        run: |
+          set -e
+          KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
+          ISSUER_ID=$(printf '%s' "$ISSUER_ID_RAW" | tr -d '\r\n[:space:]')
+          BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
+          APP_VERSION=$(node -p "require('./app.json').expo.version")
+          echo "::notice::App Store 提出: $BUNDLE_ID v$APP_VERSION (審査出し→通過後 自動公開)"
+
+          printf '%s' "$KEY_B64" | base64 --decode > /tmp/AuthKey.p8
+          node -e "const fs=require('fs');const key=fs.readFileSync('/tmp/AuthKey.p8','utf8');fs.writeFileSync('/tmp/asc.json',JSON.stringify({key_id:'$KEY_ID',issuer_id:'$ISSUER_ID',key,in_house:false}));"
+
+          n=0
+          until fastlane deliver \
+              --api_key_path /tmp/asc.json \
+              --app_identifier "$BUNDLE_ID" \
+              --app_version "$APP_VERSION" \
+              --submit_for_review true \
+              --automatic_release true \
+              --force true \
+              --skip_binary_upload true \
+              --skip_metadata true \
+              --skip_screenshots true \
+              --run_precheck_before_submit false \
+              --precheck_include_in_app_purchases false ; do
+            n=$((n+1))
+            if [ "$n" -ge 6 ]; then
+              echo "::error::deliver がリトライ上限に達しました。ビルド未処理 / バージョン重複 / メタデータ不足の可能性。"
+              exit 1
+            fi
+            echo "::notice::ビルド処理待ちか一時エラー。5分後に再試行 ($n/6)..."
+            sleep 300
+          done
+
+          rm -f /tmp/AuthKey.p8 /tmp/asc.json
