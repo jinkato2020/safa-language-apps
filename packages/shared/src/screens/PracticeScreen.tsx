@@ -9,7 +9,7 @@ import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { useSettings, useScaleStyle, type Direction } from '../SettingsContext';
 import { useI18n } from '../i18n';
-import { sentenceToRomaji } from '../transliterate';
+import { sentenceToRomaji, sentenceToRomajiWithDict } from '../transliterate';
 import { useAppData } from '../AppDataContext';
 
 // 中級・上級で除外する助詞 (postposition) と代名詞 (pronoun)
@@ -246,7 +246,11 @@ export default function PracticeScreen() {
           ss(displayIsNe ? 30 : 26, displayIsNe ? 44 : 40),
         ]}>{displayText}</Text>
         {displayIsNe && romaji && (
-          <Text style={[styles.romaji, ss(14, 22)]}>{sentenceToRomaji(ex.ne)}</Text>
+          <Text style={[styles.romaji, ss(14, 22)]}>
+            {isGrammar
+              ? sentenceToRomajiWithDict(ex.ne, (w) => GRAMMAR_VOCAB?.[w]?.rom ?? VOCAB[w]?.rom)
+              : sentenceToRomaji(ex.ne)}
+          </Text>
         )}
       </Pressable>
 

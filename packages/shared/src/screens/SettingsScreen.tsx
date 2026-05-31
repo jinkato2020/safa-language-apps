@@ -1,4 +1,4 @@
-import { Alert, Linking, Pressable, ScrollView, Share, StyleSheet, Switch, View } from 'react-native';
+import { Alert, Linking, Platform, Pressable, ScrollView, Share, StyleSheet, Switch, View } from 'react-native';
 import Svg, { Circle, Ellipse, Line, Path, Polygon } from 'react-native-svg';
 import { Text } from '../Text';
 import { colors, spacing, radius } from '../theme';
@@ -77,7 +77,7 @@ export default function SettingsScreen() {
   const s = useSettings();
   const { t, lang, setLang } = useI18n();
   const ss = useScaleStyle();
-  const { version: APP_VERSION } = useAppData();
+  const { version: APP_VERSION, review } = useAppData();
   const buildNumber = Application.nativeBuildVersion;
   const versionDisplay = buildNumber ? `${APP_VERSION} (${buildNumber})` : APP_VERSION;
   const isJaUI = lang === 'ja';
@@ -116,6 +116,26 @@ export default function SettingsScreen() {
     Linking.openURL(`mailto:contact@safa-lang.com?subject=${encodeURIComponent(t('settings.mailSubject'))}`).catch(() => {
       Alert.alert(t('common.error'), t('settings.mailError'));
     });
+  };
+
+  // 評価リンク: iOS は App Store の数値ID、Android はパッケージ名から生成。
+  // 手動ボタンは Apple 推奨どおりストアのレビュー画面を直接開く。
+  const iosAppId = review?.iosAppId;
+  const androidPackage = review?.androidPackage;
+  const canRate = Platform.OS === 'ios' ? !!iosAppId : !!androidPackage;
+
+  const onRate = () => {
+    if (Platform.OS === 'ios') {
+      Linking.openURL(`https://apps.apple.com/app/id${iosAppId}?action=write-review`).catch(() => {
+        Alert.alert(t('common.error'), t('settings.rateError'));
+      });
+    } else {
+      Linking.openURL(`market://details?id=${androidPackage}`).catch(() => {
+        Linking.openURL(`https://play.google.com/store/apps/details?id=${androidPackage}`).catch(() => {
+          Alert.alert(t('common.error'), t('settings.rateError'));
+        });
+      });
+    }
   };
 
   return (
@@ -239,6 +259,11 @@ export default function SettingsScreen() {
 
       <Section title={t('settings.sectionAbout')} icon={<InfoIcon />} ss={ss}>
         <Row label={t('settings.version')} ss={ss}><Text style={styles.valueText}>{versionDisplay}</Text></Row>
+        {canRate && (
+          <Row label={t('settings.rateApp')} ss={ss}>
+            <Pressable onPress={onRate}><Text style={styles.linkText}>{t('common.open')}</Text></Pressable>
+          </Row>
+        )}
         <Row label={t('settings.shareApp')} ss={ss}>
           <Pressable style={styles.btn} onPress={onShare}>
             <Text style={styles.btnText}>{t('common.share')}</Text>

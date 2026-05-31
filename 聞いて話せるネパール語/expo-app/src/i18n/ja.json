@@ -246,6 +246,8 @@
     "resetConfirmDesc": "全ての設定を初期値に戻しますか?",
     "version": "バージョン",
     "shareApp": "このアプリを共有",
+    "rateApp": "アプリを評価する",
+    "rateError": "ストアを開けませんでした。",
     "privacy": "プライバシーポリシー",
     "contact": "お問い合わせ",
     "mailSubject": "聞いて話せるネパール語 お問い合わせ",

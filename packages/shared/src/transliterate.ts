@@ -58,3 +58,34 @@ export function sentenceToRomaji(neText: string): string {
     return toRomaji(tok);
   }).join('');
 }
+
+// 句読点を分離してトークン化 (PracticeScreen の tokenize と同じ規則)
+const PUNCT_RE = /^[।॥?!,;:"'""''（）()「」『』]+$/;
+function tokenizeNe(text: string): string[] {
+  return text
+    .replace(/([।॥?!,;:"'""''（）()「」『』])/g, ' $1 ')
+    .split(/\s+/)
+    .map(w => w.trim())
+    .filter(w => w.length > 0);
+}
+
+// 辞書連携版: 各単語のローマ字を romOf(word) で引き、無ければ機械変換にフォールバック。
+// 文法モードで「単語と意味」リストと同じローマ字を文カードにも使うために利用する。
+export function sentenceToRomajiWithDict(
+  neText: string,
+  romOf: (word: string) => string | null | undefined,
+): string {
+  if (!neText) return '';
+  const out: string[] = [];
+  for (const tok of tokenizeNe(neText)) {
+    if (PUNCT_RE.test(tok)) {
+      const p = (tok === '।' || tok === '॥') ? '.' : tok;
+      if (out.length) out[out.length - 1] += p;
+      else out.push(p);
+    } else {
+      const rom = romOf(tok);
+      out.push(rom && rom.trim() ? rom.trim() : toRomaji(tok));
+    }
+  }
+  return out.join(' ');
+}

@@ -55,6 +55,8 @@ export type AppData = {
   VOCAB: Record<string, VocabEntry>;
   /** 文脈依存辞書 (文法モード用、Claude API 生成。シート単位で部分提供可) */
   GRAMMAR_VOCAB?: GrammarVocab;
+  /** アプリ評価リンク用のストア情報 (アプリ側で提供)。iosAppId が無ければ iOS では非表示。 */
+  review?: { iosAppId?: string | null; androidPackage?: string | null };
   audio: AudioBundle;
   // ── 派生ヘルパー (アプリ側で実装してもらう) ──
   getExamples: (themeId: number, levelId: number) => Example[];
