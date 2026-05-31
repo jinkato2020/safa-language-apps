@@ -5,7 +5,7 @@ import { colors, spacing, radius } from '../theme';
 import {
   useSettings, useScaleStyle,
   type Direction, type NepaliRepeat, type ListenSpeed,
-  type GapMode, type ThemeMode, type FontMode,
+  type GapMode, type FontMode,
 } from '../SettingsContext';
 import { useI18n, type Lang } from '../i18n';
 import { useAppData } from '../AppDataContext';
@@ -213,18 +213,6 @@ export default function SettingsScreen() {
       <Section title={t('settings.sectionDisplay')} icon={<EyeIcon />} ss={ss}>
         <Row label={t('settings.romaji')} desc={t('settings.romajiDesc')} ss={ss}>
           <Switch value={s.romaji} onValueChange={s.setRomaji} trackColor={{ false: colors.line, true: colors.ink }} />
-        </Row>
-        <Row label={t('settings.darkMode')} desc={t('settings.darkModeDesc')} ss={ss}>
-          <PillGroup<ThemeMode>
-            items={[
-              { value: 'light', label: t('settings.themeLight') },
-              { value: 'dark', label: t('settings.themeDark') },
-              { value: 'system', label: t('settings.themeSystem') },
-            ]}
-            value={s.themeMode}
-            onChange={s.setThemeMode}
-            ss={ss}
-          />
         </Row>
         <Row label={t('settings.fontSize')} desc={t('settings.fontSizeDesc')} ss={ss}>
           <PillGroup<FontMode>

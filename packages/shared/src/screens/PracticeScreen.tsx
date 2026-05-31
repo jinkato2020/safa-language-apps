@@ -65,7 +65,7 @@ function FlipIcon({ size = 18 }: { size?: number }) {
 }
 
 export default function PracticeScreen() {
-  const { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, audio, VOCAB, GRAMMAR_VOCAB, JP_READING } = useAppData();
+  const { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, audio, VOCAB, GRAMMAR_VOCAB, CONV_VOCAB, JP_READING } = useAppData();
   const { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio } = audio;
   const navigation = useNavigation<Nav>();
   const { t, lang } = useI18n();
@@ -319,9 +319,13 @@ export default function PracticeScreen() {
               <Text style={styles.wordHeaderLabel}>{t('practice.meaningHeader')}</Text>
             </View>
             {tokens.map((word, i) => {
-              // 文脈依存辞書 (文法モード時のみ) → なければ既存 VOCAB へフォールバック
-              const sentenceId = `${themeId}-${index + 1}`;
-              const gctxEntry = isGrammar ? GRAMMAR_VOCAB?.[word] : undefined;
+              // 文脈依存辞書 → なければ既存 VOCAB へフォールバック
+              // 文法: sentence_id = テーマ-例題 / 会話: テーマ-レベル-例題
+              const sentenceId = isGrammar
+                ? `${themeId}-${index + 1}`
+                : `${themeId}-${levelId}-${index + 1}`;
+              const ctxDict = isGrammar ? GRAMMAR_VOCAB : CONV_VOCAB;
+              const gctxEntry = ctxDict?.[word];
               const matchedCtx = gctxEntry?.contexts?.find(c => c.sentence_id === sentenceId)
                               ?? gctxEntry?.contexts?.[0];
 
@@ -347,9 +351,9 @@ export default function PracticeScreen() {
                     <Text style={[styles.wordMeaning, unknown && styles.wordMeaningDim, ss(16)]}>
                       {meaning || t('practice.noDictionary')}
                     </Text>
-                    {/* 文法モード時のみ 品詞・解説を補足表示 */}
-                    {isGrammar && ctxPos ? <Text style={[styles.wordCtxPos, ss(10)]}>{ctxPos}</Text> : null}
-                    {isGrammar && ctxNote ? <Text style={[styles.wordCtxNote, ss(10)]}>{ctxNote}</Text> : null}
+                    {/* 文脈辞書がある場合 品詞・解説を補足表示 (文法・会話とも) */}
+                    {ctxPos ? <Text style={[styles.wordCtxPos, ss(10)]}>{ctxPos}</Text> : null}
+                    {ctxNote ? <Text style={[styles.wordCtxNote, ss(10)]}>{ctxNote}</Text> : null}
                   </View>
                 </View>
               );

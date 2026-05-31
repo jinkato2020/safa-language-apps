@@ -63,6 +63,8 @@ export type AppData = {
   VOCAB: Record<string, VocabEntry>;
   /** 文脈依存辞書 (文法モード用、Claude API 生成。シート単位で部分提供可) */
   GRAMMAR_VOCAB?: GrammarVocab;
+  /** 文脈依存辞書 (会話モード用、Claude API 生成。sentence_id = テーマ-レベル-例題) */
+  CONV_VOCAB?: GrammarVocab;
   /** 日本語文の読み補助 (かな+ローマ字)。聞き流しのネパール語UI時に使用。Claude API 生成 */
   JP_READING?: JpReading;
   /** アプリ評価リンク用のストア情報 (アプリ側で提供)。iosAppId が無ければ iOS では非表示。 */

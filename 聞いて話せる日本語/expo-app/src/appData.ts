@@ -9,6 +9,7 @@ import grammarThemesJson from '../data/grammarThemes.json';
 import grammarExamplesJson from '../data/grammarExamples.json';
 import vocabJson from '../data/vocab.json';
 import grammarVocabJson from '../data/grammar-vocab-context.json';
+import convVocabJson from '../data/conv-vocab-context.json';
 import jpReadingJson from '../data/jp-reading.json';
 import {
   nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio,
@@ -28,12 +29,13 @@ const GRAMMAR_THEMES = grammarThemesJson as GrammarThemeMeta[];
 const GRAMMAR_EXAMPLES = grammarExamplesJson as Record<string, Example[]>;
 const VOCAB = vocabJson as Record<string, { ja: string; rom: string }>;
 const GRAMMAR_VOCAB = grammarVocabJson as GrammarVocab;
+const CONV_VOCAB = convVocabJson as GrammarVocab;
 const JP_READING = jpReadingJson as JpReading;
 
 export const appData: AppData = {
   version: appJson.expo.version,
   THEMES, LEVELS, EXAMPLES, WORD_CATEGORIES, WORDS,
-  GRAMMAR_THEMES, GRAMMAR_EXAMPLES, VOCAB, GRAMMAR_VOCAB, JP_READING,
+  GRAMMAR_THEMES, GRAMMAR_EXAMPLES, VOCAB, GRAMMAR_VOCAB, CONV_VOCAB, JP_READING,
   // アプリ評価リンク。iosAppId は App Store の数値ID (公開後に判明)。
   // 空のままだと iOS では評価行は非表示 (Android は機能する)。
   review: { iosAppId: '6774461088', androidPackage: appJson.expo.android.package },
