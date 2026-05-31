@@ -6,12 +6,13 @@
 // 使い方:
 //   node scripts/build-conv-vocab-claude.mjs                       # 初級(level1) テーマ1のみ (試験)
 //   node scripts/build-conv-vocab-claude.mjs --theme 5 --level 2   # 指定テーマ・レベル
-//   node scripts/build-conv-vocab-claude.mjs --theme 3 --all-levels# テーマ3の全レベル
 //   node scripts/build-conv-vocab-claude.mjs --all                 # 全テーマ×全レベル
+//   node scripts/build-conv-vocab-claude.mjs --all --max-level 2   # レベル1-2のみ
 //   (--force で生成済みグループも再生成。既定は生成済みをスキップ=再開可能)
 //
 // 出力: expo-app/data/conv-vocab-context.json
-//   ※ グループごとに逐次保存。通信失敗は自動リトライし、ダメなら次グループへ継続。
+//   ※ グループごとに逐次保存。1グループは BATCH_SIZE 文ずつに分割して通信を短くし、
+//      通信失敗は自動リトライ。ダメなら次グループへ継続。
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -29,6 +30,7 @@ const MODEL = 'claude-sonnet-4-6';
 const NUM_THEMES = 30;
 const NUM_LEVELS = 3;
 const MAX_RETRIES = 4;
+const BATCH_SIZE = 10; // 1リクエストあたりの文数 (短くして通信切れを防ぐ)
 
 function loadEnv() {
   if (!fs.existsSync(ENV_PATH)) throw new Error(`.env not found: ${ENV_PATH}`);
@@ -50,15 +52,16 @@ function parseArgs() {
   const li = args.indexOf('--level');
   const level = li >= 0 ? parseInt(args[li + 1], 10) : 1;
   const mli = args.indexOf('--max-level');
-  const maxLevel = mli >= 0 ? parseInt(args[mli + 1], 10) : NUM_LEVELS; // 例: --max-level 2 で上級を除外
+  const maxLevel = mli >= 0 ? parseInt(args[mli + 1], 10) : NUM_LEVELS;
   return { all, allLevels, force, theme, level, maxLevel };
 }
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
-async function analyzeGroup(apiKey, themeId, levelId, examples) {
+// 1 チャンク (例文の一部) を解析。startNum は 0 始まりのオフセット (例題番号 = startNum+i+1)。
+async function analyzeChunk(apiKey, themeId, levelId, examples, startNum) {
   const numbered = examples.map((ex, i) =>
-    `${themeId}-${levelId}-${i + 1}: ${ex.ne} (${ex.jp})`
+    `${themeId}-${levelId}-${startNum + i + 1}: ${ex.ne} (${ex.jp})`
   ).join('\n');
 
   const prompt = `あなたはネパール語学習辞書の専門家です。
@@ -76,7 +79,7 @@ ${numbered}
     "base_meaning": "<辞書的な基本意味>",
     "contexts": [
       {
-        "sentence_id": "${themeId}-${levelId}-1",
+        "sentence_id": "${themeId}-${levelId}-${startNum + 1}",
         "ja": "<この文脈での自然な日本語訳>",
         "pos": "<品詞・活用情報>",
         "note": "<文法的な短い解説 (任意、20文字以内)>"
@@ -93,14 +96,13 @@ ${numbered}
 4. 助詞・後置詞 (मा, बाट, लाई, को, ले 等) も含める
 5. ローマ字は学習者が読みやすい形 (ṁ や ñ は避け、m, n などに)
 6. 文法的解説は短く (例: "現在形・1人称単数")
-7. sentence_id は必ず "${themeId}-${levelId}-<例題番号>" の形式
+7. sentence_id は必ず "${themeId}-${levelId}-<例題番号>" の形式 (上の入力の番号を使う)
 8. **必ず JSON 単独で出力**、説明文や Markdown 不要
 
 JSON のみ:`;
 
-  const body = { model: MODEL, max_tokens: 32000, messages: [{ role: 'user', content: prompt }] };
+  const body = { model: MODEL, max_tokens: 24000, messages: [{ role: 'user', content: prompt }] };
   const startTime = Date.now();
-
   const res = await fetch(API_URL, {
     method: 'POST',
     headers: { 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
@@ -110,35 +112,60 @@ JSON のみ:`;
     const errText = await res.text();
     throw new Error(`Claude API HTTP ${res.status}: ${errText.slice(0, 200)}`);
   }
-
   const data = await res.json();
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
   const inputTokens = data.usage?.input_tokens ?? 0;
   const outputTokens = data.usage?.output_tokens ?? 0;
   const cost = (inputTokens * 3 / 1e6) + (outputTokens * 15 / 1e6);
-  console.log(`    所要 ${elapsed}s, 入力 ${inputTokens} tok, 出力 ${outputTokens} tok, ~$${cost.toFixed(4)}`);
+  console.log(`    [文${startNum + 1}-${startNum + examples.length}] ${elapsed}s, 入${inputTokens}/出${outputTokens} tok, ~$${cost.toFixed(4)}`);
 
   let text = data.content?.map(c => c.text || '').join('') || '';
   text = text.replace(/```json\s*|```\s*$/g, '').trim();
   return { vocab: JSON.parse(text), cost };
 }
 
-// 通信失敗・一時エラーを自動リトライ
-async function analyzeGroupWithRetry(apiKey, t, l, examples) {
+async function analyzeChunkWithRetry(apiKey, t, l, examples, startNum) {
   let lastErr;
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
-      return await analyzeGroup(apiKey, t, l, examples);
+      return await analyzeChunk(apiKey, t, l, examples, startNum);
     } catch (e) {
       lastErr = e;
       if (attempt < MAX_RETRIES) {
         const wait = 10000 * attempt;
-        console.log(`    失敗 (${attempt}/${MAX_RETRIES}): ${e.message} → ${wait / 1000}秒後にリトライ`);
+        console.log(`      失敗 (${attempt}/${MAX_RETRIES}): ${e.message} → ${wait / 1000}秒後にリトライ`);
         await sleep(wait);
       }
     }
   }
   throw lastErr;
+}
+
+// 単語 vocab をマージ (同じ単語の contexts を結合)
+function mergeVocab(dst, src) {
+  for (const [word, info] of Object.entries(src)) {
+    if (!dst[word]) {
+      dst[word] = { ...info, contexts: [...(info.contexts || [])] };
+    } else {
+      dst[word].contexts = [...(dst[word].contexts || []), ...(info.contexts || [])];
+      if (!dst[word].rom && info.rom) dst[word].rom = info.rom;
+      if (!dst[word].base_form && info.base_form) dst[word].base_form = info.base_form;
+      if (!dst[word].base_meaning && info.base_meaning) dst[word].base_meaning = info.base_meaning;
+    }
+  }
+}
+
+// 1 グループ (テーマ×レベル) を BATCH_SIZE 文ずつ処理してマージ
+async function processGroup(apiKey, t, l, examples) {
+  const groupVocab = {};
+  let cost = 0;
+  for (let start = 0; start < examples.length; start += BATCH_SIZE) {
+    const chunk = examples.slice(start, start + BATCH_SIZE);
+    const r = await analyzeChunkWithRetry(apiKey, t, l, chunk, start);
+    mergeVocab(groupVocab, r.vocab);
+    cost += r.cost;
+  }
+  return { vocab: groupVocab, cost };
 }
 
 function loadMerged() {
@@ -151,7 +178,6 @@ function hasGroup(merged, t, l) {
   return Object.values(merged).some(v => (v.contexts || []).some(c => String(c.sentence_id).startsWith(prefix)));
 }
 
-// 1 グループ分を merged に反映 (既存の同グループ contexts は除去してから追加)
 function mergeGroup(merged, t, l, vocab) {
   const prefix = `${t}-${l}-`;
   for (const word of Object.keys(merged)) {
@@ -162,20 +188,11 @@ function mergeGroup(merged, t, l, vocab) {
   for (const word of Object.keys(merged)) {
     if (!merged[word].contexts || merged[word].contexts.length === 0) delete merged[word];
   }
-  for (const [word, info] of Object.entries(vocab)) {
-    if (!merged[word]) {
-      merged[word] = { ...info };
-    } else {
-      merged[word].contexts = [...(merged[word].contexts || []), ...(info.contexts || [])];
-      if (!merged[word].rom && info.rom) merged[word].rom = info.rom;
-      if (!merged[word].base_form && info.base_form) merged[word].base_form = info.base_form;
-      if (!merged[word].base_meaning && info.base_meaning) merged[word].base_meaning = info.base_meaning;
-    }
-  }
+  mergeVocab(merged, vocab);
 }
 
 async function main() {
-  console.log('=== 会話モード 文脈依存辞書 生成 (耐障害版) ===\n');
+  console.log('=== 会話モード 文脈依存辞書 生成 (分割・耐障害版) ===\n');
   const env = loadEnv();
   const apiKey = env.VITE_ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error('.env に VITE_ANTHROPIC_API_KEY がありません');
@@ -191,7 +208,6 @@ async function main() {
   } else {
     pairs.push([theme, level]);
   }
-  if (maxLevel < NUM_LEVELS) console.log(`(レベル ${maxLevel} まで。レベル${maxLevel + 1}以上は保留)\n`);
 
   let merged = loadMerged();
   if (Object.keys(merged).length) console.log(`既存辞書: ${Object.keys(merged).length} 語\n`);
@@ -201,18 +217,13 @@ async function main() {
   for (const [t, l] of pairs) {
     const examples = EXAMPLES[`${t}-${l}`] ?? [];
     if (examples.length === 0) continue;
-    if (!force && hasGroup(merged, t, l)) {
-      console.log(`[テーマ${t}・レベル${l}] 生成済み、スキップ`);
-      skipped++;
-      continue;
-    }
+    if (!force && hasGroup(merged, t, l)) { console.log(`[テーマ${t}・レベル${l}] 生成済み、スキップ`); skipped++; continue; }
     console.log(`\n[テーマ${t}・レベル${l}] 例文数: ${examples.length}`);
     try {
-      const { vocab, cost } = await analyzeGroupWithRetry(apiKey, t, l, examples);
+      const { vocab, cost } = await processGroup(apiKey, t, l, examples);
       mergeGroup(merged, t, l, vocab);
-      fs.writeFileSync(OUT_JSON, JSON.stringify(merged, null, 2)); // 逐次保存
-      totalCost += cost;
-      done++;
+      fs.writeFileSync(OUT_JSON, JSON.stringify(merged, null, 2));
+      totalCost += cost; done++;
       console.log(`  単語エントリ: ${Object.keys(vocab).length} / 累計総単語: ${Object.keys(merged).length}`);
     } catch (e) {
       console.error(`  [テーマ${t}・レベル${l}] 最終失敗(スキップ): ${e.message}`);
@@ -222,7 +233,7 @@ async function main() {
 
   console.log(`\n========================================`);
   console.log(`生成: ${done} / スキップ(生成済): ${skipped} / 失敗: ${failed.length}`);
-  if (failed.length) console.log(`失敗グループ: ${failed.join(', ')} (再実行で自動的に続きから)`);
+  if (failed.length) console.log(`失敗グループ: ${failed.join(', ')} (再実行で続きから)`);
   console.log(`総ユニーク単語: ${Object.keys(merged).length}`);
   console.log(`今回コスト: ~$${totalCost.toFixed(4)} (約 ${Math.ceil(totalCost * 150)} 円)`);
 }
