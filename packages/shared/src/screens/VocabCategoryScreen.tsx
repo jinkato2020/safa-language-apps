@@ -5,6 +5,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { useI18n } from '../i18n';
+import { useScaleStyle } from '../SettingsContext';
 import { useAppData } from '../AppDataContext';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'VocabCategory'>;
@@ -13,13 +14,14 @@ export default function VocabCategoryScreen() {
   const { WORD_CATEGORIES } = useAppData();
   const navigation = useNavigation<Nav>();
   const { t } = useI18n();
+  const ss = useScaleStyle();
 
   return (
     <FlatList
       contentContainerStyle={styles.container}
       ListHeaderComponent={
         <View style={styles.head}>
-          <Text style={styles.modeTitle}>{t('vocab.modeTitle')}</Text>
+          <Text style={[styles.modeTitle, ss(20)]}>{t('vocab.modeTitle')}</Text>
           <Text style={styles.desc}>{t('vocab.themeSelectDesc')}</Text>
         </View>
       }
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
   container: { padding: spacing.lg, paddingBottom: spacing.xxl },
   head: { marginBottom: spacing.xl },
   title: { fontSize: 28, fontWeight: '700', color: colors.ink, marginBottom: spacing.xs, letterSpacing: -0.5 },
-  modeTitle: { fontSize: 16, fontWeight: '600', color: colors.inkQuiet, letterSpacing: 0.2, marginBottom: spacing.sm },
+  modeTitle: { fontSize: 20, fontWeight: '700', color: colors.accentJa, letterSpacing: 0.2, marginBottom: spacing.sm, textAlign: 'center' },
   desc: { fontSize: 14, color: colors.inkMute, lineHeight: 21 },
   card: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: radius.md, paddingVertical: spacing.md, paddingHorizontal: spacing.md, marginBottom: spacing.sm },
   cardPressed: { backgroundColor: colors.bgSoft, borderColor: colors.ink },

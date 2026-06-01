@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Animated, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from '../Text';
 import { useRoute, type RouteProp } from '@react-navigation/native';
 import Svg, { Path, Rect } from 'react-native-svg';
@@ -9,6 +9,7 @@ import { useSettings, useScaleStyle } from '../SettingsContext';
 import { useI18n } from '../i18n';
 import { toRomaji } from '../transliterate';
 import { useAppData } from '../AppDataContext';
+import { useCardFlip } from '../useCardFlip';
 
 type R = RouteProp<RootStackParamList, 'Flashcard'>;
 
@@ -40,29 +41,29 @@ export default function FlashcardScreen() {
   const { WORD_CATEGORIES, getWords } = useAppData();
   const { t } = useI18n();
   const { categoryId: initialCategoryId, direction } = useRoute<R>().params;
-  const { romaji, autoFlip } = useSettings();
+  const { romaji, autoFlip, shuffle: shuffleOn, setShuffle } = useSettings();
   const ss = useScaleStyle();
+  const { flip, animatedStyle } = useCardFlip();
   const [currentCategoryId, setCurrentCategoryId] = useState(initialCategoryId);
   const cat = WORD_CATEGORIES.find(c => c.id === currentCategoryId);
   const catName = t(`vocabCategories.${currentCategoryId}`);
   const allWords = useMemo(() => getWords(currentCategoryId), [currentCategoryId]);
-  const [shuffled, setShuffled] = useState(false);
   const [order, setOrder] = useState<number[]>(() => allWords.map((_, i) => i));
   const [cursor, setCursor] = useState(0);
   const [flipped, setFlipped] = useState(false);
 
-  // カテゴリが変わったら順序とカーソルをリセット
+  // カテゴリ変更・シャッフル設定変更で順序を再構築（シャッフルは設定値に一本化）
   useEffect(() => {
-    setOrder(allWords.map((_, i) => i));
+    const base = allWords.map((_, i) => i);
+    setOrder(shuffleOn ? shuffle(base) : base);
     setCursor(0);
     setFlipped(false);
-    setShuffled(false);
-  }, [currentCategoryId, allWords]);
+  }, [currentCategoryId, allWords, shuffleOn]);
 
-  // autoFlip: カード変化時に自動で裏返す
+  // autoFlip: カード変化時に自動で裏返す（フリップアニメ付き）
   useEffect(() => {
     if (autoFlip) {
-      const timer = setTimeout(() => setFlipped(true), 1200);
+      const timer = setTimeout(() => flip(() => setFlipped(true)), 1200);
       return () => clearTimeout(timer);
     }
   }, [cursor, autoFlip]);
@@ -76,17 +77,8 @@ export default function FlashcardScreen() {
   const frontTag = frontIsNe ? t('flashcard.tagNe') : t('flashcard.tagJa');
   const backTag = frontIsNe ? t('flashcard.tagJa') : t('flashcard.tagNe');
 
-  const toggleShuffle = () => {
-    if (shuffled) {
-      setOrder(allWords.map((_, i) => i));
-      setShuffled(false);
-    } else {
-      setOrder(shuffle(allWords.map((_, i) => i)));
-      setShuffled(true);
-    }
-    setCursor(0);
-    setFlipped(false);
-  };
+  // シャッフルのON/OFFは設定値を切り替える（順序の再構築は上の useEffect が担当）
+  const toggleShuffle = () => setShuffle(!shuffleOn);
 
   const go = (delta: number) => {
     if (delta > 0) {
@@ -133,24 +125,25 @@ export default function FlashcardScreen() {
         </Text>
       </View>
 
-      <Pressable
-        style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
-        onPress={() => setFlipped(f => !f)}
-      >
-        <Text style={styles.label}>{flipped ? backTag : frontTag}</Text>
-        <Text style={[
-          frontIsNe && !flipped ? styles.textNe : (frontIsNe && flipped ? styles.textJa : (!frontIsNe && flipped ? styles.textNe : styles.textJa)),
-          (() => {
-            const isNeShown = (frontIsNe && !flipped) || (!frontIsNe && flipped);
-            return ss(isNeShown ? 40 : 32, isNeShown ? 56 : 44);
-          })(),
-        ]}>
-          {flipped ? backText : frontText}
-        </Text>
-        {romaji && ((frontIsNe && !flipped) || (!frontIsNe && flipped)) && (
-          <Text style={[styles.cardRom, ss(15)]}>{toRomaji(word.ne)}</Text>
+      <Pressable onPress={() => flip(() => setFlipped(f => !f))}>
+        {({ pressed }) => (
+          <Animated.View style={[styles.card, pressed && styles.cardPressed, animatedStyle]}>
+            <Text style={styles.label}>{flipped ? backTag : frontTag}</Text>
+            <Text style={[
+              frontIsNe && !flipped ? styles.textNe : (frontIsNe && flipped ? styles.textJa : (!frontIsNe && flipped ? styles.textNe : styles.textJa)),
+              (() => {
+                const isNeShown = (frontIsNe && !flipped) || (!frontIsNe && flipped);
+                return ss(isNeShown ? 40 : 32, isNeShown ? 56 : 44);
+              })(),
+            ]}>
+              {flipped ? backText : frontText}
+            </Text>
+            {romaji && ((frontIsNe && !flipped) || (!frontIsNe && flipped)) && (
+              <Text style={[styles.cardRom, ss(15)]}>{toRomaji(word.ne)}</Text>
+            )}
+            <Text style={styles.hint}>{t('flashcard.tapToFlip', { action: flipped ? t('flashcard.unflip') : t('flashcard.flip') })}</Text>
+          </Animated.View>
         )}
-        <Text style={styles.hint}>{t('flashcard.tapToFlip', { action: flipped ? t('flashcard.unflip') : t('flashcard.flip') })}</Text>
       </Pressable>
 
       {/* 前へ / 次へ（位置固定、カテゴリ跨ぎ可能） */}
@@ -164,10 +157,10 @@ export default function FlashcardScreen() {
       </View>
 
       {/* シャッフルボタンのみ（反転ボタンは削除） */}
-      <Pressable style={({ pressed }) => [styles.pill, shuffled && styles.pillOn, pressed && styles.pillPressed]} onPress={toggleShuffle}>
+      <Pressable style={({ pressed }) => [styles.pill, shuffleOn && styles.pillOn, pressed && styles.pillPressed]} onPress={toggleShuffle}>
         <View style={styles.pillInner}>
-          <ShuffleIcon active={shuffled} />
-          <Text style={[styles.pillText, shuffled && styles.pillTextOn]}>{shuffled ? t('flashcard.shuffleOn') : t('flashcard.shuffleOff')}</Text>
+          <ShuffleIcon active={shuffleOn} />
+          <Text style={[styles.pillText, shuffleOn && styles.pillTextOn]}>{shuffleOn ? t('flashcard.shuffleOn') : t('flashcard.shuffleOff')}</Text>
         </View>
       </Pressable>
     </ScrollView>

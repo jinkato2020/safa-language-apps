@@ -140,9 +140,9 @@
     "headerConv": "एक विषय छानेर वार्तालाप अभिव्यक्तिको अभ्यास सुरु गर्नुहोस्।",
     "headerGrammar": "एक विषय छानेर व्याकरणको संरचना सिक्नुहोस्।",
     "headerListen": "एक विषय छानेर सुन्ने मोड सुरु गर्नुहोस्।",
-    "modeTitleConv": "सुनेर बोल्ने जापानी · कुराकानी मोड",
-    "modeTitleGrammar": "सुनेर बोल्ने जापानी · व्याकरण मोड",
-    "modeTitleListen": "सुनेर बोल्ने जापानी · सुन्ने मोड"
+    "modeTitleConv": "कुराकानी मोड",
+    "modeTitleGrammar": "व्याकरण मोड",
+    "modeTitleListen": "सुन्ने मोड"
   },
   "levelScreen": {
     "title": "स्तर चयन गर्नुहोस्",
@@ -190,7 +190,7 @@
     "shuffleOff": "शफल OFF"
   },
   "vocab": {
-    "modeTitle": "सुनेर बोल्ने जापानी · शब्दावली मोड",
+    "modeTitle": "शब्दावली मोड",
     "themeSelectDesc": "एक विषय छानेर जापानी शब्दावली बढाउनुहोस्।",
     "directionTitle": "भाषाको दिशा चयन गर्नुहोस्",
     "directionDesc": "{{category}}",

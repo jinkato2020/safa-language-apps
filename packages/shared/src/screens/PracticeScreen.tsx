@@ -1,5 +1,5 @@
 import { useLayoutEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Animated, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from '../Text';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
 import { useAudioPlayer } from 'expo-audio';
@@ -7,10 +7,11 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Svg, { Line, Path, Polyline } from 'react-native-svg';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
-import { useSettings, useScaleStyle, type Direction } from '../SettingsContext';
+import { useSettings, useScaleStyle } from '../SettingsContext';
 import { useI18n } from '../i18n';
 import { sentenceToRomaji, sentenceToRomajiWithDict } from '../transliterate';
 import { useAppData } from '../AppDataContext';
+import { useCardFlip } from '../useCardFlip';
 
 // 中級・上級で除外する助詞 (postposition) と代名詞 (pronoun)
 // 文法構造をすでに知っている学習者向けに、内容語のみを単語リストに残す
@@ -54,16 +55,6 @@ function SpeakerIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-function FlipIcon({ size = 18 }: { size?: number }) {
-  return (
-    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={colors.inkMute} strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-      <Path d="M1 4v6h6" />
-      <Path d="M23 20v-6h-6" />
-      <Path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15" />
-    </Svg>
-  );
-}
-
 export default function PracticeScreen() {
   const { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, audio, VOCAB, GRAMMAR_VOCAB, CONV_VOCAB, JP_READING } = useAppData();
   const { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio } = audio;
@@ -88,8 +79,9 @@ export default function PracticeScreen() {
     : t(`themes.${themeId}`);
   const levelName = isGrammar ? t('practice.grammarLabel') : t(`levels.${levelId}`);
 
-  const { practiceDirection, setPracticeDirection, romaji } = useSettings();
+  const { practiceDirection, romaji } = useSettings();
   const ss = useScaleStyle();
+  const { flip, animatedStyle } = useCardFlip();
 
   useLayoutEffect(() => {
     navigation.setOptions({ title: isGrammar ? t('practice.titleGrammar') : t('practice.titleConv') });
@@ -211,12 +203,6 @@ export default function PracticeScreen() {
     return levelId >= LEVELS.length;
   })();
 
-  const toggleDirection = () => {
-    const next: Direction = practiceDirection === 'ja2ne' ? 'ne2ja' : 'ja2ne';
-    setPracticeDirection(next);
-    setRevealed(false);
-  };
-
   if (!ex) return null;
 
   const questionText = isJa2Ne ? ex.jp : ex.ne;
@@ -238,34 +224,35 @@ export default function PracticeScreen() {
         </Text>
       </View>
 
-      {/* センテンスカード（タップで言語切り替え） */}
-      <Pressable
-        style={({ pressed }) => [styles.sentenceCard, pressed && styles.sentenceCardPressed]}
-        onPress={() => setRevealed(r => !r)}
-      >
-        <Text style={[styles.cardHint, ss(10)]}>{t('practice.cardHint', { state: revealed ? t('practice.answer') : t('practice.question') })}</Text>
-        <Text style={[
-          displayIsNe ? styles.neText : styles.jaText,
-          ss(displayIsNe ? 30 : 26, displayIsNe ? 44 : 40),
-        ]}>{displayText}</Text>
-        {/* ネパール語表示時のローマ字: 言語=日本語のときだけ (ネパール語話者には不要) */}
-        {displayIsNe && romaji && isJaUI && (
-          <Text style={[styles.romaji, ss(14, 22)]}>
-            {isGrammar
-              ? sentenceToRomajiWithDict(ex.ne, (w) => GRAMMAR_VOCAB?.[w]?.rom ?? VOCAB[w]?.rom)
-              : sentenceToRomaji(ex.ne)}
-          </Text>
+      {/* センテンスカード（タップで言語切り替え・フリップアニメ付き） */}
+      <Pressable onPress={() => flip(() => setRevealed(r => !r))}>
+        {({ pressed }) => (
+          <Animated.View style={[styles.sentenceCard, pressed && styles.sentenceCardPressed, animatedStyle]}>
+            <Text style={[styles.cardHint, ss(10)]}>{t('practice.cardHint', { state: revealed ? t('practice.answer') : t('practice.question') })}</Text>
+            <Text style={[
+              displayIsNe ? styles.neText : styles.jaText,
+              ss(displayIsNe ? 30 : 26, displayIsNe ? 44 : 40),
+            ]}>{displayText}</Text>
+            {/* ネパール語表示時のローマ字: 言語=日本語のときだけ (ネパール語話者には不要) */}
+            {displayIsNe && romaji && isJaUI && (
+              <Text style={[styles.romaji, ss(14, 22)]}>
+                {isGrammar
+                  ? sentenceToRomajiWithDict(ex.ne, (w) => GRAMMAR_VOCAB?.[w]?.rom ?? VOCAB[w]?.rom)
+                  : sentenceToRomaji(ex.ne)}
+              </Text>
+            )}
+            {/* 日本語表示時 & 言語=ネパール語: かな(常時) + ローマ字(ローマ字設定ON) */}
+            {!displayIsNe && !isJaUI && jpReading?.kana ? (
+              <Text style={[styles.jaKana, ss(15, 23)]}>{jpReading.kana}</Text>
+            ) : null}
+            {!displayIsNe && !isJaUI && romaji && jpReading?.romaji ? (
+              <Text style={[styles.romaji, ss(14, 22)]}>{jpReading.romaji}</Text>
+            ) : null}
+          </Animated.View>
         )}
-        {/* 日本語表示時 & 言語=ネパール語: かな(常時) + ローマ字(ローマ字設定ON) */}
-        {!displayIsNe && !isJaUI && jpReading?.kana ? (
-          <Text style={[styles.jaKana, ss(15, 23)]}>{jpReading.kana}</Text>
-        ) : null}
-        {!displayIsNe && !isJaUI && romaji && jpReading?.romaji ? (
-          <Text style={[styles.romaji, ss(14, 22)]}>{jpReading.romaji}</Text>
-        ) : null}
       </Pressable>
 
-      {/* 音声＋言語反転ボタン（横並び・中央） */}
+      {/* 音声ボタン（言語の方向は設定で変更） */}
       <View style={styles.actionRow}>
         <Pressable
           style={({ pressed }) => [styles.actionBtn, pressed && styles.actionBtnPressed]}
@@ -273,13 +260,6 @@ export default function PracticeScreen() {
         >
           <SpeakerIcon size={17} />
           <Text style={[styles.actionBtnText, ss(13)]}>{t('practice.playAudio')}</Text>
-        </Pressable>
-        <Pressable
-          style={({ pressed }) => [styles.actionBtn, pressed && styles.actionBtnPressed]}
-          onPress={toggleDirection}
-        >
-          <FlipIcon size={17} />
-          <Text style={[styles.actionBtnText, ss(13)]}>{t('practice.flipLang')}</Text>
         </Pressable>
       </View>
 

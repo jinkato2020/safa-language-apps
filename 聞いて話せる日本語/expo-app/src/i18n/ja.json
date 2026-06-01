@@ -140,9 +140,9 @@
     "headerConv": "テーマを1つ選んで、会話文を表現する練習を始めましょう。",
     "headerGrammar": "テーマを1つ選んで、文法の構造を学びましょう。",
     "headerListen": "テーマを1つ選んで、聞き流しを始めましょう。",
-    "modeTitleConv": "聞いて話せる日本語 会話モード",
-    "modeTitleGrammar": "聞いて話せる日本語 文法モード",
-    "modeTitleListen": "聞いて話せる日本語 聞き流しモード"
+    "modeTitleConv": "会話モード",
+    "modeTitleGrammar": "文法モード",
+    "modeTitleListen": "聞き流しモード"
   },
   "levelScreen": {
     "title": "レベルを選択",
@@ -190,7 +190,7 @@
     "shuffleOff": "シャッフル OFF"
   },
   "vocab": {
-    "modeTitle": "聞いて話せる日本語 単語モード",
+    "modeTitle": "単語モード",
     "themeSelectDesc": "テーマを1つ選んで、ネパール語の語彙を増やしましょう。",
     "directionTitle": "出題方向を選択",
     "directionDesc": "{{category}} のカードをどちら向きで学習しますか？",
