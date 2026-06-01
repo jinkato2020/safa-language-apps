@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Animated, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from '../Text';
 import { useRoute, type RouteProp } from '@react-navigation/native';
 import Svg, { Circle, Path, Polygon, Polyline, Rect } from 'react-native-svg';
@@ -14,6 +14,46 @@ import { useListeningAudio } from '../ListeningAudioContext';
 type R = RouteProp<RootStackParamList, 'Listening'>;
 
 const SPEEDS: ListenSpeed[] = [0.8, 1.0, 1.2, 1.5];
+
+// ── デジタル音量波 (2言語カードの真下に表示するオーディオ波形) ──
+const WAVE_BARS = 26;
+const WAVE_MAX_H = 30; // バー最大高さ(px)
+// 静止時の波形: 端が低く中央が高い自然な形 (0.18〜1.0)
+const WAVE_BASE = Array.from({ length: WAVE_BARS }, (_, i) => {
+  const tt = i / (WAVE_BARS - 1);
+  const envelope = Math.sin(tt * Math.PI);                 // 端0 → 中央1
+  const ripple = 0.55 + 0.45 * Math.abs(Math.sin(tt * Math.PI * 5));
+  return Math.max(0.18, envelope * ripple);
+});
+
+function WaveBars({ playing }: { playing: boolean }) {
+  const anims = useRef(WAVE_BASE.map((b) => new Animated.Value(b))).current;
+  useEffect(() => {
+    if (!playing) {
+      anims.forEach((a, i) => { a.stopAnimation(); a.setValue(WAVE_BASE[i]); });
+      return;
+    }
+    const loops = anims.map((a, i) => {
+      const lo = Math.max(0.15, WAVE_BASE[i] * 0.35);
+      const hi = Math.min(1, WAVE_BASE[i] * 0.9 + 0.25);
+      const dur = 360 + (i % 6) * 90;
+      return Animated.loop(Animated.sequence([
+        Animated.timing(a, { toValue: hi, duration: dur, useNativeDriver: true }),
+        Animated.timing(a, { toValue: lo, duration: dur, useNativeDriver: true }),
+      ]));
+    });
+    loops.forEach((l) => l.start());
+    return () => loops.forEach((l) => l.stop());
+  }, [playing]);
+
+  return (
+    <View style={styles.wave} pointerEvents="none">
+      {anims.map((a, i) => (
+        <Animated.View key={i} style={[styles.waveBar, { opacity: playing ? 1 : 0.45, transform: [{ scaleY: a }] }]} />
+      ))}
+    </View>
+  );
+}
 
 // ── アイコン ──
 function PrevIcon({ size = 22 }: { size?: number }) {
@@ -124,6 +164,9 @@ export default function ListeningScreen() {
       {/* UI 言語に応じて表示順を切替: ja UI は日本語が上、ne UI はネパール語が上 */}
       {isJaUI ? <>{jaCard}{neCard}</> : <>{neCard}{jaCard}</>}
 
+      {/* 2言語カードの真下: デジタル音量波 (再生中アニメ) */}
+      <WaveBars playing={playing} />
+
       <View style={styles.controls}>
         <Pressable style={({ pressed }) => [styles.ctrlBtn, pressed && styles.ctrlPressed]} onPress={() => go(-1)} hitSlop={8}>
           <PrevIcon />
@@ -167,6 +210,8 @@ const styles = StyleSheet.create({
   metaText: { fontFamily: 'Courier', fontSize: 12, color: colors.inkMute },
   metaCur: { color: colors.ink, fontWeight: '700' },
   card: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: radius.lg, padding: spacing.lg, marginBottom: spacing.md },
+  wave: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: WAVE_MAX_H, gap: 3, marginTop: spacing.xs, marginBottom: spacing.lg },
+  waveBar: { width: 2, height: WAVE_MAX_H, borderRadius: 1.5, backgroundColor: colors.accentJa },
   cardJaActive: { borderColor: colors.accentJa, shadowColor: colors.accentJa, shadowOpacity: 0.15, shadowRadius: 12, elevation: 4 },
   cardNeActive: { borderColor: colors.accentJa, shadowColor: colors.accentJa, shadowOpacity: 0.15, shadowRadius: 12, elevation: 4 },
   tag: { fontFamily: 'Courier', fontSize: 11, color: colors.inkQuiet, letterSpacing: 1.5, marginBottom: spacing.sm },

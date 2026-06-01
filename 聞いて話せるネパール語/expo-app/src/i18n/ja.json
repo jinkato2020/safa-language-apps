@@ -1,7 +1,8 @@
 {
   "app": {
     "name": "聞いて話せるネパール語",
-    "shareMessage": "聞いて話せるネパール語 — 日本語からネパール語の瞬間作文トレーニングアプリ"
+    "shareMessage": "聞いて話せるネパール語 — 日本語からネパール語の瞬間作文トレーニングアプリ",
+    "headerTitle": "聞いて話せるネパール語"
   },
   "common": {
     "prev": "← 前へ",
@@ -139,9 +140,9 @@
     "headerConv": "テーマを1つ選んで、会話文を表現する練習を始めましょう。",
     "headerGrammar": "テーマを1つ選んで、文法の構造を学びましょう。",
     "headerListen": "テーマを1つ選んで、聞き流しを始めましょう。",
-    "modeTitleConv": "聞いて学べるネパール語 会話モード",
-    "modeTitleGrammar": "聞いて学べるネパール語 文法モード",
-    "modeTitleListen": "聞いて学べるネパール語 聞き流しモード"
+    "modeTitleConv": "聞いて話せるネパール語 会話モード",
+    "modeTitleGrammar": "聞いて話せるネパール語 文法モード",
+    "modeTitleListen": "聞いて話せるネパール語 聞き流しモード"
   },
   "levelScreen": {
     "title": "レベルを選択",
@@ -189,7 +190,7 @@
     "shuffleOff": "シャッフル OFF"
   },
   "vocab": {
-    "modeTitle": "聞いて学べるネパール語 単語モード",
+    "modeTitle": "聞いて話せるネパール語 単語モード",
     "themeSelectDesc": "テーマを1つ選んで、ネパール語の語彙を増やしましょう。",
     "directionTitle": "出題方向を選択",
     "directionDesc": "{{category}} のカードをどちら向きで学習しますか？",

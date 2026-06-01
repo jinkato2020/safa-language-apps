@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   container: { padding: spacing.lg, paddingBottom: spacing.xxl },
   head: { marginBottom: spacing.xl },
   title: { fontSize: 28, fontWeight: '700', color: colors.ink, marginBottom: spacing.xs, letterSpacing: -0.5 },
-  modeTitle: { fontSize: 13, fontWeight: '600', color: colors.inkQuiet, letterSpacing: 0.2, marginBottom: spacing.sm },
+  modeTitle: { fontSize: 16, fontWeight: '600', color: colors.inkQuiet, letterSpacing: 0.2, marginBottom: spacing.sm },
   desc: { fontSize: 14, color: colors.inkMute, lineHeight: 21 },
   card: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: radius.md, paddingVertical: spacing.md, paddingHorizontal: spacing.md, marginBottom: spacing.sm },
   cardPressed: { backgroundColor: colors.bgSoft, borderColor: colors.ink },

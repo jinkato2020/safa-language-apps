@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Animated, Image, Pressable, StyleSheet, View } from 'react-native';
+import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
 import { setAudioModeAsync } from 'expo-audio';
 import { useVideoPlayer, VideoView } from 'expo-video';
@@ -76,15 +76,15 @@ function HeaderGearButton() {
 const headerStyles = StyleSheet.create({
   gearBtn: { width: 36, height: 36, alignItems: 'center', justifyContent: 'center', borderRadius: 18 },
   gearBtnPressed: { backgroundColor: colors.bgSoft },
-  headerIcon: { width: 32, height: 32 },
+  headerTitle: { fontSize: 16, fontWeight: '700', color: colors.ink, letterSpacing: 0.2 },
 });
 
-// ─── ヘッダーアイコン (タイトル) ────────────────
-type HeaderIconProps = { source: number };
-function makeHeaderTitle(source: number) {
-  return function HeaderTitle() {
-    return <Image source={source} style={headerStyles.headerIcon} resizeMode="contain" />;
-  };
+// ─── ヘッダータイトル (アプリ名・設定言語に連動) ────────────────
+// safa ロゴ画像をやめ、設定言語に応じたアプリ名テキストを表示する。
+//   ja: 聞いて話せるネパール語 / ne: सुनेर बोल्ने जापानी (聞いて話せる日本語)
+function HeaderTitle() {
+  const { t } = useI18n();
+  return <Text style={headerStyles.headerTitle} numberOfLines={1}>{t('app.headerTitle')}</Text>;
 }
 
 // ─── 各タブのスタック ─────────────────────────
@@ -92,6 +92,7 @@ function makeDefaultStackOptions(HeaderTitle: () => ReactElement) {
   return {
     headerStyle: { backgroundColor: colors.bg },
     headerTitleStyle: { fontWeight: '600' as const },
+    headerTitleAlign: 'center' as const,
     headerTintColor: colors.ink,
     headerShadowVisible: false,
     contentStyle: { backgroundColor: colors.bg },
@@ -234,13 +235,12 @@ const splashStyles = StyleSheet.create({
 export type AppShellProps = {
   /** 各アプリの assets から渡してもらうスプラッシュ動画 (require('./assets/safa-splash.mp4')) */
   splashSource: number;
-  /** ヘッダータイトルに表示するアプリアイコン (require('./assets/icon.png')) */
-  headerIconSource: number;
+  /** (旧) ヘッダーアイコン。現在はテキストタイトルに置き換えたため未使用 (互換のため任意で受け取る) */
+  headerIconSource?: number;
 };
 
-export function AppShell({ splashSource, headerIconSource }: AppShellProps) {
+export function AppShell({ splashSource }: AppShellProps) {
   const [splashDone, setSplashDone] = useState(false);
-  const HeaderTitle = useRef(makeHeaderTitle(headerIconSource)).current;
   const defaultStackOptions = useRef(makeDefaultStackOptions(HeaderTitle)).current;
 
   useEffect(() => {

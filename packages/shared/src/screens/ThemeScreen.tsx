@@ -85,7 +85,7 @@ export default function ThemeScreen() {
       contentContainerStyle={styles.container}
       ListHeaderComponent={
         <View style={styles.head}>
-          <Text style={[styles.modeTitle, ss(13)]}>{modeTitle}</Text>
+          <Text style={[styles.modeTitle, ss(16)]}>{modeTitle}</Text>
           <Text style={[styles.desc, ss(14, 21)]}>{headerText}</Text>
           {isListening && (
             <View style={styles.sourceToggle}>
@@ -145,7 +145,7 @@ export default function ThemeScreen() {
 const styles = StyleSheet.create({
   container: { padding: spacing.lg, paddingBottom: spacing.xxl },
   head: { marginBottom: spacing.xl },
-  modeTitle: { fontSize: 13, fontWeight: '600', color: colors.inkQuiet, letterSpacing: 0.2, marginBottom: spacing.sm },
+  modeTitle: { fontSize: 16, fontWeight: '600', color: colors.inkQuiet, letterSpacing: 0.2, marginBottom: spacing.sm },
   kicker: { fontSize: 11, color: colors.inkQuiet, letterSpacing: 2, textTransform: 'uppercase', marginBottom: spacing.xs },
   title: { fontSize: 28, fontWeight: '700', color: colors.ink, marginBottom: spacing.xs, letterSpacing: -0.5 },
   desc: { fontSize: 14, color: colors.inkMute, lineHeight: 21, marginBottom: spacing.md },
