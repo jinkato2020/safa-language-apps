@@ -191,7 +191,7 @@
   },
   "vocab": {
     "modeTitle": "単語モード",
-    "themeSelectDesc": "テーマを1つ選んで、ネパール語の語彙を増やしましょう。",
+    "themeSelectDesc": "テーマを選んで、ネパール語の語彙を増やしましょう。",
     "directionTitle": "出題方向を選択",
     "directionDesc": "{{category}} のカードをどちら向きで学習しますか？",
     "neLang": "🇳🇵 ネパール語",
