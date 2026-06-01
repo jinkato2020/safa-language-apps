@@ -1,36 +1,44 @@
-name: Submit to App Store (manual)
+name: App Store prepare / submit (manual)
 
 # =============================================================================
-# 手動専用。ビルドWF (Build iOS and Android) で TestFlight に上げた「最新ビルド」を
-# App Store の審査に提出し、審査通過後に自動公開する。
+# 手動専用。ビルドWF (Build iOS) で TestFlight に上げたビルドを App Store の
+# バージョンに紐付け、(任意で) 審査に提出する。
+#
+# ■ mode (デフォルト: prepare)
+#   prepare … 今回コミットのビルドをバージョンに紐付けるところまで実行し、
+#             「審査には提出しない」。最後の「審査に提出」は App Store Connect で
+#             手動で押す運用。← 通常はこちら。
+#   submit  … 紐付け＋審査提出＋通過後の自動公開まで一気に実行 (従来動作)。
+#
+# ■ ビルド番号
+#   ビルドWFと同じ計算式 BUILD_NUMBER = 1000 + commit総数 で、今回コミットの
+#   ビルドを --build_number で明示指定する。古いビルドの誤紐付けを防ぐ。
+#   (そのビルドが未処理ならリトライで待つ)
 #
 # ■ 使い方
-#   GitHub → Actions → "Submit to App Store (manual)" → Run workflow →
-#   app を選んで実行 (nepali / japanese / both)。
+#   GitHub → Actions → "App Store prepare / submit (manual)" → Run workflow →
+#   app (nepali / japanese / both) と mode (prepare / submit) を選んで実行。
 #
-# ■ 前提条件 (満たしていないと失敗します)
+# ■ 前提条件
 #   1. 先にビルドWFでビルド→TestFlightアップロード済みであること。
-#      (このWFは再ビルドせず、アップロード済みビルドを提出するだけ)
-#   2. app.json の expo.version を「まだ公開していない新バージョン」に上げてあること。
-#      例: 公開中が 1.0 なら 1.0.1 へ。同じ番号だと「すでに公開済み」で提出できない。
-#   3. App Store Connect 側に、その新バージョンの必須メタデータ
-#      (特に「このバージョンの新機能」=リリースノート) が入っていること。
-#      → このWFは skip_metadata=true で既存メタデータを流用するため。
+#   2. app.json の expo.version が「まだ公開していない新バージョン」であること。
+#   3. submit する場合、App Store Connect 側にそのバージョンの必須メタデータ
+#      (特に「このバージョンの新機能」) が入っていること (skip_metadata=true のため)。
 #
 # ■ 必要 Secrets (ビルドWFと共通)
 #   APP_STORE_CONNECT_KEY_ID / APP_STORE_CONNECT_ISSUER_ID / APP_STORE_CONNECT_API_KEY_BASE64
 #   IOS_BUNDLE_ID (Nepali) / IOS_BUNDLE_ID_JAPANESE (Japanese)
 #
 # ■ 注意
-#   アップロード直後はビルドが「処理中」で提出できないため、deliver を最大6回
-#   (約30分) リトライする。処理完了済みなら1回目で成功する。
+#   アップロード直後はビルドが「処理中」で紐付け/提出できないため、deliver を
+#   最大6回 (約30分) リトライする。処理完了済みなら1回目で成功する。
 # =============================================================================
 
 on:
   workflow_dispatch:
     inputs:
       app:
-        description: 'Which app to submit to the App Store?'
+        description: 'Which app?'
         required: true
         default: 'nepali'
         type: choice
@@ -38,6 +46,14 @@ on:
           - 'nepali'
           - 'japanese'
           - 'both'
+      mode:
+        description: 'prepare = 紐付けのみ(手動提出) / submit = 提出+自動公開まで'
+        required: true
+        default: 'prepare'
+        type: choice
+        options:
+          - 'prepare'
+          - 'submit'
 
 jobs:
   # ─────────────────────────────────────────────────────────────────────────
@@ -50,6 +66,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v5
@@ -64,33 +82,37 @@ jobs:
       - name: Install fastlane
         run: gem install fastlane --no-document
 
-      - name: Submit to App Store (review + auto-release)
+      - name: Prepare / submit to App Store
         working-directory: ${{ env.APP_DIR }}
         env:
           KEY_ID_RAW: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           ISSUER_ID_RAW: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
           BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID }}
+          MODE: ${{ github.event.inputs.mode }}
         run: |
           set -e
           KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
           ISSUER_ID=$(printf '%s' "$ISSUER_ID_RAW" | tr -d '\r\n[:space:]')
           BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
           APP_VERSION=$(node -p "require('./app.json').expo.version")
-          echo "::notice::App Store 提出: $BUNDLE_ID v$APP_VERSION (審査出し→通過後 自動公開)"
+          BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD)))
+          if [ "$MODE" = "submit" ]; then SUBMIT=true; else SUBMIT=false; fi
+          echo "::notice::App Store $MODE: $BUNDLE_ID v$APP_VERSION build $BUILD_NUMBER (submit_for_review=$SUBMIT)"
 
           # App Store Connect API キー JSON を生成 (fastlane deliver 用)
           printf '%s' "$KEY_B64" | base64 --decode > /tmp/AuthKey.p8
           node -e "const fs=require('fs');const key=fs.readFileSync('/tmp/AuthKey.p8','utf8');fs.writeFileSync('/tmp/asc.json',JSON.stringify({key_id:'$KEY_ID',issuer_id:'$ISSUER_ID',key,in_house:false}));"
 
-          # ビルド処理待ち: 提出できるまで最大6回 (約30分) リトライ
+          # ビルド処理待ち: 紐付け/提出できるまで最大6回 (約30分) リトライ
           n=0
           until fastlane deliver \
               --api_key_path /tmp/asc.json \
               --app_identifier "$BUNDLE_ID" \
               --app_version "$APP_VERSION" \
-              --submit_for_review true \
-              --automatic_release true \
+              --build_number "$BUILD_NUMBER" \
+              --submit_for_review $SUBMIT \
+              --automatic_release $SUBMIT \
               --force true \
               --skip_binary_upload true \
               --skip_metadata true \
@@ -105,6 +127,12 @@ jobs:
             echo "::notice::ビルド処理待ちか一時エラー。5分後に再試行 ($n/6)..."
             sleep 300
           done
+
+          if [ "$SUBMIT" = "true" ]; then
+            echo "::notice::審査に提出しました (通過後 自動公開)。"
+          else
+            echo "::notice::ビルド $BUILD_NUMBER をバージョンに紐付けました。App Store Connect で内容を確認し『審査に提出』を押してください。"
+          fi
 
           rm -f /tmp/AuthKey.p8 /tmp/asc.json
 
@@ -118,6 +146,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v5
@@ -132,20 +162,23 @@ jobs:
       - name: Install fastlane
         run: gem install fastlane --no-document
 
-      - name: Submit to App Store (review + auto-release)
+      - name: Prepare / submit to App Store
         working-directory: ${{ env.APP_DIR }}
         env:
           KEY_ID_RAW: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           ISSUER_ID_RAW: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
           BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID_JAPANESE }}
+          MODE: ${{ github.event.inputs.mode }}
         run: |
           set -e
           KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
           ISSUER_ID=$(printf '%s' "$ISSUER_ID_RAW" | tr -d '\r\n[:space:]')
           BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
           APP_VERSION=$(node -p "require('./app.json').expo.version")
-          echo "::notice::App Store 提出: $BUNDLE_ID v$APP_VERSION (審査出し→通過後 自動公開)"
+          BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD)))
+          if [ "$MODE" = "submit" ]; then SUBMIT=true; else SUBMIT=false; fi
+          echo "::notice::App Store $MODE: $BUNDLE_ID v$APP_VERSION build $BUILD_NUMBER (submit_for_review=$SUBMIT)"
 
           printf '%s' "$KEY_B64" | base64 --decode > /tmp/AuthKey.p8
           node -e "const fs=require('fs');const key=fs.readFileSync('/tmp/AuthKey.p8','utf8');fs.writeFileSync('/tmp/asc.json',JSON.stringify({key_id:'$KEY_ID',issuer_id:'$ISSUER_ID',key,in_house:false}));"
@@ -155,8 +188,9 @@ jobs:
               --api_key_path /tmp/asc.json \
               --app_identifier "$BUNDLE_ID" \
               --app_version "$APP_VERSION" \
-              --submit_for_review true \
-              --automatic_release true \
+              --build_number "$BUILD_NUMBER" \
+              --submit_for_review $SUBMIT \
+              --automatic_release $SUBMIT \
               --force true \
               --skip_binary_upload true \
               --skip_metadata true \
@@ -171,5 +205,11 @@ jobs:
             echo "::notice::ビルド処理待ちか一時エラー。5分後に再試行 ($n/6)..."
             sleep 300
           done
+
+          if [ "$SUBMIT" = "true" ]; then
+            echo "::notice::審査に提出しました (通過後 自動公開)。"
+          else
+            echo "::notice::ビルド $BUILD_NUMBER をバージョンに紐付けました。App Store Connect で内容を確認し『審査に提出』を押してください。"
+          fi
 
           rm -f /tmp/AuthKey.p8 /tmp/asc.json
