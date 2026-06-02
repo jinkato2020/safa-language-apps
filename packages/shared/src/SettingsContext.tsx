@@ -170,7 +170,7 @@ export function SettingsProvider({ children, defaults, storageKey = DEFAULT_STOR
   // 実効的な再生順序: 明示変更済みなら raw 値、未変更なら言語連動の既定。
   const listenDirection: Direction = listenDirectionExplicit
     ? listenDirectionRaw
-    : (lang === 'ne' ? 'ne2ja' : 'ja2ne');
+    : (lang === 'ja' ? 'ja2ne' : 'ne2ja');
   const setListenDirection = (d: Direction) => {
     setListenDirectionRaw(d);
     setListenDirectionExplicit(true);

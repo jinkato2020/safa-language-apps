@@ -27,6 +27,8 @@ type I18nValue = {
   lang: Lang;
   setLang: (l: Lang) => void;
   t: (key: string, params?: Record<string, string | number>) => string;
+  /** 利用可能な言語コード一覧 (translations のキー)。言語選択UIの動的生成に使う。 */
+  langs: Lang[];
 };
 
 const I18nCtx = createContext<I18nValue | null>(null);
@@ -114,7 +116,7 @@ export function I18nProvider({ children, translations, fallbackLang, storageKey 
   if (!loaded) return null;
 
   return (
-    <I18nCtx.Provider value={{ lang, setLang, t }}>
+    <I18nCtx.Provider value={{ lang, setLang, t, langs: availableLangs }}>
       {children}
     </I18nCtx.Provider>
   );
@@ -123,7 +125,7 @@ export function I18nProvider({ children, translations, fallbackLang, storageKey 
 export function useI18n(): I18nValue {
   const ctx = useContext(I18nCtx);
   if (!ctx) {
-    return { lang: 'ja', setLang: () => {}, t: (k) => k };
+    return { lang: 'ja', setLang: () => {}, t: (k) => k, langs: ['ja'] };
   }
   return ctx;
 }

@@ -8,6 +8,7 @@ import {
   type GapMode, type FontMode,
 } from '../SettingsContext';
 import { useI18n, type Lang } from '../i18n';
+import { L1_REGISTRY } from '../l1';
 import { useAppData } from '../AppDataContext';
 import * as Application from 'expo-application';
 
@@ -75,17 +76,17 @@ function Section({ title, icon, children, ss }: { title: string; icon: React.Rea
 
 export default function SettingsScreen() {
   const s = useSettings();
-  const { t, lang, setLang } = useI18n();
+  const { t, lang, setLang, langs } = useI18n();
   const ss = useScaleStyle();
   const { version: APP_VERSION, review } = useAppData();
   const buildNumber = Application.nativeBuildVersion;
   const versionDisplay = buildNumber ? `${APP_VERSION} (${buildNumber})` : APP_VERSION;
   const isJaUI = lang === 'ja';
 
-  // UI 言語に応じたピル順序: ネパール語 UI の時はネパール語側を先頭に
-  const langItems: { value: Lang; label: string }[] = isJaUI
-    ? [{ value: 'ja', label: '日本語' }, { value: 'ne', label: 'नेपाली' }]
-    : [{ value: 'ne', label: 'नेपाली' }, { value: 'ja', label: '日本語' }];
+  // 利用可能な言語から動的にピルを生成 (ja=日本語 / その他は L1 レジストリの自称表示)
+  const langLabel = (code: Lang): string =>
+    code === 'ja' ? '日本語' : (L1_REGISTRY[code]?.name ?? code);
+  const langItems: { value: Lang; label: string }[] = langs.map(code => ({ value: code, label: langLabel(code) }));
 
   const directionItems: { value: Direction; label: string }[] = isJaUI
     ? [{ value: 'ja2ne', label: t('directions.ja2ne') }, { value: 'ne2ja', label: t('directions.ne2ja') }]
