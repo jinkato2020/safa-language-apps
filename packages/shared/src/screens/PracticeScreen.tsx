@@ -55,7 +55,8 @@ export default function PracticeScreen() {
 
   const examples = useMemo(
     () => (isGrammar ? getGrammarExamples(themeId) : getExamples(themeId, levelId)),
-    [isGrammar, themeId, levelId],
+    // nativeLang(=パック) が変わったら再計算 (言語切替を既存画面にも反映)
+    [isGrammar, themeId, levelId, nativeLang],
   );
   const themeName = isGrammar
     ? t(`grammarThemes.${themeId}`)

@@ -48,7 +48,7 @@ export default function FlashcardScreen() {
   const [currentCategoryId, setCurrentCategoryId] = useState(initialCategoryId);
   const cat = WORD_CATEGORIES.find(c => c.id === currentCategoryId);
   const catName = t(`vocabCategories.${currentCategoryId}`);
-  const allWords = useMemo(() => getWords(currentCategoryId), [currentCategoryId]);
+  const allWords = useMemo(() => getWords(currentCategoryId), [currentCategoryId, nativeLang]);
   const [order, setOrder] = useState<number[]>(() => allWords.map((_, i) => i));
   const [cursor, setCursor] = useState(0);
   const [flipped, setFlipped] = useState(false);
