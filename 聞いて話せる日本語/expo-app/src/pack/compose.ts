@@ -1,9 +1,11 @@
 // 案2: 日本語=共通コア + 母語オーバーレイ を結合して AppData を作る。
-// 共通コア(jp/メタ) は全L1で共通・アプリ同梱。母語オーバーレイ(訳) は L1ごと(将来DL)。
+// 共通コア(jp/メタ/日本語音声/読み) は全L1で共通・アプリ同梱。
+// 母語オーバーレイ(訳/母語音声/辞書) は L1ごと(将来DL)。
 // 画面側は従来の {jp, ne} 結合済み AppData を受け取るので、画面コードは変更不要。
 
 import type {
   AppData, ThemeMeta, LevelMeta, WordCategoryMeta, GrammarThemeMeta, Example, Word,
+  VocabEntry, GrammarVocab, JpReading,
 } from '@safa/shared';
 
 // 日本語=共通コア (学ぶ対象側)。文は位置順の配列で持ち、母語側と index で対応させる。
@@ -15,6 +17,9 @@ export interface JaCore {
   examplesJp: Record<string, string[]>;  // "theme-level" → 日本語文(位置順)
   grammarJp: Record<string, string[]>;   // "theme" → 日本語文(位置順)
   wordsJa: Record<string, string[]>;     // "category" → 日本語語(位置順)
+  jpReading?: JpReading;                 // 日本語文 → かな/ローマ字 (jp依存・共通)
+  japaneseAudio: Record<string, number>;
+  japaneseGrammarAudio: Record<string, number>;
 }
 
 // 母語オーバーレイ (学習者の母語側)。core と同じキー・同じ位置で対応する訳。
@@ -23,11 +28,21 @@ export interface L1Overlay {
   examplesL1: Record<string, string[]>;
   grammarL1: Record<string, string[]>;
   wordsL1: Record<string, string[]>;
+  vocab?: Record<string, VocabEntry>;
+  grammarVocab?: GrammarVocab;
+  convVocab?: GrammarVocab;
+  l1Audio?: Record<string, number>;         // → AudioBundle.nepaliAudio (L1音声)
+  l1GrammarAudio?: Record<string, number>;  // → AudioBundle.nepaliGrammarAudio
+}
+
+export interface ComposeOptions {
+  version: string;
+  review?: { iosAppId?: string | null; androidPackage?: string | null };
 }
 
 // 共通コア + 母語オーバーレイ を位置で結合し、従来形の AppData を構築する。
 // 対応する母語訳が無い位置は空文字 (jp のみ表示)。
-export function composePack(core: JaCore, overlay: L1Overlay, version: string): AppData {
+export function composePack(core: JaCore, overlay: L1Overlay, opts: ComposeOptions): AppData {
   const join = (
     jpMap: Record<string, string[]>,
     l1Map: Record<string, string[]>,
@@ -53,7 +68,7 @@ export function composePack(core: JaCore, overlay: L1Overlay, version: string): 
 
   const EMPTY = {} as Record<string, number>;
   return {
-    version,
+    version: opts.version,
     nativeLang: overlay.nativeLang,
     THEMES: core.themes,
     LEVELS: core.levels,
@@ -62,12 +77,16 @@ export function composePack(core: JaCore, overlay: L1Overlay, version: string): 
     WORDS,
     GRAMMAR_THEMES: core.grammarThemes,
     GRAMMAR_EXAMPLES,
-    VOCAB: {},
-    // 音声は Phase3 で外部化。サンプルでは無し。
-    review: { iosAppId: null, androidPackage: null },
+    VOCAB: overlay.vocab ?? {},
+    GRAMMAR_VOCAB: overlay.grammarVocab,
+    CONV_VOCAB: overlay.convVocab,
+    JP_READING: core.jpReading,
+    review: opts.review,
     audio: {
-      nepaliAudio: EMPTY, japaneseAudio: EMPTY,
-      nepaliGrammarAudio: EMPTY, japaneseGrammarAudio: EMPTY,
+      nepaliAudio: overlay.l1Audio ?? EMPTY,
+      japaneseAudio: core.japaneseAudio,
+      nepaliGrammarAudio: overlay.l1GrammarAudio ?? EMPTY,
+      japaneseGrammarAudio: core.japaneseGrammarAudio,
     },
     getExamples: (themeId, levelId) => EXAMPLES[`${themeId}-${levelId}`] ?? [],
     getWords: (categoryId) => WORDS[String(categoryId)] ?? [],
