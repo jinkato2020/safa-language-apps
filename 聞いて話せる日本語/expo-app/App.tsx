@@ -21,15 +21,20 @@ import { bundledPack, loadPack } from './src/packLoader';
 const splashSource = require('./assets/safa-splash.mp4');
 const headerIconSource = require('./assets/icon.png');
 
-// 現在のUI言語(=L1)に応じてデータパックを非同期解決して供給する。
-// 今はバンドル即時解決だが、将来 loadPack 内で FS/サーバーDL に差し替えられる継ぎ目。
+// 現在のUI言語(=L1)に応じてデータパックを解決して供給する。
+// 同梱言語(ne)は即時。DL言語(bn等)は null→ローディング表示→DL完了で差し替え。
 function PackGate({ children }: { children: ReactNode }) {
   const { lang } = useI18n();
-  // 初期はバンドル済みパックを同期解決 (ちらつき防止)
-  const [data, setData] = useState<AppData>(() => bundledPack(lang));
+  const [data, setData] = useState<AppData | null>(() => bundledPack(lang));
   useEffect(() => {
     let alive = true;
-    loadPack(lang).then(d => { if (alive) setData(d); });
+    const bundled = bundledPack(lang);
+    setData(bundled); // 同梱なら即時 / DL言語は null (ローディング表示)
+    if (!bundled) {
+      loadPack(lang)
+        .then(d => { if (alive) setData(d); })
+        .catch(() => { if (alive) setData(bundledPack('ne') ?? null); }); // DL失敗時は主言語へ
+    }
     return () => { alive = false; };
   }, [lang]);
   if (!data) {
