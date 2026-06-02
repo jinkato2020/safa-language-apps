@@ -1,65 +1,44 @@
-// 聞いて話せる日本語: バングラ語(bn) 手打ちサンプルパック (Phase0 実証用・最小)。
-// テキストは少量、音声なし。テーマ/レベル等のメタは ne パックと共有 (表示は i18n)。
-// 本文の bn テキストは Example/Word の .ne フィールドに格納する (L1テキストとして流用)。
+// 聞いて話せる日本語: バングラ語(bn) サンプルパック (Phase0-2 実証用・最小)。
+// 案2: 日本語=共通コア(jaCore) + 母語オーバーレイ(bnOverlay) を composePack で結合。
+// テーマ/レベル等のメタは既存JSONを流用。音声は無し(Phase3で外部化)。
 
 import themesJson from '../data/themes.json';
 import levelsJson from '../data/levels.json';
 import wordCategoriesJson from '../data/wordCategories.json';
 import grammarThemesJson from '../data/grammarThemes.json';
 import appJson from '../app.json';
-import type {
-  AppData, ThemeMeta, LevelMeta, Example, WordCategoryMeta, Word, GrammarThemeMeta,
-} from '@safa/shared';
+import type { ThemeMeta, LevelMeta, WordCategoryMeta, GrammarThemeMeta } from '@safa/shared';
+import { composePack, type JaCore, type L1Overlay } from './pack/compose';
 
-const THEMES = themesJson as ThemeMeta[];
-const LEVELS = levelsJson as LevelMeta[];
-const WORD_CATEGORIES = wordCategoriesJson as WordCategoryMeta[];
-const GRAMMAR_THEMES = grammarThemesJson as GrammarThemeMeta[];
-
-// 会話例 (テーマ1・初級)
-const EXAMPLES: Record<string, Example[]> = {
-  '1-1': [
-    { jp: '私の名前は田中です。', ne: 'আমার নাম তানাকা।' },
-    { jp: '私は日本人です。', ne: 'আমি জাপানি।' },
-    { jp: 'はじめまして。', ne: 'আপনার সাথে পরিচিত হয়ে ভালো লাগলো।' },
-  ],
-};
-
-// 単語 (カテゴリ1)
-const WORDS: Record<string, Word[]> = {
-  '1': [
-    { ja: '上', ne: 'উপরে' },
-    { ja: '下', ne: 'নিচে' },
-    { ja: '右', ne: 'ডান' },
-    { ja: '左', ne: 'বাম' },
-  ],
-};
-
-// 文法例 (テーマ1)
-const GRAMMAR_EXAMPLES: Record<string, Example[]> = {
-  '1': [
-    { jp: '私は学生です。', ne: 'আমি ছাত্র।' },
-    { jp: '彼は医者です。', ne: 'সে ডাক্তার।' },
-  ],
-};
-
-const EMPTY_AUDIO = {} as Record<string, number>;
-
-export const appDataBn: AppData = {
-  version: appJson.expo.version,
-  nativeLang: 'bn',
-  THEMES, LEVELS, EXAMPLES, WORD_CATEGORIES, WORDS,
-  GRAMMAR_THEMES, GRAMMAR_EXAMPLES,
-  VOCAB: {},
-  // GRAMMAR_VOCAB / CONV_VOCAB / JP_READING はサンプルでは未提供 (任意)
-  review: { iosAppId: null, androidPackage: null },
-  audio: {
-    nepaliAudio: EMPTY_AUDIO,
-    japaneseAudio: EMPTY_AUDIO,
-    nepaliGrammarAudio: EMPTY_AUDIO,
-    japaneseGrammarAudio: EMPTY_AUDIO,
+// ── 日本語=共通コア (サンプル: テーマ1のみ。本来は全テーマで App B 全L1共通) ──
+const jaCore: JaCore = {
+  themes: themesJson as ThemeMeta[],
+  levels: levelsJson as LevelMeta[],
+  wordCategories: wordCategoriesJson as WordCategoryMeta[],
+  grammarThemes: grammarThemesJson as GrammarThemeMeta[],
+  examplesJp: {
+    '1-1': ['私の名前は田中です。', '私は日本人です。', 'はじめまして。'],
   },
-  getExamples: (themeId, levelId) => EXAMPLES[`${themeId}-${levelId}`] ?? [],
-  getWords: (categoryId) => WORDS[String(categoryId)] ?? [],
-  getGrammarExamples: (themeId) => GRAMMAR_EXAMPLES[String(themeId)] ?? [],
+  grammarJp: {
+    '1': ['私は学生です。', '彼は医者です。'],
+  },
+  wordsJa: {
+    '1': ['上', '下', '右', '左'],
+  },
 };
+
+// ── バングラ語オーバーレイ (jaCore と同じキー・同じ位置で対応) ──
+const bnOverlay: L1Overlay = {
+  nativeLang: 'bn',
+  examplesL1: {
+    '1-1': ['আমার নাম তানাকা।', 'আমি জাপানি।', 'আপনার সাথে পরিচিত হয়ে ভালো লাগলো।'],
+  },
+  grammarL1: {
+    '1': ['আমি ছাত্র।', 'সে ডাক্তার।'],
+  },
+  wordsL1: {
+    '1': ['উপরে', 'নিচে', 'ডান', 'বাম'],
+  },
+};
+
+export const appDataBn = composePack(jaCore, bnOverlay, appJson.expo.version);
