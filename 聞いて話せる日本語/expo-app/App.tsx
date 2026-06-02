@@ -2,7 +2,8 @@
 // UI / ナビゲーション / 画面は @safa/shared に集約。
 // アプリ固有: ne UI を Primary、方向は ne→ja を デフォルトに。
 
-import type { ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import {
   AppShell,
   I18nProvider,
@@ -15,20 +16,29 @@ import {
 import ja from './src/i18n/ja.json';
 import ne from './src/i18n/ne.json';
 import bn from './src/i18n/bn.json';
-import { appData } from './src/appData';
-import { appDataBn } from './src/appDataBn';
+import { bundledPack, loadPack } from './src/packLoader';
 
 const splashSource = require('./assets/safa-splash.mp4');
 const headerIconSource = require('./assets/icon.png');
 
-// 母語(L1)パック・レジストリ。UI言語をキーに対応パックを選択する (X案: UI言語=L1)。
-// 'ja' UI のときは相手言語パックとして既定 (ne) を使う。
-const PACKS: Record<string, AppData> = { ne: appData, bn: appDataBn };
-
-// 現在のUI言語に応じてデータパックを切り替える。
+// 現在のUI言語(=L1)に応じてデータパックを非同期解決して供給する。
+// 今はバンドル即時解決だが、将来 loadPack 内で FS/サーバーDL に差し替えられる継ぎ目。
 function PackGate({ children }: { children: ReactNode }) {
   const { lang } = useI18n();
-  const data = PACKS[lang] ?? appData;
+  // 初期はバンドル済みパックを同期解決 (ちらつき防止)
+  const [data, setData] = useState<AppData>(() => bundledPack(lang));
+  useEffect(() => {
+    let alive = true;
+    loadPack(lang).then(d => { if (alive) setData(d); });
+    return () => { alive = false; };
+  }, [lang]);
+  if (!data) {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
   return <AppDataProvider data={data}>{children}</AppDataProvider>;
 }
 
