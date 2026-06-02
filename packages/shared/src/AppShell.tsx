@@ -95,6 +95,8 @@ function makeDefaultStackOptions(HeaderTitle: () => ReactElement) {
     headerTitleAlign: 'center' as const,
     headerTintColor: colors.ink,
     headerShadowVisible: false,
+    // 戻るボタンは全言語で「＜」のみ (前画面タイトル文字を出さない)
+    headerBackButtonDisplayMode: 'minimal' as const,
     contentStyle: { backgroundColor: colors.bg },
     headerTitle: () => <HeaderTitle />,
     headerRight: () => <HeaderGearButton />,
