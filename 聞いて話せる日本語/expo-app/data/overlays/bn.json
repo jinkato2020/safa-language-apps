@@ -1,6 +1,6 @@
 {
   "l1": "bn",
-  "version": 2,
+  "version": 3,
   "examplesL1": {
     "1-1": [
       "আমার নাম তানাকা।",
@@ -70,9 +70,4253 @@
     ]
   },
   "grammarL1": {
-    "1": ["আমি ছাত্র।", "সে ডাক্তার।"]
+    "1": [
+      "আমি ছাত্র।",
+      "সে ডাক্তার।"
+    ]
   },
   "wordsL1": {
-    "1": ["উপরে", "নিচে", "ডান", "বাম"]
+    "1": [
+      "উপরে",
+      "নিচে",
+      "ডান",
+      "বাম"
+    ]
+  },
+  "convVocab": {
+    "নাম": {
+      "rom": "nam",
+      "base_form": "নাম",
+      "base_meaning": "名前",
+      "contexts": [
+        {
+          "sentence_id": "1-1-1",
+          "ja": "名前",
+          "pos": "名詞",
+          "note": "所有格আমারと共に使用"
+        },
+        {
+          "sentence_id": "1-2-1",
+          "ja": "名前",
+          "pos": "名詞",
+          "note": "所有格アマルと共に使用"
+        }
+      ]
+    },
+    "তানাকা": {
+      "rom": "Tanaka",
+      "base_form": "তানাকা",
+      "base_meaning": "田中（固有名詞）",
+      "contexts": [
+        {
+          "sentence_id": "1-1-1",
+          "ja": "田中",
+          "pos": "固有名詞",
+          "note": "人名"
+        },
+        {
+          "sentence_id": "1-2-1",
+          "ja": "田中",
+          "pos": "固有名詞",
+          "note": "日本人の姓"
+        }
+      ]
+    },
+    "জাপানি": {
+      "rom": "japani",
+      "base_form": "জাপানি",
+      "base_meaning": "日本人・日本の",
+      "contexts": [
+        {
+          "sentence_id": "1-1-2",
+          "ja": "日本人",
+          "pos": "名詞/形容詞",
+          "note": "述語として使用"
+        },
+        {
+          "sentence_id": "1-1-14",
+          "ja": "日本語の",
+          "pos": "形容詞/名詞",
+          "note": "ভাষাと組み合わせる"
+        },
+        {
+          "sentence_id": "1-2-4",
+          "ja": "日本語",
+          "pos": "形容詞/名詞",
+          "note": "জাপানি ভাষা＝日本語"
+        },
+        {
+          "sentence_id": "1-2-8",
+          "ja": "和食の・日本の",
+          "pos": "形容詞",
+          "note": "জাপানি খাবার＝和食"
+        }
+      ]
+    },
+    "পরিচিত": {
+      "rom": "porichito",
+      "base_form": null,
+      "base_meaning": "知り合い・面識のある",
+      "contexts": [
+        {
+          "sentence_id": "1-1-3",
+          "ja": "知り合いになって",
+          "pos": "形容詞/過去分詞",
+          "note": "হয়েと組み合わせ動詞句"
+        }
+      ]
+    },
+    "ভালো": {
+      "rom": "bhalo",
+      "base_form": "ভালো",
+      "base_meaning": "良い・よい",
+      "contexts": [
+        {
+          "sentence_id": "1-1-3",
+          "ja": "嬉しい",
+          "pos": "形容詞",
+          "note": "ভালো লাগাで「好き・嬉しい」"
+        },
+        {
+          "sentence_id": "1-1-15",
+          "ja": "良い、よい",
+          "pos": "形容詞",
+          "note": "সম্পর্কを修飾"
+        }
+      ]
+    },
+    "লাগলো": {
+      "rom": "laglo",
+      "base_form": "লাগা",
+      "base_meaning": "感じる・かかる",
+      "contexts": [
+        {
+          "sentence_id": "1-1-3",
+          "ja": "感じた",
+          "pos": "動詞(過去形)",
+          "note": "ভালো লাগাで「嬉しい」の慣用表現"
+        }
+      ]
+    },
+    "সহযোগিতা": {
+      "rom": "sahojogita",
+      "base_form": null,
+      "base_meaning": "協力・支援",
+      "contexts": [
+        {
+          "sentence_id": "1-1-4",
+          "ja": "よろしく（ご支援）",
+          "pos": "名詞",
+          "note": "丁寧な依頼表現の一部"
+        }
+      ]
+    },
+    "প্রত্যাশা": {
+      "rom": "prottasha",
+      "base_form": null,
+      "base_meaning": "期待・望み",
+      "contexts": [
+        {
+          "sentence_id": "1-1-4",
+          "ja": "お願いします",
+          "pos": "名詞",
+          "note": "করিと組み合わせ「期待する」"
+        }
+      ]
+    },
+    "করি": {
+      "rom": "kori",
+      "base_form": "করা",
+      "base_meaning": "する・行う",
+      "contexts": [
+        {
+          "sentence_id": "1-1-4",
+          "ja": "します",
+          "pos": "動詞(一人称現在)",
+          "note": "一人称敬語現在形"
+        },
+        {
+          "sentence_id": "1-1-10",
+          "ja": "します",
+          "pos": "動詞(一人称現在)",
+          "note": "পছন্দ করিで「好きだ」"
+        },
+        {
+          "sentence_id": "1-1-15",
+          "ja": "します",
+          "pos": "動詞",
+          "note": "現在形・一人称"
+        },
+        {
+          "sentence_id": "1-1-18",
+          "ja": "します（好きです）",
+          "pos": "動詞",
+          "note": "পছন্দ করিで「好き」"
+        },
+        {
+          "sentence_id": "1-2-3",
+          "ja": "好む（する）",
+          "pos": "動詞",
+          "note": "一人称現在形"
+        },
+        {
+          "sentence_id": "1-2-7",
+          "ja": "する・好む",
+          "pos": "動詞",
+          "note": "一人称現在形"
+        },
+        {
+          "sentence_id": "1-2-11",
+          "ja": "します",
+          "pos": "動詞(一人称現在)",
+          "note": "一人称単数現在形"
+        },
+        {
+          "sentence_id": "1-2-12",
+          "ja": "しています",
+          "pos": "動詞(一人称現在)",
+          "note": "一人称単数現在形"
+        },
+        {
+          "sentence_id": "1-2-14",
+          "ja": "しています",
+          "pos": "動詞(一人称現在)",
+          "note": "「জগিং করি」ジョギングする"
+        },
+        {
+          "sentence_id": "1-2-16",
+          "ja": "します",
+          "pos": "動詞(一人称現在)",
+          "note": "「রান্না করি」料理する"
+        },
+        {
+          "sentence_id": "1-2-18",
+          "ja": "します",
+          "pos": "動詞(一人称現在)",
+          "note": "一人称単数現在形"
+        },
+        {
+          "sentence_id": "1-2-20",
+          "ja": "します",
+          "pos": "動詞(一人称現在)",
+          "note": "一人称単数現在形"
+        }
+      ]
+    },
+    "টোকিও": {
+      "rom": "Tokyo",
+      "base_form": "টোকিও",
+      "base_meaning": "東京（固有名詞）",
+      "contexts": [
+        {
+          "sentence_id": "1-1-5",
+          "ja": "東京",
+          "pos": "固有名詞",
+          "note": "地名"
+        },
+        {
+          "sentence_id": "1-2-1",
+          "ja": "東京",
+          "pos": "固有名詞",
+          "note": "都市名"
+        }
+      ]
+    },
+    "থাকি": {
+      "rom": "thaki",
+      "base_form": "থাকা",
+      "base_meaning": "住む・いる・滞在する",
+      "contexts": [
+        {
+          "sentence_id": "1-1-5",
+          "ja": "住んでいます",
+          "pos": "動詞(一人称現在)",
+          "note": "一人称現在形"
+        },
+        {
+          "sentence_id": "1-2-16",
+          "ja": "暮らしています",
+          "pos": "動詞(一人称現在)",
+          "note": "居住を表す動詞"
+        }
+      ]
+    },
+    "একজন": {
+      "rom": "ekjon",
+      "base_form": null,
+      "base_meaning": "一人の（人の数量詞）",
+      "contexts": [
+        {
+          "sentence_id": "1-1-6",
+          "ja": "一人の",
+          "pos": "数量詞",
+          "note": "人に使う助数詞জন"
+        },
+        {
+          "sentence_id": "1-1-8",
+          "ja": "一人の",
+          "pos": "数量詞",
+          "note": "人に使う助数詞জন"
+        },
+        {
+          "sentence_id": "1-1-11",
+          "ja": "一人の",
+          "pos": "数量詞",
+          "note": "人を数える助数詞জন付き"
+        },
+        {
+          "sentence_id": "1-1-16",
+          "ja": "一人の",
+          "pos": "数量詞",
+          "note": "人を数える助数詞জন付き"
+        }
+      ]
+    },
+    "ছাত্র": {
+      "rom": "chatro",
+      "base_form": null,
+      "base_meaning": "学生（男性）",
+      "contexts": [
+        {
+          "sentence_id": "1-1-6",
+          "ja": "学生",
+          "pos": "名詞",
+          "note": "男性形、女性はছাত্রী"
+        }
+      ]
+    },
+    "বয়স": {
+      "rom": "boyos",
+      "base_form": null,
+      "base_meaning": "年齢",
+      "contexts": [
+        {
+          "sentence_id": "1-1-7",
+          "ja": "年齢・歳",
+          "pos": "名詞",
+          "note": "আমার বয়সで「私の年齢は」"
+        }
+      ]
+    },
+    "পঁচিশ": {
+      "rom": "ponchish",
+      "base_form": null,
+      "base_meaning": "二十五（25）",
+      "contexts": [
+        {
+          "sentence_id": "1-1-7",
+          "ja": "25",
+          "pos": "数詞",
+          "note": "ベンガル語固有の数詞"
+        }
+      ]
+    },
+    "বছর": {
+      "rom": "bochor",
+      "base_form": "বছর",
+      "base_meaning": "年・歳",
+      "contexts": [
+        {
+          "sentence_id": "1-1-7",
+          "ja": "歳",
+          "pos": "名詞",
+          "note": "年齢・年数を表す単位"
+        },
+        {
+          "sentence_id": "1-2-4",
+          "ja": "年間",
+          "pos": "名詞",
+          "note": "তিন বছর＝三年間"
+        },
+        {
+          "sentence_id": "1-3-4",
+          "ja": "年",
+          "pos": "名詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-8",
+          "ja": "年",
+          "pos": "名詞",
+          "note": "তিন বছর「三年」"
+        }
+      ]
+    },
+    "কোম্পানি": {
+      "rom": "kompani",
+      "base_form": "কোম্পানি",
+      "base_meaning": "会社",
+      "contexts": [
+        {
+          "sentence_id": "1-1-8",
+          "ja": "会社",
+          "pos": "名詞",
+          "note": "英語company由来の外来語"
+        },
+        {
+          "sentence_id": "1-2-2",
+          "ja": "会社",
+          "pos": "名詞",
+          "note": "英語 company の借用語"
+        }
+      ]
+    },
+    "কর্মচারী": {
+      "rom": "kormochari",
+      "base_form": "কর্মচারী",
+      "base_meaning": "従業員・社員",
+      "contexts": [
+        {
+          "sentence_id": "1-1-8",
+          "ja": "会社員",
+          "pos": "名詞",
+          "note": "কোম্পানিと組み合わせ「会社員」"
+        },
+        {
+          "sentence_id": "1-2-2",
+          "ja": "会社員",
+          "pos": "名詞",
+          "note": "কোম্পানি কর্মচারী＝会社員"
+        }
+      ]
+    },
+    "শখ": {
+      "rom": "shokh",
+      "base_form": "শখ",
+      "base_meaning": "趣味",
+      "contexts": [
+        {
+          "sentence_id": "1-1-9",
+          "ja": "趣味",
+          "pos": "名詞",
+          "note": "所有格আমারと共に使用"
+        },
+        {
+          "sentence_id": "1-2-3",
+          "ja": "趣味",
+          "pos": "名詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-2-18",
+          "ja": "趣味",
+          "pos": "名詞",
+          "note": "hobby に相当する語"
+        },
+        {
+          "sentence_id": "1-3-11",
+          "ja": "趣味",
+          "pos": "名詞",
+          "note": "所有格と共に使用"
+        }
+      ]
+    },
+    "সঙ্গীত": {
+      "rom": "shongit",
+      "base_form": "সঙ্গীত",
+      "base_meaning": "音楽",
+      "contexts": [
+        {
+          "sentence_id": "1-1-9",
+          "ja": "音楽",
+          "pos": "名詞",
+          "note": "述語として趣味を表す"
+        },
+        {
+          "sentence_id": "1-3-11",
+          "ja": "音楽",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "রান্না": {
+      "rom": "ranna",
+      "base_form": "রান্না",
+      "base_meaning": "料理",
+      "contexts": [
+        {
+          "sentence_id": "1-1-10",
+          "ja": "料理",
+          "pos": "名詞",
+          "note": "করতেと組み合わせ「料理すること」"
+        },
+        {
+          "sentence_id": "1-2-8",
+          "ja": "料理",
+          "pos": "名詞",
+          "note": "রান্নায়＝料理において"
+        },
+        {
+          "sentence_id": "1-2-16",
+          "ja": "料理・自炊",
+          "pos": "名詞",
+          "note": "「রান্না করি」料理をする"
+        }
+      ]
+    },
+    "পছন্দ": {
+      "rom": "pochondo",
+      "base_form": "পছন্দ",
+      "base_meaning": "好み・好き",
+      "contexts": [
+        {
+          "sentence_id": "1-1-10",
+          "ja": "好き",
+          "pos": "名詞",
+          "note": "পছন্দ করিで「好きだ」の慣用表現"
+        },
+        {
+          "sentence_id": "1-1-18",
+          "ja": "好き",
+          "pos": "名詞",
+          "note": "পছন্দ করিで「好きです」"
+        },
+        {
+          "sentence_id": "1-2-3",
+          "ja": "好きだ",
+          "pos": "名詞/動詞句",
+          "note": "পছন্দ করা＝好む"
+        },
+        {
+          "sentence_id": "1-2-7",
+          "ja": "好きだ",
+          "pos": "名詞/動詞句",
+          "note": "পছন্দ করি＝好む"
+        },
+        {
+          "sentence_id": "1-2-11",
+          "ja": "好き",
+          "pos": "名詞",
+          "note": "「পছন্দ করি」で「好きです」"
+        },
+        {
+          "sentence_id": "1-2-13",
+          "ja": "好き",
+          "pos": "名詞",
+          "note": "過去形「পছন্দ করতাম」"
+        },
+        {
+          "sentence_id": "1-2-18",
+          "ja": "好き",
+          "pos": "名詞",
+          "note": "「পছন্দ করি」で「好きです」"
+        },
+        {
+          "sentence_id": "1-2-20",
+          "ja": "好き",
+          "pos": "名詞",
+          "note": "「পছন্দ করি」で「好きです」"
+        }
+      ]
+    },
+    "বড়": {
+      "rom": "boro",
+      "base_form": "বড়",
+      "base_meaning": "大きい、年上の",
+      "contexts": [
+        {
+          "sentence_id": "1-1-11",
+          "ja": "年上の、兄の",
+          "pos": "形容詞",
+          "note": "年齢的に上を意味する"
+        },
+        {
+          "sentence_id": "1-2-17",
+          "ja": "育った",
+          "pos": "形容詞",
+          "note": "「বড় হয়েছি」で「育ちました」"
+        },
+        {
+          "sentence_id": "1-3-12",
+          "ja": "最大の",
+          "pos": "形容詞",
+          "note": "সবচেয়ে と共に最上級"
+        }
+      ]
+    },
+    "ভাই": {
+      "rom": "bhai",
+      "base_form": "ভাই",
+      "base_meaning": "兄弟",
+      "contexts": [
+        {
+          "sentence_id": "1-1-11",
+          "ja": "兄",
+          "pos": "名詞",
+          "note": "বড়と組み合わせて「兄」"
+        }
+      ]
+    },
+    "আছে": {
+      "rom": "ache",
+      "base_form": "থাকা",
+      "base_meaning": "いる、ある",
+      "contexts": [
+        {
+          "sentence_id": "1-1-11",
+          "ja": "います",
+          "pos": "動詞",
+          "note": "存在を表す現在形"
+        },
+        {
+          "sentence_id": "1-2-10",
+          "ja": "ある（存在する）",
+          "pos": "動詞",
+          "note": "存在動詞の三人称現在"
+        }
+      ]
+    },
+    "অবিবাহিত": {
+      "rom": "obibaahit",
+      "base_form": "অবিবাহিত",
+      "base_meaning": "未婚の、独身の",
+      "contexts": [
+        {
+          "sentence_id": "1-1-12",
+          "ja": "独身です",
+          "pos": "形容詞",
+          "note": "অ否定+বিবাহিত既婚"
+        }
+      ]
+    },
+    "ওসাকা": {
+      "rom": "osaka",
+      "base_form": "ওসাকা",
+      "base_meaning": "大阪（地名）",
+      "contexts": [
+        {
+          "sentence_id": "1-1-13",
+          "ja": "大阪",
+          "pos": "固有名詞",
+          "note": "日本の都市名"
+        }
+      ]
+    },
+    "থেকে": {
+      "rom": "theke",
+      "base_form": "থেকে",
+      "base_meaning": "〜から",
+      "contexts": [
+        {
+          "sentence_id": "1-1-13",
+          "ja": "〜から（出身）",
+          "pos": "後置詞",
+          "note": "出発点・出身を示す"
+        }
+      ]
+    },
+    "এসেছি": {
+      "rom": "eshechi",
+      "base_form": "আসা",
+      "base_meaning": "来る",
+      "contexts": [
+        {
+          "sentence_id": "1-1-13",
+          "ja": "来ました（出身です）",
+          "pos": "動詞",
+          "note": "現在完了・一人称"
+        }
+      ]
+    },
+    "ভাষা": {
+      "rom": "bhasha",
+      "base_form": "ভাষা",
+      "base_meaning": "言語、言葉",
+      "contexts": [
+        {
+          "sentence_id": "1-1-14",
+          "ja": "語、言語",
+          "pos": "名詞",
+          "note": "জাপানি ভাষাで「日本語」"
+        },
+        {
+          "sentence_id": "1-2-4",
+          "ja": "言語・日本語",
+          "pos": "名詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-2-15",
+          "ja": "語・言語",
+          "pos": "名詞",
+          "note": "「নেপালি ভাষা」ネパール語"
+        },
+        {
+          "sentence_id": "1-3-1",
+          "ja": "言語",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "শিখছি": {
+      "rom": "shikhchi",
+      "base_form": "শেখা",
+      "base_meaning": "学ぶ、習う",
+      "contexts": [
+        {
+          "sentence_id": "1-1-14",
+          "ja": "勉強しています",
+          "pos": "動詞",
+          "note": "現在進行形・一人称"
+        },
+        {
+          "sentence_id": "1-2-4",
+          "ja": "勉強している",
+          "pos": "動詞",
+          "note": "現在進行形・一人称"
+        },
+        {
+          "sentence_id": "1-2-15",
+          "ja": "学んでいます",
+          "pos": "動詞(一人称現在進行)",
+          "note": "現在進行形の一人称"
+        },
+        {
+          "sentence_id": "1-3-1",
+          "ja": "学んでいます",
+          "pos": "動詞",
+          "note": "現在進行形・1人称"
+        }
+      ]
+    },
+    "আপনার": {
+      "rom": "apnar",
+      "base_form": "আপনি",
+      "base_meaning": "あなたの",
+      "contexts": [
+        {
+          "sentence_id": "1-1-15",
+          "ja": "あなたの",
+          "pos": "代名詞（属格）",
+          "note": "敬称আপনিの所有格"
+        }
+      ]
+    },
+    "সাথে": {
+      "rom": "shathe",
+      "base_form": "সাথে",
+      "base_meaning": "〜と一緒に、〜と",
+      "contexts": [
+        {
+          "sentence_id": "1-1-15",
+          "ja": "〜と",
+          "pos": "後置詞",
+          "note": "共同・関係を示す"
+        },
+        {
+          "sentence_id": "1-2-7",
+          "ja": "〜と一緒に",
+          "pos": "後置詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-2-20",
+          "ja": "〜と",
+          "pos": "後置詞",
+          "note": "「মানুষের সাথে」人と"
+        }
+      ]
+    },
+    "সম্পর্ক": {
+      "rom": "shomporko",
+      "base_form": "সম্পর্ক",
+      "base_meaning": "関係、縁",
+      "contexts": [
+        {
+          "sentence_id": "1-1-15",
+          "ja": "関係、よろしくの関係",
+          "pos": "名詞",
+          "note": "よろしくの意訳に対応"
+        },
+        {
+          "sentence_id": "1-3-7",
+          "ja": "関係",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "আশা": {
+      "rom": "asha",
+      "base_form": "আশা",
+      "base_meaning": "希望、期待",
+      "contexts": [
+        {
+          "sentence_id": "1-1-15",
+          "ja": "望む、願う",
+          "pos": "名詞",
+          "note": "আশা করিで「願います」"
+        }
+      ]
+    },
+    "ডাক্তার": {
+      "rom": "daktar",
+      "base_form": "ডাক্তার",
+      "base_meaning": "医者、医師",
+      "contexts": [
+        {
+          "sentence_id": "1-1-16",
+          "ja": "医者",
+          "pos": "名詞",
+          "note": "英語doctorからの借用語"
+        }
+      ]
+    },
+    "পরিবার": {
+      "rom": "poribar",
+      "base_form": "পরিবার",
+      "base_meaning": "家族",
+      "contexts": [
+        {
+          "sentence_id": "1-1-17",
+          "ja": "家族",
+          "pos": "名詞",
+          "note": "家族全体を指す"
+        },
+        {
+          "sentence_id": "1-2-5",
+          "ja": "家族",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "চারজন": {
+      "rom": "charjon",
+      "base_form": "চারজন",
+      "base_meaning": "四人",
+      "contexts": [
+        {
+          "sentence_id": "1-1-17",
+          "ja": "四人",
+          "pos": "数量詞",
+          "note": "চার(4)+জন(人の助数詞)"
+        },
+        {
+          "sentence_id": "1-2-5",
+          "ja": "四人",
+          "pos": "数詞",
+          "note": "চার＋জন（人の助数詞）"
+        }
+      ]
+    },
+    "সদস্য": {
+      "rom": "shodosso",
+      "base_form": "সদস্য",
+      "base_meaning": "メンバー、構成員",
+      "contexts": [
+        {
+          "sentence_id": "1-1-17",
+          "ja": "家族の人数、メンバー",
+          "pos": "名詞",
+          "note": "家族構成員を指す"
+        },
+        {
+          "sentence_id": "1-2-5",
+          "ja": "家族構成員・人家族",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "খেলাধুলা": {
+      "rom": "kheladhula",
+      "base_form": "খেলাধুলা",
+      "base_meaning": "スポーツ、遊び",
+      "contexts": [
+        {
+          "sentence_id": "1-1-18",
+          "ja": "スポーツ",
+          "pos": "名詞",
+          "note": "খেলা(遊び)+ধুলা複合語"
+        }
+      ]
+    },
+    "স্বপ্ন": {
+      "rom": "shopno",
+      "base_form": "স্বপ্ন",
+      "base_meaning": "夢",
+      "contexts": [
+        {
+          "sentence_id": "1-1-19",
+          "ja": "夢",
+          "pos": "名詞",
+          "note": "将来の夢を指す"
+        }
+      ]
+    },
+    "হলো": {
+      "rom": "holo",
+      "base_form": "হওয়া",
+      "base_meaning": "〜である、なる",
+      "contexts": [
+        {
+          "sentence_id": "1-1-19",
+          "ja": "〜は〜です（繋辞）",
+          "pos": "動詞",
+          "note": "主語と述語をつなぐ"
+        }
+      ]
+    },
+    "ভ্রমণ": {
+      "rom": "bhromon",
+      "base_form": "ভ্রমণ",
+      "base_meaning": "旅行、旅",
+      "contexts": [
+        {
+          "sentence_id": "1-1-19",
+          "ja": "旅行",
+          "pos": "名詞",
+          "note": "করাと組み合わせ動詞化"
+        },
+        {
+          "sentence_id": "1-2-3",
+          "ja": "旅行",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "করা": {
+      "rom": "kora",
+      "base_form": "করা",
+      "base_meaning": "すること（動詞の不定形）",
+      "contexts": [
+        {
+          "sentence_id": "1-1-19",
+          "ja": "すること（旅行すること）",
+          "pos": "動詞（不定形）",
+          "note": "動詞の名詞的不定形"
+        }
+      ]
+    },
+    "আবার": {
+      "rom": "abar",
+      "base_form": "আবার",
+      "base_meaning": "また、再び",
+      "contexts": [
+        {
+          "sentence_id": "1-1-20",
+          "ja": "また",
+          "pos": "副詞",
+          "note": "再度・繰り返しを示す"
+        }
+      ]
+    },
+    "দেখা": {
+      "rom": "dekha",
+      "base_form": "দেখা",
+      "base_meaning": "会うこと、見ること",
+      "contexts": [
+        {
+          "sentence_id": "1-1-20",
+          "ja": "会う（こと）",
+          "pos": "動詞（名詞形）",
+          "note": "দেখা হবেで「会えるでしょう」"
+        },
+        {
+          "sentence_id": "1-2-18",
+          "ja": "鑑賞・見ること",
+          "pos": "動詞(名詞化)",
+          "note": "動詞の名詞化形"
+        },
+        {
+          "sentence_id": "1-2-20",
+          "ja": "会うこと",
+          "pos": "動詞(名詞化)",
+          "note": "「দেখা করে」で「会って」"
+        }
+      ]
+    },
+    "হবে": {
+      "rom": "hobe",
+      "base_form": "হওয়া",
+      "base_meaning": "なるだろう、でしょう",
+      "contexts": [
+        {
+          "sentence_id": "1-1-20",
+          "ja": "ましょう、でしょう",
+          "pos": "動詞",
+          "note": "未来形・三人称単数"
+        }
+      ]
+    },
+    "কেনজি": {
+      "rom": "Kenji",
+      "base_form": "কেনজি",
+      "base_meaning": "健二（固有名詞）",
+      "contexts": [
+        {
+          "sentence_id": "1-2-1",
+          "ja": "健二",
+          "pos": "固有名詞",
+          "note": "日本人の名"
+        }
+      ]
+    },
+    "বাসিন্দা": {
+      "rom": "basinda",
+      "base_form": "বাসিন্দা",
+      "base_meaning": "居住者・住民",
+      "contexts": [
+        {
+          "sentence_id": "1-2-1",
+          "ja": "出身・在住者",
+          "pos": "名詞",
+          "note": "〜র বাসিন্দা＝〜の住民"
+        }
+      ]
+    },
+    "প্রতিদিন": {
+      "rom": "protidin",
+      "base_form": "প্রতিদিন",
+      "base_meaning": "毎日",
+      "contexts": [
+        {
+          "sentence_id": "1-2-2",
+          "ja": "毎日",
+          "pos": "副詞",
+          "note": "প্রতি＋দিন の複合語"
+        },
+        {
+          "sentence_id": "1-2-11",
+          "ja": "毎日",
+          "pos": "副詞",
+          "note": "時を表す副詞"
+        },
+        {
+          "sentence_id": "1-2-14",
+          "ja": "毎日",
+          "pos": "副詞",
+          "note": "時を表す副詞"
+        },
+        {
+          "sentence_id": "1-3-13",
+          "ja": "日々",
+          "pos": "副詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-15",
+          "ja": "毎日",
+          "pos": "副詞",
+          "note": ""
+        }
+      ]
+    },
+    "ট্রেন": {
+      "rom": "tren",
+      "base_form": "ট্রেন",
+      "base_meaning": "電車・列車",
+      "contexts": [
+        {
+          "sentence_id": "1-2-2",
+          "ja": "電車",
+          "pos": "名詞",
+          "note": "英語 train の借用語"
+        }
+      ]
+    },
+    "অফিস": {
+      "rom": "ophis",
+      "base_form": "অফিস",
+      "base_meaning": "オフィス・会社",
+      "contexts": [
+        {
+          "sentence_id": "1-2-2",
+          "ja": "オフィス・職場",
+          "pos": "名詞",
+          "note": "英語 office の借用語"
+        }
+      ]
+    },
+    "যাই": {
+      "rom": "jai",
+      "base_form": "যাওয়া",
+      "base_meaning": "行く",
+      "contexts": [
+        {
+          "sentence_id": "1-2-2",
+          "ja": "通勤する・行く",
+          "pos": "動詞",
+          "note": "一人称現在形"
+        }
+      ]
+    },
+    "বই": {
+      "rom": "boi",
+      "base_form": "বই",
+      "base_meaning": "本",
+      "contexts": [
+        {
+          "sentence_id": "1-2-3",
+          "ja": "本",
+          "pos": "名詞",
+          "note": "বই পড়া＝読書"
+        }
+      ]
+    },
+    "পড়া": {
+      "rom": "pora",
+      "base_form": "পড়া",
+      "base_meaning": "読む・勉強する",
+      "contexts": [
+        {
+          "sentence_id": "1-2-3",
+          "ja": "読む（読書）",
+          "pos": "動詞/名詞句",
+          "note": "動名詞として使用"
+        },
+        {
+          "sentence_id": "1-2-4",
+          "ja": "勉強する",
+          "pos": "動詞",
+          "note": "শিখছি と共に使用"
+        }
+      ]
+    },
+    "বিশেষ": {
+      "rom": "bishesh",
+      "base_form": "বিশেষ",
+      "base_meaning": "特別な・特に",
+      "contexts": [
+        {
+          "sentence_id": "1-2-3",
+          "ja": "特に",
+          "pos": "形容詞/副詞",
+          "note": "বিশেষ করে＝特に"
+        },
+        {
+          "sentence_id": "1-2-8",
+          "ja": "特に",
+          "pos": "副詞",
+          "note": "বিশেষ করে＝特に"
+        },
+        {
+          "sentence_id": "1-3-11",
+          "ja": "特に",
+          "pos": "副詞",
+          "note": "করে と結合し副詞句"
+        }
+      ]
+    },
+    "করে": {
+      "rom": "kore",
+      "base_form": "করা",
+      "base_meaning": "する",
+      "contexts": [
+        {
+          "sentence_id": "1-2-3",
+          "ja": "して（副詞句を作る）",
+          "pos": "動詞",
+          "note": "বিশেষ করে の一部"
+        },
+        {
+          "sentence_id": "1-2-8",
+          "ja": "して",
+          "pos": "動詞",
+          "note": "副詞節形成"
+        }
+      ]
+    },
+    "ইতিহাস": {
+      "rom": "itihas",
+      "base_form": "ইতিহাস",
+      "base_meaning": "歴史",
+      "contexts": [
+        {
+          "sentence_id": "1-2-3",
+          "ja": "歴史",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "তিন": {
+      "rom": "tin",
+      "base_form": "তিন",
+      "base_meaning": "三",
+      "contexts": [
+        {
+          "sentence_id": "1-2-4",
+          "ja": "三（年間）",
+          "pos": "数詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-8",
+          "ja": "三",
+          "pos": "数詞",
+          "note": ""
+        }
+      ]
+    },
+    "ধরে": {
+      "rom": "dhore",
+      "base_form": "ধরা",
+      "base_meaning": "（期間を）通じて・〜間",
+      "contexts": [
+        {
+          "sentence_id": "1-2-4",
+          "ja": "〜間・〜にわたって",
+          "pos": "後置詞",
+          "note": "期間を示す後置詞的用法"
+        }
+      ]
+    },
+    "কঠিন": {
+      "rom": "kothin",
+      "base_form": "কঠিন",
+      "base_meaning": "難しい・固い",
+      "contexts": [
+        {
+          "sentence_id": "1-2-4",
+          "ja": "難しい",
+          "pos": "形容詞",
+          "note": ""
+        }
+      ]
+    },
+    "লাগে": {
+      "rom": "lage",
+      "base_form": "লাগা",
+      "base_meaning": "感じる・かかる",
+      "contexts": [
+        {
+          "sentence_id": "1-2-4",
+          "ja": "〜に感じる・思える",
+          "pos": "動詞",
+          "note": "感覚・印象を表す"
+        }
+      ]
+    },
+    "বাবা": {
+      "rom": "baba",
+      "base_form": "বাবা",
+      "base_meaning": "父",
+      "contexts": [
+        {
+          "sentence_id": "1-2-5",
+          "ja": "父",
+          "pos": "名詞",
+          "note": "বাবা-মা＝両親"
+        }
+      ]
+    },
+    "মা": {
+      "rom": "ma",
+      "base_form": "মা",
+      "base_meaning": "母",
+      "contexts": [
+        {
+          "sentence_id": "1-2-5",
+          "ja": "母",
+          "pos": "名詞",
+          "note": "বাবা-মা＝両親"
+        }
+      ]
+    },
+    "ছোট": {
+      "rom": "chhoto",
+      "base_form": "ছোট",
+      "base_meaning": "小さい・年下の",
+      "contexts": [
+        {
+          "sentence_id": "1-2-5",
+          "ja": "年下の・妹の",
+          "pos": "形容詞",
+          "note": "ছোট বোন＝妹"
+        },
+        {
+          "sentence_id": "1-3-18",
+          "ja": "小さな",
+          "pos": "形容詞",
+          "note": "名詞修飾"
+        }
+      ]
+    },
+    "বোন": {
+      "rom": "bon",
+      "base_form": "বোন",
+      "base_meaning": "姉妹",
+      "contexts": [
+        {
+          "sentence_id": "1-2-5",
+          "ja": "妹",
+          "pos": "名詞",
+          "note": "ছোট বোন＝妹"
+        }
+      ]
+    },
+    "বিশ্ববিদ্যালয়": {
+      "rom": "bishwobidyalay",
+      "base_form": "বিশ্ববিদ্যালয়",
+      "base_meaning": "大学",
+      "contexts": [
+        {
+          "sentence_id": "1-2-6",
+          "ja": "大学",
+          "pos": "名詞",
+          "note": "বিশ্ব＋বিদ্যালয়の複合語"
+        }
+      ]
+    },
+    "অর্থনীতি": {
+      "rom": "orthoniti",
+      "base_form": "অর্থনীতি",
+      "base_meaning": "経済学",
+      "contexts": [
+        {
+          "sentence_id": "1-2-6",
+          "ja": "経済学",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "নিয়ে": {
+      "rom": "niye",
+      "base_form": "নেওয়া",
+      "base_meaning": "取る・持つ",
+      "contexts": [
+        {
+          "sentence_id": "1-2-6",
+          "ja": "〜を専攻して・〜について",
+          "pos": "後置詞",
+          "note": "〜নিয়ে＝〜について"
+        }
+      ]
+    },
+    "পড়াশোনা": {
+      "rom": "porashona",
+      "base_form": "পড়াশোনা",
+      "base_meaning": "勉強・学習",
+      "contexts": [
+        {
+          "sentence_id": "1-2-6",
+          "ja": "専攻した・勉強した",
+          "pos": "名詞/動詞句",
+          "note": "পড়াশোনা করা＝勉強する"
+        }
+      ]
+    },
+    "করেছি": {
+      "rom": "korechhi",
+      "base_form": "করা",
+      "base_meaning": "する",
+      "contexts": [
+        {
+          "sentence_id": "1-2-6",
+          "ja": "〜していた（過去完了）",
+          "pos": "動詞",
+          "note": "一人称過去完了形"
+        }
+      ]
+    },
+    "সপ্তাহান্তে": {
+      "rom": "shoptahante",
+      "base_form": "সপ্তাহান্ত",
+      "base_meaning": "週末",
+      "contexts": [
+        {
+          "sentence_id": "1-2-7",
+          "ja": "週末には",
+          "pos": "名詞（処格）",
+          "note": "〜তে は処格語尾"
+        }
+      ]
+    },
+    "বন্ধু": {
+      "rom": "bondhu",
+      "base_form": "বন্ধু",
+      "base_meaning": "友達・友人",
+      "contexts": [
+        {
+          "sentence_id": "1-2-7",
+          "ja": "友達",
+          "pos": "名詞",
+          "note": "বন্ধুদের＝友達たちの"
+        }
+      ]
+    },
+    "ফুটবল": {
+      "rom": "phutbol",
+      "base_form": "ফুটবল",
+      "base_meaning": "サッカー・フットボール",
+      "contexts": [
+        {
+          "sentence_id": "1-2-7",
+          "ja": "サッカー",
+          "pos": "名詞",
+          "note": "英語 football の借用語"
+        }
+      ]
+    },
+    "খেলতে": {
+      "rom": "khelte",
+      "base_form": "খেলা",
+      "base_meaning": "遊ぶ・プレーする",
+      "contexts": [
+        {
+          "sentence_id": "1-2-7",
+          "ja": "する（スポーツを）",
+          "pos": "動詞",
+          "note": "動詞不定形（目的形）"
+        }
+      ]
+    },
+    "দক্ষ": {
+      "rom": "dokkhyo",
+      "base_form": "দক্ষ",
+      "base_meaning": "得意な・熟練した",
+      "contexts": [
+        {
+          "sentence_id": "1-2-8",
+          "ja": "得意だ",
+          "pos": "形容詞",
+          "note": ""
+        }
+      ]
+    },
+    "প্রায়ই": {
+      "rom": "prayi",
+      "base_form": "প্রায়",
+      "base_meaning": "よく・しばしば",
+      "contexts": [
+        {
+          "sentence_id": "1-2-8",
+          "ja": "よく・しばしば",
+          "pos": "副詞",
+          "note": "প্রায়+ই で強調"
+        },
+        {
+          "sentence_id": "1-2-16",
+          "ja": "よく・しばしば",
+          "pos": "副詞",
+          "note": "「-ই」は強調の助辞"
+        },
+        {
+          "sentence_id": "1-2-20",
+          "ja": "よく・しばしば",
+          "pos": "副詞",
+          "note": "頻度を表す副詞"
+        }
+      ]
+    },
+    "খাবার": {
+      "rom": "khabar",
+      "base_form": "খাবার",
+      "base_meaning": "食べ物・料理",
+      "contexts": [
+        {
+          "sentence_id": "1-2-8",
+          "ja": "料理・食べ物",
+          "pos": "名詞",
+          "note": "জাপানি খাবার＝和食"
+        }
+      ]
+    },
+    "তৈরি": {
+      "rom": "toiri",
+      "base_form": "তৈরি",
+      "base_meaning": "作る・準備する",
+      "contexts": [
+        {
+          "sentence_id": "1-2-8",
+          "ja": "作る",
+          "pos": "動詞/名詞",
+          "note": "তৈরি করা＝作る"
+        }
+      ]
+    },
+    "ভবিষ্যতে": {
+      "rom": "bhobishyote",
+      "base_form": "ভবিষ্যৎ",
+      "base_meaning": "将来・未来",
+      "contexts": [
+        {
+          "sentence_id": "1-2-9",
+          "ja": "将来は",
+          "pos": "名詞（処格）",
+          "note": "〜তে は処格語尾"
+        }
+      ]
+    },
+    "নিজের": {
+      "rom": "nijer",
+      "base_form": "নিজ",
+      "base_meaning": "自分の",
+      "contexts": [
+        {
+          "sentence_id": "1-2-9",
+          "ja": "自分の",
+          "pos": "代名詞（所有格）",
+          "note": "再帰代名詞の所有格"
+        }
+      ]
+    },
+    "ব্যবসা": {
+      "rom": "byobsha",
+      "base_form": "ব্যবসা",
+      "base_meaning": "ビジネス・事業",
+      "contexts": [
+        {
+          "sentence_id": "1-2-9",
+          "ja": "ビジネス・事業",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "শুরু": {
+      "rom": "shuru",
+      "base_form": "শুরু",
+      "base_meaning": "始まり・開始",
+      "contexts": [
+        {
+          "sentence_id": "1-2-9",
+          "ja": "始める",
+          "pos": "名詞/動詞句",
+          "note": "শুরু করা＝始める"
+        }
+      ]
+    },
+    "করতে": {
+      "rom": "korte",
+      "base_form": "করা",
+      "base_meaning": "する",
+      "contexts": [
+        {
+          "sentence_id": "1-2-9",
+          "ja": "したい（〜したい の不定形）",
+          "pos": "動詞",
+          "note": "動詞不定形（目的形）"
+        }
+      ]
+    },
+    "চাই": {
+      "rom": "chai",
+      "base_form": "চাওয়া",
+      "base_meaning": "望む・欲する",
+      "contexts": [
+        {
+          "sentence_id": "1-2-9",
+          "ja": "〜したいと思っている",
+          "pos": "動詞",
+          "note": "一人称現在形"
+        }
+      ]
+    },
+    "নেপালি": {
+      "rom": "Nepali",
+      "base_form": "নেপালি",
+      "base_meaning": "ネパールの・ネパール語",
+      "contexts": [
+        {
+          "sentence_id": "1-2-10",
+          "ja": "ネパールの",
+          "pos": "形容詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-2-15",
+          "ja": "ネパール語",
+          "pos": "名詞/形容詞",
+          "note": "「ভাষা」と共に言語名"
+        }
+      ]
+    },
+    "সংস্কৃতি": {
+      "rom": "shongshriti",
+      "base_form": "সংস্কৃতি",
+      "base_meaning": "文化",
+      "contexts": [
+        {
+          "sentence_id": "1-2-10",
+          "ja": "文化",
+          "pos": "名詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-17",
+          "ja": "文化",
+          "pos": "名詞",
+          "note": "বিভিন্ন で修飾"
+        }
+      ]
+    },
+    "প্রতি": {
+      "rom": "proti",
+      "base_form": "প্রতি",
+      "base_meaning": "〜に対して・〜へ",
+      "contexts": [
+        {
+          "sentence_id": "1-2-10",
+          "ja": "〜に（対して）",
+          "pos": "後置詞",
+          "note": "関心・興味の対象を示す"
+        }
+      ]
+    },
+    "আগ্রহ": {
+      "rom": "agroh",
+      "base_form": "আগ্রহ",
+      "base_meaning": "興味・関心",
+      "contexts": [
+        {
+          "sentence_id": "1-2-10",
+          "ja": "興味",
+          "pos": "名詞",
+          "note": "আগ্রহ আছে＝興味がある"
+        },
+        {
+          "sentence_id": "1-3-1",
+          "ja": "関心",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "এবং": {
+      "rom": "ebong",
+      "base_form": "এবং",
+      "base_meaning": "そして・〜と",
+      "contexts": [
+        {
+          "sentence_id": "1-2-1",
+          "ja": "〜で（接続）",
+          "pos": "接続詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-2-2",
+          "ja": "〜で（接続）",
+          "pos": "接続詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-2-3",
+          "ja": "〜と（接続）",
+          "pos": "接続詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-2-5",
+          "ja": "〜と（接続）",
+          "pos": "接続詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-2-8",
+          "ja": "〜で（接続）",
+          "pos": "接続詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-2-11",
+          "ja": "そして",
+          "pos": "接続詞",
+          "note": "文をつなぐ等位接続詞"
+        },
+        {
+          "sentence_id": "1-2-12",
+          "ja": "そして",
+          "pos": "接続詞",
+          "note": "文をつなぐ等位接続詞"
+        },
+        {
+          "sentence_id": "1-2-15",
+          "ja": "と・および",
+          "pos": "接続詞",
+          "note": "語をつなぐ接続詞"
+        },
+        {
+          "sentence_id": "1-2-16",
+          "ja": "そして",
+          "pos": "接続詞",
+          "note": "文をつなぐ等位接続詞"
+        },
+        {
+          "sentence_id": "1-2-17",
+          "ja": "そして",
+          "pos": "接続詞",
+          "note": "文をつなぐ等位接続詞"
+        },
+        {
+          "sentence_id": "1-2-18",
+          "ja": "そして",
+          "pos": "接続詞",
+          "note": "文をつなぐ等位接続詞"
+        },
+        {
+          "sentence_id": "1-2-19",
+          "ja": "そして",
+          "pos": "接続詞",
+          "note": "文をつなぐ等位接続詞"
+        }
+      ]
+    },
+    "কিন্তু": {
+      "rom": "kintu",
+      "base_form": "কিন্তু",
+      "base_meaning": "しかし・でも",
+      "contexts": [
+        {
+          "sentence_id": "1-2-4",
+          "ja": "しかし・でも",
+          "pos": "接続詞",
+          "note": "逆接"
+        },
+        {
+          "sentence_id": "1-2-15",
+          "ja": "しかし・でも",
+          "pos": "接続詞",
+          "note": "逆接の接続詞"
+        }
+      ]
+    },
+    "এখনও": {
+      "rom": "ekhono",
+      "base_form": "এখনও",
+      "base_meaning": "まだ・今でも",
+      "contexts": [
+        {
+          "sentence_id": "1-2-4",
+          "ja": "まだ",
+          "pos": "副詞",
+          "note": ""
+        }
+      ]
+    },
+    "সহ": {
+      "rom": "shoho",
+      "base_form": "সহ",
+      "base_meaning": "〜を含めて・〜と共に",
+      "contexts": [
+        {
+          "sentence_id": "1-2-5",
+          "ja": "〜を含めて",
+          "pos": "後置詞",
+          "note": "বোনসহ＝妹を含めて"
+        }
+      ]
+    },
+    "খুব": {
+      "rom": "khub",
+      "base_form": "খুব",
+      "base_meaning": "とても・非常に",
+      "contexts": [
+        {
+          "sentence_id": "1-2-10",
+          "ja": "とても",
+          "pos": "副詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-2-19",
+          "ja": "とても",
+          "pos": "副詞",
+          "note": "程度を強調する副詞"
+        }
+      ]
+    },
+    "গান": {
+      "rom": "gan",
+      "base_form": "গান",
+      "base_meaning": "歌・音楽",
+      "contexts": [
+        {
+          "sentence_id": "1-2-11",
+          "ja": "音楽・歌",
+          "pos": "名詞",
+          "note": "「গান শুনতে」で「音楽を聴く」"
+        }
+      ]
+    },
+    "শুনতে": {
+      "rom": "shunte",
+      "base_form": "শোনা",
+      "base_meaning": "聴く・聞く",
+      "contexts": [
+        {
+          "sentence_id": "1-2-11",
+          "ja": "聴くこと",
+          "pos": "動詞(不定詞)",
+          "note": "動詞の不定詞形(-তে)"
+        }
+      ]
+    },
+    "ভুলে": {
+      "rom": "bhule",
+      "base_form": "ভোলা",
+      "base_meaning": "忘れる",
+      "contexts": [
+        {
+          "sentence_id": "1-2-11",
+          "ja": "忘れずに(欠かさず)",
+          "pos": "動詞(副動詞)",
+          "note": "「না ভুলে」で「忘れずに」"
+        }
+      ]
+    },
+    "শুনি": {
+      "rom": "shuni",
+      "base_form": "শোনা",
+      "base_meaning": "聴く・聞く",
+      "contexts": [
+        {
+          "sentence_id": "1-2-11",
+          "ja": "聴きます",
+          "pos": "動詞(一人称現在)",
+          "note": "一人称単数現在形"
+        }
+      ]
+    },
+    "পেশা": {
+      "rom": "pesha",
+      "base_form": "পেশা",
+      "base_meaning": "職業・仕事",
+      "contexts": [
+        {
+          "sentence_id": "1-2-12",
+          "ja": "仕事・職業",
+          "pos": "名詞",
+          "note": "「আমার পেশা」私の職業は"
+        }
+      ]
+    },
+    "প্রকৌশলী": {
+      "rom": "prokousholee",
+      "base_form": "প্রকৌশলী",
+      "base_meaning": "エンジニア・技術者",
+      "contexts": [
+        {
+          "sentence_id": "1-2-12",
+          "ja": "エンジニア",
+          "pos": "名詞",
+          "note": "職業名詞"
+        }
+      ]
+    },
+    "সফটওয়্যার": {
+      "rom": "software",
+      "base_form": "সফটওয়্যার",
+      "base_meaning": "ソフトウェア",
+      "contexts": [
+        {
+          "sentence_id": "1-2-12",
+          "ja": "ソフトウェア",
+          "pos": "名詞",
+          "note": "英語借用語"
+        }
+      ]
+    },
+    "ডেভেলপমেন্ট": {
+      "rom": "development",
+      "base_form": "ডেভেলপমেন্ট",
+      "base_meaning": "開発",
+      "contexts": [
+        {
+          "sentence_id": "1-2-12",
+          "ja": "開発",
+          "pos": "名詞",
+          "note": "英語借用語"
+        }
+      ]
+    },
+    "কাজ": {
+      "rom": "kaj",
+      "base_form": "কাজ",
+      "base_meaning": "仕事・作業",
+      "contexts": [
+        {
+          "sentence_id": "1-2-12",
+          "ja": "仕事・作業",
+          "pos": "名詞",
+          "note": "「কাজ করি」で「仕事をする」"
+        },
+        {
+          "sentence_id": "1-3-5",
+          "ja": "取り組む",
+          "pos": "名詞",
+          "note": "কাজ করা「働く・取り組む」"
+        }
+      ]
+    },
+    "ছোটবেলা": {
+      "rom": "chotobela",
+      "base_form": "ছোটবেলা",
+      "base_meaning": "子供の頃・幼少時代",
+      "contexts": [
+        {
+          "sentence_id": "1-2-13",
+          "ja": "子供の頃",
+          "pos": "名詞",
+          "note": "「থেকেই」と共に「〜から」"
+        },
+        {
+          "sentence_id": "1-3-1",
+          "ja": "幼い頃",
+          "pos": "名詞",
+          "note": "ছোট(小さい)+বেলা(時)の複合語"
+        }
+      ]
+    },
+    "থেকেই": {
+      "rom": "thekei",
+      "base_form": "থেকে",
+      "base_meaning": "〜から(起点)",
+      "contexts": [
+        {
+          "sentence_id": "1-2-13",
+          "ja": "〜からずっと",
+          "pos": "後置詞+強調辞",
+          "note": "「-ই」は強調の助辞"
+        }
+      ]
+    },
+    "ছবি": {
+      "rom": "chobi",
+      "base_form": "ছবি",
+      "base_meaning": "絵・写真・映画",
+      "contexts": [
+        {
+          "sentence_id": "1-2-13",
+          "ja": "絵",
+          "pos": "名詞",
+          "note": "「ছবি আঁকতে」で「絵を描く」"
+        }
+      ]
+    },
+    "আঁকতে": {
+      "rom": "akte",
+      "base_form": "আঁকা",
+      "base_meaning": "描く",
+      "contexts": [
+        {
+          "sentence_id": "1-2-13",
+          "ja": "描くこと",
+          "pos": "動詞(不定詞)",
+          "note": "動詞の不定詞形(-তে)"
+        }
+      ]
+    },
+    "করতাম": {
+      "rom": "kortam",
+      "base_form": "করা",
+      "base_meaning": "する・行う",
+      "contexts": [
+        {
+          "sentence_id": "1-2-13",
+          "ja": "していました",
+          "pos": "動詞(一人称過去習慣)",
+          "note": "過去習慣の一人称形"
+        }
+      ]
+    },
+    "স্বাস্থ্য": {
+      "rom": "swasthyo",
+      "base_form": "স্বাস্থ্য",
+      "base_meaning": "健康",
+      "contexts": [
+        {
+          "sentence_id": "1-2-14",
+          "ja": "健康",
+          "pos": "名詞",
+          "note": "「স্বাস্থ্যের জন্য」健康のために"
+        }
+      ]
+    },
+    "সকালে": {
+      "rom": "sokale",
+      "base_form": "সকাল",
+      "base_meaning": "朝・午前",
+      "contexts": [
+        {
+          "sentence_id": "1-2-14",
+          "ja": "朝に",
+          "pos": "名詞(格語尾付き)",
+          "note": "「-এ」は場所・時の格語尾"
+        }
+      ]
+    },
+    "জগিং": {
+      "rom": "joging",
+      "base_form": "জগিং",
+      "base_meaning": "ジョギング",
+      "contexts": [
+        {
+          "sentence_id": "1-2-14",
+          "ja": "ジョギング",
+          "pos": "名詞",
+          "note": "英語借用語"
+        }
+      ]
+    },
+    "ইংরেজি": {
+      "rom": "ingreji",
+      "base_form": "ইংরেজি",
+      "base_meaning": "英語",
+      "contexts": [
+        {
+          "sentence_id": "1-2-15",
+          "ja": "英語",
+          "pos": "名詞",
+          "note": "言語名"
+        }
+      ]
+    },
+    "স্প্যানিশ": {
+      "rom": "spanish",
+      "base_form": "স্প্যানিশ",
+      "base_meaning": "スペイン語",
+      "contexts": [
+        {
+          "sentence_id": "1-2-15",
+          "ja": "スペイン語",
+          "pos": "名詞",
+          "note": "言語名・英語借用語"
+        }
+      ]
+    },
+    "বলতে": {
+      "rom": "bolte",
+      "base_form": "বলা",
+      "base_meaning": "言う・話す",
+      "contexts": [
+        {
+          "sentence_id": "1-2-20",
+          "ja": "話すこと",
+          "pos": "動詞(不定詞)",
+          "note": "「কথা বলতে」で話すこと"
+        }
+      ]
+    },
+    "পারি": {
+      "rom": "pari",
+      "base_form": "পারা",
+      "base_meaning": "できる・可能",
+      "contexts": [
+        {
+          "sentence_id": "1-2-15",
+          "ja": "話せます",
+          "pos": "助動詞(一人称現在)",
+          "note": "能力・可能を表す助動詞"
+        }
+      ]
+    },
+    "এখন": {
+      "rom": "ekhon",
+      "base_form": "এখন",
+      "base_meaning": "今・現在",
+      "contexts": [
+        {
+          "sentence_id": "1-2-15",
+          "ja": "今",
+          "pos": "副詞",
+          "note": "時を表す副詞"
+        }
+      ]
+    },
+    "একা": {
+      "rom": "eka",
+      "base_form": "একা",
+      "base_meaning": "一人で・単独で",
+      "contexts": [
+        {
+          "sentence_id": "1-2-16",
+          "ja": "一人で",
+          "pos": "副詞/形容詞",
+          "note": "「একা থাকি」一人暮らし"
+        }
+      ]
+    },
+    "নিজে": {
+      "rom": "nije",
+      "base_form": "নিজে",
+      "base_meaning": "自分で・自ら",
+      "contexts": [
+        {
+          "sentence_id": "1-2-16",
+          "ja": "自分で",
+          "pos": "代名詞(再帰)",
+          "note": "再帰代名詞"
+        },
+        {
+          "sentence_id": "1-3-5",
+          "ja": "自他ともに（自分）",
+          "pos": "代名詞",
+          "note": ""
+        }
+      ]
+    },
+    "ওসাকায়": {
+      "rom": "osaka-y",
+      "base_form": "ওসাকা",
+      "base_meaning": "大阪",
+      "contexts": [
+        {
+          "sentence_id": "1-2-17",
+          "ja": "大阪で",
+          "pos": "固有名詞(格語尾付き)",
+          "note": "「-য়」は場所の格語尾"
+        }
+      ]
+    },
+    "জন্মেছি": {
+      "rom": "jonmechi",
+      "base_form": "জন্মানো",
+      "base_meaning": "生まれる",
+      "contexts": [
+        {
+          "sentence_id": "1-2-17",
+          "ja": "生まれました",
+          "pos": "動詞(一人称完了)",
+          "note": "完了形の一人称"
+        }
+      ]
+    },
+    "হাই স্কুল": {
+      "rom": "high school",
+      "base_form": "হাই স্কুল",
+      "base_meaning": "高校",
+      "contexts": [
+        {
+          "sentence_id": "1-2-17",
+          "ja": "高校",
+          "pos": "名詞",
+          "note": "英語借用語"
+        }
+      ]
+    },
+    "পর্যন্ত": {
+      "rom": "porjonto",
+      "base_form": "পর্যন্ত",
+      "base_meaning": "〜まで",
+      "contexts": [
+        {
+          "sentence_id": "1-2-17",
+          "ja": "〜まで",
+          "pos": "後置詞",
+          "note": "到達点・範囲を示す後置詞"
+        }
+      ]
+    },
+    "কানসাইয়ে": {
+      "rom": "kansai-ye",
+      "base_form": "কানসাই",
+      "base_meaning": "関西",
+      "contexts": [
+        {
+          "sentence_id": "1-2-17",
+          "ja": "関西で",
+          "pos": "固有名詞(格語尾付き)",
+          "note": "「-এ」は場所の格語尾"
+        }
+      ]
+    },
+    "হয়েছি": {
+      "rom": "hoyechi",
+      "base_form": "হওয়া",
+      "base_meaning": "なる・である",
+      "contexts": [
+        {
+          "sentence_id": "1-2-17",
+          "ja": "育ちました",
+          "pos": "動詞(一人称完了)",
+          "note": "「বড় হওয়া」で「育つ」"
+        }
+      ]
+    },
+    "সিনেমা": {
+      "rom": "cinema",
+      "base_form": "সিনেমা",
+      "base_meaning": "映画",
+      "contexts": [
+        {
+          "sentence_id": "1-2-18",
+          "ja": "映画",
+          "pos": "名詞",
+          "note": "英語借用語"
+        }
+      ]
+    },
+    "বিশেষ করে": {
+      "rom": "bishesh kore",
+      "base_form": "বিশেষ করে",
+      "base_meaning": "特に・とりわけ",
+      "contexts": [
+        {
+          "sentence_id": "1-2-18",
+          "ja": "特に",
+          "pos": "副詞句",
+          "note": "強調・限定の副詞句"
+        }
+      ]
+    },
+    "অ্যাকশন": {
+      "rom": "action",
+      "base_form": "অ্যাকশন",
+      "base_meaning": "アクション",
+      "contexts": [
+        {
+          "sentence_id": "1-2-18",
+          "ja": "アクション",
+          "pos": "名詞",
+          "note": "英語借用語"
+        }
+      ]
+    },
+    "পোষা": {
+      "rom": "posha",
+      "base_form": "পোষা",
+      "base_meaning": "飼いならした・ペットの",
+      "contexts": [
+        {
+          "sentence_id": "1-2-19",
+          "ja": "ペット(の)",
+          "pos": "形容詞/動詞過去分詞",
+          "note": "「পোষা প্রাণী」でペット"
+        }
+      ]
+    },
+    "প্রাণী": {
+      "rom": "prani",
+      "base_form": "প্রাণী",
+      "base_meaning": "動物・生き物",
+      "contexts": [
+        {
+          "sentence_id": "1-2-19",
+          "ja": "動物・ペット",
+          "pos": "名詞",
+          "note": "「পোষা প্রাণী」でペット動物"
+        }
+      ]
+    },
+    "হিসেবে": {
+      "rom": "hisebe",
+      "base_form": "হিসেবে",
+      "base_meaning": "〜として",
+      "contexts": [
+        {
+          "sentence_id": "1-2-19",
+          "ja": "〜として",
+          "pos": "後置詞",
+          "note": "資格・役割を示す後置詞"
+        }
+      ]
+    },
+    "দুটি": {
+      "rom": "duti",
+      "base_form": "দুটি",
+      "base_meaning": "二つ・二匹(の)",
+      "contexts": [
+        {
+          "sentence_id": "1-2-19",
+          "ja": "二匹",
+          "pos": "数量詞",
+          "note": "「দুই+টি」で2つ(無生物・小動物)"
+        }
+      ]
+    },
+    "বিড়াল": {
+      "rom": "biral",
+      "base_form": "বিড়াল",
+      "base_meaning": "猫",
+      "contexts": [
+        {
+          "sentence_id": "1-2-19",
+          "ja": "猫",
+          "pos": "名詞",
+          "note": "動物名詞"
+        }
+      ]
+    },
+    "পালি": {
+      "rom": "pali",
+      "base_form": "পালা",
+      "base_meaning": "飼う・育てる",
+      "contexts": [
+        {
+          "sentence_id": "1-2-19",
+          "ja": "飼っています",
+          "pos": "動詞(一人称現在)",
+          "note": "動物の飼育を表す動詞"
+        }
+      ]
+    },
+    "সেগুলো": {
+      "rom": "shegulo",
+      "base_form": "সেগুলো",
+      "base_meaning": "それら・あれら",
+      "contexts": [
+        {
+          "sentence_id": "1-2-19",
+          "ja": "それら(猫たち)",
+          "pos": "代名詞(複数)",
+          "note": "非人称複数の指示代名詞"
+        }
+      ]
+    },
+    "আদুরে": {
+      "rom": "adure",
+      "base_form": "আদুরে",
+      "base_meaning": "かわいい・甘えん坊の",
+      "contexts": [
+        {
+          "sentence_id": "1-2-19",
+          "ja": "かわいい・愛らしい",
+          "pos": "形容詞",
+          "note": "愛情を示す形容詞"
+        }
+      ]
+    },
+    "নতুন": {
+      "rom": "notun",
+      "base_form": "নতুন",
+      "base_meaning": "新しい",
+      "contexts": [
+        {
+          "sentence_id": "1-2-20",
+          "ja": "新しい",
+          "pos": "形容詞",
+          "note": "「নতুন মানুষ」新しい人"
+        }
+      ]
+    },
+    "মানুষ": {
+      "rom": "manush",
+      "base_form": "মানুষ",
+      "base_meaning": "人・人間",
+      "contexts": [
+        {
+          "sentence_id": "1-2-20",
+          "ja": "人",
+          "pos": "名詞",
+          "note": "「নতুন মানুষ」新しい人"
+        },
+        {
+          "sentence_id": "1-3-2",
+          "ja": "人",
+          "pos": "名詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-4",
+          "ja": "人",
+          "pos": "名詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-7",
+          "ja": "誰とでも",
+          "pos": "名詞",
+          "note": "যেকারো と互換的に使用"
+        }
+      ]
+    },
+    "কথা": {
+      "rom": "kotha",
+      "base_form": "কথা",
+      "base_meaning": "話・言葉",
+      "contexts": [
+        {
+          "sentence_id": "1-2-20",
+          "ja": "話すこと",
+          "pos": "名詞",
+          "note": "「কথা বলতে」で「話すこと」"
+        }
+      ]
+    },
+    "তাই": {
+      "rom": "tai",
+      "base_form": "তাই",
+      "base_meaning": "だから・そのため",
+      "contexts": [
+        {
+          "sentence_id": "1-2-20",
+          "ja": "だから・そのため",
+          "pos": "接続詞",
+          "note": "因果関係の接続詞"
+        }
+      ]
+    },
+    "মিলনমেলায়": {
+      "rom": "milonmelay",
+      "base_form": "মিলনমেলা",
+      "base_meaning": "交流会・集会",
+      "contexts": [
+        {
+          "sentence_id": "1-2-20",
+          "ja": "交流会に",
+          "pos": "名詞(格語尾付き)",
+          "note": "「-য়」は場所の格語尾"
+        }
+      ]
+    },
+    "অংশ": {
+      "rom": "ongsh",
+      "base_form": "অংশ",
+      "base_meaning": "部分・参加",
+      "contexts": [
+        {
+          "sentence_id": "1-2-20",
+          "ja": "参加(します)",
+          "pos": "名詞",
+          "note": "「অংশ নিই」で「参加する」"
+        }
+      ]
+    },
+    "নিই": {
+      "rom": "nii",
+      "base_form": "নেওয়া",
+      "base_meaning": "取る・受け取る",
+      "contexts": [
+        {
+          "sentence_id": "1-2-20",
+          "ja": "参加します",
+          "pos": "動詞(一人称現在)",
+          "note": "「অংশ নেওয়া」で参加する"
+        }
+      ]
+    },
+    "গভীর": {
+      "rom": "gobhir",
+      "base_form": "গভীর",
+      "base_meaning": "深い",
+      "contexts": [
+        {
+          "sentence_id": "1-3-1",
+          "ja": "強い・深い",
+          "pos": "形容詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-4",
+          "ja": "深く",
+          "pos": "形容詞",
+          "note": "গভীরভাবে「深く」の語幹"
+        },
+        {
+          "sentence_id": "1-3-7",
+          "ja": "深い",
+          "pos": "形容詞",
+          "note": ""
+        }
+      ]
+    },
+    "বর্তমানে": {
+      "rom": "bortomane",
+      "base_form": "বর্তমান",
+      "base_meaning": "現在・現時点",
+      "contexts": [
+        {
+          "sentence_id": "1-3-1",
+          "ja": "現在は",
+          "pos": "副詞",
+          "note": "বর্তমান+এ 格語尾"
+        }
+      ]
+    },
+    "একাধিক": {
+      "rom": "ekhadhik",
+      "base_form": "একাধিক",
+      "base_meaning": "複数の・一つ以上の",
+      "contexts": [
+        {
+          "sentence_id": "1-3-1",
+          "ja": "複数の",
+          "pos": "形容詞",
+          "note": ""
+        }
+      ]
+    },
+    "বিদেশি": {
+      "rom": "bideshi",
+      "base_form": "বিদেশি",
+      "base_meaning": "外国の・外国人",
+      "contexts": [
+        {
+          "sentence_id": "1-3-1",
+          "ja": "外国語の",
+          "pos": "形容詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-4",
+          "ja": "海外",
+          "pos": "形容詞",
+          "note": "বিদেশ জীবন「海外生活」"
+        }
+      ]
+    },
+    "পেশাগত": {
+      "rom": "peshaghot",
+      "base_form": "পেশাগত",
+      "base_meaning": "職業上の・職業的な",
+      "contexts": [
+        {
+          "sentence_id": "1-3-2",
+          "ja": "職業柄",
+          "pos": "形容詞",
+          "note": "পেশা(職業)+গত"
+        }
+      ]
+    },
+    "কারণ": {
+      "rom": "karon",
+      "base_form": "কারণ",
+      "base_meaning": "理由・原因",
+      "contexts": [
+        {
+          "sentence_id": "1-3-2",
+          "ja": "職業柄（理由）",
+          "pos": "名詞",
+          "note": "পেশাগত কারণে「職業上の理由で」"
+        }
+      ]
+    },
+    "যোগাযোগ": {
+      "rom": "yoghayog",
+      "base_form": "যোগাযোগ",
+      "base_meaning": "コミュニケーション・連絡",
+      "contexts": [
+        {
+          "sentence_id": "1-3-2",
+          "ja": "コミュニケーション",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "গুরুত্ব": {
+      "rom": "gurutwo",
+      "base_form": "গুরুত্ব",
+      "base_meaning": "重要性・大切さ",
+      "contexts": [
+        {
+          "sentence_id": "1-3-2",
+          "ja": "大切にする",
+          "pos": "名詞",
+          "note": "গুরুত্ব দিই「重要視する」"
+        },
+        {
+          "sentence_id": "1-3-4",
+          "ja": "大切さ",
+          "pos": "名詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-14",
+          "ja": "重んじること",
+          "pos": "名詞",
+          "note": "দিই と組み合わせ"
+        }
+      ]
+    },
+    "সবসময়": {
+      "rom": "shobshomoy",
+      "base_form": "সবসময়",
+      "base_meaning": "常に・いつも",
+      "contexts": [
+        {
+          "sentence_id": "1-3-2",
+          "ja": "常に",
+          "pos": "副詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-8",
+          "ja": "常に",
+          "pos": "副詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-9",
+          "ja": "常に",
+          "pos": "副詞",
+          "note": ""
+        }
+      ]
+    },
+    "অন্যের": {
+      "rom": "onyer",
+      "base_form": "অন্য",
+      "base_meaning": "他の・別の・相手",
+      "contexts": [
+        {
+          "sentence_id": "1-3-2",
+          "ja": "相手の",
+          "pos": "形容詞",
+          "note": "অন্য+এর 属格"
+        }
+      ]
+    },
+    "দৃষ্টিকোণ": {
+      "rom": "drishtikhon",
+      "base_form": "দৃষ্টিকোণ",
+      "base_meaning": "視点・観点・立場",
+      "contexts": [
+        {
+          "sentence_id": "1-3-2",
+          "ja": "立場・視点",
+          "pos": "名詞",
+          "note": "দৃষ্টি(視)+কোণ(角)"
+        }
+      ]
+    },
+    "চিন্তা": {
+      "rom": "chinta",
+      "base_form": "চিন্তা",
+      "base_meaning": "考え・思考・心配",
+      "contexts": [
+        {
+          "sentence_id": "1-3-2",
+          "ja": "考える",
+          "pos": "名詞",
+          "note": "চিন্তা করা「考える」"
+        }
+      ]
+    },
+    "চেষ্টা": {
+      "rom": "cheshta",
+      "base_form": "চেষ্টা",
+      "base_meaning": "努力・試み",
+      "contexts": [
+        {
+          "sentence_id": "1-3-2",
+          "ja": "心がける・努力する",
+          "pos": "名詞",
+          "note": "চেষ্টা করি「努力する」"
+        },
+        {
+          "sentence_id": "1-3-13",
+          "ja": "しようとしている",
+          "pos": "名詞／動詞句",
+          "note": "করি と組み合わせ"
+        }
+      ]
+    },
+    "জীবনদর্শন": {
+      "rom": "jibondorsho n",
+      "base_form": "জীবনদর্শন",
+      "base_meaning": "人生観・人生哲学",
+      "contexts": [
+        {
+          "sentence_id": "1-3-3",
+          "ja": "人生観",
+          "pos": "名詞",
+          "note": "জীবন(人生)+দর্শন(哲学)"
+        }
+      ]
+    },
+    "ব্যর্থতা": {
+      "rom": "byorthotha",
+      "base_form": "ব্যর্থতা",
+      "base_meaning": "失敗・挫折",
+      "contexts": [
+        {
+          "sentence_id": "1-3-3",
+          "ja": "失敗",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "ভয়": {
+      "rom": "bhoy",
+      "base_form": "ভয়",
+      "base_meaning": "恐怖・恐れ",
+      "contexts": [
+        {
+          "sentence_id": "1-3-3",
+          "ja": "恐れず",
+          "pos": "名詞",
+          "note": "ভয় না পেয়ে「恐れないで」"
+        }
+      ]
+    },
+    "চ্যালেঞ্জ": {
+      "rom": "challenge",
+      "base_form": "চ্যালেঞ্জ",
+      "base_meaning": "挑戦・チャレンジ",
+      "contexts": [
+        {
+          "sentence_id": "1-3-3",
+          "ja": "挑戦し続けること",
+          "pos": "名詞",
+          "note": "英語借用語"
+        }
+      ]
+    },
+    "চালিয়ে যাওয়া": {
+      "rom": "chaliye jaoa",
+      "base_form": "চালিয়ে যাওয়া",
+      "base_meaning": "続ける・やり続ける",
+      "contexts": [
+        {
+          "sentence_id": "1-3-3",
+          "ja": "し続けること",
+          "pos": "動詞句",
+          "note": "継続を表す複合動詞"
+        }
+      ]
+    },
+    "বিকাশ": {
+      "rom": "bikash",
+      "base_form": "বিকাশ",
+      "base_meaning": "発展・成長・発達",
+      "contexts": [
+        {
+          "sentence_id": "1-3-3",
+          "ja": "成長",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "পথ": {
+      "rom": "poth",
+      "base_form": "পথ",
+      "base_meaning": "道・道筋・方法",
+      "contexts": [
+        {
+          "sentence_id": "1-3-3",
+          "ja": "道・つながる方法",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "দীর্ঘ": {
+      "rom": "dirgh",
+      "base_form": "দীর্ঘ",
+      "base_meaning": "長い・長期の",
+      "contexts": [
+        {
+          "sentence_id": "1-3-4",
+          "ja": "長年にわたる",
+          "pos": "形容詞",
+          "note": ""
+        }
+      ]
+    },
+    "জীবন": {
+      "rom": "jibon",
+      "base_form": "জীবন",
+      "base_meaning": "生活・人生・命",
+      "contexts": [
+        {
+          "sentence_id": "1-3-4",
+          "ja": "生活",
+          "pos": "名詞",
+          "note": "বিদেশ জীবন「海外生活」"
+        },
+        {
+          "sentence_id": "1-3-17",
+          "ja": "生涯をかけて",
+          "pos": "名詞",
+          "note": "সারা で全体強調"
+        },
+        {
+          "sentence_id": "1-3-18",
+          "ja": "暮らし",
+          "pos": "名詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-20",
+          "ja": "人生の",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "সাংস্কৃতিক": {
+      "rom": "shanskhritik",
+      "base_form": "সাংস্কৃতিক",
+      "base_meaning": "文化的な",
+      "contexts": [
+        {
+          "sentence_id": "1-3-4",
+          "ja": "文化の",
+          "pos": "形容詞",
+          "note": "সংস্কৃতি(文化)の派生形"
+        }
+      ]
+    },
+    "পার্থক্য": {
+      "rom": "parthokyo",
+      "base_form": "পার্থক্য",
+      "base_meaning": "違い・差異",
+      "contexts": [
+        {
+          "sentence_id": "1-3-4",
+          "ja": "違い",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "পেরিয়ে": {
+      "rom": "periye",
+      "base_form": "পেরানো",
+      "base_meaning": "超える・通り越す",
+      "contexts": [
+        {
+          "sentence_id": "1-3-4",
+          "ja": "超えて",
+          "pos": "動詞",
+          "note": "副動詞形"
+        }
+      ]
+    },
+    "যুক্ত": {
+      "rom": "yukto",
+      "base_form": "যুক্ত",
+      "base_meaning": "つながった・結びついた",
+      "contexts": [
+        {
+          "sentence_id": "1-3-4",
+          "ja": "つながること",
+          "pos": "形容詞",
+          "note": "যুক্ত হওয়া「つながる」"
+        },
+        {
+          "sentence_id": "1-3-15",
+          "ja": "携わっている",
+          "pos": "形容詞／述語",
+          "note": "叙述用法"
+        }
+      ]
+    },
+    "অনুভব": {
+      "rom": "onubhob",
+      "base_form": "অনুভব",
+      "base_meaning": "感じること・実感",
+      "contexts": [
+        {
+          "sentence_id": "1-3-4",
+          "ja": "実感しています",
+          "pos": "名詞",
+          "note": "অনুভব করেছি「感じた」"
+        },
+        {
+          "sentence_id": "1-3-15",
+          "ja": "感じながら",
+          "pos": "動詞（動名詞）",
+          "note": "করে で分詞的"
+        }
+      ]
+    },
+    "স্বীকার": {
+      "rom": "shikar",
+      "base_form": "স্বীকার",
+      "base_meaning": "認めること・承認",
+      "contexts": [
+        {
+          "sentence_id": "1-3-5",
+          "ja": "認める",
+          "pos": "名詞",
+          "note": "স্বীকার করে「認めて」"
+        }
+      ]
+    },
+    "পরিপূর্ণতাবাদী": {
+      "rom": "poripurnotabadi",
+      "base_form": "পরিপূর্ণতাবাদী",
+      "base_meaning": "完璧主義者",
+      "contexts": [
+        {
+          "sentence_id": "1-3-5",
+          "ja": "完璧主義者",
+          "pos": "名詞",
+          "note": "পরিপূর্ণতা(完璧)+বাদী(主義者)"
+        }
+      ]
+    },
+    "আপস": {
+      "rom": "aposh",
+      "base_form": "আপস",
+      "base_meaning": "妥協・譲歩",
+      "contexts": [
+        {
+          "sentence_id": "1-3-5",
+          "ja": "妥協せず",
+          "pos": "名詞",
+          "note": "আপস না করে「妥協しないで」"
+        }
+      ]
+    },
+    "স্বভাব": {
+      "rom": "shobhab",
+      "base_form": "স্বভাব",
+      "base_meaning": "性質・性格・習慣",
+      "contexts": [
+        {
+          "sentence_id": "1-3-5",
+          "ja": "性格",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "বিশেষায়িত": {
+      "rom": "bisheshaito",
+      "base_form": "বিশেষায়িত",
+      "base_meaning": "専門化された・特化した",
+      "contexts": [
+        {
+          "sentence_id": "1-3-6",
+          "ja": "専門",
+          "pos": "形容詞",
+          "note": "বিশেষ(特別)の派生形"
+        }
+      ]
+    },
+    "ক্ষেত্র": {
+      "rom": "kshetro",
+      "base_form": "ক্ষেত্র",
+      "base_meaning": "分野・領域・場",
+      "contexts": [
+        {
+          "sentence_id": "1-3-6",
+          "ja": "専門分野",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "পরিবেশ": {
+      "rom": "poribesh",
+      "base_form": "পরিবেশ",
+      "base_meaning": "環境",
+      "contexts": [
+        {
+          "sentence_id": "1-3-6",
+          "ja": "環境",
+          "pos": "名詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-12",
+          "ja": "環境",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "নীতি": {
+      "rom": "niti",
+      "base_form": "নীতি",
+      "base_meaning": "政策・方針・原則",
+      "contexts": [
+        {
+          "sentence_id": "1-3-6",
+          "ja": "政策",
+          "pos": "名詞",
+          "note": "পরিবেশ নীতি「環境政策」"
+        }
+      ]
+    },
+    "সম্প্রতি": {
+      "rom": "shompriti",
+      "base_form": "সম্প্রতি",
+      "base_meaning": "最近・近頃",
+      "contexts": [
+        {
+          "sentence_id": "1-3-6",
+          "ja": "最近は",
+          "pos": "副詞",
+          "note": ""
+        }
+      ]
+    },
+    "কৃত্রিম": {
+      "rom": "kritrim",
+      "base_form": "কৃত্রিম",
+      "base_meaning": "人工の・人為的な",
+      "contexts": [
+        {
+          "sentence_id": "1-3-6",
+          "ja": "人工",
+          "pos": "形容詞",
+          "note": ""
+        }
+      ]
+    },
+    "বুদ্ধিমত্তা": {
+      "rom": "buddhimotta",
+      "base_form": "বুদ্ধিমত্তা",
+      "base_meaning": "知性・インテリジェンス",
+      "contexts": [
+        {
+          "sentence_id": "1-3-6",
+          "ja": "知能",
+          "pos": "名詞",
+          "note": "কৃত্রিম বুদ্ধিমত্তা「人工知能」"
+        }
+      ]
+    },
+    "পরিবেশগত": {
+      "rom": "poribeshghot",
+      "base_form": "পরিবেশগত",
+      "base_meaning": "環境的な・環境上の",
+      "contexts": [
+        {
+          "sentence_id": "1-3-6",
+          "ja": "環境問題の",
+          "pos": "形容詞",
+          "note": "পরিবেশ+গত"
+        }
+      ]
+    },
+    "সমস্যা": {
+      "rom": "shomoshsha",
+      "base_form": "সমস্যা",
+      "base_meaning": "問題・課題",
+      "contexts": [
+        {
+          "sentence_id": "1-3-6",
+          "ja": "環境問題",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "প্রভাব": {
+      "rom": "prohab",
+      "base_form": "প্রভাব",
+      "base_meaning": "影響・効果",
+      "contexts": [
+        {
+          "sentence_id": "1-3-6",
+          "ja": "影響",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "মনোযোগ": {
+      "rom": "monoyog",
+      "base_form": "মনোযোগ",
+      "base_meaning": "注意・注目・集中",
+      "contexts": [
+        {
+          "sentence_id": "1-3-6",
+          "ja": "注目しています",
+          "pos": "名詞",
+          "note": "মনোযোগ দেওয়া「注目する」"
+        }
+      ]
+    },
+    "অপরিচিত": {
+      "rom": "oporichit",
+      "base_form": "অপরিচিত",
+      "base_meaning": "見知らぬ・初対面の",
+      "contexts": [
+        {
+          "sentence_id": "1-3-7",
+          "ja": "見知らぬ人・初対面の人",
+          "pos": "形容詞/名詞",
+          "note": "অ+পরিচিত「未知の」"
+        }
+      ]
+    },
+    "লাজুক": {
+      "rom": "lajuk",
+      "base_form": "লাজুক",
+      "base_meaning": "恥ずかしがり屋・内気な",
+      "contexts": [
+        {
+          "sentence_id": "1-3-7",
+          "ja": "人見知りな",
+          "pos": "形容詞",
+          "note": ""
+        }
+      ]
+    },
+    "ঘনিষ্ঠ": {
+      "rom": "ghonishto",
+      "base_form": "ঘনিষ্ঠ",
+      "base_meaning": "親密な・近しい",
+      "contexts": [
+        {
+          "sentence_id": "1-3-7",
+          "ja": "打ち解ける・親密になる",
+          "pos": "形容詞",
+          "note": "ঘনিষ্ঠ হওয়া「親密になる」"
+        }
+      ]
+    },
+    "গড়তে": {
+      "rom": "gorte",
+      "base_form": "গড়া",
+      "base_meaning": "築く・作る・形成する",
+      "contexts": [
+        {
+          "sentence_id": "1-3-7",
+          "ja": "築ける",
+          "pos": "動詞",
+          "note": "不定詞形（目的）"
+        }
+      ]
+    },
+    "আত্মবিশ্বাস": {
+      "rom": "attobishshash",
+      "base_form": "আত্মবিশ্বাস",
+      "base_meaning": "自信・自己信頼",
+      "contexts": [
+        {
+          "sentence_id": "1-3-7",
+          "ja": "自信",
+          "pos": "名詞",
+          "note": "আত্ম(自己)+বিশ্বাস(信頼)"
+        }
+      ]
+    },
+    "প্রিয়": {
+      "rom": "priyo",
+      "base_form": "প্রিয়",
+      "base_meaning": "大切な・好きな・愛する",
+      "contexts": [
+        {
+          "sentence_id": "1-3-8",
+          "ja": "大切にしている",
+          "pos": "形容詞",
+          "note": ""
+        }
+      ]
+    },
+    "জীবনসূত্র": {
+      "rom": "jibonshutro",
+      "base_form": "জীবনসূত্র",
+      "base_meaning": "座右の銘・人生の格言",
+      "contexts": [
+        {
+          "sentence_id": "1-3-8",
+          "ja": "座右の銘",
+          "pos": "名詞",
+          "note": "জীবন(人生)+সূত্র(格言)"
+        }
+      ]
+    },
+    "পাথর": {
+      "rom": "pathor",
+      "base_form": "পাথর",
+      "base_meaning": "石",
+      "contexts": [
+        {
+          "sentence_id": "1-3-8",
+          "ja": "石",
+          "pos": "名詞",
+          "note": "石の上にも三年のことわざ"
+        }
+      ]
+    },
+    "ধৈর্য": {
+      "rom": "dhoiryo",
+      "base_form": "ধৈর্য",
+      "base_meaning": "忍耐・辛抱",
+      "contexts": [
+        {
+          "sentence_id": "1-3-8",
+          "ja": "忍耐",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "মনে করিয়ে দেওয়া": {
+      "rom": "mone koriye deoa",
+      "base_form": "মনে করিয়ে দেওয়া",
+      "base_meaning": "思い出させる・意識させる",
+      "contexts": [
+        {
+          "sentence_id": "1-3-8",
+          "ja": "意識しています・思い出させてくれる",
+          "pos": "動詞句",
+          "note": "使役的複合動詞"
+        }
+      ]
+    },
+    "গবেষক": {
+      "rom": "gobeshok",
+      "base_form": "গবেষক",
+      "base_meaning": "研究者",
+      "contexts": [
+        {
+          "sentence_id": "1-3-9",
+          "ja": "研究者",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "আবিষ্কার": {
+      "rom": "abishkar",
+      "base_form": "আবিষ্কার",
+      "base_meaning": "発見・発明",
+      "contexts": [
+        {
+          "sentence_id": "1-3-9",
+          "ja": "発見",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "সমাজ": {
+      "rom": "shomaj",
+      "base_form": "সমাজ",
+      "base_meaning": "社会",
+      "contexts": [
+        {
+          "sentence_id": "1-3-9",
+          "ja": "社会に",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "অবদান": {
+      "rom": "obodan",
+      "base_form": "অবদান",
+      "base_meaning": "貢献・寄与",
+      "contexts": [
+        {
+          "sentence_id": "1-3-9",
+          "ja": "貢献できるか",
+          "pos": "名詞",
+          "note": "অবদান রাখা「貢献する」"
+        },
+        {
+          "sentence_id": "1-3-19",
+          "ja": "貢献すること",
+          "pos": "名詞",
+          "note": "রাখা と組み合わせ"
+        }
+      ]
+    },
+    "প্রশ্ন": {
+      "rom": "proshno",
+      "base_form": "প্রশ্ন",
+      "base_meaning": "問い・質問",
+      "contexts": [
+        {
+          "sentence_id": "1-3-9",
+          "ja": "問いながら",
+          "pos": "名詞",
+          "note": "প্রশ্ন করতে করতে「問いながら」"
+        }
+      ]
+    },
+    "গবেষণা": {
+      "rom": "gobeshona",
+      "base_form": "গবেষণা",
+      "base_meaning": "研究",
+      "contexts": [
+        {
+          "sentence_id": "1-3-9",
+          "ja": "研究を進めています",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "এগিয়ে নেওয়া": {
+      "rom": "egiye neoa",
+      "base_form": "এগিয়ে নেওয়া",
+      "base_meaning": "進める・前に進める",
+      "contexts": [
+        {
+          "sentence_id": "1-3-9",
+          "ja": "研究を進めています",
+          "pos": "動詞句",
+          "note": "複合動詞「前へ持っていく」"
+        }
+      ]
+    },
+    "শক্তি": {
+      "rom": "shokti",
+      "base_form": "শক্তি",
+      "base_meaning": "力・強み・強さ",
+      "contexts": [
+        {
+          "sentence_id": "1-3-10",
+          "ja": "強み",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "ভিন্ন": {
+      "rom": "bhinno",
+      "base_form": "ভিন্ন",
+      "base_meaning": "異なる・別々の",
+      "contexts": [
+        {
+          "sentence_id": "1-3-10",
+          "ja": "異なる",
+          "pos": "形容詞",
+          "note": ""
+        }
+      ]
+    },
+    "মতামত": {
+      "rom": "motamot",
+      "base_form": "মতামত",
+      "base_meaning": "意見・見解",
+      "contexts": [
+        {
+          "sentence_id": "1-3-10",
+          "ja": "意見",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "একত্রিত": {
+      "rom": "ekotrito",
+      "base_form": "একত্রিত",
+      "base_meaning": "まとめた・一つにした",
+      "contexts": [
+        {
+          "sentence_id": "1-3-10",
+          "ja": "まとめ",
+          "pos": "形容詞/動詞",
+          "note": "একত্রিত করা「まとめる」"
+        }
+      ]
+    },
+    "পুরো": {
+      "rom": "puro",
+      "base_form": "পুরো",
+      "base_meaning": "全体の・全部の",
+      "contexts": [
+        {
+          "sentence_id": "1-3-10",
+          "ja": "チーム全体",
+          "pos": "形容詞",
+          "note": ""
+        }
+      ]
+    },
+    "দল": {
+      "rom": "dol",
+      "base_form": "দল",
+      "base_meaning": "チーム・グループ・集団",
+      "contexts": [
+        {
+          "sentence_id": "1-3-10",
+          "ja": "チーム",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "লক্ষ্য": {
+      "rom": "lokkho",
+      "base_form": "লক্ষ্য",
+      "base_meaning": "目標・目的・ゴール",
+      "contexts": [
+        {
+          "sentence_id": "1-3-10",
+          "ja": "目標",
+          "pos": "名詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-19",
+          "ja": "その目標",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "পরিচালিত": {
+      "rom": "porichalit",
+      "base_form": "পরিচালনা",
+      "base_meaning": "導く・運営する",
+      "contexts": [
+        {
+          "sentence_id": "1-3-10",
+          "ja": "導く",
+          "pos": "動詞",
+          "note": "受動形容詞的用法"
+        }
+      ]
+    },
+    "নেতৃত্ব": {
+      "rom": "netritwo",
+      "base_form": "নেতৃত্ব",
+      "base_meaning": "リーダーシップ・指導力",
+      "contexts": [
+        {
+          "sentence_id": "1-3-10",
+          "ja": "リーダーシップ",
+          "pos": "名詞",
+          "note": "নেতা(リーダー)の派生形"
+        }
+      ]
+    },
+    "মনে করি": {
+      "rom": "mone kori",
+      "base_form": "মনে করা",
+      "base_meaning": "思う・考える",
+      "contexts": [
+        {
+          "sentence_id": "1-3-10",
+          "ja": "思っています",
+          "pos": "動詞句",
+          "note": "1人称単数現在形"
+        },
+        {
+          "sentence_id": "1-3-12",
+          "ja": "考えている",
+          "pos": "動詞句",
+          "note": "1人称現在形"
+        },
+        {
+          "sentence_id": "1-3-20",
+          "ja": "思っている",
+          "pos": "動詞句",
+          "note": "1人称現在形"
+        }
+      ]
+    },
+    "ধ্রুপদী": {
+      "rom": "dhrupodi",
+      "base_form": "ধ্রুপদী",
+      "base_meaning": "古典的な",
+      "contexts": [
+        {
+          "sentence_id": "1-3-11",
+          "ja": "古典の",
+          "pos": "形容詞",
+          "note": "名詞修飾"
+        }
+      ]
+    },
+    "শোনা": {
+      "rom": "shona",
+      "base_form": "শোনা",
+      "base_meaning": "聴く、聞く",
+      "contexts": [
+        {
+          "sentence_id": "1-3-11",
+          "ja": "鑑賞すること",
+          "pos": "動詞（動名詞）",
+          "note": "動名詞として使用"
+        }
+      ]
+    },
+    "কন্ট্রাপয়েন্ট": {
+      "rom": "kontrapointo",
+      "base_form": "কন্ট্রাপয়েন্ট",
+      "base_meaning": "対位法（音楽用語）",
+      "contexts": [
+        {
+          "sentence_id": "1-3-11",
+          "ja": "対位法",
+          "pos": "名詞",
+          "note": "英語借用語"
+        }
+      ]
+    },
+    "জটিলতা": {
+      "rom": "jotilota",
+      "base_form": "জটিলতা",
+      "base_meaning": "複雑さ、複雑性",
+      "contexts": [
+        {
+          "sentence_id": "1-3-11",
+          "ja": "複雑さ",
+          "pos": "名詞",
+          "note": "জটিল の抽象名詞形"
+        }
+      ]
+    },
+    "গভীরভাবে": {
+      "rom": "gobhirbbhabe",
+      "base_form": "গভীর",
+      "base_meaning": "深く、深い",
+      "contexts": [
+        {
+          "sentence_id": "1-3-11",
+          "ja": "深く",
+          "pos": "副詞",
+          "note": "ভাবে で副詞化"
+        }
+      ]
+    },
+    "মুগ্ধ": {
+      "rom": "mugdho",
+      "base_form": "মুগ্ধ করা",
+      "base_meaning": "魅了された、感銘を受けた",
+      "contexts": [
+        {
+          "sentence_id": "1-3-11",
+          "ja": "感銘を受ける",
+          "pos": "形容詞／動詞",
+          "note": "করে と組み合わせ"
+        }
+      ]
+    },
+    "খাপ খাইয়ে নেওয়া": {
+      "rom": "khap khaiye neoa",
+      "base_form": "খাপ খাওয়া",
+      "base_meaning": "適応する、順応する",
+      "contexts": [
+        {
+          "sentence_id": "1-3-12",
+          "ja": "順応すること",
+          "pos": "動詞句（動名詞）",
+          "note": "慣用句的表現"
+        }
+      ]
+    },
+    "নমনীয়তা": {
+      "rom": "nomoniyota",
+      "base_form": "নমনীয়তা",
+      "base_meaning": "柔軟性、しなやかさ",
+      "contexts": [
+        {
+          "sentence_id": "1-3-12",
+          "ja": "柔軟性",
+          "pos": "名詞",
+          "note": "নমনীয় の抽象名詞"
+        }
+      ]
+    },
+    "হাতিয়ার": {
+      "rom": "hatiyar",
+      "base_form": "হাতিয়ার",
+      "base_meaning": "武器、道具",
+      "contexts": [
+        {
+          "sentence_id": "1-3-12",
+          "ja": "武器",
+          "pos": "名詞",
+          "note": "比喩的用法"
+        }
+      ]
+    },
+    "শৈশব": {
+      "rom": "shaishob",
+      "base_form": "শৈশব",
+      "base_meaning": "幼少期、幼年時代",
+      "contexts": [
+        {
+          "sentence_id": "1-3-13",
+          "ja": "幼少期に",
+          "pos": "名詞",
+          "note": "に格 -এ 付加"
+        }
+      ]
+    },
+    "ভোগা": {
+      "rom": "bhoga",
+      "base_form": "ভোগ করা",
+      "base_meaning": "経験する、苦しむ",
+      "contexts": [
+        {
+          "sentence_id": "1-3-13",
+          "ja": "経験した",
+          "pos": "動詞（分詞）",
+          "note": "過去分詞修飾用法"
+        }
+      ]
+    },
+    "কষ্ট": {
+      "rom": "koshto",
+      "base_form": "কষ্ট",
+      "base_meaning": "苦労、困難、苦しみ",
+      "contexts": [
+        {
+          "sentence_id": "1-3-13",
+          "ja": "困難",
+          "pos": "名詞",
+          "note": "複数形 -গুলো 付加"
+        }
+      ]
+    },
+    "গড়েছে": {
+      "rom": "goreche",
+      "base_form": "গড়া",
+      "base_meaning": "形成する、作る",
+      "contexts": [
+        {
+          "sentence_id": "1-3-13",
+          "ja": "形成した",
+          "pos": "動詞",
+          "note": "現在完了形3人称"
+        }
+      ]
+    },
+    "অভিজ্ঞতা": {
+      "rom": "obhiggnota",
+      "base_form": "অভিজ্ঞতা",
+      "base_meaning": "経験",
+      "contexts": [
+        {
+          "sentence_id": "1-3-13",
+          "ja": "経験",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "পাথেয়": {
+      "rom": "patheo",
+      "base_form": "পাথেয়",
+      "base_meaning": "糧、路銀、支え",
+      "contexts": [
+        {
+          "sentence_id": "1-3-13",
+          "ja": "糧",
+          "pos": "名詞",
+          "note": "比喩的用法"
+        }
+      ]
+    },
+    "বেড়ে ওঠা": {
+      "rom": "bere otha",
+      "base_form": "বেড়ে ওঠা",
+      "base_meaning": "成長する",
+      "contexts": [
+        {
+          "sentence_id": "1-3-13",
+          "ja": "成長すること",
+          "pos": "動詞句（動名詞）",
+          "note": "複合動詞"
+        }
+      ]
+    },
+    "বিষয়": {
+      "rom": "bishoy",
+      "base_form": "বিষয়",
+      "base_meaning": "物事、事柄、テーマ",
+      "contexts": [
+        {
+          "sentence_id": "1-3-14",
+          "ja": "物事",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "উপরিভাগ": {
+      "rom": "uporibhag",
+      "base_form": "উপরিভাগ",
+      "base_meaning": "表面、上面",
+      "contexts": [
+        {
+          "sentence_id": "1-3-14",
+          "ja": "表面",
+          "pos": "名詞",
+          "note": "থেকে と共に用法"
+        }
+      ]
+    },
+    "প্রকৃত": {
+      "rom": "prokrito",
+      "base_form": "প্রকৃত",
+      "base_meaning": "本当の、真の",
+      "contexts": [
+        {
+          "sentence_id": "1-3-14",
+          "ja": "本質的な",
+          "pos": "形容詞",
+          "note": "名詞修飾"
+        }
+      ]
+    },
+    "সারমর্ম": {
+      "rom": "sharmorm",
+      "base_form": "সারমর্ম",
+      "base_meaning": "本質、要点、真髄",
+      "contexts": [
+        {
+          "sentence_id": "1-3-14",
+          "ja": "本質",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "চিনে নেওয়া": {
+      "rom": "chine neoa",
+      "base_form": "চেনা",
+      "base_meaning": "見極める、識別する",
+      "contexts": [
+        {
+          "sentence_id": "1-3-14",
+          "ja": "見極めること",
+          "pos": "動詞句（動名詞）",
+          "note": "複合動詞"
+        }
+      ]
+    },
+    "বর্তমান": {
+      "rom": "bortoman",
+      "base_form": "বর্তমান",
+      "base_meaning": "現在（の）",
+      "contexts": [
+        {
+          "sentence_id": "1-3-15",
+          "ja": "現在",
+          "pos": "名詞／形容詞",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-18",
+          "ja": "現在の",
+          "pos": "形容詞",
+          "note": "名詞修飾"
+        }
+      ]
+    },
+    "স্বাস্থ্যখাত": {
+      "rom": "shasthokhaat",
+      "base_form": "স্বাস্থ্যখাত",
+      "base_meaning": "医療分野、保健セクター",
+      "contexts": [
+        {
+          "sentence_id": "1-3-15",
+          "ja": "医療分野",
+          "pos": "名詞",
+          "note": "複合名詞"
+        }
+      ]
+    },
+    "কৃত্রিম বুদ্ধিমত্তা": {
+      "rom": "kritrim buddhimotta",
+      "base_form": "কৃত্রিম বুদ্ধিমত্তা",
+      "base_meaning": "人工知能（AI）",
+      "contexts": [
+        {
+          "sentence_id": "1-3-15",
+          "ja": "AI（人工知能）",
+          "pos": "名詞句",
+          "note": "複合名詞"
+        }
+      ]
+    },
+    "ব্যবহার": {
+      "rom": "byobohar",
+      "base_form": "ব্যবহার করা",
+      "base_meaning": "使用、活用",
+      "contexts": [
+        {
+          "sentence_id": "1-3-15",
+          "ja": "活用すること",
+          "pos": "名詞",
+          "note": "動名詞的用法"
+        }
+      ]
+    },
+    "প্রকল্প": {
+      "rom": "prokolpo",
+      "base_form": "প্রকল্প",
+      "base_meaning": "プロジェクト、計画",
+      "contexts": [
+        {
+          "sentence_id": "1-3-15",
+          "ja": "プロジェクト",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "সার্থকতা": {
+      "rom": "sharthokkota",
+      "base_form": "সার্থকতা",
+      "base_meaning": "やりがい、意義、充実感",
+      "contexts": [
+        {
+          "sentence_id": "1-3-15",
+          "ja": "やりがい",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "আবেগ": {
+      "rom": "abeg",
+      "base_form": "আবেগ",
+      "base_meaning": "感情、感情的衝動",
+      "contexts": [
+        {
+          "sentence_id": "1-3-16",
+          "ja": "感情",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "যৌক্তিকভাবে": {
+      "rom": "jouktikobbhabe",
+      "base_form": "যৌক্তিক",
+      "base_meaning": "論理的に",
+      "contexts": [
+        {
+          "sentence_id": "1-3-16",
+          "ja": "論理的に",
+          "pos": "副詞",
+          "note": "ভাবে で副詞化"
+        }
+      ]
+    },
+    "পরিস্থিতি": {
+      "rom": "poristhiti",
+      "base_form": "পরিস্থিতি",
+      "base_meaning": "状況、情勢",
+      "contexts": [
+        {
+          "sentence_id": "1-3-16",
+          "ja": "状況",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "বিশ্লেষণ": {
+      "rom": "bishleshon",
+      "base_form": "বিশ্লেষণ করা",
+      "base_meaning": "分析すること",
+      "contexts": [
+        {
+          "sentence_id": "1-3-16",
+          "ja": "分析して",
+          "pos": "名詞／動詞句",
+          "note": "করে で接続分詞"
+        }
+      ]
+    },
+    "সিদ্ধান্ত": {
+      "rom": "siddanto",
+      "base_form": "সিদ্ধান্ত",
+      "base_meaning": "決断、判断",
+      "contexts": [
+        {
+          "sentence_id": "1-3-16",
+          "ja": "判断を下すこと",
+          "pos": "名詞",
+          "note": "নেওয়া と組み合わせ"
+        }
+      ]
+    },
+    "পারদর্শী": {
+      "rom": "paradôrshi",
+      "base_form": "পারদর্শী",
+      "base_meaning": "得意な、巧みな",
+      "contexts": [
+        {
+          "sentence_id": "1-3-16",
+          "ja": "得意な方",
+          "pos": "形容詞",
+          "note": "叙述用法"
+        }
+      ]
+    },
+    "সেতুবন্ধন": {
+      "rom": "shetubondhon",
+      "base_form": "সেতুবন্ধন",
+      "base_meaning": "橋渡し、架け橋",
+      "contexts": [
+        {
+          "sentence_id": "1-3-17",
+          "ja": "橋渡し",
+          "pos": "名詞",
+          "note": "複合名詞"
+        }
+      ]
+    },
+    "ভূমিকা": {
+      "rom": "bhumika",
+      "base_form": "ভূমিকা",
+      "base_meaning": "役割、役",
+      "contexts": [
+        {
+          "sentence_id": "1-3-17",
+          "ja": "役割",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "ভুল বোঝাবুঝি": {
+      "rom": "bhul bojhabujhi",
+      "base_form": "ভুল বোঝাবুঝি",
+      "base_meaning": "誤解",
+      "contexts": [
+        {
+          "sentence_id": "1-3-17",
+          "ja": "誤解",
+          "pos": "名詞句",
+          "note": "複合名詞"
+        }
+      ]
+    },
+    "কুসংস্কার": {
+      "rom": "kushongshkar",
+      "base_form": "কুসংস্কার",
+      "base_meaning": "偏見、迷信",
+      "contexts": [
+        {
+          "sentence_id": "1-3-17",
+          "ja": "偏見",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "দূর করা": {
+      "rom": "dur kora",
+      "base_form": "দূর করা",
+      "base_meaning": "取り除く、なくす",
+      "contexts": [
+        {
+          "sentence_id": "1-3-17",
+          "ja": "なくすこと",
+          "pos": "動詞句",
+          "note": ""
+        },
+        {
+          "sentence_id": "1-3-19",
+          "ja": "解消すること",
+          "pos": "動詞句",
+          "note": ""
+        }
+      ]
+    },
+    "জন্মস্থান": {
+      "rom": "jonmosthan",
+      "base_form": "জন্মস্থান",
+      "base_meaning": "出生地、出身地",
+      "contexts": [
+        {
+          "sentence_id": "1-3-18",
+          "ja": "出身地",
+          "pos": "名詞",
+          "note": "複合名詞"
+        }
+      ]
+    },
+    "পাহাড়ি": {
+      "rom": "pahadi",
+      "base_form": "পাহাড়ি",
+      "base_meaning": "山の、山間の",
+      "contexts": [
+        {
+          "sentence_id": "1-3-18",
+          "ja": "山間の",
+          "pos": "形容詞",
+          "note": "名詞修飾"
+        }
+      ]
+    },
+    "গ্রাম": {
+      "rom": "gram",
+      "base_form": "গ্রাম",
+      "base_meaning": "村",
+      "contexts": [
+        {
+          "sentence_id": "1-3-18",
+          "ja": "村",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "প্রকৃতি": {
+      "rom": "prokriti",
+      "base_form": "প্রকৃতি",
+      "base_meaning": "自然",
+      "contexts": [
+        {
+          "sentence_id": "1-3-18",
+          "ja": "自然",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "শ্রদ্ধা": {
+      "rom": "shroddha",
+      "base_form": "শ্রদ্ধা করা",
+      "base_meaning": "敬う、尊重する",
+      "contexts": [
+        {
+          "sentence_id": "1-3-18",
+          "ja": "敬うこと",
+          "pos": "名詞",
+          "note": "動名詞的用法"
+        }
+      ]
+    },
+    "মূল্যবোধ": {
+      "rom": "mullôbodh",
+      "base_form": "মূল্যবোধ",
+      "base_meaning": "価値観",
+      "contexts": [
+        {
+          "sentence_id": "1-3-18",
+          "ja": "価値観",
+          "pos": "名詞",
+          "note": "複合名詞"
+        }
+      ]
+    },
+    "ভিত্তি": {
+      "rom": "bhitti",
+      "base_form": "ভিত্তি",
+      "base_meaning": "基盤、根底、基礎",
+      "contexts": [
+        {
+          "sentence_id": "1-3-18",
+          "ja": "根底",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "ভবিষ্যত": {
+      "rom": "bhobishshot",
+      "base_form": "ভবিষ্যত",
+      "base_meaning": "将来、未来",
+      "contexts": [
+        {
+          "sentence_id": "1-3-19",
+          "ja": "将来",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "শিক্ষাগত": {
+      "rom": "shikkagoto",
+      "base_form": "শিক্ষাগত",
+      "base_meaning": "教育的な、教育上の",
+      "contexts": [
+        {
+          "sentence_id": "1-3-19",
+          "ja": "教育の",
+          "pos": "形容詞",
+          "note": "名詞修飾"
+        }
+      ]
+    },
+    "বৈষম্য": {
+      "rom": "boishommo",
+      "base_form": "বৈষম্য",
+      "base_meaning": "格差、不平等",
+      "contexts": [
+        {
+          "sentence_id": "1-3-19",
+          "ja": "格差",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "ধাপে ধাপে": {
+      "rom": "dhape dhape",
+      "base_form": "ধাপ",
+      "base_meaning": "段階的に、着々と",
+      "contexts": [
+        {
+          "sentence_id": "1-3-19",
+          "ja": "着々と",
+          "pos": "副詞句",
+          "note": "反復で強調"
+        }
+      ]
+    },
+    "প্রস্তুতি": {
+      "rom": "prostuti",
+      "base_form": "প্রস্তুতি নেওয়া",
+      "base_meaning": "準備すること",
+      "contexts": [
+        {
+          "sentence_id": "1-3-19",
+          "ja": "準備を進めている",
+          "pos": "名詞",
+          "note": "নিচ্ছি と組み合わせ"
+        }
+      ]
+    },
+    "শিখতে থাকা": {
+      "rom": "shikhte thaka",
+      "base_form": "শেখা",
+      "base_meaning": "学び続けること",
+      "contexts": [
+        {
+          "sentence_id": "1-3-20",
+          "ja": "学び続けること",
+          "pos": "動詞句（動名詞）",
+          "note": "継続相を表す"
+        }
+      ]
+    },
+    "কর্তব্য": {
+      "rom": "kortobbo",
+      "base_form": "কর্তব্য",
+      "base_meaning": "義務、務め",
+      "contexts": [
+        {
+          "sentence_id": "1-3-20",
+          "ja": "自分に課していること",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "জ্ঞান": {
+      "rom": "ggan",
+      "base_form": "জ্ঞান",
+      "base_meaning": "知識、智恵",
+      "contexts": [
+        {
+          "sentence_id": "1-3-20",
+          "ja": "知識",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "অন্বেষণ": {
+      "rom": "onbeshon",
+      "base_form": "অন্বেষণ",
+      "base_meaning": "探求、探索",
+      "contexts": [
+        {
+          "sentence_id": "1-3-20",
+          "ja": "探求",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "অর্থ": {
+      "rom": "ortho",
+      "base_form": "অর্থ",
+      "base_meaning": "意味、意義",
+      "contexts": [
+        {
+          "sentence_id": "1-3-20",
+          "ja": "意義",
+          "pos": "名詞",
+          "note": ""
+        }
+      ]
+    },
+    "দৃঢ়ভাবে": {
+      "rom": "drirhobhabe",
+      "base_form": "দৃঢ়",
+      "base_meaning": "強く、固く",
+      "contexts": [
+        {
+          "sentence_id": "1-3-20",
+          "ja": "強く",
+          "pos": "副詞",
+          "note": "ভাবে で副詞化"
+        }
+      ]
+    },
+    "বিশ্বাস": {
+      "rom": "bishwash",
+      "base_form": "বিশ্বাস করা",
+      "base_meaning": "信じること、信念",
+      "contexts": [
+        {
+          "sentence_id": "1-3-20",
+          "ja": "信じている",
+          "pos": "名詞／動詞句",
+          "note": "করি と組み合わせ"
+        }
+      ]
+    },
+    "বিভিন্ন": {
+      "rom": "bibhinno",
+      "base_form": "বিভিন্ন",
+      "base_meaning": "様々な、異なる",
+      "contexts": [
+        {
+          "sentence_id": "1-3-17",
+          "ja": "異文化間の",
+          "pos": "形容詞",
+          "note": "名詞修飾"
+        }
+      ]
+    },
+    "সবচেয়ে": {
+      "rom": "shobcheye",
+      "base_form": "সবচেয়ে",
+      "base_meaning": "最も",
+      "contexts": [
+        {
+          "sentence_id": "1-3-12",
+          "ja": "最大の",
+          "pos": "副詞（最上級）",
+          "note": "最上級を作る"
+        }
+      ]
+    },
+    "আজকের": {
+      "rom": "ajker",
+      "base_form": "আজ",
+      "base_meaning": "今日の、現在の",
+      "contexts": [
+        {
+          "sentence_id": "1-3-13",
+          "ja": "今の（自分）",
+          "pos": "形容詞的名詞",
+          "note": "所有格形"
+        }
+      ]
+    },
+    "পেছন": {
+      "rom": "pechon",
+      "base_form": "পেছন",
+      "base_meaning": "背後、裏",
+      "contexts": [
+        {
+          "sentence_id": "1-3-14",
+          "ja": "背後にある",
+          "pos": "名詞",
+          "note": "後置詞的用法"
+        }
+      ]
+    },
+    "কাজ করা": {
+      "rom": "kaj kora",
+      "base_form": "কাজ করা",
+      "base_meaning": "働く、取り組む",
+      "contexts": [
+        {
+          "sentence_id": "1-3-17",
+          "ja": "取り組むこと",
+          "pos": "動詞句",
+          "note": "চাই と共に意志表現"
+        }
+      ]
+    },
+    "সারা": {
+      "rom": "shara",
+      "base_form": "সারা",
+      "base_meaning": "全て、全体の",
+      "contexts": [
+        {
+          "sentence_id": "1-3-17",
+          "ja": "生涯をかけて",
+          "pos": "形容詞",
+          "note": "জীবন を修飾"
+        }
+      ]
+    }
   }
 }

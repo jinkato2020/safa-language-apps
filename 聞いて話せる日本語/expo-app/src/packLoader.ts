@@ -30,6 +30,9 @@ function toOverlay(json: any): L1Overlay {
     examplesL1: json.examplesL1 ?? {},
     grammarL1: json.grammarL1 ?? {},
     wordsL1: json.wordsL1 ?? {},
+    convVocab: json.convVocab,
+    grammarVocab: json.grammarVocab,
+    vocab: json.vocab,
   };
 }
 

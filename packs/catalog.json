@@ -5,10 +5,10 @@
       "l1": "bn",
       "name": "বাংলা",
       "nameJa": "ベンガル語",
-      "version": 2,
+      "version": 3,
       "access": "free",
-      "sizeBytes": 9972,
-      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-bn-v2.json"
+      "sizeBytes": 80585,
+      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-bn-v3.json"
     }
   ]
 }
