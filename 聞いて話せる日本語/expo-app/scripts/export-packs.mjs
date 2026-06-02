@@ -45,6 +45,7 @@ for (const file of readdirSync(overlaysDir)) {
     access: 'free',
     sizeBytes,
     url: `${RAW_BASE}/${outName}`,
+    audioBase: `${RAW_BASE}/audio/${l1}`, // 母語音声 mp3 の配信ベース (<audioBase>/<文ID>.mp3)
   });
   console.log(`wrote ${outName} (${sizeBytes} bytes)`);
 }
