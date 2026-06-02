@@ -39,17 +39,25 @@ async function fetchJson(url: string): Promise<any> {
   return res.json();
 }
 
-// 母語オーバーレイを取得 (FSにあれば読む / 無ければDLして保存)。
+// 母語オーバーレイを取得。
+// オフライン: キャッシュがあれば使う。オンライン: カタログ版がキャッシュ版より新しければ再DL。
 async function getOverlay(lang: string): Promise<L1Overlay> {
   const uri = overlayUri(lang);
   const info = await FileSystem.getInfoAsync(uri);
+
+  // カタログ取得 (失敗=オフライン扱い)
+  let catalog: any = null;
+  try { catalog = await fetchJson(CATALOG_URL); } catch {}
+  const entry = catalog?.packs?.find((p: any) => p.l1 === lang);
+
   if (info.exists) {
-    return toOverlay(JSON.parse(await FileSystem.readAsStringAsync(uri)));
+    const cached = JSON.parse(await FileSystem.readAsStringAsync(uri));
+    // オフライン、またはキャッシュが最新 → キャッシュを使う
+    if (!entry || (cached.version ?? 0) >= (entry.version ?? 0)) return toOverlay(cached);
   }
-  // 未保存 → カタログから該当パックURLを引いてDL→保存
-  const catalog = await fetchJson(CATALOG_URL);
-  const entry = (catalog.packs ?? []).find((p: any) => p.l1 === lang);
-  if (!entry?.url) throw new Error(`pack not found in catalog: ${lang}`);
+
+  // 新規 or 旧版 → DL (オフラインかつ未キャッシュは失敗)
+  if (!entry?.url) throw new Error(`offline or pack not in catalog: ${lang}`);
   await FileSystem.makeDirectoryAsync(packDir(lang), { intermediates: true });
   await FileSystem.downloadAsync(entry.url, uri);
   return toOverlay(JSON.parse(await FileSystem.readAsStringAsync(uri)));
