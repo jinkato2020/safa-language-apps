@@ -9,7 +9,9 @@
       "access": "free",
       "sizeBytes": 647781,
       "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-bn-v4.json",
-      "audioBase": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio/bn"
+      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-bn-v4.zip",
+      "audioVersion": 4,
+      "audioZipBytes": 15767596
     }
   ]
 }

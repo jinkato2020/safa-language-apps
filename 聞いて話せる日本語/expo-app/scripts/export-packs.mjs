@@ -6,9 +6,10 @@
 // 配信URLは下の RAW_BASE。packs/ をコミットしているブランチを指す。
 // ※ 実験中は experiment/bangla を指す。本番化時は main に packs/ を移し RAW_BASE も差し替える。
 
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { zipSync } from 'fflate';
 
 const appDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const repoRoot = path.resolve(appDir, '..', '..');
@@ -37,6 +38,24 @@ for (const file of readdirSync(overlaysDir)) {
   writeFileSync(outPath, JSON.stringify(overlay), 'utf8');
   const sizeBytes = statSync(outPath).size;
   const meta = NAMES[l1] ?? { name: l1, nameJa: l1 };
+
+  // 母語音声を1個のzipにまとめる (660ファイルの逐次DLを1回に)。
+  let audioZip, audioVersion, audioZipBytes;
+  const audioSrcDir = path.join(outDir, 'audio', l1);
+  if (existsSync(audioSrcDir)) {
+    const entries = {};
+    for (const mp3 of readdirSync(audioSrcDir)) {
+      if (mp3.endsWith('.mp3')) entries[mp3] = new Uint8Array(readFileSync(path.join(audioSrcDir, mp3)));
+    }
+    const zipName = `audio-${l1}-v${version}.zip`;
+    const zipBuf = zipSync(entries, { level: 0 }); // mp3は圧縮済みなので無圧縮(高速)
+    writeFileSync(path.join(outDir, zipName), zipBuf);
+    audioZip = `${RAW_BASE}/${zipName}`;
+    audioVersion = version;
+    audioZipBytes = zipBuf.length;
+    console.log(`wrote ${zipName} (${Object.keys(entries).length} files, ${(zipBuf.length / 1048576).toFixed(2)} MB)`);
+  }
+
   packs.push({
     l1,
     name: meta.name,
@@ -45,7 +64,9 @@ for (const file of readdirSync(overlaysDir)) {
     access: 'free',
     sizeBytes,
     url: `${RAW_BASE}/${outName}`,
-    audioBase: `${RAW_BASE}/audio/${l1}`, // 母語音声 mp3 の配信ベース (<audioBase>/<文ID>.mp3)
+    audioZip,       // 母語音声 zip (1ファイル)。展開して <文ID>.mp3 を得る
+    audioVersion,   // 音声zipの版 (overlay版に同期)
+    audioZipBytes,
   });
   console.log(`wrote ${outName} (${sizeBytes} bytes)`);
 }

@@ -22,13 +22,13 @@ const splashSource = require('./assets/safa-splash.mp4');
 const headerIconSource = require('./assets/icon.png');
 
 // DLローディング画面 (進捗バー付き)。
-function DownloadView({ done, total }: { done: number; total: number }) {
+function DownloadView({ done, total, label }: { done: number; total: number; label?: string }) {
   const pct = total > 0 ? Math.round((done / total) * 100) : 0;
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
       <ActivityIndicator />
       <Text style={{ marginTop: 16, fontSize: 13, color: '#52525b' }}>
-        {total > 0 ? `ডাউনলোড হচ্ছে… ${done}/${total}` : 'ডাউনলোড হচ্ছে…'}
+        {`${label === '展開中' ? 'প্রস্তুত হচ্ছে' : 'ডাউনলোড হচ্ছে'}… ${pct}%`}
       </Text>
       <View style={{ marginTop: 12, width: 220, height: 6, borderRadius: 3, backgroundColor: '#e4e4e7', overflow: 'hidden' }}>
         <View style={{ width: `${pct}%`, height: '100%', backgroundColor: '#2563eb' }} />
@@ -42,20 +42,20 @@ function DownloadView({ done, total }: { done: number; total: number }) {
 function PackGate({ children }: { children: ReactNode }) {
   const { lang } = useI18n();
   const [data, setData] = useState<AppData | null>(() => bundledPack(lang));
-  const [progress, setProgress] = useState<{ done: number; total: number }>({ done: 0, total: 0 });
+  const [progress, setProgress] = useState<{ done: number; total: number; label?: string }>({ done: 0, total: 0 });
   useEffect(() => {
     let alive = true;
     const bundled = bundledPack(lang);
     setData(bundled); // 同梱なら即時 / DL言語は null (進捗表示)
     if (!bundled) {
       setProgress({ done: 0, total: 0 });
-      loadPack(lang, (done, total) => { if (alive) setProgress({ done, total }); })
+      loadPack(lang, (done, total, label) => { if (alive) setProgress({ done, total, label }); })
         .then(d => { if (alive) setData(d); })
         .catch(() => { if (alive) setData(bundledPack('ne') ?? null); }); // DL失敗時は主言語へ
     }
     return () => { alive = false; };
   }, [lang]);
-  if (!data) return <DownloadView done={progress.done} total={progress.total} />;
+  if (!data) return <DownloadView done={progress.done} total={progress.total} label={progress.label} />;
   return <AppDataProvider data={data}>{children}</AppDataProvider>;
 }
 
