@@ -191,7 +191,7 @@ export function ListeningAudioProvider({ children }: { children: ReactNode }) {
   const player = useAudioPlayer(undefined, { keepAudioSessionActive: true });
   const status = useAudioPlayerStatus(player);
   // 現在 player に loaded されているソースを追跡
-  const loadedSrcRef = useRef<number | null>(null);
+  const loadedSrcRef = useRef<number | string | null>(null);
 
   // Ref: stale closure 回避用
   const phaseRef = useRef<Phase>('idle');
@@ -221,7 +221,7 @@ export function ListeningAudioProvider({ children }: { children: ReactNode }) {
   const lastPlayStartRef = useRef(0);
 
   // 単一プレイヤー: 指定ソースをロード（必要なら）→ 先頭から再生
-  const playSrc = (src: number) => {
+  const playSrc = (src: number | string) => {
     try {
       if (loadedSrcRef.current !== src) {
         player.replace(src);

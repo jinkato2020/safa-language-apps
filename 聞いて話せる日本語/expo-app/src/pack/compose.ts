@@ -31,8 +31,8 @@ export interface L1Overlay {
   vocab?: Record<string, VocabEntry>;
   grammarVocab?: GrammarVocab;
   convVocab?: GrammarVocab;
-  l1Audio?: Record<string, number>;         // → AudioBundle.nepaliAudio (L1音声)
-  l1GrammarAudio?: Record<string, number>;  // → AudioBundle.nepaliGrammarAudio
+  l1Audio?: Record<string, number | string>;         // → AudioBundle.nepaliAudio (L1音声。DL版はfile:// URI)
+  l1GrammarAudio?: Record<string, number | string>;  // → AudioBundle.nepaliGrammarAudio
 }
 
 export interface ComposeOptions {

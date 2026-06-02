@@ -17,11 +17,13 @@ import type {
   ThemeMeta, LevelMeta, Example, WordCategoryMeta, Word, GrammarThemeMeta,
 } from './types';
 
+// 音声ソース: 同梱は require() の数値、DLパックは file:// などの URI 文字列。
+export type AudioSrc = number | string;
 export type AudioBundle = {
-  nepaliAudio: Record<string, number>;
-  japaneseAudio: Record<string, number>;
-  nepaliGrammarAudio: Record<string, number>;
-  japaneseGrammarAudio: Record<string, number>;
+  nepaliAudio: Record<string, AudioSrc>;
+  japaneseAudio: Record<string, AudioSrc>;
+  nepaliGrammarAudio: Record<string, AudioSrc>;
+  japaneseGrammarAudio: Record<string, AudioSrc>;
 };
 
 export type VocabEntry = { ja: string; rom: string };
