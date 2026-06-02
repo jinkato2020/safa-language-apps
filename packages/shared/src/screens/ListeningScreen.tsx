@@ -7,8 +7,8 @@ import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { useSettings, useScaleStyle, type ListenSpeed } from '../SettingsContext';
 import { useI18n } from '../i18n';
-import { sentenceToRomaji } from '../transliterate';
 import { useAppData } from '../AppDataContext';
+import { getL1 } from '../l1';
 import { useListeningAudio } from '../ListeningAudioContext';
 
 type R = RouteProp<RootStackParamList, 'Listening'>;
@@ -89,7 +89,8 @@ function PauseIcon({ size = 30 }: { size?: number }) {
 }
 
 export default function ListeningScreen() {
-  const { getExamples, getGrammarExamples, JP_READING } = useAppData();
+  const { getExamples, getGrammarExamples, JP_READING, nativeLang } = useAppData();
+  const l1 = getL1(nativeLang);
   const route = useRoute<R>();
   const { t, lang } = useI18n();
   const isJaUI = lang === 'ja';
@@ -149,7 +150,7 @@ export default function ListeningScreen() {
     <View style={[styles.card, activeLang === 'ne' && styles.cardNeActive]}>
       <Text style={[styles.tag, activeLang === 'ne' && styles.tagNeActive, ss(11)]}>{t('listening.tagNe')}</Text>
       <Text style={[styles.textNe, ss(26, 38)]}>{ex.ne}</Text>
-      {isJaUI && romaji ? <Text style={[styles.romaji, ss(14, 22)]}>{sentenceToRomaji(ex.ne)}</Text> : null}
+      {isJaUI && romaji && l1.romanizeSentence ? <Text style={[styles.romaji, ss(14, 22)]}>{l1.romanizeSentence(ex.ne)}</Text> : null}
     </View>
   );
 

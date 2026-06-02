@@ -7,8 +7,8 @@ import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { useSettings, useScaleStyle } from '../SettingsContext';
 import { useI18n } from '../i18n';
-import { toRomaji } from '../transliterate';
 import { useAppData } from '../AppDataContext';
+import { getL1 } from '../l1';
 import { useCardFlip } from '../useCardFlip';
 
 type R = RouteProp<RootStackParamList, 'Flashcard'>;
@@ -38,7 +38,8 @@ function ShuffleIcon({ active }: { active: boolean }) {
 }
 
 export default function FlashcardScreen() {
-  const { WORD_CATEGORIES, getWords } = useAppData();
+  const { WORD_CATEGORIES, getWords, nativeLang } = useAppData();
+  const l1 = getL1(nativeLang);
   const { t } = useI18n();
   const { categoryId: initialCategoryId, direction } = useRoute<R>().params;
   const { romaji, autoFlip, shuffle: shuffleOn, setShuffle } = useSettings();
@@ -138,8 +139,8 @@ export default function FlashcardScreen() {
             ]}>
               {flipped ? backText : frontText}
             </Text>
-            {romaji && ((frontIsNe && !flipped) || (!frontIsNe && flipped)) && (
-              <Text style={[styles.cardRom, ss(15)]}>{toRomaji(word.ne)}</Text>
+            {romaji && l1.romanizeWord && ((frontIsNe && !flipped) || (!frontIsNe && flipped)) && (
+              <Text style={[styles.cardRom, ss(15)]}>{l1.romanizeWord(word.ne)}</Text>
             )}
             <Text style={styles.hint}>{t('flashcard.tapToFlip', { action: flipped ? t('flashcard.unflip') : t('flashcard.flip') })}</Text>
           </Animated.View>

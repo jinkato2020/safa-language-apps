@@ -9,8 +9,8 @@ import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
 import { useSettings, useScaleStyle } from '../SettingsContext';
 import { useI18n } from '../i18n';
-import { sentenceToRomaji, sentenceToRomajiWithDict } from '../transliterate';
 import { useAppData } from '../AppDataContext';
+import { getL1 } from '../l1';
 import { useCardFlip } from '../useCardFlip';
 
 function tokenize(text: string): string[] {
@@ -38,8 +38,9 @@ function SpeakerIcon({ size = 18 }: { size?: number }) {
 }
 
 export default function PracticeScreen() {
-  const { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, audio, VOCAB, GRAMMAR_VOCAB, CONV_VOCAB, JP_READING } = useAppData();
+  const { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, audio, VOCAB, GRAMMAR_VOCAB, CONV_VOCAB, JP_READING, nativeLang } = useAppData();
   const { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio } = audio;
+  const l1 = getL1(nativeLang);
   const navigation = useNavigation<Nav>();
   const { t, lang } = useI18n();
   const isJaUI = lang === 'ja';
@@ -215,12 +216,12 @@ export default function PracticeScreen() {
               displayIsNe ? styles.neText : styles.jaText,
               ss(displayIsNe ? 30 : 26, displayIsNe ? 44 : 40),
             ]}>{displayText}</Text>
-            {/* ネパール語表示時のローマ字: 言語=日本語のときだけ (ネパール語話者には不要) */}
-            {displayIsNe && romaji && isJaUI && (
+            {/* L1テキストのローマ字: 言語=日本語のときだけ。romanizer を持つ L1 (ne 等) のみ表示 */}
+            {displayIsNe && romaji && isJaUI && l1.romanizeSentence && (
               <Text style={[styles.romaji, ss(14, 22)]}>
-                {isGrammar
-                  ? sentenceToRomajiWithDict(ex.ne, (w) => GRAMMAR_VOCAB?.[w]?.rom ?? VOCAB[w]?.rom)
-                  : sentenceToRomaji(ex.ne)}
+                {isGrammar && l1.romanizeSentenceWithDict
+                  ? l1.romanizeSentenceWithDict(ex.ne, (w) => GRAMMAR_VOCAB?.[w]?.rom ?? VOCAB[w]?.rom)
+                  : l1.romanizeSentence(ex.ne)}
               </Text>
             )}
             {/* 日本語表示時 & 言語=ネパール語: かな(常時) + ローマ字(ローマ字設定ON) */}
