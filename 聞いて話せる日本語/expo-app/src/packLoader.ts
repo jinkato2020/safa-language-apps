@@ -57,22 +57,27 @@ async function getOverlay(lang: string, entry: any): Promise<any> {
   return JSON.parse(await FileSystem.readAsStringAsync(uri));
 }
 
-// 母語音声を取得。examplesL1 の各文ID(.mp3)を FS にあれば使い、無ければ audioBase からDL。
-// 戻り値: { 文ID: ローカル file:// URI }。onProgress(done,total) で進捗通知。
+// 母語音声を取得。会話(examplesL1)=文ID"テーマ-レベル-番号"、文法(grammarL1)=文ID"テーマ-番号"。
+// FSにあれば使い、無ければ audioBase からDL。戻り値: { l1Audio(会話), l1GrammarAudio(文法) }。
 async function getAudio(
   lang: string, overlayJson: any, audioBase: string | undefined, onProgress?: ProgressFn,
-): Promise<Record<string, string>> {
-  const ids: string[] = [];
-  for (const [key, arr] of Object.entries(overlayJson.examplesL1 || {})) {
-    (arr as string[]).forEach((_, i) => ids.push(`${key}-${i + 1}`));
-  }
-  const map: Record<string, string> = {};
-  if (!ids.length) return map;
+): Promise<{ l1Audio: Record<string, string>; l1GrammarAudio: Record<string, string> }> {
+  const collect = (m: any) => {
+    const ids: string[] = [];
+    for (const [key, arr] of Object.entries(m || {})) (arr as string[]).forEach((_, i) => ids.push(`${key}-${i + 1}`));
+    return ids;
+  };
+  const convIds = collect(overlayJson.examplesL1);
+  const gramIds = collect(overlayJson.grammarL1);
+  const l1Audio: Record<string, string> = {};
+  const l1GrammarAudio: Record<string, string> = {};
+  const total = convIds.length + gramIds.length;
+  if (!total) return { l1Audio, l1GrammarAudio };
 
   await FileSystem.makeDirectoryAsync(audioDir(lang), { intermediates: true });
   let done = 0;
-  onProgress?.(0, ids.length);
-  for (const id of ids) {
+  onProgress?.(0, total);
+  const fetchOne = async (id: string, map: Record<string, string>) => {
     const uri = `${audioDir(lang)}${id}.mp3`;
     const info = await FileSystem.getInfoAsync(uri);
     if (!info.exists && audioBase) {
@@ -80,9 +85,11 @@ async function getAudio(
     }
     const after = await FileSystem.getInfoAsync(uri);
     if (after.exists) map[id] = uri;
-    onProgress?.(++done, ids.length);
-  }
-  return map;
+    onProgress?.(++done, total);
+  };
+  for (const id of convIds) await fetchOne(id, l1Audio);
+  for (const id of gramIds) await fetchOne(id, l1GrammarAudio);
+  return { l1Audio, l1GrammarAudio };
 }
 
 /** L1パックを解決。ne=同梱。その他=オーバーレイ+音声をFS/DLし結合。onProgressで進捗通知。 */
@@ -95,8 +102,8 @@ export async function loadPack(lang: string, onProgress?: ProgressFn): Promise<A
   const entry = catalog?.packs?.find((p: any) => p.l1 === lang);
 
   const overlayJson = await getOverlay(lang, entry);
-  const l1Audio = await getAudio(lang, overlayJson, entry?.audioBase, onProgress);
+  const { l1Audio, l1GrammarAudio } = await getAudio(lang, overlayJson, entry?.audioBase, onProgress);
 
-  const overlay: L1Overlay = { ...toOverlay(overlayJson), l1Audio };
+  const overlay: L1Overlay = { ...toOverlay(overlayJson), l1Audio, l1GrammarAudio };
   return composePack(jaCore, overlay, { version: appJson.expo.version });
 }

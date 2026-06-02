@@ -49,16 +49,21 @@ async function main() {
 
   let ok = 0, skip = 0, chars = 0;
   console.log(`音声: ${VOICE} / 出力: ${OUT_DIR}`);
-  for (const [key, arr] of Object.entries(overlay.examplesL1 || {})) {
-    for (let i = 0; i < arr.length; i++) {
-      const id = `${key}-${i + 1}`;
-      const out = path.join(OUT_DIR, `${id}.mp3`);
-      if (fs.existsSync(out) && fs.statSync(out).size > 0) { skip++; continue; }
-      const buf = await synth(arr[i], apiKey);
-      fs.writeFileSync(out, buf);
-      ok++; chars += [...arr[i]].length;
-      console.log(`  ${id}.mp3`);
-    }
+
+  // 文ID→bn文 を集約。会話: "テーマ-レベル-番号" / 文法: "テーマ-番号"
+  const items = [];
+  for (const [key, arr] of Object.entries(overlay.examplesL1 || {}))
+    arr.forEach((t, i) => items.push({ id: `${key}-${i + 1}`, text: t }));
+  for (const [key, arr] of Object.entries(overlay.grammarL1 || {}))
+    arr.forEach((t, i) => items.push({ id: `${key}-${i + 1}`, text: t }));
+
+  for (const { id, text } of items) {
+    const out = path.join(OUT_DIR, `${id}.mp3`);
+    if (fs.existsSync(out) && fs.statSync(out).size > 0) { skip++; continue; }
+    const buf = await synth(text, apiKey);
+    fs.writeFileSync(out, buf);
+    ok++; chars += [...text].length;
+    console.log(`  ${id}.mp3`);
   }
   console.log(`\n生成 ${ok} / スキップ ${skip} / 合成文字数 ${chars}`);
 }
