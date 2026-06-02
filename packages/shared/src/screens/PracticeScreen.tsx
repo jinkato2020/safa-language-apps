@@ -13,24 +13,6 @@ import { sentenceToRomaji, sentenceToRomajiWithDict } from '../transliterate';
 import { useAppData } from '../AppDataContext';
 import { useCardFlip } from '../useCardFlip';
 
-// 中級・上級で除外する助詞 (postposition) と代名詞 (pronoun)
-// 文法構造をすでに知っている学習者向けに、内容語のみを単語リストに残す
-const NE_PARTICLES_AND_PRONOUNS = new Set<string>([
-  // 助詞・後置詞
-  'मा', 'बाट', 'लाई', 'को', 'का', 'की', 'ले', 'सँग', 'सित', 'देखि', 'सम्म',
-  'पनि', 'मात्र', 'मात्रै', 'त', 'र', 'अनि', 'तर', 'वा', 'कि', 'भने', 'नै', 'कै',
-  // 人称代名詞
-  'म', 'तँ', 'तिमी', 'तपाईं', 'ऊ', 'उनी', 'उहाँ',
-  'हामी', 'हामीहरू', 'तिमीहरू', 'तपाईंहरू', 'उनीहरू',
-  // 指示・疑問代名詞
-  'यो', 'त्यो', 'यी', 'ती', 'के', 'कुन', 'कस्तो', 'कहाँ', 'कहिले', 'किन', 'कसरी', 'कति',
-  // 所有・反射
-  'आफ्नो', 'आफू', 'मेरो', 'मेरा', 'तिम्रो', 'तिम्रा', 'उसको', 'उहाँको',
-  'हाम्रो', 'हाम्रा', 'तपाईंको', 'उनको', 'उनीहरूको',
-  // 与格代名詞
-  'मलाई', 'तिमीलाई', 'तपाईंलाई', 'उसलाई', 'उनलाई', 'हामीलाई', 'उनीहरूलाई',
-]);
-
 function tokenize(text: string): string[] {
   return text
     .replace(/([।॥?!,;:"'"'（）()「」『』])/g, ' $1 ')
@@ -281,16 +263,11 @@ export default function PracticeScreen() {
         </Pressable>
       </View>
 
-      {/* 単語と意味
-            会話モード: 中級・上級では助詞・代名詞を除外
-            文法モード: フィルタなし (全単語を表示)
+      {/* 単語と意味 (全単語を表示)
             日本語 UI: ネパール語 (デーヴァナーガリー) + ローマ字 / 意味=日本語
             ネパール語 UI: 日本語 (各 ne 単語の ja 訳) / 意味=ネパール語  */}
       {(() => {
-        // 会話の中級・上級だけ助詞・代名詞を除外
-        const filterParticles = !isGrammar && levelId >= 2;
-        const all = tokenize(ex.ne).filter(w => !isPunct(w));
-        const tokens = filterParticles ? all.filter(w => !NE_PARTICLES_AND_PRONOUNS.has(w)) : all;
+        const tokens = tokenize(ex.ne).filter(w => !isPunct(w));
         return (
           <View style={styles.wordsSection}>
             <View style={styles.wordHeader}>

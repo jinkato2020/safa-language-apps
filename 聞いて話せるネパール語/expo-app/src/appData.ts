@@ -34,6 +34,7 @@ const JP_READING = jpReadingJson as JpReading;
 
 export const appData: AppData = {
   version: appJson.expo.version,
+  nativeLang: 'ne', // 学習者の母語/第2言語 (多言語化の足場。将来パック選択で切替)
   THEMES, LEVELS, EXAMPLES, WORD_CATEGORIES, WORDS,
   GRAMMAR_THEMES, GRAMMAR_EXAMPLES, VOCAB, GRAMMAR_VOCAB, CONV_VOCAB, JP_READING,
   // アプリ評価リンク。iosAppId は App Store の数値ID (公開後に判明)。

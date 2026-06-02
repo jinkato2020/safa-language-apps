@@ -20,6 +20,7 @@ export {
 export { Text } from './Text';
 export { colors, spacing, radius } from './theme';
 export { toRomaji, sentenceToRomaji } from './transliterate';
+export { getL1, L1_REGISTRY, type L1Config, type L1Code } from './l1';
 
 // ── 型 ──
 export type {
