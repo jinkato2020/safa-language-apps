@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "packs": [
+    {
+      "l1": "bn",
+      "name": "বাংলা",
+      "nameJa": "ベンガル語",
+      "version": 1,
+      "access": "free",
+      "sizeBytes": 379,
+      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-bn-v1.json"
+    }
+  ]
+}

@@ -1,23 +1,22 @@
-// 母語オーバーレイを GitHub Releases 用に書き出す。
-// data/overlays/<l1>.json を読み、dist-packs/overlay-<l1>-v<ver>.json と catalog.json を生成する。
+// 母語オーバーレイを raw.githubusercontent.com 配信用に書き出す。
+// data/overlays/<l1>.json を読み、リポジトリ直下 packs/ に
+// overlay-<l1>-v<ver>.json と catalog.json を生成する (= そのまま commit/push して raw配信)。
 // 使い方: node scripts/export-packs.mjs
 //
-// 生成物を GitHub Release (タグ packs-v1) にアップロードする:
-//   - catalog.json
-//   - overlay-bn-v1.json (各言語ぶん)
-// catalog.json 内の url はそのタグの asset URL を指す (下の RELEASE_BASE)。
+// 配信URLは下の RAW_BASE。packs/ をコミットしているブランチを指す。
+// ※ 実験中は experiment/bangla を指す。本番化時は main に packs/ を移し RAW_BASE も差し替える。
 
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const appDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const repoRoot = path.resolve(appDir, '..', '..');
 const overlaysDir = path.join(appDir, 'data', 'overlays');
-const outDir = path.join(appDir, 'dist-packs');
+const outDir = path.join(repoRoot, 'packs');
 
-// アップロード先 Release のタグ。ここを変えたら Release タグも合わせる。
-const RELEASE_TAG = 'packs-v1';
-const RELEASE_BASE = `https://github.com/JinKato2020/safa-language-apps/releases/download/${RELEASE_TAG}`;
+// raw配信のベースURL (packs/ を置くブランチ)。
+const RAW_BASE = 'https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs';
 
 // 言語コード → 表示名
 const NAMES = {
@@ -45,7 +44,7 @@ for (const file of readdirSync(overlaysDir)) {
     version,
     access: 'free',
     sizeBytes,
-    url: `${RELEASE_BASE}/${outName}`,
+    url: `${RAW_BASE}/${outName}`,
   });
   console.log(`wrote ${outName} (${sizeBytes} bytes)`);
 }
@@ -53,5 +52,5 @@ for (const file of readdirSync(overlaysDir)) {
 const catalog = { schema: 1, packs };
 writeFileSync(path.join(outDir, 'catalog.json'), JSON.stringify(catalog, null, 2), 'utf8');
 console.log(`wrote catalog.json (${packs.length} packs)`);
-console.log(`\nアップロード先 Release タグ: ${RELEASE_TAG}`);
-console.log(`出力フォルダ: ${outDir}`);
+console.log(`\n配信ベース: ${RAW_BASE}`);
+console.log(`出力フォルダ (commit/push して raw配信): ${outDir}`);
