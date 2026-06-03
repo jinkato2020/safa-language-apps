@@ -47,7 +47,7 @@ export default function VocabCategoryScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: spacing.lg, paddingBottom: spacing.xxl },
+  container: { padding: spacing.lg, paddingBottom: spacing.xxl, maxWidth: 760, width: '100%', alignSelf: 'center' },
   head: { marginBottom: spacing.xl },
   title: { fontSize: 28, fontWeight: '700', color: colors.ink, marginBottom: spacing.xs, letterSpacing: -0.5 },
   modeTitle: { fontSize: 20, fontWeight: '700', color: colors.accentJa, letterSpacing: 0.2, marginBottom: spacing.sm, textAlign: 'center' },

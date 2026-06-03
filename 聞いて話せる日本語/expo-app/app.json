@@ -6,12 +6,12 @@
     "runtimeVersion": {
       "policy": "appVersion"
     },
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": false,
+      "supportsTablet": true,
       "bundleIdentifier": "com.safa.japanese",
       "infoPlist": {
         "UIBackgroundModes": [

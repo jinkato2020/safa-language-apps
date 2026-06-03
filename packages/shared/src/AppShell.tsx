@@ -9,8 +9,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
+import * as ScreenOrientation from 'expo-screen-orientation';
 import { setAudioModeAsync } from 'expo-audio';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -251,6 +252,17 @@ export function AppShell({ splashSource }: AppShellProps) {
       shouldPlayInBackground: true,
       interruptionMode: 'doNotMix',
     }).catch(() => {});
+  }, []);
+
+  // 画面回転ポリシー: タブレット(最小辺>=600dp)は縦横自由、スマホは縦固定。
+  useEffect(() => {
+    const { width, height } = Dimensions.get('window');
+    const isTablet = Math.min(width, height) >= 600;
+    if (isTablet) {
+      ScreenOrientation.unlockAsync().catch(() => {});
+    } else {
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP).catch(() => {});
+    }
   }, []);
 
   if (!splashDone) {

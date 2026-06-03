@@ -75,7 +75,7 @@ export default function ListenSourceScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: spacing.lg, paddingBottom: spacing.xxl },
+  container: { padding: spacing.lg, paddingBottom: spacing.xxl, maxWidth: 760, width: '100%', alignSelf: 'center' },
   head: { marginBottom: spacing.lg },
   title: { fontSize: 26, fontWeight: '700', color: colors.ink, marginBottom: spacing.xs, letterSpacing: -0.5 },
   desc: { fontSize: 14, color: colors.inkMute, lineHeight: 21 },

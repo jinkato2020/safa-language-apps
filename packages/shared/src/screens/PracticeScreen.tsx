@@ -325,7 +325,7 @@ export default function PracticeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: spacing.lg, paddingBottom: spacing.xxl },
+  container: { padding: spacing.lg, paddingBottom: spacing.xxl, maxWidth: 760, width: '100%', alignSelf: 'center' },
   metaRow: { paddingBottom: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.line, marginBottom: spacing.lg },
   metaText: { fontFamily: 'Courier', fontSize: 12, color: colors.inkMute },
   metaCur: { color: colors.ink, fontWeight: '700' },

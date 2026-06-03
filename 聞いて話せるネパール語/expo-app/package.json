@@ -19,6 +19,7 @@
     "expo-application": "~7.0.8",
     "expo-audio": "~1.1.1",
     "expo-localization": "~17.0.8",
+    "expo-screen-orientation": "~9.0.9",
     "expo-splash-screen": "~31.0.13",
     "expo-status-bar": "~3.0.9",
     "expo-updates": "~29.0.17",

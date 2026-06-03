@@ -9,12 +9,12 @@
     "updates": {
       "url": "https://u.expo.dev/f7a978ac-d672-46e5-9a16-1350a0e889a2"
     },
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": false,
+      "supportsTablet": true,
       "bundleIdentifier": "com.safa.nepali.jp",
       "infoPlist": {
         "UIBackgroundModes": [
