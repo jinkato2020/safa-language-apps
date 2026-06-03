@@ -46,8 +46,10 @@ function toOverlay(json: any): L1Overlay {
 }
 
 async function fetchJson(url: string): Promise<any> {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`fetch ${url} -> ${res.status}`);
+  // キャッシュ無効化 (古い catalog を掴まないよう毎回最新を取得)。
+  const busted = `${url}${url.includes('?') ? '&' : '?'}t=${Date.now()}`;
+  const res = await fetch(busted, { cache: 'no-store' as any, headers: { 'Cache-Control': 'no-cache' } });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
@@ -78,14 +80,18 @@ function u8ToB64(u8: Uint8Array): string {
 }
 
 // オーバーレイJSON取得 (オフライン=キャッシュ / 新版あれば再DL)。
-async function getOverlay(lang: string, entry: any): Promise<any> {
+async function getOverlay(lang: string, entry: any, diag?: { catalog: any; catalogErr: string }): Promise<any> {
   const uri = overlayUri(lang);
   const info = await FileSystem.getInfoAsync(uri);
   if (info.exists) {
     const cached = JSON.parse(await FileSystem.readAsStringAsync(uri));
     if (!entry || (cached.version ?? 0) >= (entry.version ?? 0)) return cached;
   }
-  if (!entry?.url) throw new Error(`overlay: catalog未取得かパック未掲載 (${lang})`);
+  if (!entry?.url) {
+    // catalog取得失敗 と「neが載っていない(古いcatalog等)」を区別して原因を明示。
+    const langs = diag?.catalog?.packs?.map((p: any) => p.l1).join(',') || 'なし';
+    throw new Error(diag?.catalog ? `catalogに${lang}無し(掲載:${langs})` : `catalog取得失敗:${diag?.catalogErr || '不明'}`);
+  }
   await FileSystem.makeDirectoryAsync(packDir(lang), { intermediates: true });
   await withRetry(async () => {
     const r = await FileSystem.downloadAsync(entry.url, uri);
@@ -165,11 +171,12 @@ export async function loadPack(lang: string, onProgress?: ProgressFn): Promise<A
   const bundled = BUNDLED[lang];
   if (bundled) return bundled;
 
-  let catalog: any = null;
-  try { catalog = await withRetry(() => fetchJson(CATALOG_URL)); } catch {}
+  let catalog: any = null, catalogErr = '';
+  try { catalog = await withRetry(() => fetchJson(CATALOG_URL)); }
+  catch (e: any) { catalogErr = String(e?.message ?? e); }
   const entry = catalog?.packs?.find((p: any) => p.l1 === lang);
 
-  const overlayJson = await getOverlay(lang, entry);
+  const overlayJson = await getOverlay(lang, entry, { catalog, catalogErr });
   try { await ensureAudio(lang, entry, onProgress); } catch {} // 音声DL失敗でもテキストは表示
   const { l1Audio, l1GrammarAudio } = await buildAudioMaps(lang, overlayJson);
 
