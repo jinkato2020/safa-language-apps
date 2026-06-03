@@ -9,13 +9,17 @@ import type { AppData } from '@safa/shared';
 import * as FileSystem from 'expo-file-system/legacy';
 import { unzipSync } from 'fflate';
 import appJson from '../app.json';
-import { appData, jaCore } from './appData';
+import { jaCore } from './appData';
 import { composePack, type L1Overlay } from './pack/compose';
 
 const CATALOG_URL =
   'https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/catalog.json';
 
-const BUNDLED: Record<string, AppData> = { ne: appData };
+// 母語(ne/bn)はすべて DL パック。アプリ同梱の母語データは無し。
+const BUNDLED: Record<string, AppData> = {};
+
+// アプリ評価リンク (composePack に渡す)。iosAppId は App Store の数値ID。
+const REVIEW = { iosAppId: '6774461088', androidPackage: appJson.expo.android.package };
 
 export function bundledPack(lang: string): AppData | null {
   return BUNDLED[lang] ?? null;
@@ -88,11 +92,17 @@ async function ensureAudio(lang: string, entry: any, onProgress?: ProgressFn): P
   }
   await FileSystem.makeDirectoryAsync(audioDir(lang), { intermediates: true });
 
-  // 1) zip を1ファイルDL (進捗: バイト)
+  // DLと展開を「1本の連続バー」に統合する (0〜DL_FRAC=DL, DL_FRAC〜1=展開)。
+  // 別々に 0→100 を2回出すとバーが2回満ちて見えるため。
+  const SCALE = 1000, DL_FRAC = 0.8;
+
+  // 1) zip を1ファイルDL (全体の 0〜80%)
   const zipUri = `${packDir(lang)}audio.zip`;
   const total = entry.audioZipBytes || 0;
   const dl = FileSystem.createDownloadResumable(entry.audioZip, zipUri, {}, (p: any) => {
-    onProgress?.(p.totalBytesWritten, p.totalBytesExpectedToWrite || total, 'ダウンロード中');
+    const exp = p.totalBytesExpectedToWrite || total || 1;
+    const f = Math.min(1, p.totalBytesWritten / exp) * DL_FRAC;
+    onProgress?.(Math.round(f * SCALE), SCALE, 'ダウンロード中');
   });
   await dl.downloadAsync();
 
@@ -101,10 +111,12 @@ async function ensureAudio(lang: string, entry: any, onProgress?: ProgressFn): P
   const files = unzipSync(bytes);
   const names = Object.keys(files);
   let i = 0;
-  onProgress?.(0, names.length, '展開中');
+  onProgress?.(Math.round(DL_FRAC * SCALE), SCALE, '展開中'); // 80%から継続
   for (const name of names) {
     await FileSystem.writeAsStringAsync(`${audioDir(lang)}${name}`, u8ToB64(files[name]), { encoding: 'base64' as any });
-    onProgress?.(++i, names.length, '展開中');
+    i++;
+    const f = DL_FRAC + (i / names.length) * (1 - DL_FRAC);
+    onProgress?.(Math.round(f * SCALE), SCALE, '展開中'); // 80〜100%
   }
   await FileSystem.writeAsStringAsync(marker, String(entry.audioVersion ?? ''));
   await FileSystem.deleteAsync(zipUri, { idempotent: true });
@@ -144,5 +156,5 @@ export async function loadPack(lang: string, onProgress?: ProgressFn): Promise<A
   const { l1Audio, l1GrammarAudio } = await buildAudioMaps(lang, overlayJson);
 
   const overlay: L1Overlay = { ...toOverlay(overlayJson), l1Audio, l1GrammarAudio };
-  return composePack(jaCore, overlay, { version: appJson.expo.version });
+  return composePack(jaCore, overlay, { version: appJson.expo.version, review: REVIEW });
 }
