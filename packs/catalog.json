@@ -5,13 +5,13 @@
       "l1": "bn",
       "name": "বাংলা",
       "nameJa": "ベンガル語",
-      "version": 4,
+      "version": 5,
       "access": "free",
-      "sizeBytes": 647781,
-      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-bn-v4.json",
-      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-bn-v4.zip",
-      "audioVersion": 4,
-      "audioZipBytes": 15767596
+      "sizeBytes": 880822,
+      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-bn-v5.json",
+      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-bn-v5.zip",
+      "audioVersion": 5,
+      "audioZipBytes": 74814694
     }
   ]
 }
