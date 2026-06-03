@@ -51,6 +51,16 @@ async function fetchJson(url: string): Promise<any> {
   return res.json();
 }
 
+const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
+// 一時的な失敗(初回起動時のネット未準備/瞬断)に備え指数バックオフで再試行。
+async function withRetry<T>(fn: () => Promise<T>, tries = 3): Promise<T> {
+  let last: any;
+  for (let i = 0; i < tries; i++) {
+    try { return await fn(); } catch (e) { last = e; if (i < tries - 1) await sleep(700 * (i + 1)); }
+  }
+  throw last;
+}
+
 // base64 <-> Uint8Array (RN グローバルの atob/btoa を使用)
 function b64ToU8(b64: string): Uint8Array {
   const bin = (global as any).atob(b64);
@@ -75,10 +85,18 @@ async function getOverlay(lang: string, entry: any): Promise<any> {
     const cached = JSON.parse(await FileSystem.readAsStringAsync(uri));
     if (!entry || (cached.version ?? 0) >= (entry.version ?? 0)) return cached;
   }
-  if (!entry?.url) throw new Error(`offline or pack not in catalog: ${lang}`);
+  if (!entry?.url) throw new Error(`overlay: catalog未取得かパック未掲載 (${lang})`);
   await FileSystem.makeDirectoryAsync(packDir(lang), { intermediates: true });
-  await FileSystem.downloadAsync(entry.url, uri);
-  return JSON.parse(await FileSystem.readAsStringAsync(uri));
+  await withRetry(async () => {
+    const r = await FileSystem.downloadAsync(entry.url, uri);
+    if (r.status && r.status >= 400) throw new Error(`overlay HTTP ${r.status}`);
+  });
+  const raw = await FileSystem.readAsStringAsync(uri);
+  try {
+    return JSON.parse(raw);
+  } catch {
+    throw new Error(`overlay JSON parse失敗 (先頭: ${raw.slice(0, 40)})`);
+  }
 }
 
 // 母語音声zipをDL→展開 (版が新しい/未取得のときだけ)。各 <文ID>.mp3 を端末に保存。
@@ -148,7 +166,7 @@ export async function loadPack(lang: string, onProgress?: ProgressFn): Promise<A
   if (bundled) return bundled;
 
   let catalog: any = null;
-  try { catalog = await fetchJson(CATALOG_URL); } catch {}
+  try { catalog = await withRetry(() => fetchJson(CATALOG_URL)); } catch {}
   const entry = catalog?.packs?.find((p: any) => p.l1 === lang);
 
   const overlayJson = await getOverlay(lang, entry);

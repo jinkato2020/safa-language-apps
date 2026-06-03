@@ -30,15 +30,18 @@ const DL_TEXT: Record<string, { dl: string; prep: string; fail: string; retry: s
 
 // DLローディング画面 (進捗バー付き / 失敗時は再試行)。
 function DownloadView(
-  { done, total, label, lang, error, onRetry }:
-  { done: number; total: number; label?: string; lang: string; error?: boolean; onRetry?: () => void },
+  { done, total, label, lang, error, errMsg, onRetry }:
+  { done: number; total: number; label?: string; lang: string; error?: boolean; errMsg?: string; onRetry?: () => void },
 ) {
   const t = DL_TEXT[lang] ?? DL_TEXT.ne;
   const pct = total > 0 ? Math.round((done / total) * 100) : 0;
   if (error) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
-        <Text style={{ fontSize: 14, color: '#dc2626', marginBottom: 16, textAlign: 'center' }}>{t.fail}</Text>
+        <Text style={{ fontSize: 14, color: '#dc2626', marginBottom: 8, textAlign: 'center' }}>{t.fail}</Text>
+        {errMsg ? (
+          <Text style={{ fontSize: 11, color: '#a1a1aa', marginBottom: 16, textAlign: 'center' }} selectable>{errMsg}</Text>
+        ) : null}
         <Pressable onPress={onRetry} style={{ paddingVertical: 10, paddingHorizontal: 24, borderRadius: 8, backgroundColor: '#2563eb' }}>
           <Text style={{ color: '#fff', fontSize: 14, fontWeight: '600' }}>{t.retry}</Text>
         </Pressable>
@@ -65,19 +68,20 @@ function PackGate({ children }: { children: ReactNode }) {
   const [data, setData] = useState<AppData | null>(() => bundledPack(lang));
   const [progress, setProgress] = useState<{ done: number; total: number; label?: string }>({ done: 0, total: 0 });
   const [error, setError] = useState(false);
+  const [errMsg, setErrMsg] = useState<string>('');
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
     let alive = true;
     const bundled = bundledPack(lang);
     if (bundled) { setData(bundled); return; } // 同梱(現状なし)なら即時
-    // 母語はすべてDL。null→進捗バー、失敗→再試行画面。
-    setData(null); setError(false); setProgress({ done: 0, total: 0 });
+    // 母語はすべてDL。null→進捗バー、失敗→再試行画面(エラー内容も表示)。
+    setData(null); setError(false); setErrMsg(''); setProgress({ done: 0, total: 0 });
     loadPack(lang, (done, total, label) => { if (alive) setProgress({ done, total, label }); })
       .then(d => { if (alive) setData(d); })
-      .catch(() => { if (alive) setError(true); });
+      .catch((e: any) => { if (alive) { setErrMsg(String(e?.message ?? e)); setError(true); } });
     return () => { alive = false; };
   }, [lang, attempt]);
-  if (error) return <DownloadView done={0} total={0} lang={lang} error onRetry={() => setAttempt(a => a + 1)} />;
+  if (error) return <DownloadView done={0} total={0} lang={lang} error errMsg={errMsg} onRetry={() => setAttempt(a => a + 1)} />;
   if (!data) return <DownloadView done={progress.done} total={progress.total} label={progress.label} lang={lang} />;
   return <AppDataProvider data={data}>{children}</AppDataProvider>;
 }
