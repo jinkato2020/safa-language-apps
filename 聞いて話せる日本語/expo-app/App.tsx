@@ -4,6 +4,7 @@
 
 import { useEffect, useState, type ReactNode } from 'react';
 import { ActivityIndicator, Pressable, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   AppShell,
   I18nProvider,
@@ -25,6 +26,14 @@ const headerIconSource = require('./assets/icon.png');
 // UI言語が ja 等の場合はパックを ne にフォールバック。
 const PACK_LANGS = ['ne', 'bn'];
 const toPackLang = (lang: string) => (PACK_LANGS.includes(lang) ? lang : 'ne');
+
+// 初回起動の母語選択。各L1の自言語表記で提示する。
+const LANG_OPTIONS = [
+  { code: 'ne', native: 'नेपाली', sub: 'Nepali' },
+  { code: 'bn', native: 'বাংলা', sub: 'Bangla' },
+];
+// 母語を一度でも選んだかのフラグ (i18n の lang とは別管理)。
+const L1_CHOSEN_KEY = '@japanese_app/l1_chosen_v1';
 
 // DL画面の文言 (UI言語=L1ごと)。
 const DL_TEXT: Record<string, { dl: string; prep: string; fail: string; retry: string }> = {
@@ -92,6 +101,53 @@ function PackGate({ children }: { children: ReactNode }) {
   return <AppDataProvider data={data}>{children}</AppDataProvider>;
 }
 
+// 母語選択画面 (初回のみ)。選んだ言語が UI言語=L1=DLするパックになる。
+function LanguageSelect({ onSelect }: { onSelect: (l: string) => void }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
+      <Text style={{ fontSize: 19, fontWeight: '700', color: '#18181b', marginBottom: 6 }}>言語を選択</Text>
+      <Text style={{ fontSize: 13, color: '#71717a', marginBottom: 32, textAlign: 'center' }}>
+        भाषा छान्नुहोस् / ভাষা নির্বাচন করুন
+      </Text>
+      {LANG_OPTIONS.map(o => (
+        <Pressable
+          key={o.code}
+          onPress={() => onSelect(o.code)}
+          style={{ width: 248, paddingVertical: 16, borderRadius: 12, backgroundColor: '#2563eb', marginBottom: 14, alignItems: 'center' }}
+        >
+          <Text style={{ color: '#fff', fontSize: 20, fontWeight: '700' }}>{o.native}</Text>
+          <Text style={{ color: '#dbeafe', fontSize: 12, marginTop: 2 }}>{o.sub}</Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+}
+
+// 初回のみ母語選択画面を出す。選択済みなら素通り。
+function FirstRunGate({ children }: { children: ReactNode }) {
+  const { setLang } = useI18n();
+  const [checked, setChecked] = useState(false);
+  const [needSelect, setNeedSelect] = useState(false);
+  useEffect(() => {
+    let alive = true;
+    AsyncStorage.getItem(L1_CHOSEN_KEY)
+      .then(v => { if (alive) { setNeedSelect(!v); setChecked(true); } })
+      .catch(() => { if (alive) { setNeedSelect(true); setChecked(true); } });
+    return () => { alive = false; };
+  }, []);
+  if (!checked) return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}><ActivityIndicator /></View>;
+  if (needSelect) {
+    return (
+      <LanguageSelect onSelect={(l) => {
+        setLang(l);
+        AsyncStorage.setItem(L1_CHOSEN_KEY, l).catch(() => {});
+        setNeedSelect(false);
+      }} />
+    );
+  }
+  return <>{children}</>;
+}
+
 export default function App() {
   return (
     <I18nProvider
@@ -103,9 +159,11 @@ export default function App() {
         defaults={{ practiceDirection: 'ne2ja', listenDirection: 'ne2ja' }}
         storageKey="@japanese_app/settings_v2"
       >
-        <PackGate>
-          <AppShell splashSource={splashSource} headerIconSource={headerIconSource} />
-        </PackGate>
+        <FirstRunGate>
+          <PackGate>
+            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} />
+          </PackGate>
+        </FirstRunGate>
       </SettingsProvider>
     </I18nProvider>
   );
