@@ -1,4 +1,4 @@
-// 瞬間作文.xlsx の全シートからネパール語の単語を抽出し、
+// 会話.xlsx の全シートからネパール語の単語を抽出し、
 // Google翻訳の公開エンドポイントで日本語訳・ローマ字を取得して
 // data/vocab.json に保存する。
 //
@@ -13,7 +13,7 @@ import ExcelJS from 'exceljs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, '..');
-const XLSX_PATH = path.join(PROJECT_ROOT, '瞬間作文.xlsx');
+const XLSX_PATH = path.join(PROJECT_ROOT, '会話.xlsx');
 const VOCAB_PATH = path.join(PROJECT_ROOT, 'data', 'vocab.json');
 
 const GTRANS_URL = 'https://translate.googleapis.com/translate_a/single';

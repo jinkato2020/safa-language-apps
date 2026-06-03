@@ -1,4 +1,4 @@
-// 瞬間作文.xlsx と data/vocab.json から
+// 会話.xlsx と data/vocab.json から
 // HOME(モード選択) → テーマ → レベル → 練習/聞き流し のフローを持つ
 // 自己完結HTMLアプリを生成する。
 //
@@ -13,7 +13,7 @@ import ExcelJS from 'exceljs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, '..');
-const XLSX_PATH = path.join(PROJECT_ROOT, '瞬間作文.xlsx');
+const XLSX_PATH = path.join(PROJECT_ROOT, '会話.xlsx');
 const WORDS_XLSX_PATH = path.join(PROJECT_ROOT, '単語.xlsx');
 const GRAMMAR_XLSX_PATH = path.join(PROJECT_ROOT, '文法.xlsx');
 const VOCAB_PATH = path.join(PROJECT_ROOT, 'data', 'vocab.json');

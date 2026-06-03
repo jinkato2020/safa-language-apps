@@ -23,7 +23,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const ENV_PATH = path.join(PROJECT_ROOT, '.env');
-const OUTPUT_PATH = path.join(PROJECT_ROOT, '瞬間作文.xlsx');
+const OUTPUT_PATH = path.join(PROJECT_ROOT, '会話.xlsx');
 
 const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages';
 const MODEL = 'claude-sonnet-4-6';

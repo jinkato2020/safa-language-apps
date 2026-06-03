@@ -1,4 +1,4 @@
-// 瞬間作文.xlsx の30シートから B/D/F 列のネパール語を読み取り、
+// 会話.xlsx の30シートから B/D/F 列のネパール語を読み取り、
 // Google Cloud TTS（ヒンディー語フォールバック）で mp3 を一括生成する。
 //
 // 命名規則: {シート番号}-{レベル番号}-{例題番号}.mp3
@@ -25,7 +25,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const ENV_PATH = path.join(PROJECT_ROOT, '.env');
-const XLSX_PATH = path.join(PROJECT_ROOT, '瞬間作文.xlsx');
+const XLSX_PATH = path.join(PROJECT_ROOT, '会話.xlsx');
 const OUTPUT_DIR = path.join(PROJECT_ROOT, 'nepali');
 
 const SYNTHESIZE_URL = 'https://texttospeech.googleapis.com/v1/text:synthesize';

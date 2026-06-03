@@ -95,7 +95,7 @@ const ITEMS = [
   { src: 'scripts',          dst: 'scripts',          desc: '音声生成・データ加工スクリプト' },
 
   // ── データソース (Excel) ──
-  { src: '瞬間作文.xlsx',     dst: '瞬間作文.xlsx',     desc: '会話例題マスター (テンプレ)' },
+  { src: '会話.xlsx',         dst: '会話.xlsx',         desc: '会話例題マスター (テンプレ)' },
   { src: '単語.xlsx',         dst: '単語.xlsx',         desc: '単語マスター (テンプレ)' },
   { src: '文法.xlsx',         dst: '文法.xlsx',         desc: '文法例題マスター (テンプレ)' },
   { src: 'バイリンガル.xlsx', dst: 'バイリンガル.xlsx', desc: 'i18n 翻訳テンプレ' },

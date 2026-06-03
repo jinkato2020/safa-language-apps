@@ -228,7 +228,7 @@ HOME → 分野選択（30カテゴリ）→ 方向選択 → フラッシュカ
 │   ├── build-app.mjs               # HTML版アプリを生成
 │   └── export-to-expo.mjs          # 無料層データをExpo用に書き出し
 │
-├── 瞬間作文.xlsx                    # 30テーマ × 3レベル × 20例題
+├── 会話.xlsx                        # 30テーマ × 3レベル × 20例題
 ├── 単語.xlsx                        # 30分野 × 単語リスト
 ├── data/
 │   └── vocab.json                  # 単語辞書（ターゲット語 → 日本語）
@@ -435,7 +435,7 @@ eas build --platform ios --profile production
 2. **Anthropic APIで例文生成**:
    ```bash
    # 既存スクリプトを言語切替で再実行
-   npm run generate-excel  # → 瞬間作文.xlsx (英語版)
+   npm run generate-excel  # → 会話.xlsx (英語版)
    ```
    - プロンプトで「日本語↔英語」に変更
 3. **単語データ作成**:
