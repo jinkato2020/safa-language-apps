@@ -21,6 +21,11 @@ import { bundledPack, loadPack } from './src/packLoader';
 const splashSource = require('./assets/safa-splash.mp4');
 const headerIconSource = require('./assets/icon.png');
 
+// L1(母語=パック)になり得る言語。ja は学習対象=共通コアなのでパックは無い。
+// UI言語が ja 等の場合はパックを ne にフォールバック。
+const PACK_LANGS = ['ne', 'bn'];
+const toPackLang = (lang: string) => (PACK_LANGS.includes(lang) ? lang : 'ne');
+
 // DL画面の文言 (UI言語=L1ごと)。
 const DL_TEXT: Record<string, { dl: string; prep: string; fail: string; retry: string }> = {
   ne: { dl: 'डाउनलोड हुँदैछ', prep: 'तयार पारिँदैछ', fail: 'डाउनलोड असफल भयो', retry: 'पुनः प्रयास गर्नुहोस्' },
@@ -65,22 +70,23 @@ function DownloadView(
 // 同梱言語(ne)は即時。DL言語(bn等)は null→進捗バー表示→DL完了で差し替え。
 function PackGate({ children }: { children: ReactNode }) {
   const { lang } = useI18n();
-  const [data, setData] = useState<AppData | null>(() => bundledPack(lang));
+  const packLang = toPackLang(lang); // ja等→ne。実際にDL/同梱判定するL1。
+  const [data, setData] = useState<AppData | null>(() => bundledPack(packLang));
   const [progress, setProgress] = useState<{ done: number; total: number; label?: string }>({ done: 0, total: 0 });
   const [error, setError] = useState(false);
   const [errMsg, setErrMsg] = useState<string>('');
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
     let alive = true;
-    const bundled = bundledPack(lang);
+    const bundled = bundledPack(packLang);
     if (bundled) { setData(bundled); return; } // 同梱(現状なし)なら即時
     // 母語はすべてDL。null→進捗バー、失敗→再試行画面(エラー内容も表示)。
     setData(null); setError(false); setErrMsg(''); setProgress({ done: 0, total: 0 });
-    loadPack(lang, (done, total, label) => { if (alive) setProgress({ done, total, label }); })
+    loadPack(packLang, (done, total, label) => { if (alive) setProgress({ done, total, label }); })
       .then(d => { if (alive) setData(d); })
       .catch((e: any) => { if (alive) { setErrMsg(String(e?.message ?? e)); setError(true); } });
     return () => { alive = false; };
-  }, [lang, attempt]);
+  }, [packLang, attempt]);
   if (error) return <DownloadView done={0} total={0} lang={lang} error errMsg={errMsg} onRetry={() => setAttempt(a => a + 1)} />;
   if (!data) return <DownloadView done={progress.done} total={progress.total} label={progress.label} lang={lang} />;
   return <AppDataProvider data={data}>{children}</AppDataProvider>;
