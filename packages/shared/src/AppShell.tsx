@@ -235,7 +235,8 @@ function VideoSplash({ source, onDone }: { source: number; onDone: () => void })
 const splashStyles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center' },
   video: { width: '50%', height: '50%' },
-  appName: { marginTop: 8, fontSize: 20, fontWeight: '700', color: '#000000', textAlign: 'center', paddingHorizontal: 24, letterSpacing: 0.3 },
+  // 動画の下の余白を詰めてアプリ名をスプラッシュ直下へ引き上げる (負の marginTop)
+  appName: { marginTop: -48, fontSize: 20, fontWeight: '700', color: '#000000', textAlign: 'center', paddingHorizontal: 24, letterSpacing: 0.3 },
 });
 
 // ─── AppShell: VideoSplash → MainTabs ──────────────────
