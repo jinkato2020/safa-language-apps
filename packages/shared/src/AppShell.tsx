@@ -191,6 +191,7 @@ function MainTabs({ defaultStackOptions }: { defaultStackOptions: any }) {
 
 // ─── safa ロゴスプラッシュ ────────────────────────
 function VideoSplash({ source, onDone }: { source: number; onDone: () => void }) {
+  const { t } = useI18n();
   const player = useVideoPlayer(source, p => {
     p.loop = false;
     p.audioMixingMode = 'mixWithOthers';
@@ -225,6 +226,8 @@ function VideoSplash({ source, onDone }: { source: number; onDone: () => void })
   return (
     <View style={splashStyles.container}>
       <VideoView player={player} style={splashStyles.video} nativeControls={false} contentFit="contain" />
+      {/* スプラッシュ下にアプリ名を設定言語で表示 (黒字) */}
+      <Text style={splashStyles.appName} numberOfLines={2}>{t('app.headerTitle')}</Text>
     </View>
   );
 }
@@ -232,6 +235,7 @@ function VideoSplash({ source, onDone }: { source: number; onDone: () => void })
 const splashStyles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center' },
   video: { width: '50%', height: '50%' },
+  appName: { marginTop: 8, fontSize: 20, fontWeight: '700', color: '#000000', textAlign: 'center', paddingHorizontal: 24, letterSpacing: 0.3 },
 });
 
 // ─── AppShell: VideoSplash → MainTabs ──────────────────

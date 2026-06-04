@@ -86,7 +86,12 @@ export default function SettingsScreen() {
   // 利用可能な言語から動的にピルを生成 (ja=日本語 / その他は L1 レジストリの自称表示)
   const langLabel = (code: Lang): string =>
     code === 'ja' ? '日本語' : (L1_REGISTRY[code]?.name ?? code);
-  const langItems: { value: Lang; label: string }[] = langs.map(code => ({ value: code, label: langLabel(code) }));
+  // 並び順: 現在の言語(=起動時に選んだ母語)を一番左、ネパール語(ne)を一番右、他はその間。
+  const langRank = (code: Lang): number => (code === lang ? 0 : code === 'ne' ? 2 : 1);
+  const sortedLangs: Lang[] = [...langs].sort((a, b) => langRank(a) - langRank(b));
+  const langItems: { value: Lang; label: string }[] = sortedLangs.map(code => ({ value: code, label: langLabel(code) }));
+  // 説明文もピル(ボタン)と同じ言語順で動的生成して一致させる。
+  const langDescText = sortedLangs.map(langLabel).join(' / ');
 
   const directionItems: { value: Direction; label: string }[] = isJaUI
     ? [{ value: 'ja2ne', label: t('directions.ja2ne') }, { value: 'ne2ja', label: t('directions.ne2ja') }]
@@ -147,7 +152,7 @@ export default function SettingsScreen() {
       </View>
 
       <Section title={t('settings.sectionLang')} icon={<LangIcon />} ss={ss}>
-        <Row label={t('settings.language')} desc={t('settings.languageDesc')} ss={ss}>
+        <Row label={t('settings.language')} desc={langDescText} ss={ss}>
           <PillGroup<Lang>
             items={langItems}
             value={lang}

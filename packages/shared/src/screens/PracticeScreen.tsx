@@ -220,8 +220,8 @@ export default function PracticeScreen() {
               displayIsNe ? styles.neText : styles.jaText,
               ss(displayIsNe ? 30 : 26, displayIsNe ? 44 : 40),
             ]}>{displayText}</Text>
-            {/* L1テキストのローマ字: 言語=日本語のときだけ。romanizer を持つ L1 (ne 等) のみ表示 */}
-            {displayIsNe && romaji && isJaUI && l1.romanizeSentence && (
+            {/* 学習対象(ネパール語)テキストのローマ字: 母語UI(ja/en)で表示。romanizer を持つ L1 のみ */}
+            {displayIsNe && romaji && glossUI && l1.romanizeSentence && (
               <Text style={[styles.romaji, ss(14, 22)]}>
                 {isGrammar && l1.romanizeSentenceWithDict
                   ? l1.romanizeSentenceWithDict(ex.ne, (w) => GRAMMAR_VOCAB?.[w]?.rom ?? VOCAB[w]?.rom)
