@@ -11,8 +11,9 @@ import appJson from '../app.json';
 import { neCore } from './appData';
 import { composePack, type L1Overlay } from './pack/compose';
 
+// 本番配信: GitHub Release (tag: packs-appa)。publish-packs-appa.yml が experiment/bangla から自動公開。
 const CATALOG_URL =
-  'https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs-nepali/catalog.json';
+  'https://github.com/JinKato2020/safa-language-apps/releases/download/packs-appa/catalog.json';
 
 // 母語(ja/en)はすべて DL パック。ネパール語コアのみ同梱。
 const BUNDLED: Record<string, AppData> = {};
