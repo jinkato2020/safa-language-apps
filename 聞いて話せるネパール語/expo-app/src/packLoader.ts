@@ -8,14 +8,14 @@ import type { AppData } from '@safa/shared';
 import * as FileSystem from 'expo-file-system/legacy';
 import { unzipSync } from 'fflate';
 import appJson from '../app.json';
-import { appData, neCore } from './appData';
+import { neCore } from './appData';
 import { composePack, type L1Overlay } from './pack/compose';
 
 const CATALOG_URL =
   'https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs-nepali/catalog.json';
 
-// ja は同梱(現行 appData)。en は DL。ne UI も同梱ja内容を使う(下の toPackLang)。
-const BUNDLED: Record<string, AppData> = { ja: appData };
+// 母語(ja/en)はすべて DL パック。ネパール語コアのみ同梱。
+const BUNDLED: Record<string, AppData> = {};
 const REVIEW = { iosAppId: '6771720689', androidPackage: appJson.expo.android.package };
 
 export function bundledPack(lang: string): AppData | null {

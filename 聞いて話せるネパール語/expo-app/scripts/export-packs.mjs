@@ -16,6 +16,7 @@ const outDir = path.join(repoRoot, 'packs-nepali');
 const RAW_BASE = 'https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs-nepali';
 
 const NAMES = {
+  ja: { name: '日本語', nameJa: '日本語' },
   en: { name: 'English', nameJa: 'English' },
 };
 
