@@ -12,8 +12,9 @@ import appJson from '../app.json';
 import { jaCore } from './appData';
 import { composePack, type L1Overlay } from './pack/compose';
 
+// 本番配信: GitHub Release (tag: packs-appb)。publish-packs-appb.yml が experiment/bangla から自動公開。
 const CATALOG_URL =
-  'https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/catalog.json';
+  'https://github.com/JinKato2020/safa-language-apps/releases/download/packs-appb/catalog.json';
 
 // 母語(ne/bn)はすべて DL パック。アプリ同梱の母語データは無し。
 const BUNDLED: Record<string, AppData> = {};
