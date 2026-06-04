@@ -44,6 +44,9 @@ export default function PracticeScreen() {
   const navigation = useNavigation<Nav>();
   const { t, lang } = useI18n();
   const isJaUI = lang === 'ja';
+  // 母語(訳)側UIか＝学習対象(ネパール語)を「単語」列に出す。ja/en=母語UI(App A)。
+  // ne/bn UI(App B 等)は逆向き(対象語を単語列・母語を意味列)。
+  const glossUI = lang === 'ja' || lang === 'en';
   const { themeId: initialThemeId, levelId: initialLevelId, startIndex, mode } = useRoute<R>().params;
   const isGrammar = mode === 'grammar';
 
@@ -295,15 +298,16 @@ export default function PracticeScreen() {
               const ctxPos = matchedCtx?.pos;
               const unknown = !jaTrans;
 
-              // UI 言語で主表示／意味を反転
-              const primary = isJaUI ? word : (jaTrans || word);
-              const primaryRom = isJaUI ? neRom : '';
-              const meaning = isJaUI ? jaTrans : word;
+              // 母語(訳)UI(ja/en)=単語列に学習対象(ネパール語)、意味列に訳。
+              // それ以外(ne/bn)=逆向き。
+              const primary = glossUI ? word : (jaTrans || word);
+              const primaryRom = glossUI ? neRom : '';
+              const meaning = glossUI ? jaTrans : word;
               return (
                 <View key={i} style={[styles.wordRow, unknown && styles.wordRowUnknown]}>
                   <Text style={styles.wordNum}>{String(i + 1).padStart(2, '0')}</Text>
                   <View style={styles.wordContent}>
-                    <Text style={[isJaUI ? styles.wordDeva : styles.wordJa, ss(16)]}>{primary}</Text>
+                    <Text style={[glossUI ? styles.wordDeva : styles.wordJa, ss(16)]}>{primary}</Text>
                     {romaji && primaryRom ? <Text style={[styles.wordRom, ss(11)]}>{primaryRom}</Text> : null}
                   </View>
                   <View style={styles.wordMeaningCol}>

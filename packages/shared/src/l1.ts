@@ -32,6 +32,16 @@ export const L1_REGISTRY: Record<string, L1Config> = {
     code: 'bn',
     name: 'বাংলা',
   },
+  // 英語: App A(ネパール語学習)の英語UIで使用。表示名は "English"。
+  // ローマ字補助は対象言語=ネパール語(デーヴァナーガリー)のものを流用
+  // (英語話者もネパール文字を読めないため、発音補助が必要)。
+  en: {
+    code: 'en',
+    name: 'English',
+    romanizeWord: toRomaji,
+    romanizeSentence: sentenceToRomaji,
+    romanizeSentenceWithDict: sentenceToRomajiWithDict,
+  },
 };
 
 /** code に対応する L1 設定を返す。未知/未指定なら ne にフォールバック。 */
