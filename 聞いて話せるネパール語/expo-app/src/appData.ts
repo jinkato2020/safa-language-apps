@@ -19,6 +19,7 @@ import type {
   AppData, ThemeMeta, LevelMeta, Example, WordCategoryMeta, Word, GrammarThemeMeta,
   GrammarVocab, JpReading,
 } from '@safa/shared';
+import type { NeCore } from './pack/compose';
 
 const THEMES = themesJson as ThemeMeta[];
 const LEVELS = levelsJson as LevelMeta[];
@@ -32,9 +33,10 @@ const GRAMMAR_VOCAB = grammarVocabJson as GrammarVocab;
 const CONV_VOCAB = convVocabJson as GrammarVocab;
 const JP_READING = jpReadingJson as JpReading;
 
+// 日本語ユーザー向けの同梱 AppData (現行のまま=既存ユーザーに影響なし)。
 export const appData: AppData = {
   version: appJson.expo.version,
-  nativeLang: 'ne', // 学習者の母語/第2言語 (多言語化の足場。将来パック選択で切替)
+  nativeLang: 'ja',
   THEMES, LEVELS, EXAMPLES, WORD_CATEGORIES, WORDS,
   GRAMMAR_THEMES, GRAMMAR_EXAMPLES, VOCAB, GRAMMAR_VOCAB, CONV_VOCAB, JP_READING,
   // アプリ評価リンク。iosAppId は App Store の数値ID (公開後に判明)。
@@ -44,4 +46,23 @@ export const appData: AppData = {
   getExamples: (themeId, levelId) => EXAMPLES[`${themeId}-${levelId}`] ?? [],
   getWords: (categoryId) => WORDS[String(categoryId)] ?? [],
   getGrammarExamples: (themeId) => GRAMMAR_EXAMPLES[String(themeId)] ?? [],
+};
+
+// ── ネパール語=共通コア (en パックの composePack 用。jp体験には未使用) ──
+const pickNe = (m: Record<string, Example[]>): Record<string, string[]> =>
+  Object.fromEntries(Object.entries(m).map(([k, arr]) => [k, arr.map(e => e.ne)]));
+const pickWordNe = (m: Record<string, Word[]>): Record<string, string[]> =>
+  Object.fromEntries(Object.entries(m).map(([k, arr]) => [k, arr.map(w => w.ne)]));
+
+export const neCore: NeCore = {
+  themes: THEMES,
+  levels: LEVELS,
+  wordCategories: WORD_CATEGORIES,
+  grammarThemes: GRAMMAR_THEMES,
+  examplesNe: pickNe(EXAMPLES),
+  grammarNe: pickNe(GRAMMAR_EXAMPLES),
+  wordsNe: pickWordNe(WORDS),
+  jpReading: JP_READING,
+  nepaliAudio,
+  nepaliGrammarAudio,
 };

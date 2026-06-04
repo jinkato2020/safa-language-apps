@@ -1,6 +1,7 @@
 # ─── monorepo root ────────────────────────────────────────────────
-# 言語パックの音声「元mp3」(配信はzipのみ。元はbuild-bn-audio.mjsで再生成可)
+# 言語パックの音声「元mp3」(配信はzipのみ。元はbuild-*-audio.mjsで再生成可)
 packs/audio/
+packs-nepali/audio/
 # Node / npm
 node_modules/
 **/node_modules/
