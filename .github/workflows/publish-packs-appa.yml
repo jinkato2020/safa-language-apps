@@ -1,0 +1,62 @@
+name: Publish App A packs to Release
+
+# App A (聞いて話せるネパール語) の言語パックを GitHub Release (tag: packs-appa) に公開する。
+# 配信元を experiment/bangla ブランチの raw から Release 資産へ本番化する仕組み。
+# App A の母語(L1)パックは ja / en (フォルダ packs-nepali/)。
+#
+# 発火:
+#   - experiment/bangla の packs-nepali/** を push したとき (= パック更新で自動公開)
+#   - このワークフローファイルを変更したとき (初回公開・手動更新用)
+#   - 手動 (workflow_dispatch)
+#
+# 配信URL: https://github.com/<repo>/releases/download/packs-appa/<file>
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, experiment/bangla]
+    paths:
+      - 'packs-nepali/**'
+      - '.github/workflows/publish-packs-appa.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout packs (experiment/bangla)
+        uses: actions/checkout@v4
+        with:
+          ref: experiment/bangla
+
+      - name: Rewrite catalog asset URLs to Release base
+        run: |
+          node -e "
+          const fs=require('fs');
+          const REL='https://github.com/${{ github.repository }}/releases/download/packs-appa';
+          const c=JSON.parse(fs.readFileSync('packs-nepali/catalog.json','utf8'));
+          for(const p of c.packs){
+            if(p.url) p.url = REL + '/' + p.url.split('/').pop();
+            if(p.audioZip) p.audioZip = REL + '/' + p.audioZip.split('/').pop();
+          }
+          fs.writeFileSync('packs-nepali/catalog.json', JSON.stringify(c,null,2));
+          console.log('catalog rewritten to Release URLs');
+          for(const p of c.packs) console.log('  '+p.l1+': '+p.url+' / '+(p.audioZip||'-'));
+          "
+
+      - name: Publish to Release (packs-appa)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          # App A のパック資産 (catalog + ja/en overlay + ja/en audio。旧版も含めてアップロード)
+          ASSETS=$(ls packs-nepali/catalog.json packs-nepali/overlay-ja-*.json packs-nepali/overlay-en-*.json packs-nepali/audio-ja-*.zip packs-nepali/audio-en-*.zip)
+          echo "Uploading assets:"; echo "$ASSETS"
+          gh release delete packs-appa --yes --cleanup-tag 2>/dev/null || true
+          gh release create packs-appa $ASSETS \
+            --title "App A language packs" \
+            --notes "聞いて話せるネパール語 の母語パック (ja/en)。experiment/bangla から自動公開。" \
+            --target main \
+            --latest=false
