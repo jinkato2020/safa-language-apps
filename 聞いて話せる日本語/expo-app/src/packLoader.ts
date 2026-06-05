@@ -43,6 +43,7 @@ function toOverlay(json: any): L1Overlay {
     convVocab: json.convVocab,
     grammarVocab: json.grammarVocab,
     vocab: json.vocab,
+    vocabTokenize: json.vocabTokenize,
   };
 }
 

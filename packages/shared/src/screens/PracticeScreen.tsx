@@ -38,7 +38,7 @@ function SpeakerIcon({ size = 18 }: { size?: number }) {
 }
 
 export default function PracticeScreen() {
-  const { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, audio, VOCAB, GRAMMAR_VOCAB, CONV_VOCAB, JP_READING, nativeLang } = useAppData();
+  const { LEVELS, THEMES, GRAMMAR_THEMES, getExamples, getGrammarExamples, audio, VOCAB, GRAMMAR_VOCAB, CONV_VOCAB, JP_READING, nativeLang, vocabTokenize } = useAppData();
   const { nepaliAudio, japaneseAudio, nepaliGrammarAudio, japaneseGrammarAudio } = audio;
   const l1 = getL1(nativeLang);
   const navigation = useNavigation<Nav>();
@@ -272,7 +272,33 @@ export default function PracticeScreen() {
             日本語 UI: ネパール語 (デーヴァナーガリー) + ローマ字 / 意味=日本語
             ネパール語 UI: 日本語 (各 ne 単語の ja 訳) / 意味=ネパール語  */}
       {(() => {
-        const tokens = tokenize(ex.ne).filter(w => !isPunct(w));
+        // 文法: sentence_id = テーマ-例題 / 会話: テーマ-レベル-例題
+        const sentenceId = isGrammar
+          ? `${themeId}-${index + 1}`
+          : `${themeId}-${levelId}-${index + 1}`;
+        const ctxDict = isGrammar ? GRAMMAR_VOCAB : CONV_VOCAB;
+        type Item = { word: string; jaTrans: string; rom: string; pos?: string | null; note?: string | null };
+        let items: Item[];
+        if (vocabTokenize === 'jp') {
+          // 日本語(分かち書きなし): 空白分割は使えないため、辞書から この文ID を含む語を集め、
+          // 日本語文中の出現位置順に並べる (App B 英語パック=学習対象の日本語を分解)。
+          const arr: (Item & { at: number })[] = [];
+          for (const [w, e] of Object.entries(ctxDict ?? {})) {
+            const c = e.contexts?.find(cc => cc.sentence_id === sentenceId);
+            if (!c) continue;
+            arr.push({ word: w, jaTrans: c.ja || '', rom: e.rom || '', pos: c.pos, note: c.note, at: ex.jp.indexOf(w) });
+          }
+          arr.sort((a, b) => (a.at < 0 ? 1e9 : a.at) - (b.at < 0 ? 1e9 : b.at));
+          items = arr;
+        } else {
+          // 既定: L1文(ex.ne)を空白分割。文脈依存辞書 → なければ既存 VOCAB へフォールバック。
+          items = tokenize(ex.ne).filter(w => !isPunct(w)).map(word => {
+            const gctxEntry = ctxDict?.[word];
+            const matchedCtx = gctxEntry?.contexts?.find(c => c.sentence_id === sentenceId) ?? gctxEntry?.contexts?.[0];
+            const fallback = VOCAB[word] ?? {};
+            return { word, jaTrans: matchedCtx?.ja || fallback.ja || '', rom: gctxEntry?.rom || fallback.rom || '', pos: matchedCtx?.pos, note: matchedCtx?.note };
+          });
+        }
         return (
           <View style={styles.wordsSection}>
             <View style={styles.wordHeader}>
@@ -280,29 +306,12 @@ export default function PracticeScreen() {
               <Text style={styles.wordHeaderLabel}>{t('practice.wordsHeader')}</Text>
               <Text style={styles.wordHeaderLabel}>{t('practice.meaningHeader')}</Text>
             </View>
-            {tokens.map((word, i) => {
-              // 文脈依存辞書 → なければ既存 VOCAB へフォールバック
-              // 文法: sentence_id = テーマ-例題 / 会話: テーマ-レベル-例題
-              const sentenceId = isGrammar
-                ? `${themeId}-${index + 1}`
-                : `${themeId}-${levelId}-${index + 1}`;
-              const ctxDict = isGrammar ? GRAMMAR_VOCAB : CONV_VOCAB;
-              const gctxEntry = ctxDict?.[word];
-              const matchedCtx = gctxEntry?.contexts?.find(c => c.sentence_id === sentenceId)
-                              ?? gctxEntry?.contexts?.[0];
-
-              const fallback = VOCAB[word] ?? {};
-              const jaTrans = matchedCtx?.ja || fallback.ja || '';
-              const neRom = gctxEntry?.rom || fallback.rom || '';
-              const ctxNote = matchedCtx?.note;
-              const ctxPos = matchedCtx?.pos;
-              const unknown = !jaTrans;
-
-              // 母語(訳)UI(ja/en)=単語列に学習対象(ネパール語)、意味列に訳。
-              // それ以外(ne/bn)=逆向き。
-              const primary = glossUI ? word : (jaTrans || word);
-              const primaryRom = glossUI ? neRom : '';
-              const meaning = glossUI ? jaTrans : word;
+            {items.map((it, i) => {
+              const unknown = !it.jaTrans;
+              // 母語(訳)UI(ja/en)=単語列に学習対象、意味列に訳。それ以外(ne/bn)=逆向き。
+              const primary = glossUI ? it.word : (it.jaTrans || it.word);
+              const primaryRom = glossUI ? it.rom : '';
+              const meaning = glossUI ? it.jaTrans : it.word;
               return (
                 <View key={i} style={[styles.wordRow, unknown && styles.wordRowUnknown]}>
                   <Text style={styles.wordNum}>{String(i + 1).padStart(2, '0')}</Text>
@@ -314,9 +323,8 @@ export default function PracticeScreen() {
                     <Text style={[styles.wordMeaning, unknown && styles.wordMeaningDim, ss(16)]}>
                       {meaning || t('practice.noDictionary')}
                     </Text>
-                    {/* 文脈辞書がある場合 品詞・解説を補足表示 (文法・会話とも) */}
-                    {ctxPos ? <Text style={[styles.wordCtxPos, ss(10)]}>{ctxPos}</Text> : null}
-                    {ctxNote ? <Text style={[styles.wordCtxNote, ss(10)]}>{ctxNote}</Text> : null}
+                    {it.pos ? <Text style={[styles.wordCtxPos, ss(10)]}>{it.pos}</Text> : null}
+                    {it.note ? <Text style={[styles.wordCtxNote, ss(10)]}>{it.note}</Text> : null}
                   </View>
                 </View>
               );

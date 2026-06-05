@@ -71,6 +71,8 @@ export type AppData = {
   CONV_VOCAB?: GrammarVocab;
   /** 日本語文の読み補助 (かな+ローマ字)。聞き流しのネパール語UI時に使用。Claude API 生成 */
   JP_READING?: JpReading;
+  /** 単語分解の対象。既定=L1文(ex.ne)を分解し辞書もL1語キー。'jp'=日本語文(ex.jp)を分解し辞書は日本語語キー(App B 英語パック=学習対象の日本語を分解)。 */
+  vocabTokenize?: 'jp';
   /** アプリ評価リンク用のストア情報 (アプリ側で提供)。iosAppId が無ければ iOS では非表示。 */
   review?: { iosAppId?: string | null; androidPackage?: string | null };
   audio: AudioBundle;

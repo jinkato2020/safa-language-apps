@@ -17,6 +17,7 @@ import {
 import ja from './src/i18n/ja.json';
 import ne from './src/i18n/ne.json';
 import bn from './src/i18n/bn.json';
+import en from './src/i18n/en.json';
 import { bundledPack, loadPack } from './src/packLoader';
 
 const splashSource = require('./assets/safa-splash.mp4');
@@ -24,13 +25,14 @@ const headerIconSource = require('./assets/icon.png');
 
 // L1(母語=パック)になり得る言語。ja は学習対象=共通コアなのでパックは無い。
 // UI言語が ja 等の場合はパックを ne にフォールバック。
-const PACK_LANGS = ['ne', 'bn'];
+const PACK_LANGS = ['ne', 'bn', 'en'];
 const toPackLang = (lang: string) => (PACK_LANGS.includes(lang) ? lang : 'ne');
 
 // 初回起動の母語選択。各L1の自言語表記で提示する。
 const LANG_OPTIONS = [
   { code: 'ne', native: 'नेपाली', sub: 'Nepali' },
   { code: 'bn', native: 'বাংলা', sub: 'Bangla' },
+  { code: 'en', native: 'English', sub: 'English' },
 ];
 // 母語を一度でも選んだかのフラグ (i18n の lang とは別管理)。
 const L1_CHOSEN_KEY = '@japanese_app/l1_chosen_v1';
@@ -39,6 +41,7 @@ const L1_CHOSEN_KEY = '@japanese_app/l1_chosen_v1';
 const DL_TEXT: Record<string, { dl: string; prep: string; fail: string; retry: string }> = {
   ne: { dl: 'डाउनलोड हुँदैछ', prep: 'तयार पारिँदैछ', fail: 'डाउनलोड असफल भयो', retry: 'पुनः प्रयास गर्नुहोस्' },
   bn: { dl: 'ডাউনলোড হচ্ছে', prep: 'প্রস্তুত হচ্ছে', fail: 'ডাউনলোড ব্যর্থ হয়েছে', retry: 'আবার চেষ্টা করুন' },
+  en: { dl: 'Downloading', prep: 'Preparing', fail: 'Download failed', retry: 'Retry' },
   ja: { dl: 'ダウンロード中', prep: '準備中', fail: 'ダウンロードに失敗しました', retry: '再試行' },
 };
 
@@ -151,7 +154,7 @@ function FirstRunGate({ children }: { children: ReactNode }) {
 export default function App() {
   return (
     <I18nProvider
-      translations={{ ja, ne, bn }}
+      translations={{ ja, ne, bn, en }}
       fallbackLang="ne"
       storageKey="@japanese_app/lang_v1"
     >

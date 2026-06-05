@@ -33,6 +33,7 @@ export interface L1Overlay {
   convVocab?: GrammarVocab;
   l1Audio?: Record<string, number | string>;         // → AudioBundle.nepaliAudio (L1音声。DL版はfile:// URI)
   l1GrammarAudio?: Record<string, number | string>;  // → AudioBundle.nepaliGrammarAudio
+  vocabTokenize?: 'jp';                               // 'jp'=日本語文を分解(辞書も日本語語キー)。英語パック用
 }
 
 export interface ComposeOptions {
@@ -81,6 +82,7 @@ export function composePack(core: JaCore, overlay: L1Overlay, opts: ComposeOptio
     GRAMMAR_VOCAB: overlay.grammarVocab,
     CONV_VOCAB: overlay.convVocab,
     JP_READING: core.jpReading,
+    vocabTokenize: overlay.vocabTokenize,
     review: opts.review,
     audio: {
       nepaliAudio: overlay.l1Audio ?? EMPTY,
