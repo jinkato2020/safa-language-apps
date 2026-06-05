@@ -52,8 +52,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -e
-          # App B のパック資産 (catalog + ne/bn overlay + ne/bn audio。旧版も含めてアップロード)
-          ASSETS=$(ls packs/catalog.json packs/overlay-ne-*.json packs/overlay-bn-*.json packs/audio-ne-*.zip packs/audio-bn-*.zip)
+          # App B のパック資産 (catalog + 全L1の overlay/audio。ne/bn/en/将来言語を全てアップロード)
+          ASSETS=$(ls packs/catalog.json packs/overlay-*.json packs/audio-*.zip)
           echo "Uploading assets:"; echo "$ASSETS"
           # 既存 Release/タグを消して作り直す (資産URLは固定タグなので不変)
           gh release delete packs-appb --yes --cleanup-tag 2>/dev/null || true
