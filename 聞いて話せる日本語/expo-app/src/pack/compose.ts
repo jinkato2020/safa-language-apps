@@ -18,6 +18,7 @@ export interface JaCore {
   grammarJp: Record<string, string[]>;   // "theme" → 日本語文(位置順)
   wordsJa: Record<string, string[]>;     // "category" → 日本語語(位置順)
   jpReading?: JpReading;                 // 日本語文 → かな/ローマ字 (jp依存・共通)
+  wordsReading?: JpReading;              // 日本語語 → かな/ローマ字 (単語モードのふりがな用)
   japaneseAudio: Record<string, number>;
   japaneseGrammarAudio: Record<string, number>;
 }
@@ -82,6 +83,7 @@ export function composePack(core: JaCore, overlay: L1Overlay, opts: ComposeOptio
     GRAMMAR_VOCAB: overlay.grammarVocab,
     CONV_VOCAB: overlay.convVocab,
     JP_READING: core.jpReading,
+    WORDS_READING: core.wordsReading,
     vocabTokenize: overlay.vocabTokenize,
     review: opts.review,
     audio: {

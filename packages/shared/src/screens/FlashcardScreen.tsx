@@ -38,7 +38,7 @@ function ShuffleIcon({ active }: { active: boolean }) {
 }
 
 export default function FlashcardScreen() {
-  const { WORD_CATEGORIES, getWords, nativeLang } = useAppData();
+  const { WORD_CATEGORIES, getWords, nativeLang, WORDS_READING } = useAppData();
   const l1 = getL1(nativeLang);
   const { t } = useI18n();
   const { categoryId: initialCategoryId, direction } = useRoute<R>().params;
@@ -130,18 +130,26 @@ export default function FlashcardScreen() {
         {({ pressed }) => (
           <Animated.View style={[styles.card, pressed && styles.cardPressed, animatedStyle]}>
             <Text style={styles.label}>{flipped ? backTag : frontTag}</Text>
-            <Text style={[
-              frontIsNe && !flipped ? styles.textNe : (frontIsNe && flipped ? styles.textJa : (!frontIsNe && flipped ? styles.textNe : styles.textJa)),
-              (() => {
-                const isNeShown = (frontIsNe && !flipped) || (!frontIsNe && flipped);
-                return ss(isNeShown ? 40 : 32, isNeShown ? 56 : 44);
-              })(),
-            ]}>
-              {flipped ? backText : frontText}
-            </Text>
-            {romaji && l1.romanizeWord && ((frontIsNe && !flipped) || (!frontIsNe && flipped)) && (
-              <Text style={[styles.cardRom, ss(15)]}>{l1.romanizeWord(word.ne)}</Text>
-            )}
+            {(() => {
+              const isNeShown = (frontIsNe && !flipped) || (!frontIsNe && flipped);
+              // 学習対象=日本語語が表示されている面 (App B)。その語の読みがあればふりがな+ローマ字。
+              const jaReading = !isNeShown ? WORDS_READING?.[word.ja] : undefined;
+              return (
+                <>
+                  {/* ふりがな (漢字の上・かな) */}
+                  {jaReading?.kana ? <Text style={[styles.furigana, ss(15)]}>{jaReading.kana}</Text> : null}
+                  <Text style={[isNeShown ? styles.textNe : styles.textJa, ss(isNeShown ? 40 : 32, isNeShown ? 56 : 44)]}>
+                    {flipped ? backText : frontText}
+                  </Text>
+                  {/* ローマ字: 日本語語=単語読みのローマ字 / それ以外(App A)=L1ローマ字補助 */}
+                  {jaReading ? (
+                    <Text style={[styles.cardRom, ss(15)]}>{jaReading.romaji}</Text>
+                  ) : (!WORDS_READING && romaji && l1.romanizeWord && isNeShown ? (
+                    <Text style={[styles.cardRom, ss(15)]}>{l1.romanizeWord(word.ne)}</Text>
+                  ) : null)}
+                </>
+              );
+            })()}
             <Text style={styles.hint}>{t('flashcard.tapToFlip', { action: flipped ? t('flashcard.unflip') : t('flashcard.flip') })}</Text>
           </Animated.View>
         )}
@@ -178,6 +186,7 @@ const styles = StyleSheet.create({
   label: { fontFamily: 'Courier', fontSize: 11, color: colors.inkFaint, letterSpacing: 2, marginBottom: spacing.md },
   textNe: { fontSize: 40, fontWeight: '700', color: colors.ink, textAlign: 'center', lineHeight: 56 },
   textJa: { fontSize: 32, fontWeight: '700', color: colors.ink, textAlign: 'center', lineHeight: 44 },
+  furigana: { fontSize: 15, color: colors.inkMute, textAlign: 'center', marginBottom: 2, letterSpacing: 1 },
   hint: { fontFamily: 'Courier', fontSize: 10, color: colors.inkFaint, letterSpacing: 1.5, marginTop: spacing.md },
   cardRom: { fontFamily: 'Courier', fontSize: 15, color: colors.inkQuiet, fontStyle: 'italic', marginTop: spacing.md, textAlign: 'center' },
   navRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, marginBottom: spacing.lg },

@@ -10,6 +10,7 @@ import wordsJson from '../data/words.json';
 import grammarThemesJson from '../data/grammarThemes.json';
 import grammarExamplesJson from '../data/grammarExamples.json';
 import jpReadingJson from '../data/jp-reading.json';
+import wordsReadingJson from '../data/words-reading.json';
 import { japaneseAudio, japaneseGrammarAudio } from '../data/audioMap';
 import type {
   ThemeMeta, LevelMeta, Example, WordCategoryMeta, Word, GrammarThemeMeta, JpReading,
@@ -24,6 +25,7 @@ const WORDS = wordsJson as Record<string, Word[]>;
 const GRAMMAR_THEMES = grammarThemesJson as GrammarThemeMeta[];
 const GRAMMAR_EXAMPLES = grammarExamplesJson as Record<string, Example[]>;
 const JP_READING = jpReadingJson as JpReading;
+const WORDS_READING = wordsReadingJson as JpReading;
 
 // 結合データ {jp, ne} の jp側 / ja語 を取り出すヘルパー (位置順を維持)
 const pickJp = (m: Record<string, Example[]>): Record<string, string[]> =>
@@ -41,6 +43,7 @@ export const jaCore: JaCore = {
   grammarJp: pickJp(GRAMMAR_EXAMPLES),
   wordsJa: pickWordJa(WORDS),
   jpReading: JP_READING,
+  wordsReading: WORDS_READING,
   japaneseAudio,
   japaneseGrammarAudio,
 };

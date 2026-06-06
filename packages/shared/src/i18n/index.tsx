@@ -68,14 +68,17 @@ type ProviderProps = {
   translations: Record<Lang, Translations>;
   /** どの言語にも見つからない場合のフォールバック (アプリのプライマリ言語) */
   fallbackLang: Lang;
+  /** ユーザーが選択/自動検出できる言語 (設定UIの対象)。未指定なら translations 全部。
+   *  学習対象言語(例: App B の ja)を除外するのに使う。translations にはフォールバック用に残せる。 */
+  selectableLangs?: Lang[];
   /** AsyncStorage に保存するキー (アプリごとに別。デフォルトはシリーズ共通) */
   storageKey?: string;
 };
 
-export function I18nProvider({ children, translations, fallbackLang, storageKey = STORAGE_KEY }: ProviderProps) {
-  const availableLangs = Object.keys(translations);
+export function I18nProvider({ children, translations, fallbackLang, selectableLangs, storageKey = STORAGE_KEY }: ProviderProps) {
+  const selectable = selectableLangs ?? Object.keys(translations);
   const [lang, setLangState] = useState<Lang>(() => {
-    const detected = detectSystemLang(availableLangs);
+    const detected = detectSystemLang(selectable);
     return detected || fallbackLang;
   });
   const [loaded, setLoaded] = useState(false);
@@ -85,7 +88,7 @@ export function I18nProvider({ children, translations, fallbackLang, storageKey 
     (async () => {
       try {
         const raw = await AsyncStorage.getItem(storageKey);
-        if (raw && availableLangs.includes(raw)) {
+        if (raw && selectable.includes(raw)) {
           setLangState(raw);
         }
       } catch {}
@@ -116,7 +119,7 @@ export function I18nProvider({ children, translations, fallbackLang, storageKey 
   if (!loaded) return null;
 
   return (
-    <I18nCtx.Provider value={{ lang, setLang, t, langs: availableLangs }}>
+    <I18nCtx.Provider value={{ lang, setLang, t, langs: selectable }}>
       {children}
     </I18nCtx.Provider>
   );

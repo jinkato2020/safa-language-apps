@@ -156,6 +156,7 @@ export default function App() {
     <I18nProvider
       translations={{ ja, ne, bn, en }}
       fallbackLang="ne"
+      selectableLangs={['ne', 'bn', 'en']}
       storageKey="@japanese_app/lang_v1"
     >
       <SettingsProvider

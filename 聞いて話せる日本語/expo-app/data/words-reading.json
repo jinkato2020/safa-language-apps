@@ -1,0 +1,3854 @@
+{
+  "上": {
+    "kana": "うえ",
+    "romaji": "ue"
+  },
+  "下": {
+    "kana": "した",
+    "romaji": "shita"
+  },
+  "前": {
+    "kana": "まえ",
+    "romaji": "mae"
+  },
+  "後ろ": {
+    "kana": "うしろ",
+    "romaji": "ushiro"
+  },
+  "右": {
+    "kana": "みぎ",
+    "romaji": "migi"
+  },
+  "左": {
+    "kana": "ひだり",
+    "romaji": "hidari"
+  },
+  "中": {
+    "kana": "なか",
+    "romaji": "naka"
+  },
+  "外": {
+    "kana": "そと",
+    "romaji": "soto"
+  },
+  "横": {
+    "kana": "よこ",
+    "romaji": "yoko"
+  },
+  "真ん中": {
+    "kana": "まんなか",
+    "romaji": "mannaka"
+  },
+  "東": {
+    "kana": "ひがし",
+    "romaji": "higashi"
+  },
+  "西": {
+    "kana": "にし",
+    "romaji": "nishi"
+  },
+  "南": {
+    "kana": "みなみ",
+    "romaji": "minami"
+  },
+  "北": {
+    "kana": "きた",
+    "romaji": "kita"
+  },
+  "近く": {
+    "kana": "ちかく",
+    "romaji": "chikaku"
+  },
+  "遠く": {
+    "kana": "とおく",
+    "romaji": "tōku"
+  },
+  "ここ": {
+    "kana": "ここ",
+    "romaji": "koko"
+  },
+  "そこ": {
+    "kana": "そこ",
+    "romaji": "soko"
+  },
+  "まっすぐ": {
+    "kana": "まっすぐ",
+    "romaji": "massugu"
+  },
+  "周り": {
+    "kana": "まわり",
+    "romaji": "mawari"
+  },
+  "今": {
+    "kana": "いま",
+    "romaji": "ima"
+  },
+  "今日": {
+    "kana": "きょう",
+    "romaji": "kyō"
+  },
+  "昨日": {
+    "kana": "きのう",
+    "romaji": "kinō"
+  },
+  "明日": {
+    "kana": "あした",
+    "romaji": "ashita"
+  },
+  "一昨日": {
+    "kana": "おととい",
+    "romaji": "ototoi"
+  },
+  "明後日": {
+    "kana": "あさって",
+    "romaji": "asatte"
+  },
+  "朝": {
+    "kana": "あさ",
+    "romaji": "asa"
+  },
+  "昼": {
+    "kana": "ひる",
+    "romaji": "hiru"
+  },
+  "夕方": {
+    "kana": "ゆうがた",
+    "romaji": "yūgata"
+  },
+  "夜": {
+    "kana": "よる",
+    "romaji": "yoru"
+  },
+  "正午": {
+    "kana": "しょうご",
+    "romaji": "shōgo"
+  },
+  "真夜中": {
+    "kana": "まよなか",
+    "romaji": "mayonaka"
+  },
+  "時間": {
+    "kana": "じかん",
+    "romaji": "jikan"
+  },
+  "分": {
+    "kana": "ふん",
+    "romaji": "fun"
+  },
+  "時(時刻)": {
+    "kana": "とき",
+    "romaji": "toki"
+  },
+  "週": {
+    "kana": "しゅう",
+    "romaji": "shū"
+  },
+  "月(暦)": {
+    "kana": "つき",
+    "romaji": "tsuki"
+  },
+  "年": {
+    "kana": "とし",
+    "romaji": "toshi"
+  },
+  "今週": {
+    "kana": "こんしゅう",
+    "romaji": "konshū"
+  },
+  "来週": {
+    "kana": "らいしゅう",
+    "romaji": "raishū"
+  },
+  "とても": {
+    "kana": "とても",
+    "romaji": "totemo"
+  },
+  "少し": {
+    "kana": "すこし",
+    "romaji": "sukoshi"
+  },
+  "非常に": {
+    "kana": "ひじょうに",
+    "romaji": "hijōni"
+  },
+  "かなり": {
+    "kana": "かなり",
+    "romaji": "kanari"
+  },
+  "ほとんど": {
+    "kana": "ほとんど",
+    "romaji": "hotondo"
+  },
+  "全然": {
+    "kana": "ぜんぜん",
+    "romaji": "zenzen"
+  },
+  "いつも": {
+    "kana": "いつも",
+    "romaji": "itsumo"
+  },
+  "時々": {
+    "kana": "ときどき",
+    "romaji": "tokidoki"
+  },
+  "たまに": {
+    "kana": "たまに",
+    "romaji": "tamani"
+  },
+  "普通": {
+    "kana": "ふつう",
+    "romaji": "futsū"
+  },
+  "まだ": {
+    "kana": "まだ",
+    "romaji": "mada"
+  },
+  "もう": {
+    "kana": "もう",
+    "romaji": "mō"
+  },
+  "すぐに": {
+    "kana": "すぐに",
+    "romaji": "suguni"
+  },
+  "再び": {
+    "kana": "ふたたび",
+    "romaji": "futatabi"
+  },
+  "きっと": {
+    "kana": "きっと",
+    "romaji": "kitto"
+  },
+  "多分": {
+    "kana": "たぶん",
+    "romaji": "tabun"
+  },
+  "本当に": {
+    "kana": "ほんとうに",
+    "romaji": "hontōni"
+  },
+  "ゆっくり": {
+    "kana": "ゆっくり",
+    "romaji": "yukkuri"
+  },
+  "早く": {
+    "kana": "はやく",
+    "romaji": "hayaku"
+  },
+  "一緒に": {
+    "kana": "いっしょに",
+    "romaji": "isshoni"
+  },
+  "熱い": {
+    "kana": "あつい",
+    "romaji": "atsui"
+  },
+  "冷たい": {
+    "kana": "つめたい",
+    "romaji": "tsumetai"
+  },
+  "温かい": {
+    "kana": "あたたかい",
+    "romaji": "atatakai"
+  },
+  "硬い": {
+    "kana": "かたい",
+    "romaji": "katai"
+  },
+  "柔らかい": {
+    "kana": "やわらかい",
+    "romaji": "yawarakai"
+  },
+  "滑らか": {
+    "kana": "なめらか",
+    "romaji": "nameraka"
+  },
+  "ざらざらした": {
+    "kana": "ざらざらした",
+    "romaji": "zarazarashita"
+  },
+  "濡れた": {
+    "kana": "ぬれた",
+    "romaji": "nureta"
+  },
+  "乾いた": {
+    "kana": "かわいた",
+    "romaji": "kawaita"
+  },
+  "重い": {
+    "kana": "おもい",
+    "romaji": "omoi"
+  },
+  "軽い": {
+    "kana": "かるい",
+    "romaji": "karui"
+  },
+  "痛い": {
+    "kana": "いたい",
+    "romaji": "itai"
+  },
+  "かゆい": {
+    "kana": "かゆい",
+    "romaji": "kayui"
+  },
+  "甘い": {
+    "kana": "あまい",
+    "romaji": "amai"
+  },
+  "辛い": {
+    "kana": "からい",
+    "romaji": "karai"
+  },
+  "酸っぱい": {
+    "kana": "すっぱい",
+    "romaji": "suppai"
+  },
+  "苦い": {
+    "kana": "にがい",
+    "romaji": "nigai"
+  },
+  "塩辛い": {
+    "kana": "しおからい",
+    "romaji": "shiokarai"
+  },
+  "臭い": {
+    "kana": "くさい",
+    "romaji": "kusai"
+  },
+  "いい匂い": {
+    "kana": "いいにおい",
+    "romaji": "ii nioi"
+  },
+  "良い": {
+    "kana": "よい",
+    "romaji": "yoi"
+  },
+  "悪い": {
+    "kana": "わるい",
+    "romaji": "warui"
+  },
+  "きれい": {
+    "kana": "きれい",
+    "romaji": "kirei"
+  },
+  "汚い": {
+    "kana": "きたない",
+    "romaji": "kitanai"
+  },
+  "美しい": {
+    "kana": "うつくしい",
+    "romaji": "utsukushii"
+  },
+  "醜い": {
+    "kana": "みにくい",
+    "romaji": "minikui"
+  },
+  "新しい": {
+    "kana": "あたらしい",
+    "romaji": "atarashii"
+  },
+  "古い": {
+    "kana": "ふるい",
+    "romaji": "furui"
+  },
+  "簡単": {
+    "kana": "かんたん",
+    "romaji": "kantan"
+  },
+  "難しい": {
+    "kana": "むずかしい",
+    "romaji": "muzukashii"
+  },
+  "便利": {
+    "kana": "べんり",
+    "romaji": "benri"
+  },
+  "不便": {
+    "kana": "ふべん",
+    "romaji": "fuben"
+  },
+  "正しい": {
+    "kana": "ただしい",
+    "romaji": "tadashii"
+  },
+  "間違い": {
+    "kana": "まちがい",
+    "romaji": "machigai"
+  },
+  "安全": {
+    "kana": "あんぜん",
+    "romaji": "anzen"
+  },
+  "危険": {
+    "kana": "きけん",
+    "romaji": "kiken"
+  },
+  "特別": {
+    "kana": "とくべつ",
+    "romaji": "tokubetsu"
+  },
+  "重要": {
+    "kana": "じゅうよう",
+    "romaji": "jūyō"
+  },
+  "必要": {
+    "kana": "ひつよう",
+    "romaji": "hitsuyō"
+  },
+  "親切": {
+    "kana": "しんせつ",
+    "romaji": "shinsetsu"
+  },
+  "優しい": {
+    "kana": "やさしい",
+    "romaji": "yasashii"
+  },
+  "厳しい": {
+    "kana": "きびしい",
+    "romaji": "kibishii"
+  },
+  "真面目": {
+    "kana": "まじめ",
+    "romaji": "majime"
+  },
+  "正直": {
+    "kana": "しょうじき",
+    "romaji": "shōjiki"
+  },
+  "頑固": {
+    "kana": "がんこ",
+    "romaji": "ganko"
+  },
+  "臆病": {
+    "kana": "おくびょう",
+    "romaji": "okubyō"
+  },
+  "勇敢": {
+    "kana": "ゆうかん",
+    "romaji": "yūkan"
+  },
+  "賢い": {
+    "kana": "かしこい",
+    "romaji": "kashikoi"
+  },
+  "愚か": {
+    "kana": "おろか",
+    "romaji": "oroka"
+  },
+  "面白い": {
+    "kana": "おもしろい",
+    "romaji": "omoshiroi"
+  },
+  "退屈": {
+    "kana": "たいくつ",
+    "romaji": "taikutsu"
+  },
+  "元気": {
+    "kana": "げんき",
+    "romaji": "genki"
+  },
+  "静か": {
+    "kana": "しずか",
+    "romaji": "shizuka"
+  },
+  "騒がしい": {
+    "kana": "さわがしい",
+    "romaji": "sawagashii"
+  },
+  "恥ずかしがり屋": {
+    "kana": "はずかしがりや",
+    "romaji": "hazukashigariya"
+  },
+  "活発": {
+    "kana": "かっぱつ",
+    "romaji": "kappatsu"
+  },
+  "怠惰": {
+    "kana": "たいだ",
+    "romaji": "taida"
+  },
+  "寛大": {
+    "kana": "かんだい",
+    "romaji": "kandai"
+  },
+  "けち": {
+    "kana": "けち",
+    "romaji": "kechi"
+  },
+  "行く": {
+    "kana": "いく",
+    "romaji": "iku"
+  },
+  "来る": {
+    "kana": "くる",
+    "romaji": "kuru"
+  },
+  "歩く": {
+    "kana": "あるく",
+    "romaji": "aruku"
+  },
+  "走る": {
+    "kana": "はしる",
+    "romaji": "hashiru"
+  },
+  "止まる": {
+    "kana": "とまる",
+    "romaji": "tomaru"
+  },
+  "座る": {
+    "kana": "すわる",
+    "romaji": "suwaru"
+  },
+  "立つ": {
+    "kana": "たつ",
+    "romaji": "tatsu"
+  },
+  "寝る": {
+    "kana": "ねる",
+    "romaji": "neru"
+  },
+  "起きる": {
+    "kana": "おきる",
+    "romaji": "okiru"
+  },
+  "登る": {
+    "kana": "のぼる",
+    "romaji": "noboru"
+  },
+  "降りる": {
+    "kana": "おりる",
+    "romaji": "oriru"
+  },
+  "入る": {
+    "kana": "はいる",
+    "romaji": "hairu"
+  },
+  "出る": {
+    "kana": "でる",
+    "romaji": "deru"
+  },
+  "戻る": {
+    "kana": "もどる",
+    "romaji": "modoru"
+  },
+  "進む": {
+    "kana": "すすむ",
+    "romaji": "susumu"
+  },
+  "持つ": {
+    "kana": "もつ",
+    "romaji": "motsu"
+  },
+  "置く": {
+    "kana": "おく",
+    "romaji": "oku"
+  },
+  "投げる": {
+    "kana": "なげる",
+    "romaji": "nageru"
+  },
+  "押す": {
+    "kana": "おす",
+    "romaji": "osu"
+  },
+  "引く": {
+    "kana": "ひく",
+    "romaji": "hiku"
+  },
+  "食べる": {
+    "kana": "たべる",
+    "romaji": "taberu"
+  },
+  "飲む": {
+    "kana": "のむ",
+    "romaji": "nomu"
+  },
+  "作る": {
+    "kana": "つくる",
+    "romaji": "tsukuru"
+  },
+  "料理する": {
+    "kana": "りょうりする",
+    "romaji": "ryōri suru"
+  },
+  "洗う": {
+    "kana": "あらう",
+    "romaji": "arau"
+  },
+  "掃除する": {
+    "kana": "そうじする",
+    "romaji": "sōji suru"
+  },
+  "着る": {
+    "kana": "きる",
+    "romaji": "kiru"
+  },
+  "脱ぐ": {
+    "kana": "ぬぐ",
+    "romaji": "nugu"
+  },
+  "買う": {
+    "kana": "かう",
+    "romaji": "kau"
+  },
+  "売る": {
+    "kana": "うる",
+    "romaji": "uru"
+  },
+  "払う": {
+    "kana": "はらう",
+    "romaji": "harau"
+  },
+  "使う": {
+    "kana": "つかう",
+    "romaji": "tsukau"
+  },
+  "開ける": {
+    "kana": "あける",
+    "romaji": "akeru"
+  },
+  "閉める": {
+    "kana": "しめる",
+    "romaji": "shimeru"
+  },
+  "始める": {
+    "kana": "はじめる",
+    "romaji": "hajimeru"
+  },
+  "終える": {
+    "kana": "おえる",
+    "romaji": "oeru"
+  },
+  "休む": {
+    "kana": "やすむ",
+    "romaji": "yasumu"
+  },
+  "働く": {
+    "kana": "はたらく",
+    "romaji": "hataraku"
+  },
+  "住む": {
+    "kana": "すむ",
+    "romaji": "sumu"
+  },
+  "遊ぶ": {
+    "kana": "あそぶ",
+    "romaji": "asobu"
+  },
+  "話す": {
+    "kana": "はなす",
+    "romaji": "hanasu"
+  },
+  "言う": {
+    "kana": "いう",
+    "romaji": "iu"
+  },
+  "聞く": {
+    "kana": "きく",
+    "romaji": "kiku"
+  },
+  "尋ねる": {
+    "kana": "たずねる",
+    "romaji": "tazuneru"
+  },
+  "答える": {
+    "kana": "こたえる",
+    "romaji": "kotaeru"
+  },
+  "読む": {
+    "kana": "よむ",
+    "romaji": "yomu"
+  },
+  "書く": {
+    "kana": "かく",
+    "romaji": "kaku"
+  },
+  "見る": {
+    "kana": "みる",
+    "romaji": "miru"
+  },
+  "会う": {
+    "kana": "あう",
+    "romaji": "au"
+  },
+  "教える": {
+    "kana": "おしえる",
+    "romaji": "oshieru"
+  },
+  "学ぶ": {
+    "kana": "まなぶ",
+    "romaji": "manabu"
+  },
+  "呼ぶ": {
+    "kana": "よぶ",
+    "romaji": "yobu"
+  },
+  "伝える": {
+    "kana": "つたえる",
+    "romaji": "tsutaeru"
+  },
+  "説明する": {
+    "kana": "せつめいする",
+    "romaji": "setsumei suru"
+  },
+  "電話する": {
+    "kana": "でんわする",
+    "romaji": "denwa suru"
+  },
+  "挨拶する": {
+    "kana": "あいさつする",
+    "romaji": "aisatsu suru"
+  },
+  "お礼を言う": {
+    "kana": "おれいをいう",
+    "romaji": "orei o iu"
+  },
+  "謝る": {
+    "kana": "あやまる",
+    "romaji": "ayamaru"
+  },
+  "笑う": {
+    "kana": "わらう",
+    "romaji": "warau"
+  },
+  "泣く": {
+    "kana": "なく",
+    "romaji": "naku"
+  },
+  "考える": {
+    "kana": "かんがえる",
+    "romaji": "kangaeru"
+  },
+  "思う": {
+    "kana": "おもう",
+    "romaji": "omou"
+  },
+  "知る": {
+    "kana": "しる",
+    "romaji": "shiru"
+  },
+  "理解する": {
+    "kana": "りかいする",
+    "romaji": "rikai suru"
+  },
+  "覚える": {
+    "kana": "おぼえる",
+    "romaji": "oboeru"
+  },
+  "忘れる": {
+    "kana": "わすれる",
+    "romaji": "wasureru"
+  },
+  "信じる": {
+    "kana": "しんじる",
+    "romaji": "shinjiru"
+  },
+  "疑う": {
+    "kana": "うたがう",
+    "romaji": "utagau"
+  },
+  "期待する": {
+    "kana": "きたいする",
+    "romaji": "kitai suru"
+  },
+  "心配する": {
+    "kana": "しんぱいする",
+    "romaji": "shinpai suru"
+  },
+  "驚く": {
+    "kana": "おどろく",
+    "romaji": "odoroku"
+  },
+  "怒る": {
+    "kana": "おこる",
+    "romaji": "okoru"
+  },
+  "喜ぶ": {
+    "kana": "よろこぶ",
+    "romaji": "yorokobu"
+  },
+  "悲しむ": {
+    "kana": "かなしむ",
+    "romaji": "kanashimu"
+  },
+  "恐れる": {
+    "kana": "おそれる",
+    "romaji": "osoreru"
+  },
+  "好む": {
+    "kana": "このむ",
+    "romaji": "konomu"
+  },
+  "嫌う": {
+    "kana": "きらう",
+    "romaji": "kirau"
+  },
+  "愛する": {
+    "kana": "あいする",
+    "romaji": "ai suru"
+  },
+  "尊敬する": {
+    "kana": "そんけいする",
+    "romaji": "sonkei suru"
+  },
+  "決める": {
+    "kana": "きめる",
+    "romaji": "kimeru"
+  },
+  "父": {
+    "kana": "ちち",
+    "romaji": "chichi"
+  },
+  "母": {
+    "kana": "はは",
+    "romaji": "haha"
+  },
+  "兄": {
+    "kana": "あに",
+    "romaji": "ani"
+  },
+  "姉": {
+    "kana": "あね",
+    "romaji": "ane"
+  },
+  "弟": {
+    "kana": "おとうと",
+    "romaji": "otōto"
+  },
+  "妹": {
+    "kana": "いもうと",
+    "romaji": "imōto"
+  },
+  "息子": {
+    "kana": "むすこ",
+    "romaji": "musuko"
+  },
+  "娘": {
+    "kana": "むすめ",
+    "romaji": "musume"
+  },
+  "夫": {
+    "kana": "おっと",
+    "romaji": "otto"
+  },
+  "妻": {
+    "kana": "つま",
+    "romaji": "tsuma"
+  },
+  "祖父": {
+    "kana": "そふ",
+    "romaji": "sofu"
+  },
+  "祖母": {
+    "kana": "そぼ",
+    "romaji": "sobo"
+  },
+  "孫(男)": {
+    "kana": "まご",
+    "romaji": "mago"
+  },
+  "孫(女)": {
+    "kana": "まご",
+    "romaji": "mago"
+  },
+  "おじ(父方)": {
+    "kana": "おじ",
+    "romaji": "oji"
+  },
+  "おば(父方)": {
+    "kana": "おば",
+    "romaji": "oba"
+  },
+  "いとこ(男)": {
+    "kana": "いとこ",
+    "romaji": "itoko"
+  },
+  "いとこ(女)": {
+    "kana": "いとこ",
+    "romaji": "itoko"
+  },
+  "家族": {
+    "kana": "かぞく",
+    "romaji": "kazoku"
+  },
+  "親戚": {
+    "kana": "しんせき",
+    "romaji": "shinseki"
+  },
+  "子供": {
+    "kana": "こども",
+    "romaji": "kodomo"
+  },
+  "赤ちゃん": {
+    "kana": "あかちゃん",
+    "romaji": "akachan"
+  },
+  "親": {
+    "kana": "おや",
+    "romaji": "oya"
+  },
+  "友人": {
+    "kana": "ゆうじん",
+    "romaji": "yūjin"
+  },
+  "親友": {
+    "kana": "しんゆう",
+    "romaji": "shin'yū"
+  },
+  "隣人": {
+    "kana": "りんじん",
+    "romaji": "rinjin"
+  },
+  "結婚": {
+    "kana": "けっこん",
+    "romaji": "kekkon"
+  },
+  "義父": {
+    "kana": "ぎふ",
+    "romaji": "gifu"
+  },
+  "義母": {
+    "kana": "ぎぼ",
+    "romaji": "gibo"
+  },
+  "婿": {
+    "kana": "むこ",
+    "romaji": "muko"
+  },
+  "嫁": {
+    "kana": "よめ",
+    "romaji": "yome"
+  },
+  "兄弟": {
+    "kana": "きょうだい",
+    "romaji": "kyōdai"
+  },
+  "姉妹": {
+    "kana": "しまai",
+    "romaji": "shimai"
+  },
+  "大人": {
+    "kana": "おとな",
+    "romaji": "otona"
+  },
+  "若者": {
+    "kana": "わかもの",
+    "romaji": "wakamono"
+  },
+  "老人": {
+    "kana": "ろうじん",
+    "romaji": "rōjin"
+  },
+  "男性": {
+    "kana": "だんせい",
+    "romaji": "dansei"
+  },
+  "女性": {
+    "kana": "じょせい",
+    "romaji": "josei"
+  },
+  "男の子": {
+    "kana": "おとこのこ",
+    "romaji": "otokonoko"
+  },
+  "女の子": {
+    "kana": "おんなのこ",
+    "romaji": "onnanoko"
+  },
+  "頭": {
+    "kana": "あたま",
+    "romaji": "atama"
+  },
+  "髪": {
+    "kana": "かみ",
+    "romaji": "kami"
+  },
+  "顔": {
+    "kana": "かお",
+    "romaji": "kao"
+  },
+  "目": {
+    "kana": "め",
+    "romaji": "me"
+  },
+  "鼻": {
+    "kana": "はな",
+    "romaji": "hana"
+  },
+  "口": {
+    "kana": "くち",
+    "romaji": "kuchi"
+  },
+  "耳": {
+    "kana": "みみ",
+    "romaji": "mimi"
+  },
+  "歯": {
+    "kana": "は",
+    "romaji": "ha"
+  },
+  "首": {
+    "kana": "くび",
+    "romaji": "kubi"
+  },
+  "肩": {
+    "kana": "かた",
+    "romaji": "kata"
+  },
+  "胸": {
+    "kana": "むね",
+    "romaji": "mune"
+  },
+  "背中": {
+    "kana": "せなか",
+    "romaji": "senaka"
+  },
+  "腕": {
+    "kana": "うで",
+    "romaji": "ude"
+  },
+  "手": {
+    "kana": "て",
+    "romaji": "te"
+  },
+  "指": {
+    "kana": "ゆび",
+    "romaji": "yubi"
+  },
+  "足": {
+    "kana": "あし",
+    "romaji": "ashi"
+  },
+  "お腹": {
+    "kana": "おなか",
+    "romaji": "onaka"
+  },
+  "腰": {
+    "kana": "こし",
+    "romaji": "koshi"
+  },
+  "心臓": {
+    "kana": "しんぞう",
+    "romaji": "shinzō"
+  },
+  "体": {
+    "kana": "からだ",
+    "romaji": "karada"
+  },
+  "額": {
+    "kana": "ひたい",
+    "romaji": "hitai"
+  },
+  "眉": {
+    "kana": "まゆ",
+    "romaji": "mayu"
+  },
+  "まつげ": {
+    "kana": "まつげ",
+    "romaji": "matsuge"
+  },
+  "唇": {
+    "kana": "くちびる",
+    "romaji": "kuchibiru"
+  },
+  "舌": {
+    "kana": "した",
+    "romaji": "shita"
+  },
+  "のど": {
+    "kana": "のど",
+    "romaji": "nodo"
+  },
+  "顎": {
+    "kana": "あご",
+    "romaji": "ago"
+  },
+  "膝": {
+    "kana": "ひざ",
+    "romaji": "hiza"
+  },
+  "太もも": {
+    "kana": "ふともも",
+    "romaji": "futomomo"
+  },
+  "ふくらはぎ": {
+    "kana": "ふくらはぎ",
+    "romaji": "fukurahagi"
+  },
+  "足首": {
+    "kana": "あしくび",
+    "romaji": "ashikubi"
+  },
+  "手首": {
+    "kana": "てくび",
+    "romaji": "tekubi"
+  },
+  "肘": {
+    "kana": "ひじ",
+    "romaji": "hiji"
+  },
+  "爪": {
+    "kana": "つめ",
+    "romaji": "tsume"
+  },
+  "皮膚": {
+    "kana": "ひふ",
+    "romaji": "hifu"
+  },
+  "骨": {
+    "kana": "ほね",
+    "romaji": "hone"
+  },
+  "筋肉": {
+    "kana": "きんにく",
+    "romaji": "kinniku"
+  },
+  "血液": {
+    "kana": "けつえき",
+    "romaji": "ketsueki"
+  },
+  "肺": {
+    "kana": "はい",
+    "romaji": "hai"
+  },
+  "肝臓": {
+    "kana": "かんぞう",
+    "romaji": "kanzō"
+  },
+  "幸せ": {
+    "kana": "しあわせ",
+    "romaji": "shiawase"
+  },
+  "悲しい": {
+    "kana": "かなしい",
+    "romaji": "kanashii"
+  },
+  "怒り": {
+    "kana": "いかり",
+    "romaji": "ikari"
+  },
+  "恐れ": {
+    "kana": "おそれ",
+    "romaji": "osore"
+  },
+  "驚き": {
+    "kana": "おどろき",
+    "romaji": "odoroki"
+  },
+  "愛": {
+    "kana": "あい",
+    "romaji": "ai"
+  },
+  "嫉妬": {
+    "kana": "しっと",
+    "romaji": "shitto"
+  },
+  "恥ずかしい": {
+    "kana": "はずかしい",
+    "romaji": "hazukashii"
+  },
+  "楽しい": {
+    "kana": "たのしい",
+    "romaji": "tanoshii"
+  },
+  "緊張": {
+    "kana": "きんちょう",
+    "romaji": "kinchō"
+  },
+  "安心": {
+    "kana": "あんしん",
+    "romaji": "anshin"
+  },
+  "興奮": {
+    "kana": "こうふん",
+    "romaji": "kōfun"
+  },
+  "寂しい": {
+    "kana": "さびしい",
+    "romaji": "sabishii"
+  },
+  "疲れた": {
+    "kana": "つかれた",
+    "romaji": "tsukareta"
+  },
+  "心配": {
+    "kana": "しんぱい",
+    "romaji": "shinpai"
+  },
+  "好き": {
+    "kana": "すき",
+    "romaji": "suki"
+  },
+  "嫌い": {
+    "kana": "きらい",
+    "romaji": "kirai"
+  },
+  "感謝": {
+    "kana": "かんしゃ",
+    "romaji": "kansha"
+  },
+  "怖い": {
+    "kana": "こわい",
+    "romaji": "kowai"
+  },
+  "嬉しい": {
+    "kana": "うれしい",
+    "romaji": "ureshii"
+  },
+  "興味": {
+    "kana": "きょうみ",
+    "romaji": "kyōmi"
+  },
+  "自信": {
+    "kana": "じしん",
+    "romaji": "jishin"
+  },
+  "勇気": {
+    "kana": "ゆうき",
+    "romaji": "yūki"
+  },
+  "希望": {
+    "kana": "きぼう",
+    "romaji": "kibō"
+  },
+  "絶望": {
+    "kana": "ぜつぼう",
+    "romaji": "zetsubō"
+  },
+  "不安": {
+    "kana": "ふあん",
+    "romaji": "fuan"
+  },
+  "信頼": {
+    "kana": "しんらい",
+    "romaji": "shinrai"
+  },
+  "同情": {
+    "kana": "どうじょう",
+    "romaji": "dōjō"
+  },
+  "後悔": {
+    "kana": "こうかい",
+    "romaji": "kōkai"
+  },
+  "失望": {
+    "kana": "しつぼう",
+    "romaji": "shitsubō"
+  },
+  "満足": {
+    "kana": "まんぞく",
+    "romaji": "manzoku"
+  },
+  "不満": {
+    "kana": "ふまん",
+    "romaji": "fuman"
+  },
+  "笑顔": {
+    "kana": "えがお",
+    "romaji": "egao"
+  },
+  "涙": {
+    "kana": "なみだ",
+    "romaji": "namida"
+  },
+  "感動": {
+    "kana": "かんどう",
+    "romaji": "kandō"
+  },
+  "赤": {
+    "kana": "あか",
+    "romaji": "aka"
+  },
+  "青": {
+    "kana": "あお",
+    "romaji": "ao"
+  },
+  "黄色": {
+    "kana": "きいろ",
+    "romaji": "kiiro"
+  },
+  "緑": {
+    "kana": "みどり",
+    "romaji": "midori"
+  },
+  "黒": {
+    "kana": "くろ",
+    "romaji": "kuro"
+  },
+  "白": {
+    "kana": "しろ",
+    "romaji": "shiro"
+  },
+  "灰色": {
+    "kana": "はいいろ",
+    "romaji": "haiiro"
+  },
+  "ピンク": {
+    "kana": "ピンク",
+    "romaji": "pinku"
+  },
+  "紫": {
+    "kana": "むらさき",
+    "romaji": "murasaki"
+  },
+  "オレンジ": {
+    "kana": "オレンジ",
+    "romaji": "orenji"
+  },
+  "茶色": {
+    "kana": "ちゃいろ",
+    "romaji": "chairo"
+  },
+  "円形": {
+    "kana": "えんけい",
+    "romaji": "enkei"
+  },
+  "四角": {
+    "kana": "しかく",
+    "romaji": "shikaku"
+  },
+  "三角形": {
+    "kana": "さんかくけい",
+    "romaji": "sankakukei"
+  },
+  "大きい": {
+    "kana": "おおきい",
+    "romaji": "ōkii"
+  },
+  "小さい": {
+    "kana": "ちいさい",
+    "romaji": "chiisai"
+  },
+  "長い": {
+    "kana": "ながい",
+    "romaji": "nagai"
+  },
+  "短い": {
+    "kana": "みじかい",
+    "romaji": "mijikai"
+  },
+  "広い": {
+    "kana": "ひろい",
+    "romaji": "hiroi"
+  },
+  "狭い": {
+    "kana": "せまい",
+    "romaji": "semai"
+  },
+  "金色": {
+    "kana": "きんいろ",
+    "romaji": "kin'iro"
+  },
+  "銀色": {
+    "kana": "ぎんいろ",
+    "romaji": "gin'iro"
+  },
+  "薄い色": {
+    "kana": "うすいいろ",
+    "romaji": "usuiiro"
+  },
+  "濃い色": {
+    "kana": "こいいろ",
+    "romaji": "koiiro"
+  },
+  "透明": {
+    "kana": "とうめい",
+    "romaji": "tōmei"
+  },
+  "直線": {
+    "kana": "ちょくせん",
+    "romaji": "chokusen"
+  },
+  "曲線": {
+    "kana": "きょくせん",
+    "romaji": "kyokusen"
+  },
+  "平らな": {
+    "kana": "たいらな",
+    "romaji": "tairana"
+  },
+  "丸い": {
+    "kana": "まるい",
+    "romaji": "marui"
+  },
+  "角ばった": {
+    "kana": "かくばった",
+    "romaji": "kakubatta"
+  },
+  "厚い": {
+    "kana": "あつい",
+    "romaji": "atsui"
+  },
+  "薄い": {
+    "kana": "うすい",
+    "romaji": "usui"
+  },
+  "速い": {
+    "kana": "はやい",
+    "romaji": "hayai"
+  },
+  "遅い": {
+    "kana": "おそい",
+    "romaji": "osoi"
+  },
+  "強い": {
+    "kana": "つよい",
+    "romaji": "tsuyoi"
+  },
+  "弱い": {
+    "kana": "よわい",
+    "romaji": "yowai"
+  },
+  "服": {
+    "kana": "ふく",
+    "romaji": "fuku"
+  },
+  "シャツ": {
+    "kana": "シャツ",
+    "romaji": "shatsu"
+  },
+  "ズボン": {
+    "kana": "ズボン",
+    "romaji": "zubon"
+  },
+  "スカート": {
+    "kana": "スカート",
+    "romaji": "sukāto"
+  },
+  "靴": {
+    "kana": "くつ",
+    "romaji": "kutsu"
+  },
+  "靴下": {
+    "kana": "くつした",
+    "romaji": "kutsushita"
+  },
+  "帽子": {
+    "kana": "ぼうし",
+    "romaji": "bōshi"
+  },
+  "メガネ": {
+    "kana": "メガネ",
+    "romaji": "megane"
+  },
+  "時計": {
+    "kana": "とけい",
+    "romaji": "tokei"
+  },
+  "バッグ": {
+    "kana": "バッグ",
+    "romaji": "baggu"
+  },
+  "財布": {
+    "kana": "さいふ",
+    "romaji": "saifu"
+  },
+  "傘": {
+    "kana": "かさ",
+    "romaji": "kasa"
+  },
+  "マスク": {
+    "kana": "マスク",
+    "romaji": "masuku"
+  },
+  "手袋": {
+    "kana": "てぶくろ",
+    "romaji": "tebukuro"
+  },
+  "マフラー": {
+    "kana": "マフラー",
+    "romaji": "mafurā"
+  },
+  "コート": {
+    "kana": "コート",
+    "romaji": "kōto"
+  },
+  "ジャケット": {
+    "kana": "ジャケット",
+    "romaji": "jaketto"
+  },
+  "下着": {
+    "kana": "したぎ",
+    "romaji": "shitagi"
+  },
+  "アクセサリー": {
+    "kana": "アクセサリー",
+    "romaji": "akusesarī"
+  },
+  "指輪": {
+    "kana": "ゆびわ",
+    "romaji": "yubiwa"
+  },
+  "セーター": {
+    "kana": "セーター",
+    "romaji": "sētā"
+  },
+  "Tシャツ": {
+    "kana": "ティーシャツ",
+    "romaji": "tīshatsu"
+  },
+  "パンツ": {
+    "kana": "パンツ",
+    "romaji": "pantsu"
+  },
+  "ネクタイ": {
+    "kana": "ネクタイ",
+    "romaji": "nekutai"
+  },
+  "ベルト": {
+    "kana": "ベルト",
+    "romaji": "beruto"
+  },
+  "ブレスレット": {
+    "kana": "ブレスレット",
+    "romaji": "buresuretto"
+  },
+  "ネックレス": {
+    "kana": "ネックレス",
+    "romaji": "nekkuresu"
+  },
+  "イヤリング": {
+    "kana": "イヤリング",
+    "romaji": "iyaringu"
+  },
+  "サンダル": {
+    "kana": "サンダル",
+    "romaji": "sandaru"
+  },
+  "ブーツ": {
+    "kana": "ブーツ",
+    "romaji": "būtsu"
+  },
+  "ハンカチ": {
+    "kana": "ハンカチ",
+    "romaji": "hankachi"
+  },
+  "ジーンズ": {
+    "kana": "ジーンズ",
+    "romaji": "jīnzu"
+  },
+  "パジャマ": {
+    "kana": "パジャマ",
+    "romaji": "pajama"
+  },
+  "制服": {
+    "kana": "せいふく",
+    "romaji": "seifuku"
+  },
+  "サリー": {
+    "kana": "サリー",
+    "romaji": "sarī"
+  },
+  "ダウラスルワル(民族衣装)": {
+    "kana": "ダウラスルワル",
+    "romaji": "daurasuruwaru"
+  },
+  "ボタン": {
+    "kana": "ボタン",
+    "romaji": "botan"
+  },
+  "ジッパー": {
+    "kana": "ジッパー",
+    "romaji": "jippā"
+  },
+  "ポケット": {
+    "kana": "ポケット",
+    "romaji": "poketto"
+  },
+  "髪飾り": {
+    "kana": "かみかざり",
+    "romaji": "kamikazari"
+  },
+  "ご飯": {
+    "kana": "ごはん",
+    "romaji": "gohan"
+  },
+  "豆スープ": {
+    "kana": "まめスープ",
+    "romaji": "mamesūpu"
+  },
+  "パン": {
+    "kana": "パン",
+    "romaji": "pan"
+  },
+  "麺": {
+    "kana": "めん",
+    "romaji": "men"
+  },
+  "肉": {
+    "kana": "にく",
+    "romaji": "niku"
+  },
+  "魚": {
+    "kana": "さかな",
+    "romaji": "sakana"
+  },
+  "卵": {
+    "kana": "たまご",
+    "romaji": "tamago"
+  },
+  "野菜": {
+    "kana": "やさい",
+    "romaji": "yasai"
+  },
+  "果物": {
+    "kana": "くだもの",
+    "romaji": "kudamono"
+  },
+  "米": {
+    "kana": "こめ",
+    "romaji": "kome"
+  },
+  "カレー": {
+    "kana": "カレー",
+    "romaji": "karē"
+  },
+  "スープ": {
+    "kana": "スープ",
+    "romaji": "sūpu"
+  },
+  "餃子(モモ)": {
+    "kana": "ぎょうざ",
+    "romaji": "gyōza"
+  },
+  "お菓子": {
+    "kana": "おかし",
+    "romaji": "okashi"
+  },
+  "パスタ": {
+    "kana": "パスタ",
+    "romaji": "pasuta"
+  },
+  "ハンバーガー": {
+    "kana": "ハンバーガー",
+    "romaji": "hanbāgā"
+  },
+  "ピザ": {
+    "kana": "ピザ",
+    "romaji": "piza"
+  },
+  "サラダ": {
+    "kana": "サラダ",
+    "romaji": "sarada"
+  },
+  "寿司": {
+    "kana": "すし",
+    "romaji": "sushi"
+  },
+  "軽食": {
+    "kana": "けいしょく",
+    "romaji": "keishoku"
+  },
+  "セルロティ": {
+    "kana": "セルロティ",
+    "romaji": "seruroti"
+  },
+  "ダルバート": {
+    "kana": "ダルバート",
+    "romaji": "darubāto"
+  },
+  "じゃがいも": {
+    "kana": "じゃがいも",
+    "romaji": "jagaimo"
+  },
+  "トマト": {
+    "kana": "トマト",
+    "romaji": "tomato"
+  },
+  "キュウリ": {
+    "kana": "きゅうり",
+    "romaji": "kyūri"
+  },
+  "ニンジン": {
+    "kana": "にんじん",
+    "romaji": "ninjin"
+  },
+  "ほうれん草": {
+    "kana": "ほうれんそう",
+    "romaji": "hōrensō"
+  },
+  "キャベツ": {
+    "kana": "キャベツ",
+    "romaji": "kyabetsu"
+  },
+  "カリフラワー": {
+    "kana": "カリフラワー",
+    "romaji": "karifurawā"
+  },
+  "ナス": {
+    "kana": "ナス",
+    "romaji": "nasu"
+  },
+  "オクラ": {
+    "kana": "オクラ",
+    "romaji": "okura"
+  },
+  "リンゴ": {
+    "kana": "リンゴ",
+    "romaji": "ringo"
+  },
+  "バナナ": {
+    "kana": "バナナ",
+    "romaji": "banana"
+  },
+  "マンゴー": {
+    "kana": "マンゴー",
+    "romaji": "mangō"
+  },
+  "ぶどう": {
+    "kana": "ぶどう",
+    "romaji": "budō"
+  },
+  "パイナップル": {
+    "kana": "パイナップル",
+    "romaji": "painappuru"
+  },
+  "スイカ": {
+    "kana": "スイカ",
+    "romaji": "suika"
+  },
+  "ココナッツ": {
+    "kana": "ココナッツ",
+    "romaji": "kokonattsu"
+  },
+  "デザート": {
+    "kana": "デザート",
+    "romaji": "dezāto"
+  },
+  "水": {
+    "kana": "みず",
+    "romaji": "mizu"
+  },
+  "茶": {
+    "kana": "ちゃ",
+    "romaji": "cha"
+  },
+  "コーヒー": {
+    "kana": "コーヒー",
+    "romaji": "kōhī"
+  },
+  "ミルク": {
+    "kana": "ミルク",
+    "romaji": "miruku"
+  },
+  "ジュース": {
+    "kana": "ジュース",
+    "romaji": "jūsu"
+  },
+  "ビール": {
+    "kana": "ビール",
+    "romaji": "bīru"
+  },
+  "酒": {
+    "kana": "さけ",
+    "romaji": "sake"
+  },
+  "砂糖": {
+    "kana": "さとう",
+    "romaji": "satō"
+  },
+  "塩": {
+    "kana": "しお",
+    "romaji": "shio"
+  },
+  "唐辛子": {
+    "kana": "とうがらし",
+    "romaji": "tōgarashi"
+  },
+  "油": {
+    "kana": "あぶら",
+    "romaji": "abura"
+  },
+  "バター": {
+    "kana": "バター",
+    "romaji": "batā"
+  },
+  "蜂蜜": {
+    "kana": "はちみつ",
+    "romaji": "hachimitsu"
+  },
+  "ヨーグルト": {
+    "kana": "ヨーグルト",
+    "romaji": "yōguruto"
+  },
+  "酢": {
+    "kana": "す",
+    "romaji": "su"
+  },
+  "香辛料": {
+    "kana": "こうしんりょう",
+    "romaji": "kōshinryō"
+  },
+  "ニンニク": {
+    "kana": "にんにく",
+    "romaji": "ninniku"
+  },
+  "生姜": {
+    "kana": "しょうが",
+    "romaji": "shōga"
+  },
+  "玉ねぎ": {
+    "kana": "たまねぎ",
+    "romaji": "tamanegi"
+  },
+  "醤油": {
+    "kana": "しょうゆ",
+    "romaji": "shōyu"
+  },
+  "レモン": {
+    "kana": "レモン",
+    "romaji": "remon"
+  },
+  "クミン": {
+    "kana": "クミン",
+    "romaji": "kumin"
+  },
+  "コリアンダー": {
+    "kana": "コリアンダー",
+    "romaji": "koriandā"
+  },
+  "ターメリック": {
+    "kana": "ターメリック",
+    "romaji": "tāmerikku"
+  },
+  "シナモン": {
+    "kana": "シナモン",
+    "romaji": "shinamon"
+  },
+  "カルダモン": {
+    "kana": "カルダモン",
+    "romaji": "karudamon"
+  },
+  "クローブ": {
+    "kana": "クローブ",
+    "romaji": "kurōbu"
+  },
+  "黒コショウ": {
+    "kana": "くろコショウ",
+    "romaji": "kurokoshō"
+  },
+  "ピクルス": {
+    "kana": "ピクルス",
+    "romaji": "pikurusu"
+  },
+  "アルコール": {
+    "kana": "アルコール",
+    "romaji": "arukōru"
+  },
+  "ソフトドリンク": {
+    "kana": "ソフトドリンク",
+    "romaji": "sofutodorinku"
+  },
+  "緑茶": {
+    "kana": "りょくちゃ",
+    "romaji": "ryokucha"
+  },
+  "紅茶": {
+    "kana": "こうちゃ",
+    "romaji": "kōcha"
+  },
+  "レモンティー": {
+    "kana": "レモンティー",
+    "romaji": "remontī"
+  },
+  "ラッシー": {
+    "kana": "ラッシー",
+    "romaji": "rasshī"
+  },
+  "スムージー": {
+    "kana": "スムージー",
+    "romaji": "sumūjī"
+  },
+  "ハーブティー": {
+    "kana": "ハーブティー",
+    "romaji": "hābutī"
+  },
+  "炭酸水": {
+    "kana": "たんさんすい",
+    "romaji": "tansansui"
+  },
+  "ココア": {
+    "kana": "ココア",
+    "romaji": "kokoa"
+  },
+  "チョコレート": {
+    "kana": "チョコレート",
+    "romaji": "chokorēto"
+  },
+  "犬": {
+    "kana": "いぬ",
+    "romaji": "inu"
+  },
+  "猫": {
+    "kana": "ねこ",
+    "romaji": "neko"
+  },
+  "牛": {
+    "kana": "うし",
+    "romaji": "ushi"
+  },
+  "馬": {
+    "kana": "うま",
+    "romaji": "uma"
+  },
+  "鶏": {
+    "kana": "にわとり",
+    "romaji": "niwatori"
+  },
+  "羊": {
+    "kana": "ひつじ",
+    "romaji": "hitsuji"
+  },
+  "山羊": {
+    "kana": "やぎ",
+    "romaji": "yagi"
+  },
+  "豚": {
+    "kana": "ぶた",
+    "romaji": "buta"
+  },
+  "鳥": {
+    "kana": "とり",
+    "romaji": "tori"
+  },
+  "虎": {
+    "kana": "とら",
+    "romaji": "tora"
+  },
+  "象": {
+    "kana": "ぞう",
+    "romaji": "zō"
+  },
+  "猿": {
+    "kana": "さる",
+    "romaji": "saru"
+  },
+  "蛇": {
+    "kana": "へび",
+    "romaji": "hebi"
+  },
+  "木": {
+    "kana": "き",
+    "romaji": "ki"
+  },
+  "花": {
+    "kana": "はな",
+    "romaji": "hana"
+  },
+  "草": {
+    "kana": "くさ",
+    "romaji": "kusa"
+  },
+  "葉": {
+    "kana": "は",
+    "romaji": "ha"
+  },
+  "種": {
+    "kana": "たね",
+    "romaji": "tane"
+  },
+  "森": {
+    "kana": "もり",
+    "romaji": "mori"
+  },
+  "うさぎ": {
+    "kana": "うさぎ",
+    "romaji": "usagi"
+  },
+  "ねずみ": {
+    "kana": "ねずみ",
+    "romaji": "nezumi"
+  },
+  "リス": {
+    "kana": "りす",
+    "romaji": "risu"
+  },
+  "クマ": {
+    "kana": "くま",
+    "romaji": "kuma"
+  },
+  "鹿": {
+    "kana": "しか",
+    "romaji": "shika"
+  },
+  "狼": {
+    "kana": "おおかみ",
+    "romaji": "ōkami"
+  },
+  "キツネ": {
+    "kana": "きつね",
+    "romaji": "kitsune"
+  },
+  "鷲": {
+    "kana": "わし",
+    "romaji": "washi"
+  },
+  "オウム": {
+    "kana": "おうむ",
+    "romaji": "ōmu"
+  },
+  "アヒル": {
+    "kana": "あひる",
+    "romaji": "ahiru"
+  },
+  "ガチョウ": {
+    "kana": "がちょう",
+    "romaji": "gachō"
+  },
+  "クジャク": {
+    "kana": "くじゃく",
+    "romaji": "kujaku"
+  },
+  "カラス": {
+    "kana": "からす",
+    "romaji": "karasu"
+  },
+  "ハチ": {
+    "kana": "はち",
+    "romaji": "hachi"
+  },
+  "アリ": {
+    "kana": "あり",
+    "romaji": "ari"
+  },
+  "蝶": {
+    "kana": "ちょう",
+    "romaji": "chō"
+  },
+  "枝": {
+    "kana": "えだ",
+    "romaji": "eda"
+  },
+  "根": {
+    "kana": "ね",
+    "romaji": "ne"
+  },
+  "果実": {
+    "kana": "かじつ",
+    "romaji": "kajitsu"
+  },
+  "野生動物": {
+    "kana": "やせいどうぶつ",
+    "romaji": "yasei dōbutsu"
+  },
+  "天気": {
+    "kana": "てんき",
+    "romaji": "tenki"
+  },
+  "太陽": {
+    "kana": "たいよう",
+    "romaji": "taiyō"
+  },
+  "月": {
+    "kana": "つき",
+    "romaji": "tsuki"
+  },
+  "星": {
+    "kana": "ほし",
+    "romaji": "hoshi"
+  },
+  "雲": {
+    "kana": "くも",
+    "romaji": "kumo"
+  },
+  "雨": {
+    "kana": "あめ",
+    "romaji": "ame"
+  },
+  "雪": {
+    "kana": "ゆき",
+    "romaji": "yuki"
+  },
+  "風": {
+    "kana": "かぜ",
+    "romaji": "kaze"
+  },
+  "雷": {
+    "kana": "かみなり",
+    "romaji": "kaminari"
+  },
+  "虹": {
+    "kana": "にじ",
+    "romaji": "niji"
+  },
+  "嵐": {
+    "kana": "あらし",
+    "romaji": "arashi"
+  },
+  "霧": {
+    "kana": "きり",
+    "romaji": "kiri"
+  },
+  "暑い": {
+    "kana": "あつい",
+    "romaji": "atsui"
+  },
+  "寒い": {
+    "kana": "さむい",
+    "romaji": "samui"
+  },
+  "暖かい": {
+    "kana": "あたたかい",
+    "romaji": "atatakai"
+  },
+  "涼しい": {
+    "kana": "すずしい",
+    "romaji": "suzushii"
+  },
+  "湿気": {
+    "kana": "しっけ",
+    "romaji": "shikke"
+  },
+  "乾燥": {
+    "kana": "かんそう",
+    "romaji": "kansō"
+  },
+  "地震": {
+    "kana": "じしん",
+    "romaji": "jishin"
+  },
+  "自然": {
+    "kana": "しぜん",
+    "romaji": "shizen"
+  },
+  "山": {
+    "kana": "やま",
+    "romaji": "yama"
+  },
+  "谷": {
+    "kana": "たに",
+    "romaji": "tani"
+  },
+  "丘": {
+    "kana": "おか",
+    "romaji": "oka"
+  },
+  "平地": {
+    "kana": "へいち",
+    "romaji": "heichi"
+  },
+  "砂漠": {
+    "kana": "さばく",
+    "romaji": "sabaku"
+  },
+  "火山": {
+    "kana": "かざん",
+    "romaji": "kazan"
+  },
+  "滝": {
+    "kana": "たき",
+    "romaji": "taki"
+  },
+  "池": {
+    "kana": "いけ",
+    "romaji": "ike"
+  },
+  "沼": {
+    "kana": "ぬま",
+    "romaji": "numa"
+  },
+  "島": {
+    "kana": "しま",
+    "romaji": "shima"
+  },
+  "海岸": {
+    "kana": "かいがん",
+    "romaji": "kaigan"
+  },
+  "洞窟": {
+    "kana": "どうくつ",
+    "romaji": "dōkutsu"
+  },
+  "岩": {
+    "kana": "いわ",
+    "romaji": "iwa"
+  },
+  "砂": {
+    "kana": "すな",
+    "romaji": "suna"
+  },
+  "土": {
+    "kana": "つち",
+    "romaji": "tsuchi"
+  },
+  "泥": {
+    "kana": "どろ",
+    "romaji": "doro"
+  },
+  "空": {
+    "kana": "そら",
+    "romaji": "sora"
+  },
+  "大地": {
+    "kana": "だいち",
+    "romaji": "daichi"
+  },
+  "自然災害": {
+    "kana": "しぜんさいがい",
+    "romaji": "shizen saigai"
+  },
+  "洪水": {
+    "kana": "こうずい",
+    "romaji": "kōzui"
+  },
+  "春": {
+    "kana": "はる",
+    "romaji": "haru"
+  },
+  "夏": {
+    "kana": "なつ",
+    "romaji": "natsu"
+  },
+  "秋": {
+    "kana": "あき",
+    "romaji": "aki"
+  },
+  "冬": {
+    "kana": "ふゆ",
+    "romaji": "fuyu"
+  },
+  "雨季": {
+    "kana": "うき",
+    "romaji": "uki"
+  },
+  "夜明け": {
+    "kana": "よあけ",
+    "romaji": "yoake"
+  },
+  "日没": {
+    "kana": "にちぼつ",
+    "romaji": "nichibotsu"
+  },
+  "月曜日": {
+    "kana": "げつようび",
+    "romaji": "getsuyōbi"
+  },
+  "火曜日": {
+    "kana": "かようび",
+    "romaji": "kayōbi"
+  },
+  "水曜日": {
+    "kana": "すいようび",
+    "romaji": "suiyōbi"
+  },
+  "木曜日": {
+    "kana": "もくようび",
+    "romaji": "mokuyōbi"
+  },
+  "金曜日": {
+    "kana": "きんようび",
+    "romaji": "kin'yōbi"
+  },
+  "土曜日": {
+    "kana": "どようび",
+    "romaji": "doyōbi"
+  },
+  "日曜日": {
+    "kana": "にちようび",
+    "romaji": "nichiyōbi"
+  },
+  "週末": {
+    "kana": "しゅうまつ",
+    "romaji": "shūmatsu"
+  },
+  "1月": {
+    "kana": "いちがつ",
+    "romaji": "ichigatsu"
+  },
+  "2月": {
+    "kana": "にがつ",
+    "romaji": "nigatsu"
+  },
+  "3月": {
+    "kana": "さんがつ",
+    "romaji": "sangatsu"
+  },
+  "4月": {
+    "kana": "しがつ",
+    "romaji": "shigatsu"
+  },
+  "5月": {
+    "kana": "ごがつ",
+    "romaji": "gogatsu"
+  },
+  "6月": {
+    "kana": "ろくがつ",
+    "romaji": "rokugatsu"
+  },
+  "7月": {
+    "kana": "しちがつ",
+    "romaji": "shichigatsu"
+  },
+  "8月": {
+    "kana": "はちがつ",
+    "romaji": "hachigatsu"
+  },
+  "9月": {
+    "kana": "くがつ",
+    "romaji": "kugatsu"
+  },
+  "10月": {
+    "kana": "じゅうがつ",
+    "romaji": "jūgatsu"
+  },
+  "11月": {
+    "kana": "じゅういちがつ",
+    "romaji": "jūichigatsu"
+  },
+  "12月": {
+    "kana": "じゅうにがつ",
+    "romaji": "jūnigatsu"
+  },
+  "1日(日付)": {
+    "kana": "ついたち",
+    "romaji": "tsuitachi"
+  },
+  "1分前": {
+    "kana": "いっぷんまえ",
+    "romaji": "ippunmae"
+  },
+  "1時間後": {
+    "kana": "いちじかんご",
+    "romaji": "ichijikango"
+  },
+  "数日": {
+    "kana": "すうじつ",
+    "romaji": "sūjitsu"
+  },
+  "数週間": {
+    "kana": "すうしゅうかん",
+    "romaji": "sūshūkan"
+  },
+  "数年": {
+    "kana": "すうねん",
+    "romaji": "sūnen"
+  },
+  "一日中": {
+    "kana": "いちにちじゅう",
+    "romaji": "ichinichijū"
+  },
+  "一晩中": {
+    "kana": "ひとばんじゅう",
+    "romaji": "hitobanjū"
+  },
+  "家": {
+    "kana": "いえ",
+    "romaji": "ie"
+  },
+  "部屋": {
+    "kana": "へや",
+    "romaji": "heya"
+  },
+  "ドア": {
+    "kana": "ドア",
+    "romaji": "doa"
+  },
+  "窓": {
+    "kana": "まど",
+    "romaji": "mado"
+  },
+  "壁": {
+    "kana": "かべ",
+    "romaji": "kabe"
+  },
+  "床": {
+    "kana": "ゆか",
+    "romaji": "yuka"
+  },
+  "天井": {
+    "kana": "てんじょう",
+    "romaji": "tenjō"
+  },
+  "屋根": {
+    "kana": "やね",
+    "romaji": "yane"
+  },
+  "階段": {
+    "kana": "かいだん",
+    "romaji": "kaidan"
+  },
+  "庭": {
+    "kana": "にわ",
+    "romaji": "niwa"
+  },
+  "ベッド": {
+    "kana": "ベッド",
+    "romaji": "beddo"
+  },
+  "机": {
+    "kana": "つくえ",
+    "romaji": "tsukue"
+  },
+  "椅子": {
+    "kana": "いす",
+    "romaji": "isu"
+  },
+  "テーブル": {
+    "kana": "テーブル",
+    "romaji": "tēburu"
+  },
+  "ソファ": {
+    "kana": "ソファ",
+    "romaji": "sofa"
+  },
+  "戸棚": {
+    "kana": "とだな",
+    "romaji": "todana"
+  },
+  "冷蔵庫": {
+    "kana": "れいぞうこ",
+    "romaji": "reizōko"
+  },
+  "テレビ": {
+    "kana": "テレビ",
+    "romaji": "terebi"
+  },
+  "台所": {
+    "kana": "だいどころ",
+    "romaji": "daidokoro"
+  },
+  "浴室": {
+    "kana": "よくしつ",
+    "romaji": "yokushitsu"
+  },
+  "リビング": {
+    "kana": "リビング",
+    "romaji": "ribingu"
+  },
+  "ダイニング": {
+    "kana": "ダイニング",
+    "romaji": "dainingu"
+  },
+  "寝室": {
+    "kana": "しんしつ",
+    "romaji": "shinshitsu"
+  },
+  "トイレ": {
+    "kana": "トイレ",
+    "romaji": "toire"
+  },
+  "書斎": {
+    "kana": "しょさい",
+    "romaji": "shosai"
+  },
+  "ガレージ": {
+    "kana": "ガレージ",
+    "romaji": "garēji"
+  },
+  "バルコニー": {
+    "kana": "バルコニー",
+    "romaji": "barukonī"
+  },
+  "鏡": {
+    "kana": "かがみ",
+    "romaji": "kagami"
+  },
+  "ライト": {
+    "kana": "ライト",
+    "romaji": "raito"
+  },
+  "扇風機": {
+    "kana": "せんぷうき",
+    "romaji": "senpūki"
+  },
+  "エアコン": {
+    "kana": "エアコン",
+    "romaji": "eakon"
+  },
+  "ヒーター": {
+    "kana": "ヒーター",
+    "romaji": "hītā"
+  },
+  "シャワー": {
+    "kana": "シャワー",
+    "romaji": "shawā"
+  },
+  "便器": {
+    "kana": "べんき",
+    "romaji": "benki"
+  },
+  "流し台": {
+    "kana": "ながしだい",
+    "romaji": "nagashidai"
+  },
+  "食器": {
+    "kana": "しょっき",
+    "romaji": "shokki"
+  },
+  "鍋": {
+    "kana": "なべ",
+    "romaji": "nabe"
+  },
+  "フォーク": {
+    "kana": "フォーク",
+    "romaji": "fōku"
+  },
+  "スプーン": {
+    "kana": "スプーン",
+    "romaji": "supūn"
+  },
+  "カップ": {
+    "kana": "カップ",
+    "romaji": "kappu"
+  },
+  "街": {
+    "kana": "まち",
+    "romaji": "machi"
+  },
+  "村": {
+    "kana": "むら",
+    "romaji": "mura"
+  },
+  "道": {
+    "kana": "みち",
+    "romaji": "michi"
+  },
+  "通り": {
+    "kana": "とおり",
+    "romaji": "tōri"
+  },
+  "公園": {
+    "kana": "こうえん",
+    "romaji": "kōen"
+  },
+  "学校": {
+    "kana": "がっこう",
+    "romaji": "gakkō"
+  },
+  "病院": {
+    "kana": "びょういん",
+    "romaji": "byōin"
+  },
+  "銀行": {
+    "kana": "ぎんこう",
+    "romaji": "ginkō"
+  },
+  "郵便局": {
+    "kana": "ゆうびんきょく",
+    "romaji": "yūbinkyoku"
+  },
+  "警察署": {
+    "kana": "けいさつしょ",
+    "romaji": "keisatsusho"
+  },
+  "寺院": {
+    "kana": "じいん",
+    "romaji": "jiin"
+  },
+  "教会": {
+    "kana": "きょうかい",
+    "romaji": "kyōkai"
+  },
+  "モスク": {
+    "kana": "モスク",
+    "romaji": "mosuku"
+  },
+  "市場": {
+    "kana": "いちば",
+    "romaji": "ichiba"
+  },
+  "店": {
+    "kana": "みせ",
+    "romaji": "mise"
+  },
+  "レストラン": {
+    "kana": "レストラン",
+    "romaji": "resutoran"
+  },
+  "ホテル": {
+    "kana": "ホテル",
+    "romaji": "hoteru"
+  },
+  "駅": {
+    "kana": "えき",
+    "romaji": "eki"
+  },
+  "空港": {
+    "kana": "くうこう",
+    "romaji": "kūkō"
+  },
+  "図書館": {
+    "kana": "としょかん",
+    "romaji": "toshokan"
+  },
+  "美術館": {
+    "kana": "びじゅつかん",
+    "romaji": "bijutsukan"
+  },
+  "博物館": {
+    "kana": "はくぶつかん",
+    "romaji": "hakubutsukan"
+  },
+  "映画館": {
+    "kana": "えいがかん",
+    "romaji": "eigakan"
+  },
+  "劇場": {
+    "kana": "げきじょう",
+    "romaji": "gekijō"
+  },
+  "スタジアム": {
+    "kana": "スタジアム",
+    "romaji": "sutajiamu"
+  },
+  "プール": {
+    "kana": "プール",
+    "romaji": "pūru"
+  },
+  "ジム": {
+    "kana": "ジム",
+    "romaji": "jimu"
+  },
+  "オフィス": {
+    "kana": "オフィス",
+    "romaji": "ofisu"
+  },
+  "工場": {
+    "kana": "こうじょう",
+    "romaji": "kōjō"
+  },
+  "倉庫": {
+    "kana": "そうこ",
+    "romaji": "sōko"
+  },
+  "ガソリンスタンド": {
+    "kana": "ガソリンスタンド",
+    "romaji": "gasorinsutando"
+  },
+  "カフェ": {
+    "kana": "カフェ",
+    "romaji": "kafe"
+  },
+  "パン屋": {
+    "kana": "パンや",
+    "romaji": "pan'ya"
+  },
+  "八百屋": {
+    "kana": "やおや",
+    "romaji": "yaoya"
+  },
+  "肉屋": {
+    "kana": "にくや",
+    "romaji": "nikuya"
+  },
+  "薬局": {
+    "kana": "やっきょく",
+    "romaji": "yakkyoku"
+  },
+  "スーパー": {
+    "kana": "スーパー",
+    "romaji": "sūpā"
+  },
+  "コンビニ": {
+    "kana": "コンビニ",
+    "romaji": "konbini"
+  },
+  "屋台": {
+    "kana": "やたい",
+    "romaji": "yatai"
+  },
+  "市役所": {
+    "kana": "しやくしょ",
+    "romaji": "shiyakusho"
+  },
+  "バス": {
+    "kana": "バス",
+    "romaji": "basu"
+  },
+  "タクシー": {
+    "kana": "タクシー",
+    "romaji": "takushī"
+  },
+  "車": {
+    "kana": "くるま",
+    "romaji": "kuruma"
+  },
+  "バイク": {
+    "kana": "バイク",
+    "romaji": "baiku"
+  },
+  "自転車": {
+    "kana": "じてんしゃ",
+    "romaji": "jitensha"
+  },
+  "飛行機": {
+    "kana": "ひこうき",
+    "romaji": "hikōki"
+  },
+  "ヘリコプター": {
+    "kana": "ヘリコプター",
+    "romaji": "herikoputā"
+  },
+  "ボート": {
+    "kana": "ボート",
+    "romaji": "bōto"
+  },
+  "電車": {
+    "kana": "でんしゃ",
+    "romaji": "densha"
+  },
+  "リキシャ": {
+    "kana": "リキシャ",
+    "romaji": "rikisha"
+  },
+  "トラック": {
+    "kana": "トラック",
+    "romaji": "torakku"
+  },
+  "高速道路": {
+    "kana": "こうそくどうろ",
+    "romaji": "kōsokudōro"
+  },
+  "駐車場": {
+    "kana": "ちゅうしゃじょう",
+    "romaji": "chūshajō"
+  },
+  "切符": {
+    "kana": "きっぷ",
+    "romaji": "kippu"
+  },
+  "運賃": {
+    "kana": "うんちん",
+    "romaji": "unchin"
+  },
+  "運転手": {
+    "kana": "うんてんしゅ",
+    "romaji": "untenshu"
+  },
+  "乗客": {
+    "kana": "じょうきゃく",
+    "romaji": "jōkyaku"
+  },
+  "信号": {
+    "kana": "しんごう",
+    "romaji": "shingō"
+  },
+  "標識": {
+    "kana": "ひょうしき",
+    "romaji": "hyōshiki"
+  },
+  "道路": {
+    "kana": "どうろ",
+    "romaji": "dōro"
+  },
+  "渋滞": {
+    "kana": "じゅうたい",
+    "romaji": "jūtai"
+  },
+  "スピード": {
+    "kana": "スピード",
+    "romaji": "supīdo"
+  },
+  "ガソリン": {
+    "kana": "ガソリン",
+    "romaji": "gasorin"
+  },
+  "ディーゼル": {
+    "kana": "ディーゼル",
+    "romaji": "dīzeru"
+  },
+  "タイヤ": {
+    "kana": "タイヤ",
+    "romaji": "taiya"
+  },
+  "ハンドル": {
+    "kana": "ハンドル",
+    "romaji": "handoru"
+  },
+  "ブレーキ": {
+    "kana": "ブレーキ",
+    "romaji": "burēki"
+  },
+  "クラクション": {
+    "kana": "クラクション",
+    "romaji": "kurakushon"
+  },
+  "シートベルト": {
+    "kana": "シートベルト",
+    "romaji": "shītoberuto"
+  },
+  "運転免許": {
+    "kana": "うんてんめんきょ",
+    "romaji": "untenmenkyo"
+  },
+  "事故": {
+    "kana": "じこ",
+    "romaji": "jiko"
+  },
+  "修理": {
+    "kana": "しゅうり",
+    "romaji": "shūri"
+  },
+  "バス停": {
+    "kana": "バスてい",
+    "romaji": "basutei"
+  },
+  "線路": {
+    "kana": "せんろ",
+    "romaji": "senro"
+  },
+  "出発": {
+    "kana": "しゅっぱつ",
+    "romaji": "shuppatsu"
+  },
+  "到着": {
+    "kana": "とうちゃく",
+    "romaji": "tōchaku"
+  },
+  "遅延": {
+    "kana": "ちえん",
+    "romaji": "chien"
+  },
+  "予約": {
+    "kana": "よやく",
+    "romaji": "yoyaku"
+  },
+  "旅程": {
+    "kana": "りょてい",
+    "romaji": "ryotei"
+  },
+  "歩道": {
+    "kana": "ほどう",
+    "romaji": "hodō"
+  },
+  "医者": {
+    "kana": "いしゃ",
+    "romaji": "isha"
+  },
+  "看護師": {
+    "kana": "かんごし",
+    "romaji": "kangoshi"
+  },
+  "教師": {
+    "kana": "きょうし",
+    "romaji": "kyōshi"
+  },
+  "学生": {
+    "kana": "がくせい",
+    "romaji": "gakusei"
+  },
+  "会社員": {
+    "kana": "かいしゃいん",
+    "romaji": "kaishain"
+  },
+  "商人": {
+    "kana": "しょうにん",
+    "romaji": "shōnin"
+  },
+  "エンジニア": {
+    "kana": "エンジニア",
+    "romaji": "enjinia"
+  },
+  "弁護士": {
+    "kana": "べんごし",
+    "romaji": "bengoshi"
+  },
+  "警察官": {
+    "kana": "けいさつかん",
+    "romaji": "keisatsukan"
+  },
+  "兵士": {
+    "kana": "へいし",
+    "romaji": "heishi"
+  },
+  "農家": {
+    "kana": "のうか",
+    "romaji": "nōka"
+  },
+  "料理人": {
+    "kana": "りょうりにん",
+    "romaji": "ryōrinin"
+  },
+  "大工": {
+    "kana": "だいく",
+    "romaji": "daiku"
+  },
+  "仕立て屋": {
+    "kana": "したてや",
+    "romaji": "shitateya"
+  },
+  "美容師": {
+    "kana": "びようし",
+    "romaji": "biyōshi"
+  },
+  "店員": {
+    "kana": "てんいん",
+    "romaji": "ten'in"
+  },
+  "銀行員": {
+    "kana": "ぎんこういん",
+    "romaji": "ginkōin"
+  },
+  "記者": {
+    "kana": "きしゃ",
+    "romaji": "kisha"
+  },
+  "通訳": {
+    "kana": "つうやく",
+    "romaji": "tsūyaku"
+  },
+  "社長": {
+    "kana": "しゃちょう",
+    "romaji": "shachō"
+  },
+  "部長": {
+    "kana": "ぶちょう",
+    "romaji": "buchō"
+  },
+  "マネージャー": {
+    "kana": "マネージャー",
+    "romaji": "manējā"
+  },
+  "秘書": {
+    "kana": "ひしょ",
+    "romaji": "hisho"
+  },
+  "受付": {
+    "kana": "うけつけ",
+    "romaji": "uketsuke"
+  },
+  "翻訳者": {
+    "kana": "ほんやくしゃ",
+    "romaji": "hon'yakusha"
+  },
+  "ガイド": {
+    "kana": "ガイド",
+    "romaji": "gaido"
+  },
+  "芸術家": {
+    "kana": "げいじゅつか",
+    "romaji": "geijutsuka"
+  },
+  "音楽家": {
+    "kana": "おんがくか",
+    "romaji": "ongakuka"
+  },
+  "歌手": {
+    "kana": "かしゅ",
+    "romaji": "kashu"
+  },
+  "俳優": {
+    "kana": "はいゆう",
+    "romaji": "haiyū"
+  },
+  "作家": {
+    "kana": "さっか",
+    "romaji": "sakka"
+  },
+  "プログラマー": {
+    "kana": "プログラマー",
+    "romaji": "puroguramā"
+  },
+  "デザイナー": {
+    "kana": "デザイナー",
+    "romaji": "dezainā"
+  },
+  "写真家": {
+    "kana": "しゃしんか",
+    "romaji": "shashinka"
+  },
+  "パイロット": {
+    "kana": "パイロット",
+    "romaji": "pairotto"
+  },
+  "客室乗務員": {
+    "kana": "きゃくしつじょうむいん",
+    "romaji": "kyakushitsujōmuin"
+  },
+  "漁師": {
+    "kana": "りょうし",
+    "romaji": "ryōshi"
+  },
+  "牧夫": {
+    "kana": "ぼくふ",
+    "romaji": "bokufu"
+  },
+  "主婦": {
+    "kana": "しゅふ",
+    "romaji": "shufu"
+  },
+  "大学": {
+    "kana": "だいがく",
+    "romaji": "daigaku"
+  },
+  "先生": {
+    "kana": "せんせい",
+    "romaji": "sensei"
+  },
+  "生徒": {
+    "kana": "せいと",
+    "romaji": "seito"
+  },
+  "教室": {
+    "kana": "きょうしつ",
+    "romaji": "kyōshitsu"
+  },
+  "本": {
+    "kana": "ほん",
+    "romaji": "hon"
+  },
+  "ノート": {
+    "kana": "ノート",
+    "romaji": "nōto"
+  },
+  "鉛筆": {
+    "kana": "えんぴつ",
+    "romaji": "enpitsu"
+  },
+  "ペン": {
+    "kana": "ペン",
+    "romaji": "pen"
+  },
+  "消しゴム": {
+    "kana": "けしゴム",
+    "romaji": "keshigomu"
+  },
+  "黒板": {
+    "kana": "こくばん",
+    "romaji": "kokuban"
+  },
+  "試験": {
+    "kana": "しけん",
+    "romaji": "shiken"
+  },
+  "宿題": {
+    "kana": "しゅくだい",
+    "romaji": "shukudai"
+  },
+  "授業": {
+    "kana": "じゅぎょう",
+    "romaji": "jugyō"
+  },
+  "卒業": {
+    "kana": "そつぎょう",
+    "romaji": "sotsugyō"
+  },
+  "言語": {
+    "kana": "げんご",
+    "romaji": "gengo"
+  },
+  "文法": {
+    "kana": "ぶんぽう",
+    "romaji": "bunpō"
+  },
+  "単語": {
+    "kana": "たんご",
+    "romaji": "tango"
+  },
+  "質問": {
+    "kana": "しつもん",
+    "romaji": "shitsumon"
+  },
+  "教科書": {
+    "kana": "きょうかしょ",
+    "romaji": "kyōkasho"
+  },
+  "辞書": {
+    "kana": "じしょ",
+    "romaji": "jisho"
+  },
+  "レポート": {
+    "kana": "レポート",
+    "romaji": "repōto"
+  },
+  "プレゼン": {
+    "kana": "プレゼン",
+    "romaji": "purezen"
+  },
+  "講義": {
+    "kana": "こうぎ",
+    "romaji": "kōgi"
+  },
+  "学期": {
+    "kana": "がっき",
+    "romaji": "gakki"
+  },
+  "学年": {
+    "kana": "がくねん",
+    "romaji": "gakunen"
+  },
+  "入学": {
+    "kana": "にゅうがく",
+    "romaji": "nyūgaku"
+  },
+  "成績": {
+    "kana": "せいせき",
+    "romaji": "seiseki"
+  },
+  "数学": {
+    "kana": "すうがく",
+    "romaji": "sūgaku"
+  },
+  "科学": {
+    "kana": "かがく",
+    "romaji": "kagaku"
+  },
+  "歴史": {
+    "kana": "れきし",
+    "romaji": "rekishi"
+  },
+  "地理": {
+    "kana": "ちり",
+    "romaji": "chiri"
+  },
+  "物理": {
+    "kana": "ぶつり",
+    "romaji": "butsuri"
+  },
+  "化学": {
+    "kana": "かがく",
+    "romaji": "kagaku"
+  },
+  "生物": {
+    "kana": "せいぶつ",
+    "romaji": "seibutsu"
+  },
+  "文学": {
+    "kana": "ぶんがく",
+    "romaji": "bungaku"
+  },
+  "哲学": {
+    "kana": "てつがく",
+    "romaji": "tetsugaku"
+  },
+  "経済": {
+    "kana": "けいざい",
+    "romaji": "keizai"
+  },
+  "答え": {
+    "kana": "こたえ",
+    "romaji": "kotae"
+  },
+  "お金": {
+    "kana": "おかね",
+    "romaji": "okane"
+  },
+  "紙幣": {
+    "kana": "しへい",
+    "romaji": "shihei"
+  },
+  "硬貨": {
+    "kana": "こうか",
+    "romaji": "kōka"
+  },
+  "ルピー": {
+    "kana": "ルピー",
+    "romaji": "rupī"
+  },
+  "ドル": {
+    "kana": "ドル",
+    "romaji": "doru"
+  },
+  "価格": {
+    "kana": "かかく",
+    "romaji": "kakaku"
+  },
+  "値段": {
+    "kana": "ねだん",
+    "romaji": "nedan"
+  },
+  "高い(値段)": {
+    "kana": "たかい",
+    "romaji": "takai"
+  },
+  "安い": {
+    "kana": "やすい",
+    "romaji": "yasui"
+  },
+  "給料": {
+    "kana": "きゅうりょう",
+    "romaji": "kyūryō"
+  },
+  "手当": {
+    "kana": "てあて",
+    "romaji": "teate"
+  },
+  "口座": {
+    "kana": "こうざ",
+    "romaji": "kōza"
+  },
+  "預金": {
+    "kana": "よきん",
+    "romaji": "yokin"
+  },
+  "ローン": {
+    "kana": "ローン",
+    "romaji": "rōn"
+  },
+  "利息": {
+    "kana": "りそく",
+    "romaji": "risoku"
+  },
+  "税金": {
+    "kana": "ぜいきん",
+    "romaji": "zeikin"
+  },
+  "予算": {
+    "kana": "よさん",
+    "romaji": "yosan"
+  },
+  "領収書": {
+    "kana": "りょうしゅうしょ",
+    "romaji": "ryōshūsho"
+  },
+  "お釣り": {
+    "kana": "おつり",
+    "romaji": "otsuri"
+  },
+  "投資": {
+    "kana": "とうし",
+    "romaji": "tōshi"
+  },
+  "利益": {
+    "kana": "りえき",
+    "romaji": "rieki"
+  },
+  "損失": {
+    "kana": "そんしつ",
+    "romaji": "sonshitsu"
+  },
+  "株": {
+    "kana": "かぶ",
+    "romaji": "kabu"
+  },
+  "借金": {
+    "kana": "しゃっきん",
+    "romaji": "shakkin"
+  },
+  "返済": {
+    "kana": "へんさい",
+    "romaji": "hensai"
+  },
+  "値引き": {
+    "kana": "ねびき",
+    "romaji": "nebiki"
+  },
+  "セール": {
+    "kana": "セール",
+    "romaji": "sēru"
+  },
+  "無料": {
+    "kana": "むりょう",
+    "romaji": "muryō"
+  },
+  "寄付": {
+    "kana": "きふ",
+    "romaji": "kifu"
+  },
+  "賞金": {
+    "kana": "しょうきん",
+    "romaji": "shōkin"
+  },
+  "商売": {
+    "kana": "しょうばい",
+    "romaji": "shōbai"
+  },
+  "会社": {
+    "kana": "かいしゃ",
+    "romaji": "kaisha"
+  },
+  "雇用": {
+    "kana": "こよう",
+    "romaji": "koyō"
+  },
+  "失業": {
+    "kana": "しつぎょう",
+    "romaji": "shitsugyō"
+  },
+  "富裕": {
+    "kana": "ふゆう",
+    "romaji": "fuyū"
+  },
+  "貧乏": {
+    "kana": "びんぼう",
+    "romaji": "binbō"
+  },
+  "クレジットカード": {
+    "kana": "クレジットカード",
+    "romaji": "kurejittokādo"
+  },
+  "趣味": {
+    "kana": "しゅみ",
+    "romaji": "shumi"
+  },
+  "娯楽": {
+    "kana": "ごらく",
+    "romaji": "goraku"
+  },
+  "読書": {
+    "kana": "どくしょ",
+    "romaji": "dokusho"
+  },
+  "映画": {
+    "kana": "えいが",
+    "romaji": "eiga"
+  },
+  "テレビ番組": {
+    "kana": "テレビばんぐみ",
+    "romaji": "terebibangumi"
+  },
+  "音楽": {
+    "kana": "おんがく",
+    "romaji": "ongaku"
+  },
+  "歌": {
+    "kana": "うた",
+    "romaji": "uta"
+  },
+  "ダンス": {
+    "kana": "ダンス",
+    "romaji": "dansu"
+  },
+  "ゲーム": {
+    "kana": "ゲーム",
+    "romaji": "gēmu"
+  },
+  "パズル": {
+    "kana": "パズル",
+    "romaji": "pazuru"
+  },
+  "旅行": {
+    "kana": "りょこう",
+    "romaji": "ryokō"
+  },
+  "写真撮影": {
+    "kana": "しゃしんさつえい",
+    "romaji": "shashinsatsuei"
+  },
+  "絵画": {
+    "kana": "かいが",
+    "romaji": "kaiga"
+  },
+  "絵を描く": {
+    "kana": "えをかく",
+    "romaji": "e o kaku"
+  },
+  "釣り": {
+    "kana": "つり",
+    "romaji": "tsuri"
+  },
+  "ハイキング": {
+    "kana": "ハイキング",
+    "romaji": "haikingu"
+  },
+  "山登り": {
+    "kana": "やまのぼり",
+    "romaji": "yamanobori"
+  },
+  "キャンプ": {
+    "kana": "キャンプ",
+    "romaji": "kyanpu"
+  },
+  "料理(趣味)": {
+    "kana": "りょうり",
+    "romaji": "ryōri"
+  },
+  "編み物": {
+    "kana": "あみもの",
+    "romaji": "amimono"
+  },
+  "手芸": {
+    "kana": "しゅげい",
+    "romaji": "shugei"
+  },
+  "楽器": {
+    "kana": "がっき",
+    "romaji": "gakki"
+  },
+  "ギター": {
+    "kana": "ギター",
+    "romaji": "gitā"
+  },
+  "ピアノ": {
+    "kana": "ピアノ",
+    "romaji": "piano"
+  },
+  "ドラム": {
+    "kana": "ドラム",
+    "romaji": "doramu"
+  },
+  "フルート": {
+    "kana": "フルート",
+    "romaji": "furūto"
+  },
+  "カラオケ": {
+    "kana": "カラオケ",
+    "romaji": "karaoke"
+  },
+  "漫画": {
+    "kana": "まんが",
+    "romaji": "manga"
+  },
+  "アニメ": {
+    "kana": "アニメ",
+    "romaji": "anime"
+  },
+  "小説": {
+    "kana": "しょうせつ",
+    "romaji": "shōsetsu"
+  },
+  "詩": {
+    "kana": "し",
+    "romaji": "shi"
+  },
+  "ヨガ": {
+    "kana": "ヨガ",
+    "romaji": "yoga"
+  },
+  "瞑想": {
+    "kana": "めいそう",
+    "romaji": "meisō"
+  },
+  "ガーデニング": {
+    "kana": "ガーデニング",
+    "romaji": "gādeningu"
+  },
+  "コレクション": {
+    "kana": "コレクション",
+    "romaji": "korekushon"
+  },
+  "集める": {
+    "kana": "あつめる",
+    "romaji": "atsumeru"
+  },
+  "楽しむ": {
+    "kana": "たのしむ",
+    "romaji": "tanoshimu"
+  },
+  "リラックス": {
+    "kana": "リラックス",
+    "romaji": "rirakkusu"
+  },
+  "パーティー": {
+    "kana": "パーティー",
+    "romaji": "pātī"
+  },
+  "友達と遊ぶ": {
+    "kana": "ともだちとあそぶ",
+    "romaji": "tomodachi to asobu"
+  },
+  "祭り": {
+    "kana": "まつり",
+    "romaji": "matsuri"
+  },
+  "ダサイン祭": {
+    "kana": "ダサインさい",
+    "romaji": "dasainsai"
+  },
+  "ティハール祭": {
+    "kana": "ティハールさい",
+    "romaji": "tihārusai"
+  },
+  "結婚式": {
+    "kana": "けっこんしき",
+    "romaji": "kekkonshiki"
+  },
+  "誕生日": {
+    "kana": "たんじょうび",
+    "romaji": "tanjōbi"
+  },
+  "お祈り": {
+    "kana": "おいのり",
+    "romaji": "oinori"
+  },
+  "寺": {
+    "kana": "てら",
+    "romaji": "tera"
+  },
+  "神": {
+    "kana": "かみ",
+    "romaji": "kami"
+  },
+  "仏": {
+    "kana": "ほとけ",
+    "romaji": "hotoke"
+  },
+  "信仰": {
+    "kana": "しんこう",
+    "romaji": "shinkō"
+  },
+  "ヒンドゥー教": {
+    "kana": "ヒンドゥーきょう",
+    "romaji": "hindūkyō"
+  },
+  "仏教": {
+    "kana": "ぶっきょう",
+    "romaji": "bukkyō"
+  },
+  "イスラム教": {
+    "kana": "イスラムきょう",
+    "romaji": "isuramukyō"
+  },
+  "キリスト教": {
+    "kana": "キリストきょう",
+    "romaji": "kirisutokyō"
+  },
+  "文化": {
+    "kana": "ぶんか",
+    "romaji": "bunka"
+  },
+  "伝統": {
+    "kana": "でんとう",
+    "romaji": "dentō"
+  },
+  "儀式": {
+    "kana": "ぎしき",
+    "romaji": "gishiki"
+  },
+  "お供え": {
+    "kana": "おそなえ",
+    "romaji": "osonae"
+  },
+  "巡礼": {
+    "kana": "じゅんれい",
+    "romaji": "junrei"
+  },
+  "新年": {
+    "kana": "しんねん",
+    "romaji": "shinnen"
+  },
+  "ホーリー祭": {
+    "kana": "ホーリーさい",
+    "romaji": "hōrīsai"
+  },
+  "命日": {
+    "kana": "めいにち",
+    "romaji": "meinichi"
+  },
+  "葬式": {
+    "kana": "そうしき",
+    "romaji": "sōshiki"
+  },
+  "火葬": {
+    "kana": "かそう",
+    "romaji": "kasō"
+  },
+  "占い": {
+    "kana": "うらない",
+    "romaji": "uranai"
+  },
+  "星占い": {
+    "kana": "ほしうらない",
+    "romaji": "hoshiuranai"
+  },
+  "神話": {
+    "kana": "しんわ",
+    "romaji": "shinwa"
+  },
+  "聖典": {
+    "kana": "せいてん",
+    "romaji": "seiten"
+  },
+  "僧侶": {
+    "kana": "そうりょ",
+    "romaji": "sōryo"
+  },
+  "巡礼者": {
+    "kana": "じゅんれいしゃ",
+    "romaji": "junreisha"
+  },
+  "守護神": {
+    "kana": "しゅごしん",
+    "romaji": "shugoshin"
+  },
+  "女神": {
+    "kana": "めがみ",
+    "romaji": "megami"
+  },
+  "男神": {
+    "kana": "おとこがみ",
+    "romaji": "otokogami"
+  },
+  "悪魔": {
+    "kana": "あくま",
+    "romaji": "akuma"
+  },
+  "天使": {
+    "kana": "てんし",
+    "romaji": "tenshi"
+  },
+  "天国": {
+    "kana": "てんごく",
+    "romaji": "tengoku"
+  },
+  "地獄": {
+    "kana": "じごく",
+    "romaji": "jigoku"
+  },
+  "魂": {
+    "kana": "たましい",
+    "romaji": "tamashii"
+  },
+  "輪廻": {
+    "kana": "りんね",
+    "romaji": "rinne"
+  },
+  "業(カルマ)": {
+    "kana": "ごう",
+    "romaji": "gō"
+  },
+  "観光": {
+    "kana": "かんこう",
+    "romaji": "kankō"
+  },
+  "パスポート": {
+    "kana": "パスポート",
+    "romaji": "pasupōto"
+  },
+  "ビザ": {
+    "kana": "ビザ",
+    "romaji": "biza"
+  },
+  "スーツケース": {
+    "kana": "スーツケース",
+    "romaji": "sūtsukēsu"
+  },
+  "地図": {
+    "kana": "ちず",
+    "romaji": "chizu"
+  },
+  "カメラ": {
+    "kana": "カメラ",
+    "romaji": "kamera"
+  },
+  "写真": {
+    "kana": "しゃしん",
+    "romaji": "shashin"
+  },
+  "お土産": {
+    "kana": "おみやげ",
+    "romaji": "omiyage"
+  },
+  "ヒマラヤ": {
+    "kana": "ヒマラヤ",
+    "romaji": "himaraya"
+  },
+  "湖": {
+    "kana": "みずうみ",
+    "romaji": "mizuumi"
+  },
+  "川": {
+    "kana": "かわ",
+    "romaji": "kawa"
+  },
+  "海": {
+    "kana": "うみ",
+    "romaji": "umi"
+  },
+  "国境": {
+    "kana": "こっきょう",
+    "romaji": "kokkyō"
+  },
+  "関税": {
+    "kana": "かんぜい",
+    "romaji": "kanzei"
+  },
+  "両替": {
+    "kana": "りょうがえ",
+    "romaji": "ryōgae"
+  },
+  "レンタカー": {
+    "kana": "レンタカー",
+    "romaji": "rentakā"
+  },
+  "観光客": {
+    "kana": "かんこうきゃく",
+    "romaji": "kankōkyaku"
+  },
+  "観光地": {
+    "kana": "かんこうち",
+    "romaji": "kankōchi"
+  },
+  "名所": {
+    "kana": "めいしょ",
+    "romaji": "meisho"
+  },
+  "世界遺産": {
+    "kana": "せかいいさん",
+    "romaji": "sekaiisan"
+  },
+  "国立公園": {
+    "kana": "こくりつこうえん",
+    "romaji": "kokuritsukōen"
+  },
+  "トレッキング": {
+    "kana": "トレッキング",
+    "romaji": "torekkingu"
+  },
+  "ラフティング": {
+    "kana": "ラフティング",
+    "romaji": "rafutingu"
+  },
+  "寺院巡り": {
+    "kana": "じいんめぐり",
+    "romaji": "jiinmeguri"
+  },
+  "民泊": {
+    "kana": "みんぱく",
+    "romaji": "minpaku"
+  },
+  "ゲストハウス": {
+    "kana": "げすとはうす",
+    "romaji": "gesutohausu"
+  },
+  "リゾート": {
+    "kana": "りぞーと",
+    "romaji": "rizōto"
+  },
+  "ホームステイ料": {
+    "kana": "ほーむすていりょう",
+    "romaji": "hōmusuteiryō"
+  },
+  "キャンセル": {
+    "kana": "きゃんせる",
+    "romaji": "kyanseru"
+  },
+  "チェックイン": {
+    "kana": "ちぇっくいん",
+    "romaji": "chekkuin"
+  },
+  "緊急": {
+    "kana": "きんきゅう",
+    "romaji": "kinkyū"
+  },
+  "救急車": {
+    "kana": "きゅうきゅうしゃ",
+    "romaji": "kyūkyūsha"
+  },
+  "患者": {
+    "kana": "かんじゃ",
+    "romaji": "kanja"
+  },
+  "病気": {
+    "kana": "びょうき",
+    "romaji": "byōki"
+  },
+  "痛み": {
+    "kana": "いたみ",
+    "romaji": "itami"
+  },
+  "熱": {
+    "kana": "ねつ",
+    "romaji": "netsu"
+  },
+  "風邪": {
+    "kana": "かぜ",
+    "romaji": "kaze"
+  },
+  "咳": {
+    "kana": "せき",
+    "romaji": "seki"
+  },
+  "頭痛": {
+    "kana": "ずつう",
+    "romaji": "zutsū"
+  },
+  "怪我": {
+    "kana": "けが",
+    "romaji": "kega"
+  },
+  "薬": {
+    "kana": "くすり",
+    "romaji": "kusuri"
+  },
+  "注射": {
+    "kana": "ちゅうしゃ",
+    "romaji": "chūsha"
+  },
+  "血": {
+    "kana": "ち",
+    "romaji": "chi"
+  },
+  "火事": {
+    "kana": "かじ",
+    "romaji": "kaji"
+  },
+  "警察": {
+    "kana": "けいさつ",
+    "romaji": "keisatsu"
+  },
+  "助けて": {
+    "kana": "たすけて",
+    "romaji": "tasukete"
+  },
+  "アレルギー": {
+    "kana": "あれるぎー",
+    "romaji": "arerugī"
+  },
+  "食中毒": {
+    "kana": "しょくちゅうどく",
+    "romaji": "shokuchūdoku"
+  },
+  "インフルエンザ": {
+    "kana": "いんふるえんざ",
+    "romaji": "infuruenza"
+  },
+  "高血圧": {
+    "kana": "こうけつあつ",
+    "romaji": "kōketsuatsu"
+  },
+  "糖尿病": {
+    "kana": "とうにょうびょう",
+    "romaji": "tōnyōbyō"
+  },
+  "がん": {
+    "kana": "がん",
+    "romaji": "gan"
+  },
+  "心臓病": {
+    "kana": "しんぞうびょう",
+    "romaji": "shinzōbyō"
+  },
+  "手術": {
+    "kana": "しゅじゅつ",
+    "romaji": "shujutsu"
+  },
+  "包帯": {
+    "kana": "ほうたい",
+    "romaji": "hōtai"
+  },
+  "ばんそうこう": {
+    "kana": "ばんそうこう",
+    "romaji": "bansōkō"
+  },
+  "体温計": {
+    "kana": "たいおんけい",
+    "romaji": "taionkei"
+  },
+  "レントゲン": {
+    "kana": "れんとげん",
+    "romaji": "rentogen"
+  },
+  "ワクチン": {
+    "kana": "わくちん",
+    "romaji": "wakuchin"
+  },
+  "健康": {
+    "kana": "けんこう",
+    "romaji": "kenkō"
+  },
+  "健診": {
+    "kana": "けんしん",
+    "romaji": "kenshin"
+  },
+  "入院": {
+    "kana": "にゅういん",
+    "romaji": "nyūin"
+  },
+  "退院": {
+    "kana": "たいいん",
+    "romaji": "taiin"
+  },
+  "火傷": {
+    "kana": "やけど",
+    "romaji": "yakedo"
+  },
+  "骨折": {
+    "kana": "こっせつ",
+    "romaji": "kossetsu"
+  },
+  "暴力": {
+    "kana": "ぼうりょく",
+    "romaji": "bōryoku"
+  }
+}
