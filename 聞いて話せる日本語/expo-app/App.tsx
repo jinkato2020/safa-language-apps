@@ -25,12 +25,12 @@ const headerIconSource = require('./assets/icon.png');
 
 // L1(母語=パック)になり得る言語。ja は学習対象=共通コアなのでパックは無い。
 // UI言語が ja 等の場合はパックを ne にフォールバック。
-const PACK_LANGS = ['ne', 'bn', 'en'];
-const toPackLang = (lang: string) => (PACK_LANGS.includes(lang) ? lang : 'ne');
+// ⚠️ ネパール語(ne)UIは一時的に非公開。翻訳/パック/コードは残し、再開は ne を各リストに戻すだけ。
+const PACK_LANGS = ['bn', 'en'];
+const toPackLang = (lang: string) => (PACK_LANGS.includes(lang) ? lang : 'en');
 
-// 初回起動の母語選択。各L1の自言語表記で提示する。
+// 初回起動の母語選択。各L1の自言語表記で提示する。(ne は一時非表示)
 const LANG_OPTIONS = [
-  { code: 'ne', native: 'नेपाली', sub: 'Nepali' },
   { code: 'bn', native: 'বাংলা', sub: 'Bangla' },
   { code: 'en', native: 'English', sub: 'English' },
 ];
@@ -108,9 +108,9 @@ function PackGate({ children }: { children: ReactNode }) {
 function LanguageSelect({ onSelect }: { onSelect: (l: string) => void }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
-      <Text style={{ fontSize: 19, fontWeight: '700', color: '#18181b', marginBottom: 6 }}>言語を選択</Text>
+      <Text style={{ fontSize: 19, fontWeight: '700', color: '#18181b', marginBottom: 6 }}>Select your language</Text>
       <Text style={{ fontSize: 13, color: '#71717a', marginBottom: 32, textAlign: 'center' }}>
-        भाषा छान्नुहोस् / ভাষা নির্বাচন করুন
+        भाषा छान्नुहोस् · ভাষা নির্বাচন করুন
       </Text>
       {LANG_OPTIONS.map(o => (
         <Pressable
@@ -155,8 +155,8 @@ export default function App() {
   return (
     <I18nProvider
       translations={{ ja, ne, bn, en }}
-      fallbackLang="ne"
-      selectableLangs={['ne', 'bn', 'en']}
+      fallbackLang="en"
+      selectableLangs={['bn', 'en']}
       storageKey="@japanese_app/lang_v1"
     >
       <SettingsProvider
