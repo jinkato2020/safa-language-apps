@@ -23,8 +23,6 @@ import ListeningScreen from './screens/ListeningScreen';
 import VocabCategoryScreen from './screens/VocabCategoryScreen';
 import VocabDirectionScreen from './screens/VocabDirectionScreen';
 import FlashcardScreen from './screens/FlashcardScreen';
-import VocabModeScreen from './screens/VocabModeScreen';
-import PosterThemeScreen from './screens/PosterThemeScreen';
 import PosterAudioScreen from './screens/PosterAudioScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { PosterProvider, usePosterLessons, type PosterLesson } from './PosterContext';
@@ -142,12 +140,10 @@ function ListeningStackNav({ defaultStackOptions }: { defaultStackOptions: any }
 function VocabularyStackNav({ defaultStackOptions }: { defaultStackOptions: any }) {
   const hasPoster = usePosterLessons().length > 0;
   return (
-    <VocabStack.Navigator screenOptions={defaultStackOptions} initialRouteName={hasPoster ? 'VocabMode' : 'VocabCategory'}>
-      {hasPoster && <VocabStack.Screen name="VocabMode" component={VocabModeScreen} />}
+    <VocabStack.Navigator screenOptions={defaultStackOptions}>
       <VocabStack.Screen name="VocabCategory" component={VocabCategoryScreen} />
       <VocabStack.Screen name="VocabDirection" component={VocabDirectionScreen} />
       <VocabStack.Screen name="Flashcard" component={FlashcardScreen} />
-      {hasPoster && <VocabStack.Screen name="PosterTheme" component={PosterThemeScreen} />}
       {hasPoster && <VocabStack.Screen name="PosterAudio" component={PosterAudioScreen} />}
       <VocabStack.Screen name="SettingsMain" component={SettingsScreen} />
     </VocabStack.Navigator>

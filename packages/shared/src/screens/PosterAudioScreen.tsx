@@ -17,7 +17,7 @@ export default function PosterAudioScreen({ route }: any) {
   const player = useAudioPlayer();
   const scrollRef = useRef<ScrollView>(null);
   const [idx, setIdx] = useState(-1);      // -1: 未再生 / 0..n-1: 再生中カード
-  const [phase, setPhase] = useState<'ja' | 'ne'>('ja');
+  const [phase, setPhase] = useState<'ja' | 'ne'>('ne');  // ネパール語→日本語の順
   const [playing, setPlaying] = useState(false);
 
   // 最新値を listener から参照するための ref
@@ -48,10 +48,10 @@ export default function PosterAudioScreen({ route }: any) {
       if (!st?.didJustFinish || !lesson) return;
       const { idx: ci, phase: cp, playing: pl } = ref.current;
       if (!pl) return;
-      if (cp === 'ja') { setPhase('ne'); playCard(ci, 'ne'); }
+      if (cp === 'ne') { setPhase('ja'); playCard(ci, 'ja'); }  // ネパール語の次に日本語
       else {
         const ni = ci + 1;
-        if (ni < lesson.cards.length) { setIdx(ni); setPhase('ja'); playCard(ni, 'ja'); }
+        if (ni < lesson.cards.length) { setIdx(ni); setPhase('ne'); playCard(ni, 'ne'); }  // 次カードはネパール語から
         else { setPlaying(false); setIdx(-1); }   // 全終了
       }
     });
@@ -59,7 +59,7 @@ export default function PosterAudioScreen({ route }: any) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lesson, scale]);
 
-  const start = (from = 0) => { setPlaying(true); setIdx(from); setPhase('ja'); playCard(from, 'ja'); };
+  const start = (from = 0) => { setPlaying(true); setIdx(from); setPhase('ne'); playCard(from, 'ne'); };
   const stop = () => { setPlaying(false); player.pause(); };
   const toggle = () => { if (playing) stop(); else start(idx >= 0 ? idx : 0); };
 
