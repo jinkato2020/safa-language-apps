@@ -20,47 +20,57 @@ export default function PosterAudioScreen({ route }: any) {
   const [phase, setPhase] = useState<'ja' | 'ne'>('ne');  // ネパール語→日本語の順
   const [playing, setPlaying] = useState(false);
 
-  // 最新値を listener から参照するための ref
+  // 最新値を listener/watchdog から参照するための ref
   const ref = useRef({ idx, phase, playing });
   ref.current = { idx, phase, playing };
+  const genRef = useRef(0);                 // 再生世代(古いコールバックを無視)
+  const wdRef = useRef<any>(null);          // ended取りこぼし保険のタイマー
+  const advanceRef = useRef<(g: number) => void>(() => {});
 
   const PAD = spacing.lg;
   const dispW = width - PAD * 2;
   const scale = lesson ? dispW / lesson.posterW : 1;
   const dispH = lesson ? lesson.posterH * scale : 0;
 
-  // 指定カード・フェーズの音声を再生
+  // 指定カード・フェーズの音声を再生(状態更新もここで一元化)
   const playCard = (i: number, ph: 'ja' | 'ne') => {
     if (!lesson) return;
     const card = lesson.cards[i];
     if (!card) return;
-    player.replace(ph === 'ja' ? card.ja : card.ne);
-    player.seekTo(0);
-    player.play();
-    // ハイライトを画面内へスクロール
+    genRef.current += 1;
+    const my = genRef.current;
+    setIdx(i); setPhase(ph);
+    try { player.replace(ph === 'ja' ? card.ja : card.ne); player.seekTo(0); player.play(); } catch {}
     const y = card.box.y * scale;
     scrollRef.current?.scrollTo({ y: Math.max(0, y - dispW * 0.5), animated: true });
+    // 保険: ended が来なくても約6秒で次へ(音声は通常1〜2秒)
+    if (wdRef.current) clearTimeout(wdRef.current);
+    wdRef.current = setTimeout(() => advanceRef.current(my), 6000);
   };
 
-  // 再生終了で次へ(ja→ne→次カードのja)
+  // 次へ(ne→ja→次カードのne)。世代が古ければ無視(二重送り防止)
+  advanceRef.current = (g: number) => {
+    if (g !== genRef.current || !ref.current.playing || !lesson) return;
+    const { idx: ci, phase: cp } = ref.current;
+    if (cp === 'ne') { playCard(ci, 'ja'); }
+    else {
+      const ni = ci + 1;
+      if (ni < lesson.cards.length) playCard(ni, 'ne');
+      else { if (wdRef.current) clearTimeout(wdRef.current); setPlaying(false); setIdx(-1); }
+    }
+  };
+
+  // 再生終了イベントで次へ
   useEffect(() => {
     const sub = player.addListener('playbackStatusUpdate', (st: any) => {
-      if (!st?.didJustFinish || !lesson) return;
-      const { idx: ci, phase: cp, playing: pl } = ref.current;
-      if (!pl) return;
-      if (cp === 'ne') { setPhase('ja'); playCard(ci, 'ja'); }  // ネパール語の次に日本語
-      else {
-        const ni = ci + 1;
-        if (ni < lesson.cards.length) { setIdx(ni); setPhase('ne'); playCard(ni, 'ne'); }  // 次カードはネパール語から
-        else { setPlaying(false); setIdx(-1); }   // 全終了
-      }
+      if (st?.didJustFinish) advanceRef.current(genRef.current);
     });
     return () => sub.remove();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lesson, scale]);
+  }, []);
 
-  const start = (from = 0) => { setPlaying(true); setIdx(from); setPhase('ne'); playCard(from, 'ne'); };
-  const stop = () => { setPlaying(false); player.pause(); };
+  const start = (from = 0) => { setPlaying(true); playCard(from, 'ne'); };
+  const stop = () => { setPlaying(false); player.pause(); if (wdRef.current) clearTimeout(wdRef.current); };
   const toggle = () => { if (playing) stop(); else start(idx >= 0 ? idx : 0); };
 
   if (!lesson) return <View style={styles.center}><Text>レッスンがありません</Text></View>;
