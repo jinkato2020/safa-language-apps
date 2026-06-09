@@ -253,6 +253,9 @@
     "contact": "Contact",
     "mailSubject": "Listen & Speak Nepali — Inquiry",
     "privacyError": "Could not open the Privacy Policy.",
-    "mailError": "Could not open the mail app."
+    "mailError": "Could not open the mail app.",
+    "terms": "Terms of Service",
+    "privacyUrl": "https://safa-lang.com/nepali3/privacy/",
+    "termsUrl": "https://safa-lang.com/nepali3/terms/"
   }
 }

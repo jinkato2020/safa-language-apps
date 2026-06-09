@@ -112,8 +112,21 @@ export default function SettingsScreen() {
     ]);
   };
 
+  // 法的ページURLは i18n 経由で言語別に解決 (アプリ側 i18n の settings.privacyUrl / settings.termsUrl)。
+  // キー未設定のアプリはサイト全体の既定URLにフォールバック。
+  const SITE_DEFAULT = 'https://safa-lang.com';
+  const privacyUrl = (() => { const v = t('settings.privacyUrl'); return v.startsWith('http') ? v : `${SITE_DEFAULT}/privacy/`; })();
+  const termsUrl = t('settings.termsUrl');
+  const hasTerms = termsUrl.startsWith('http');
+
   const onPrivacy = () => {
-    Linking.openURL('https://www.safa-lang.com/nepali/privacy/').catch(() => {
+    Linking.openURL(privacyUrl).catch(() => {
+      Alert.alert(t('common.error'), t('settings.privacyError'));
+    });
+  };
+
+  const onTerms = () => {
+    Linking.openURL(termsUrl).catch(() => {
       Alert.alert(t('common.error'), t('settings.privacyError'));
     });
   };
@@ -266,6 +279,11 @@ export default function SettingsScreen() {
         <Row label={t('settings.privacy')} ss={ss}>
           <Pressable onPress={onPrivacy}><Text style={styles.linkText}>{t('common.open')}</Text></Pressable>
         </Row>
+        {hasTerms && (
+          <Row label={t('settings.terms')} ss={ss}>
+            <Pressable onPress={onTerms}><Text style={styles.linkText}>{t('common.open')}</Text></Pressable>
+          </Row>
+        )}
         <Row label={t('settings.contact')} ss={ss}>
           <Pressable onPress={onContact}><Text style={styles.linkText}>{t('common.mail')}</Text></Pressable>
         </Row>
