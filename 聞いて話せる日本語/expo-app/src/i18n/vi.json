@@ -197,7 +197,11 @@
     "neLang": "🇬🇧 Tiếng Anh",
     "jaLang": "🇯🇵 Tiếng Nhật",
     "neToJaDesc": "Hiển thị tiếng Anh; chạm để hiện tiếng Nhật. Giúp ghi nhớ nhanh.",
-    "jaToNeDesc": "Hiển thị tiếng Nhật; chạm để hiện tiếng Anh. Rèn kỹ năng đọc."
+    "jaToNeDesc": "Hiển thị tiếng Nhật; chạm để hiện tiếng Anh. Rèn kỹ năng đọc.",
+    "modeFlashcard": "Thẻ xáo trộn",
+    "modeFlashcardDesc": "Lật thẻ để học từ",
+    "modePoster": "Đọc theo poster",
+    "modePosterDesc": "Nghe trong khi xem poster"
   },
   "settings": {
     "title": "Cài đặt",

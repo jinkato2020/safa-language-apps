@@ -20,6 +20,7 @@ import bn from './src/i18n/bn.json';
 import en from './src/i18n/en.json';
 import vi from './src/i18n/vi.json';
 import { bundledPack, loadPack } from './src/packLoader';
+import { POSTER_LESSONS } from './src/posterLessons';
 
 const splashSource = require('./assets/safa-splash.mp4');
 const headerIconSource = require('./assets/icon.png');
@@ -168,7 +169,7 @@ export default function App() {
       >
         <FirstRunGate>
           <PackGate>
-            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} />
+            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={POSTER_LESSONS} />
           </PackGate>
         </FirstRunGate>
       </SettingsProvider>

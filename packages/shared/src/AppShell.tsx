@@ -23,7 +23,11 @@ import ListeningScreen from './screens/ListeningScreen';
 import VocabCategoryScreen from './screens/VocabCategoryScreen';
 import VocabDirectionScreen from './screens/VocabDirectionScreen';
 import FlashcardScreen from './screens/FlashcardScreen';
+import VocabModeScreen from './screens/VocabModeScreen';
+import PosterThemeScreen from './screens/PosterThemeScreen';
+import PosterAudioScreen from './screens/PosterAudioScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import { PosterProvider, usePosterLessons, type PosterLesson } from './PosterContext';
 import { colors } from './theme';
 import { useGlobalScaleStyle } from './SettingsContext';
 import { useI18n } from './i18n';
@@ -136,11 +140,15 @@ function ListeningStackNav({ defaultStackOptions }: { defaultStackOptions: any }
 }
 
 function VocabularyStackNav({ defaultStackOptions }: { defaultStackOptions: any }) {
+  const hasPoster = usePosterLessons().length > 0;
   return (
-    <VocabStack.Navigator screenOptions={defaultStackOptions}>
+    <VocabStack.Navigator screenOptions={defaultStackOptions} initialRouteName={hasPoster ? 'VocabMode' : 'VocabCategory'}>
+      {hasPoster && <VocabStack.Screen name="VocabMode" component={VocabModeScreen} />}
       <VocabStack.Screen name="VocabCategory" component={VocabCategoryScreen} />
       <VocabStack.Screen name="VocabDirection" component={VocabDirectionScreen} />
       <VocabStack.Screen name="Flashcard" component={FlashcardScreen} />
+      {hasPoster && <VocabStack.Screen name="PosterTheme" component={PosterThemeScreen} />}
+      {hasPoster && <VocabStack.Screen name="PosterAudio" component={PosterAudioScreen} />}
       <VocabStack.Screen name="SettingsMain" component={SettingsScreen} />
     </VocabStack.Navigator>
   );
@@ -245,9 +253,11 @@ export type AppShellProps = {
   splashSource: number;
   /** (旧) ヘッダーアイコン。現在はテキストタイトルに置き換えたため未使用 (互換のため任意で受け取る) */
   headerIconSource?: number;
+  /** ポスター音声学習レッスン (供給時のみ単語モードに「音声朗読」分岐を表示) */
+  posterLessons?: PosterLesson[];
 };
 
-export function AppShell({ splashSource }: AppShellProps) {
+export function AppShell({ splashSource, posterLessons }: AppShellProps) {
   const [splashDone, setSplashDone] = useState(false);
   const defaultStackOptions = useRef(makeDefaultStackOptions(HeaderTitle)).current;
 
@@ -278,9 +288,11 @@ export function AppShell({ splashSource }: AppShellProps) {
     <SafeAreaProvider>
       <NavigationContainer>
         <StatusBar style="dark" />
-        <ListeningAudioProvider>
-          <MainTabs defaultStackOptions={defaultStackOptions} />
-        </ListeningAudioProvider>
+        <PosterProvider lessons={posterLessons || []}>
+          <ListeningAudioProvider>
+            <MainTabs defaultStackOptions={defaultStackOptions} />
+          </ListeningAudioProvider>
+        </PosterProvider>
       </NavigationContainer>
     </SafeAreaProvider>
   );

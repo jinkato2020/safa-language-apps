@@ -197,7 +197,11 @@
     "neLang": "🇳🇵 ネパール語",
     "jaLang": "🇯🇵 日本語",
     "neToJaDesc": "ネパール語が表示され、タップで日本語訳を確認。読解力を鍛えます。",
-    "jaToNeDesc": "日本語が表示され、タップでネパール語を確認。瞬発力を鍛えます。"
+    "jaToNeDesc": "日本語が表示され、タップでネパール語を確認。瞬発力を鍛えます。",
+    "modeFlashcard": "シャッフルカード",
+    "modeFlashcardDesc": "カードをめくって単語を覚える",
+    "modePoster": "音声朗読(ポスター)",
+    "modePosterDesc": "ポスターを見ながら音声を聞く"
   },
   "settings": {
     "title": "設定",

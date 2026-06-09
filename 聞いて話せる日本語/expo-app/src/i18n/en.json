@@ -197,7 +197,11 @@
     "neLang": "🇬🇧 English",
     "jaLang": "🇯🇵 Japanese",
     "neToJaDesc": "English is shown; tap to reveal the Japanese. Builds quick recall.",
-    "jaToNeDesc": "Japanese is shown; tap to reveal the English. Builds reading skills."
+    "jaToNeDesc": "Japanese is shown; tap to reveal the English. Builds reading skills.",
+    "modeFlashcard": "Shuffle cards",
+    "modeFlashcardDesc": "Flip cards to learn words",
+    "modePoster": "Audio reading (poster)",
+    "modePosterDesc": "Listen while viewing the poster"
   },
   "settings": {
     "title": "Settings",
