@@ -5,13 +5,13 @@
       "l1": "en",
       "name": "English",
       "nameJa": "English",
-      "version": 3,
+      "version": 4,
       "access": "free",
-      "sizeBytes": 2449994,
-      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs-nepali/overlay-en-v3.json",
-      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs-nepali/audio-en-v2.zip",
-      "audioVersion": 2,
-      "audioZipBytes": 67437286
+      "sizeBytes": 2450181,
+      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs-nepali/overlay-en-v4.json",
+      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs-nepali/audio-en-v3.zip",
+      "audioVersion": 3,
+      "audioZipBytes": 67573606
     },
     {
       "l1": "ja",
