@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Image, ScrollView, Pressable, useWindowDimensions, StyleSheet } from 'react-native';
 import { useAudioPlayer } from 'expo-audio';
+import Svg, { Path, Rect } from 'react-native-svg';
 import { colors, spacing, radius } from '../theme';
 import { usePosterLessons } from '../PosterContext';
 
@@ -117,7 +118,14 @@ export default function PosterAudioScreen({ route }: any) {
         )}
         <View style={styles.bar}>
           <Pressable onPress={toggle} style={({ pressed }) => [styles.playBtn, pressed && styles.playPressed]}>
-            <Text style={styles.playText}>{playing ? '■ 停止' : (idx >= 0 ? '▶ 続きから' : '▶ 再生')}</Text>
+            {playing ? (
+              <Svg width={22} height={22} viewBox="0 0 24 24">
+                <Rect x={6} y={5} width={4} height={14} rx={1} fill="#fff" />
+                <Rect x={14} y={5} width={4} height={14} rx={1} fill="#fff" />
+              </Svg>
+            ) : (
+              <Svg width={22} height={22} viewBox="0 0 24 24"><Path d="M8 5v14l11-7z" fill="#fff" /></Svg>
+            )}
           </Pressable>
           <Text style={styles.prog}>{idx >= 0 ? `${idx + 1} / ${lesson.cards.length}` : ''}</Text>
         </View>
@@ -129,8 +137,8 @@ export default function PosterAudioScreen({ route }: any) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  hl: { position: 'absolute', borderWidth: 4, borderColor: GOLD, borderRadius: 18,
-    backgroundColor: 'rgba(176,135,70,0.12)' },
+  hl: { position: 'absolute', borderWidth: 2, borderColor: GOLD, borderRadius: 16,
+    backgroundColor: 'rgba(176,135,70,0.10)' },
   dock: { position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: colors.surface,
     borderTopWidth: 1, borderTopColor: colors.line },
   bigcard: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg, paddingHorizontal: spacing.lg, paddingVertical: spacing.md, minHeight: 140 },
@@ -146,8 +154,7 @@ const styles = StyleSheet.create({
   np: { fontSize: 30, fontWeight: '700', color: '#2f5d54', marginTop: 4 },
   bar: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingHorizontal: spacing.lg, paddingVertical: spacing.sm,
     borderTopWidth: 1, borderTopColor: '#f0eee9' },
-  playBtn: { paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, backgroundColor: colors.ink, borderRadius: radius.md },
+  playBtn: { width: 52, height: 52, borderRadius: 26, backgroundColor: colors.ink, alignItems: 'center', justifyContent: 'center' },
   playPressed: { opacity: 0.7 },
-  playText: { color: '#fff', fontWeight: '700', fontSize: 15 },
   prog: { flex: 1, textAlign: 'right', fontSize: 13, color: colors.inkFaint },
 });
