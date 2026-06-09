@@ -27,15 +27,15 @@ const headerIconSource = require('./assets/icon.png');
 
 // L1(母語=パック)になり得る言語。ja は学習対象=共通コアなのでパックは無い。
 // UI言語が ja 等の場合はパックを ne にフォールバック。
-// ⚠️ ネパール語(ne)UIは一時的に非公開。翻訳/パック/コードは残し、再開は ne を各リストに戻すだけ。
-const PACK_LANGS = ['bn', 'en', 'vi'];
+const PACK_LANGS = ['bn', 'en', 'vi', 'ne'];
 const toPackLang = (lang: string) => (PACK_LANGS.includes(lang) ? lang : 'en');
 
-// 初回起動の母語選択。各L1の自言語表記で提示する。(ne は一時非表示)
+// 初回起動の母語選択。各L1の自言語表記で提示する。
 const LANG_OPTIONS = [
   { code: 'bn', native: 'বাংলা', sub: 'Bangla' },
   { code: 'en', native: 'English', sub: 'English' },
   { code: 'vi', native: 'Tiếng Việt', sub: 'Vietnamese' },
+  { code: 'ne', native: 'नेपाली', sub: 'Nepali' },
 ];
 // 母語を一度でも選んだかのフラグ (i18n の lang とは別管理)。
 const L1_CHOSEN_KEY = '@japanese_app/l1_chosen_v1';
@@ -160,7 +160,7 @@ export default function App() {
     <I18nProvider
       translations={{ ja, ne, bn, en, vi }}
       fallbackLang="en"
-      selectableLangs={['bn', 'en', 'vi']}
+      selectableLangs={['bn', 'en', 'vi', 'ne']}
       storageKey="@japanese_app/lang_v1"
     >
       <SettingsProvider
