@@ -42,9 +42,9 @@
       "name": "Tiếng Việt",
       "nameJa": "ベトナム語",
       "access": "free",
-      "version": 1,
-      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-vi-v1.json",
-      "sizeBytes": 191659,
+      "version": 2,
+      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-vi-v2.json",
+      "sizeBytes": 2300082,
       "audioVersion": 1,
       "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-vi-v1.zip",
       "audioZipBytes": 70884454
