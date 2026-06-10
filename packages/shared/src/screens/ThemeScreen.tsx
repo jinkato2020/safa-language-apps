@@ -126,7 +126,7 @@ export default function ThemeScreen() {
       }
       data={items}
       keyExtractor={(item) => String(item.id)}
-      renderItem={({ item }) => (
+      renderItem={({ item, index }) => (
         <Pressable
           style={({ pressed }) => [
             styles.card,
@@ -134,7 +134,8 @@ export default function ThemeScreen() {
           ]}
           onPress={() => onPressItem(item.id)}
         >
-          <Text style={styles.num}>{String(item.id).padStart(2, '0')}</Text>
+          {/* 表示番号はリスト上の位置(=テーマ並び順)。データキーは item.id を維持。 */}
+          <Text style={styles.num}>{String(index + 1).padStart(2, '0')}</Text>
           <Text style={[styles.name, ss(14)]}>{getThemeDisplayName(item.id)}</Text>
         </Pressable>
       )}
