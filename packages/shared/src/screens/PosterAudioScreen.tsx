@@ -152,9 +152,9 @@ const styles = StyleSheet.create({
   lngtagText: { color: '#fff', fontWeight: '700', fontSize: 12 },
   rom: { fontSize: 16, color: colors.inkFaint, fontStyle: 'italic', marginTop: 2 },
   np: { fontSize: 30, fontWeight: '700', color: '#2f5d54', marginTop: 4 },
-  bar: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingHorizontal: spacing.lg, paddingVertical: spacing.sm,
+  bar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingHorizontal: spacing.lg, paddingVertical: spacing.sm,
     borderTopWidth: 1, borderTopColor: '#f0eee9' },
   playBtn: { width: 52, height: 52, borderRadius: 26, backgroundColor: colors.ink, alignItems: 'center', justifyContent: 'center' },
   playPressed: { opacity: 0.7 },
-  prog: { flex: 1, textAlign: 'right', fontSize: 13, color: colors.inkFaint },
+  prog: { position: 'absolute', right: spacing.lg, fontSize: 13, color: colors.inkFaint },
 });
