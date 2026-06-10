@@ -7,7 +7,6 @@
 
 import type { AppData } from '@safa/shared';
 import * as FileSystem from 'expo-file-system/legacy';
-import { unzipSync } from 'fflate';
 import appJson from '../app.json';
 import { jaCore } from './appData';
 import { composePack, type L1Overlay } from './pack/compose';
@@ -72,15 +71,6 @@ function b64ToU8(b64: string): Uint8Array {
   for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
   return u8;
 }
-function u8ToB64(u8: Uint8Array): string {
-  let bin = '';
-  const chunk = 0x8000;
-  for (let i = 0; i < u8.length; i += chunk) {
-    bin += String.fromCharCode.apply(null, Array.from(u8.subarray(i, i + chunk)));
-  }
-  return (global as any).btoa(bin);
-}
-
 // オーバーレイJSON取得 (オフライン=キャッシュ / 新版あれば再DL)。
 async function getOverlay(lang: string, entry: any, diag?: { catalog: any; catalogErr: string }): Promise<any> {
   const uri = overlayUri(lang);
@@ -132,22 +122,44 @@ async function ensureAudio(lang: string, entry: any, onProgress?: ProgressFn): P
   });
   await dl.downloadAsync();
 
-  // 2) 展開して各mp3を保存 (進捗: ファイル数)
-  //   メモリ対策: zipバイト列は展開後すぐ解放し、各mp3は書き出し後に都度解放する
-  //   (Android で 70〜80MB のzipを一括保持するとOOM/フリーズしやすいため)。
-  let bytes: Uint8Array | null = b64ToU8(await FileSystem.readAsStringAsync(zipUri, { encoding: 'base64' as any }));
-  const files = unzipSync(bytes);
-  bytes = null; // 元zipバイト列を解放
-  const names = Object.keys(files);
-  let i = 0;
+  // 2) ストリーミング展開して各mp3を保存。
+  //   音声zipは無圧縮(STORED, fflate zipSync level:0)なので、zip全体をメモリに
+  //   載せず、ディスク上のzipから各エントリのローカルヘッダ+データを範囲読みして
+  //   そのまま書き出す。ピークメモリは1ファイル分のみ→Androidの70〜80MBでもOOMしない。
+  const zinfo: any = await FileSystem.getInfoAsync(zipUri);
+  const zipSize: number = zinfo?.size ?? 0;
+  const HDR = 30; // local file header 固定長
+  let off = 0, fcount = 0;
   onProgress?.(Math.round(DL_FRAC * SCALE), SCALE, '展開中'); // 80%から継続
-  for (const name of names) {
-    await FileSystem.writeAsStringAsync(`${audioDir(lang)}${name}`, u8ToB64(files[name]), { encoding: 'base64' as any });
-    delete (files as any)[name]; // 書き出し済みmp3を解放(ピークメモリ抑制)
-    i++;
-    const f = DL_FRAC + (i / names.length) * (1 - DL_FRAC);
+  while (off + 4 <= zipSize) {
+    // ヘッダ(30) + ファイル名(短い)をまとめて読む
+    const head = b64ToU8(await FileSystem.readAsStringAsync(zipUri, { encoding: 'base64' as any, position: off, length: Math.min(HDR + 128, zipSize - off) }));
+    // ローカルファイルヘッダ署名 PK\x03\x04 でなければ中央ディレクトリ等＝終了
+    if (!(head[0] === 0x50 && head[1] === 0x4b && head[2] === 0x03 && head[3] === 0x04)) break;
+    const u16 = (i: number) => head[i] | (head[i + 1] << 8);
+    const u32 = (i: number) => head[i] + head[i + 1] * 256 + head[i + 2] * 65536 + head[i + 3] * 16777216;
+    const comp = u32(18);            // 圧縮後サイズ(STORED=実サイズ)
+    const nameLen = u16(26);
+    const extraLen = u16(28);
+    let name = '';
+    if (HDR + nameLen <= head.length) {
+      for (let k = 0; k < nameLen; k++) name += String.fromCharCode(head[HDR + k]);
+    } else {
+      const nb = b64ToU8(await FileSystem.readAsStringAsync(zipUri, { encoding: 'base64' as any, position: off + HDR, length: nameLen }));
+      for (let k = 0; k < nameLen; k++) name += String.fromCharCode(nb[k]);
+    }
+    const dataPos = off + HDR + nameLen + extraLen;
+    if (comp > 0 && name && !name.endsWith('/')) {
+      // データをbase64で範囲読み→そのままbase64書き出し(デコード不要・低メモリ)
+      const b64 = await FileSystem.readAsStringAsync(zipUri, { encoding: 'base64' as any, position: dataPos, length: comp });
+      await FileSystem.writeAsStringAsync(`${audioDir(lang)}${name}`, b64, { encoding: 'base64' as any });
+      fcount++;
+    }
+    off = dataPos + comp;
+    const f = DL_FRAC + Math.min(1, off / (zipSize || 1)) * (1 - DL_FRAC);
     onProgress?.(Math.round(f * SCALE), SCALE, '展開中'); // 80〜100%
   }
+  if (fcount === 0) throw new Error('zip展開で0ファイル(破損/形式不一致)');
   // 全mp3の保存が完了してからマーカーを書く(途中失敗時は未完=次回再取得)。
   await FileSystem.writeAsStringAsync(marker, String(entry.audioVersion ?? ''));
   await FileSystem.deleteAsync(zipUri, { idempotent: true });
