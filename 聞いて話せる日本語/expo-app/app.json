@@ -2,7 +2,7 @@
   "expo": {
     "name": "聞いて話せる日本語",
     "slug": "ListenSpeakJapanese",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "runtimeVersion": {
       "policy": "appVersion"
     },
