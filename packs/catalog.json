@@ -9,9 +9,9 @@
       "access": "free",
       "sizeBytes": 3819053,
       "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-bn-v10.json",
-      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-bn-v8.zip",
-      "audioVersion": 8,
-      "audioZipBytes": 77546470
+      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-bn-v9.zip",
+      "audioVersion": 9,
+      "audioZipBytes": 2808830
     },
     {
       "l1": "ne",
