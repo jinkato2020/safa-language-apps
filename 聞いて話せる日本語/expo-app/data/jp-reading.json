@@ -6964,8 +6964,8 @@
     "romaji": "Koochi no shiji o yoku kikanai to, joutatsu shimasen."
   },
   "スポーツ観戦が好きなので、スタジアムによく行きます。": {
-    "kana": "スポーツ かんせんが すきなので、スタジアムに よく いきます。",
-    "romaji": "Supootsu kansen ga suki na node, Sutajiamu ni yoku ikimasu."
+    "kana": "スポーツかんせんがすきなので、スタジアムによくいきます。",
+    "romaji": "supōtsu kansen ga suki na node, sutajiamu ni yoku ikimasu."
   },
   "マラソンに参加するために、半年間トレーニングしました。": {
     "kana": "マラソンに さんかする ために、はんとしかん トレーニング しました。",
@@ -9374,5 +9374,3169 @@
   "世代間で価値観の違いが生じているものの、ネパール人の根底にある家族への献身は変わらない。": {
     "kana": "せだいかんでかちかんのちがいがしょうじているものの、ネパールじんのこんていにあるかぞくへのけんしんはかわらない。",
     "romaji": "sedaikan de kachikan no chigai ga shōjite iru mono no, ネパール jin no kontei ni aru kazoku e no kenshin wa kawaranai."
+  },
+  "日本の文化にとても興味があります。": {
+    "kana": "にほんの ぶんかに とても きょうみが あります。",
+    "romaji": "Nihon no bunka ni totemo kyōmi ga arimasu."
+  },
+  "英語とスペイン語が話せますが、今は日本語を学んでいます。": {
+    "kana": "えいごと スペインごが はなせますが、いまは にほんごを まなんで います。",
+    "romaji": "Eigo to Supein-go ga hanasemasu ga, ima wa Nihon-go o manande imasu."
+  },
+  "私の強みは異なる意見をまとめ、チーम全体を同じ目標へと導くリーダーシップにあると思っています。": {
+    "kana": "わたしの つよみは ことなる いけんを まとめ、チームぜんたいを おなじ もくひょうへと みちびく リーダーシップに あると おもって います。",
+    "romaji": "Watashi no tsuyomi wa kotonaru iken o matomete, Chīmu zentai o onaji mokuhyō e to michibiku Rīdāshippu ni aru to omotte imasu."
+  },
+  "日本料理を初めて食べましたが、とても気に入りました。": {
+    "kana": "にほんりょうりを はじめて たべましたが、とても きに いりました。",
+    "romaji": "Nihon ryōri o hajimete tabemashita ga, totemo ki ni irimashita."
+  },
+  "保育園に入りたいです。": {
+    "kana": "ほいくえんに はいりたいです。",
+    "romaji": "Hoikuen ni hairitai desu."
+  },
+  "今日、子供が熱があります。": {
+    "kana": "きょう、こどもが ねつが あります。",
+    "romaji": "Kyō, kodomo ga netsu ga arimasu."
+  },
+  "母子手帳をください。": {
+    "kana": "ぼしてちょうを ください。",
+    "romaji": "Boshi techō o kudasai."
+  },
+  "予防接種はいつですか？": {
+    "kana": "よぼうせっしゅは いつですか？",
+    "romaji": "Yobō sesshu wa itsu desu ka?"
+  },
+  "お迎えは何時ですか？": {
+    "kana": "おむかえは なんじですか？",
+    "romaji": "Omukae wa nanji desu ka?"
+  },
+  "連絡帳を書いてください。": {
+    "kana": "れんらくちょうを かいてください。",
+    "romaji": "Renrakuchō o kaite kudasai."
+  },
+  "卵アレルギーがあります。": {
+    "kana": "たまご アレルギーが あります。",
+    "romaji": "Tamago Arerugī ga arimasu."
+  },
+  "運動会はいつですか？": {
+    "kana": "うんどうかいは いつですか？",
+    "romaji": "Undōkai wa itsu desu ka?"
+  },
+  "保育園の入園申し込みはどこでしますか？": {
+    "kana": "ほいくえんの にゅうえん もうしこみは どこで しますか？",
+    "romaji": "Hoikuen no nyūen mōshikomi wa doko de shimasu ka?"
+  },
+  "子供が病気のとき、病児保育を利用できますか？": {
+    "kana": "こどもが びょうきの とき、びょうじほいくを りようできますか？",
+    "romaji": "Kodomo ga byōki no toki, byōji hoiku o riyō dekimasu ka?"
+  },
+  "３か月健診の予約をしたいのですが。": {
+    "kana": "さんかげつ けんしんの よやくを したいのですが。",
+    "romaji": "Sankagetsu kenshin no yoyaku o shitai no desu ga."
+  },
+  "給食にアレルギー対応をしてもらえますか？": {
+    "kana": "きゅうしょくに アレルギー たいおうを して もらえますか？",
+    "romaji": "Kyūshoku ni Arerugī taiō o shite moraemasu ka?"
+  },
+  "明日の持ち物リストを教えてください。": {
+    "kana": "あしたの もちものリストを おしえてください。",
+    "romaji": "Ashita no mochimono Risuto o oshiete kudasai."
+  },
+  "先生にメッセージアプリで連絡してもいいですか？": {
+    "kana": "せんせいに メッセージアプリで れんらくしても いいですか？",
+    "romaji": "Sensei ni Messēji Apuri de renraku shite mo ii desu ka?"
+  },
+  "児童手当の申請方法を教えてください。": {
+    "kana": "じどうてあての しんせい ほうほうを おしえてください。",
+    "romaji": "Jidō teate no shinsei hōhō o oshiete kudasai."
+  },
+  "授業参観の日程はいつですか？": {
+    "kana": "じゅぎょう さんかんの にっていは いつですか？",
+    "romaji": "Jugyō sankan no nittei wa itsu desu ka?"
+  },
+  "待機児童が多く、希望の保育園に入れるか心配しています。": {
+    "kana": "たいきじどうが おおく、きぼうの ほいくえんに はいれるか しんぱいして います。",
+    "romaji": "Taiki jidō ga ōku, kibō no hoikuen ni haireru ka shinpai shite imasu."
+  },
+  "入園式に必要な書類を事前に確認しておきたいです。": {
+    "kana": "にゅうえんしきに ひつような しょるいを じぜんに かくにんして おきたいです。",
+    "romaji": "Nyūenshiki ni hitsuyō na shorui o jizen ni kakunin shite okitai desu."
+  },
+  "子供のかかりつけ医から予防接種の記録を母子手帳に書いてもらいました。": {
+    "kana": "こどもの かかりつけいから よぼうせっしゅの きろくを ぼしてちょうに かいて もらいました。",
+    "romaji": "Kodomo no kakaritsuke-i kara yobō sesshu no kiroku o boshi techō ni kaite moraimashita."
+  },
+  "連絡帳に子供の体調と食欲の変化を毎日記録するよう言われました。": {
+    "kana": "れんらくちょうに こどもの たいちょうと しょくよくの へんかを まいにち きろくするよう いわれました。",
+    "romaji": "Renrakuchō ni kodomo no taichō to shokuyoku no henka o mainichi kiroku suru yō iwaremashita."
+  },
+  "給食のアレルギー対応について、担任の先生と面談で詳しく話し合いました。": {
+    "kana": "きゅうしょくの アレルギー たいおうに ついて、たんにんの せんせいと めんだんで くわしく はなしあいました。",
+    "romaji": "Kyūshoku no Arerugī taiō ni tsuite, tannin no sensei to mendan de kuwashiku hanashiaimashita."
+  },
+  "育児休業を終えて職場復帰する前に、保育園の慣らし保育の日程を調整しました。": {
+    "kana": "いくじきゅうぎょうを おえて しょくば ふっきする まえに、ほいくえんの ならしほいくの にっていを ちょうせいしました。",
+    "romaji": "Ikuji kyūgyō o oete shokuba fukki suru mae ni, hoikuen no narashi hoiku no nittei o chōsei shimashita."
+  },
+  "児童手当は子供が中学校を卒業するまで毎月支給されると市役所で説明を受けました。": {
+    "kana": "じどうてあては こどもが ちゅうがっこうを そつぎょうするまで まいつき しきゅうされると しやくしょで せつめいを うけました。",
+    "romaji": "Jidō teate wa kodomo ga chūgakkō o sotsugyō suru made maitsuki shikyū sareru to shiyakusho de setsumei o ukemashita."
+  },
+  "幼稚園の行事予定表をもとに、仕事のシフトを事前に調整しておくことが大切です。": {
+    "kana": "ようちえんの ぎょうじ よていひょうを もとに、しごとの シフトを じぜんに ちょうせいして おくことが たいせつです。",
+    "romaji": "Yōchien no gyōji yoteihyō o moto ni, shigoto no Shifuto o jizen ni chōsei shite oku koto ga taisetsu desu."
+  },
+  "牛は昔から人間の生活に役立ってきた動物です。": {
+    "kana": "うしは むかしから にんげんの せいかつに やくだって きた どうぶつです。",
+    "romaji": "Ushi wa mukashi kara ningen no seikatsu ni yakudatte kita dōbutsu desu."
+  },
+  "住民登録をしたいです。": {
+    "kana": "じゅうみん とうろくを したいです。",
+    "romaji": "Jūmin tōroku o shitai desu."
+  },
+  "在留カードをください。": {
+    "kana": "ざいりゅう カードを ください。",
+    "romaji": "Zairyū Kādo o kudasai."
+  },
+  "番号札をとってください。": {
+    "kana": "ばんごうふだを とってください。",
+    "romaji": "Bangōfuda o totte kudasai."
+  },
+  "何番の窓口ですか？": {
+    "kana": "なんばんの まどぐちですか？",
+    "romaji": "Nanban no madoguchi desu ka?"
+  },
+  "印鑑が必要ですか？": {
+    "kana": "いんかんが ひつようですか？",
+    "romaji": "Inkan ga hitsuyō desu ka?"
+  },
+  "住民票をください。": {
+    "kana": "じゅうみんひょうを ください。",
+    "romaji": "Jūminhyō o kudasai."
+  },
+  "マイナンバーカードを作りたいです。": {
+    "kana": "マイナンバーカードを つくりたいです。",
+    "romaji": "Mainanbā Kādo o tsukuritai desu."
+  },
+  "国民健康保険に入りたいです。": {
+    "kana": "こくみん けんこう ほけんに はいりたいです。",
+    "romaji": "Kokumin kenkō hoken ni hairitai desu."
+  },
+  "転入届を出したいです。": {
+    "kana": "てんにゅうとどけを だしたいです。",
+    "romaji": "Ten'nyū todoke o dashitai desu."
+  },
+  "通訳をお願いできますか？": {
+    "kana": "つうやくを おねがい できますか？",
+    "romaji": "Tsūyaku o onegai dekimasu ka?"
+  },
+  "やさしい日本語で話してください。": {
+    "kana": "やさしい にほんごで はなしてください。",
+    "romaji": "Yasashii Nihon-go de hanashite kudasai."
+  },
+  "ビザを更新したいです。": {
+    "kana": "ビザを こうしんしたいです。",
+    "romaji": "Biza o kōshin shitai desu."
+  },
+  "必要な書類は何ですか？": {
+    "kana": "ひつような しょるいは なんですか？",
+    "romaji": "Hitsuyō na shorui wa nan desu ka?"
+  },
+  "住所が変わりました。": {
+    "kana": "じゅうしょが かわりました。",
+    "romaji": "Jūsho ga kawarimashita."
+  },
+  "国民年金に加入したいです。": {
+    "kana": "こくみん ねんきんに かにゅうしたいです。",
+    "romaji": "Kokumin nenkin ni kanyū shitai desu."
+  },
+  "児童手当の申請をしたいです。": {
+    "kana": "じどうてあての しんせいを したいです。",
+    "romaji": "Jidō teate no shinsei o shitai desu."
+  },
+  "転出届を出したいです。": {
+    "kana": "てんしゅつとどけを だしたいです。",
+    "romaji": "Tenshutsu todoke o dashitai desu."
+  },
+  "入国管理局はどこですか？": {
+    "kana": "にゅうこく かんりきょくは どこですか？",
+    "romaji": "Nyūkoku kanrikyoku wa doko desu ka?"
+  },
+  "住民税を払いたいです。": {
+    "kana": "じゅうみんぜいを はらいたいです。",
+    "romaji": "Jūminzei o haraitai desu."
+  },
+  "転入届は引っ越してから14日以内に出してください。": {
+    "kana": "てんにゅうとどけは ひっこしてから じゅうよっかいないに だしてください。",
+    "romaji": "Ten'nyū todoke wa hikkoshite kara jūyokka inai ni dashite kudasai."
+  },
+  "在留カードの住所変更は市役所でできます。": {
+    "kana": "ざいりゅうカードのじゅうしょへんこうはしやくしょでできます。",
+    "romaji": "zairyū Kādo no jūsho henkō wa shiyakusho de dekimasu."
+  },
+  "国民健康保険の保険料は収入によって変わります。": {
+    "kana": "こくみんけんこうほけんのほけんりょうはしゅうにゅうによってかわります。",
+    "romaji": "kokumin kenkō hoken no hokенryō wa shūnyū ni yotte kawarimasu."
+  },
+  "ビザの在留期間が切れる前に更新の申請をしてください。": {
+    "kana": "ビザのざいりゅうきかんがきれるまえにこうしんのしんせいをしてください。",
+    "romaji": "Biza no zairyū kikan ga kireru mae ni kōshin no shinsei o shite kudasai."
+  },
+  "マイナンバーカードは本人確認書類として使えます。": {
+    "kana": "マイナンバーカードはほんにんかくにんしょるいとしてつかえます。",
+    "romaji": "Mainanbā Kādo wa honnin kakunin shorui to shite tsukaemasu."
+  },
+  "窓口が混んでいるので、番号札をとって待ってください。": {
+    "kana": "まどぐちがこんでいるので、ばんごうふだをとってまってください。",
+    "romaji": "madoguchi ga konde iru node, bangōfuda o totte matte kudasai."
+  },
+  "住民票の写しは手数料300円で取れます。": {
+    "kana": "じゅうみんひょうのうつしはてすうりょう300えんでとれます。",
+    "romaji": "jūminhyō no utsushi wa tesūryō sanbyaku en de toremasu."
+  },
+  "児童手当は子どもが中学校を卒業するまで受けられます。": {
+    "kana": "じどうてあてはこどもがちゅうがっこうをそつぎょうするまでうけられます。",
+    "romaji": "jidō teate wa kodomo ga chūgakkō o sotsugyō suru made ukeraremasu."
+  },
+  "在留資格を変更したい場合は入国管理局に行く必要があります。": {
+    "kana": "ざいりゅうしかくをへんこうしたいばあいはにゅうこくかんりきょくにいくひつようがあります。",
+    "romaji": "zairyū shikaku o henkō shitai baai wa nyūkoku kanrikyoku ni iku hitsuyō ga arimasu."
+  },
+  "会社をやめたら、国民健康保険に加入してください。": {
+    "kana": "かいしゃをやめたら、こくみんけんこうほけんにかにゅうしてください。",
+    "romaji": "kaisha o yametara, kokumin kenkō hoken ni kanyū shite kudasai."
+  },
+  "国民年金の保険料を払えない場合は、免除の申請ができます。": {
+    "kana": "こくみんねんきんのほけんりょうをはらえないばあいは、めんじょのしんせいができます。",
+    "romaji": "kokumin nenkin no hokенryō o haraenai baai wa, menjo no shinsei ga dekimasu."
+  },
+  "転出証明書を持って、新しい市役所で転入届を出してください。": {
+    "kana": "てんしゅつしょうめいしょをもって、あたらしいしやくしょでてんにゅうとどけをだしてください。",
+    "romaji": "tenshutsu shōmeisho o motte, atarashii shiyakusho de tenyū todoke o dashite kudasai."
+  },
+  "印鑑登録をすると、印鑑証明書が取れます。": {
+    "kana": "いんかんとうろくをすると、いんかんしょうめいしょがとれます。",
+    "romaji": "inkan tōroku o suru to, inkan shōmeisho ga toremasu."
+  },
+  "住民税は前年の収入をもとに計算されます。": {
+    "kana": "じゅうみんぜいはぜんねんのしゅうにゅうをもとにけいさんされます。",
+    "romaji": "jūminzei wa zennen no shūnyū o moto ni keisan saremasu."
+  },
+  "通訳サービスがあるか役所に確認してください。": {
+    "kana": "つうやくサービスがあるかやくしょにかくにんしてください。",
+    "romaji": "tsūyaku Sābisu ga aru ka yakusho ni kakunin shite kudasai."
+  },
+  "在留資格の更新には申請書と写真と手数料が必要です。": {
+    "kana": "ざいりゅうしかくのこうしんにはしんせいしょとしゃしんとてすうりょうがひつようです。",
+    "romaji": "zairyū shikaku no kōshin ni wa shinseisho to shashin to tesūryō ga hitsuyō desu."
+  },
+  "子どもが生まれたら14日以内に出生届を出してください。": {
+    "kana": "こどもがうまれたら14にちいないにしゅっせいとどけをだしてください。",
+    "romaji": "kodomo ga umaretara jūyokka inai ni shussei todoke o dashite kudasai."
+  },
+  "健康保険をやめるときは資格喪失届が必要です。": {
+    "kana": "けんこうほけんをやめるときはしかくそうしつとどけがひつようです。",
+    "romaji": "kenkō hoken o yameru toki wa shikaku sōshitsu todoke ga hitsuyō desu."
+  },
+  "マイナンバーの通知書は大切に保管してください。": {
+    "kana": "マイナンバーのつうちしょはたいせつにほかんしてください。",
+    "romaji": "Mainanbā no tsūchisho wa taisetsu ni hokan shite kudasai."
+  },
+  "書類が足りない場合は後日また窓口に来てください。": {
+    "kana": "しょるいがたりないばあいはごじつまたまどぐちにきてください。",
+    "romaji": "shorui ga tarinai baai wa gojitsu mata madoguchi ni kite kudasai."
+  },
+  "特別永住者証明書の更新は有効期限の2ヶ月前から申請できます。": {
+    "kana": "とくべつえいじゅうしゃしょうめいしょのこうしんはゆうこうきげんの2かげつまえからしんせいできます。",
+    "romaji": "tokubetsu eijūsha shōmeisho no kōshin wa yūkō kigen no nikagetsu mae kara shinsei dekimasu."
+  },
+  "帰化申請は法務局で行い、審査に1年以上かかる場合があります。": {
+    "kana": "きかしんせいはほうむきょくでおこない、しんさに1ねんいじょうかかるばあいがあります。",
+    "romaji": "kika shinsei wa hōmukyoku de okonai, shinsa ni ichinen ijō kakaru baai ga arimasu."
+  },
+  "所得証明書は確定申告をしていないと発行できないことがあります。": {
+    "kana": "しょとくしょうめいしょはかくていしんこくをしていないとはっこうできないことがあります。",
+    "romaji": "shotoku shōmeisho wa kakutei shinkoku o shite inai to hakkō dekinai koto ga arimasu."
+  },
+  "戸籍謄本が必要な場合は本籍地の市区町村に請求してください。": {
+    "kana": "こせきとうほんがひつようなばあいはほんせきちのしくちょうそんにせいきゅうしてください。",
+    "romaji": "koseki tōhon ga hitsuyō na baai wa honseкichi no shikuchōson ni seikyū shite kudasai."
+  },
+  "課税証明書と非課税証明書は用途によって使い分けが必要です。": {
+    "kana": "かぜいしょうめいしょとひかぜいしょうめいしょはようとによってつかいわけがひつようです。",
+    "romaji": "kazei shōmeisho to hikazei shōmeisho wa yōto ni yotte tsukaiwake ga hitsuyō desu."
+  },
+  "就労資格証明書を取得しておくと転職時の手続きがスムーズになります。": {
+    "kana": "しゅうろうしかくしょうめいしょをしゅとくしておくとてんしょくじのてつづきがスムーズになります。",
+    "romaji": "shūrō shikaku shōmeisho o shutoku shite oku to tenshoku ji no tetsuzuki ga Sumūzu ni narimasu."
+  },
+  "失業給付を受けるにはハローワークで求職申し込みをする必要があります。": {
+    "kana": "しつぎょうきゅうふをうけるにはハローワークできゅうしょくもうしこみをするひつようがあります。",
+    "romaji": "shitsugyō kyūfu o ukeru ni wa Harōwāku de kyūshoku mōshikomi o suru hitsuyō ga arimasu."
+  },
+  "生活保護の申請は居住地を管轄する福祉事務所で受け付けています。": {
+    "kana": "せいかつほごのしんせいはきょじゅうちをかんかつするふくしじむしょでうけつけています。",
+    "romaji": "seikatsu hogo no shinsei wa kyojūchi o kankatsu suru fukushi jimusho de uketsukete imasu."
+  },
+  "障害者手帳を持っていると公共料金や交通費の割引が受けられます。": {
+    "kana": "しょうがいしゃてちょうをもっているとこうきょうりょうきんやこうつうひのわりびきがうけられます。",
+    "romaji": "shōgaisha techō o motte iru to kōkyō ryōkin ya kōtsūhi no waribiki ga ukeraremasu."
+  },
+  "確定申告の期間は原則として2月16日から3月15日までです。": {
+    "kana": "かくていしんこくのきかんはげんそくとして2がつ16にちから3がつ15にちまでです。",
+    "romaji": "kakutei shinkoku no kikan wa gensoku to shite nigatsu jūrokunichi kara sangatsu jūgonichi made desu."
+  },
+  "介護保険の認定を受けるには市区町村へ要介護認定の申請が必要です。": {
+    "kana": "かいごほけんのにんていをうけるにはしくちょうそんへようかいごにんていのしんせいがひつようです。",
+    "romaji": "kaigo hoken no nintei o ukeru ni wa shikuchōson e yōkaigo nintei no shinsei ga hitsuyō desu."
+  },
+  "在留資格「定住者」は活動制限がないため就労の幅が広がります。": {
+    "kana": "ざいりゅうしかく「ていじゅうしゃ」はかつどうせいげんがないためしゅうろうのはばがひろがります。",
+    "romaji": "zairyū shikaku 「teijūsha」 wa katsudō seigen ga nai tame shūrō no haba ga hirogarimasu."
+  },
+  "マイナンバーカードの電子証明書は5年ごとに更新手続きが必要です。": {
+    "kana": "マイナンバーカードのでんししょうめいしょは5ねんごとにこうしんてつづきがひつようです。",
+    "romaji": "Mainanbā Kādo no denshi shōmeisho wa gonен goto ni kōshin tetsuzuki ga hitsuyō desu."
+  },
+  "外国籍の方が遺産相続する場合は法務局での登記手続きが必要になります。": {
+    "kana": "がいこくせきのかたがいさんそうぞくするばあいはほうむきょくでのとうきてつづきがひつようになります。",
+    "romaji": "gaikokuseки no kata ga isan sōzoku suru baai wa hōmukyoku de no tōki tetsuzuki ga hitsuyō ni narimasu."
+  },
+  "国民健康保険の高額療養費制度を使うと医療費の自己負担額が軽減されます。": {
+    "kana": "こくみんけんこうほけんのこうがくりょうようひせいどをつかうといりょうひのじこふたんがくがけいげんされます。",
+    "romaji": "kokumin kenkō hoken no kōgaku ryōyōhi seido o tsukau to iryōhi no jiko futangaku ga keigen saremasu."
+  },
+  "永住許可申請には原則として10年以上の在留歴が必要とされています。": {
+    "kana": "えいじゅうきょかしんせいにはげんそくとして10ねんいじょうのざいりゅうれきがひつようとされています。",
+    "romaji": "eijū kyoka shinsei ni wa gensoku to shite jūnen ijō no zairyū reki ga hitsuyō to sarete imasu."
+  },
+  "ひとり親家庭は児童扶養手当の申請を福祉窓口で行うことができます。": {
+    "kana": "ひとりおやかていはじどうふようてあてのしんせいをふくしまどぐちでおこなうことができます。",
+    "romaji": "hitori oya katei wa jidō fuyō teate no shinsei o fukushi madoguchi de okonau koto ga dekimasu."
+  },
+  "公営住宅に申し込む際は収入基準と在留資格の条件を確認してください。": {
+    "kana": "こうえいじゅうたくにもうしこむさいはしゅうにゅうきじゅんとざいりゅうしかくのじょうけんをかくにんしてください。",
+    "romaji": "kōei jūtaku ni mōshikomu sai wa shūnyū kijun to zairyū shikaku no jōken o kakunin shite kudasai."
+  },
+  "納税証明書はオンラインまたは税務署の窓口で取得することができます。": {
+    "kana": "のうぜいしょうめいしょはオンラインまたはぜいむしょのまどぐちでしゅとくすることができます。",
+    "romaji": "nōzei shōmeisho wa Onrain mata wa zeimusho no madoguchi de shutoku suru koto ga dekimasu."
+  },
+  "行政書士に依頼すると在留資格の申請書類作成を代行してもらえます。": {
+    "kana": "ぎょうせいしょしにいらいするとざいりゅうしかくのしんせいしょるいさくせいをだいこうしてもらえます。",
+    "romaji": "gyōsei shoshi ni irai suru to zairyū shikaku no shinsei shorui sakusei o daikō shite moraemasu."
+  },
+  "お腹が痛いです。": {
+    "kana": "おなかがいたいです。",
+    "romaji": "onaka ga itai desu."
+  },
+  "咳が出ます。": {
+    "kana": "せきがでます。",
+    "romaji": "seki ga demasu."
+  },
+  "保険証はありますか？": {
+    "kana": "ほけんしょうはありますか？",
+    "romaji": "hokenshō wa arimasu ka?"
+  },
+  "予約をしたいです。": {
+    "kana": "よやくをしたいです。",
+    "romaji": "yoyaku o shitai desu."
+  },
+  "薬をください。": {
+    "kana": "くすりをください。",
+    "romaji": "kusuri o kudasai."
+  },
+  "処方箋をもらいました。": {
+    "kana": "しょほうせんをもらいました。",
+    "romaji": "shohōsen o moraimashita."
+  },
+  "子供が熱を出しました。": {
+    "kana": "こどもがねつをだしました。",
+    "romaji": "kodomo ga netsu o dashimashita."
+  },
+  "アレルギーがあります。": {
+    "kana": "アレルギーがあります。",
+    "romaji": "Arerugī ga arimasu."
+  },
+  "入院が必要ですか？": {
+    "kana": "にゅういんがひつようですか？",
+    "romaji": "nyūin ga hitsuyō desu ka?"
+  },
+  "血液検査をします。": {
+    "kana": "けつえきけんさをします。",
+    "romaji": "ketsueki kensa o shimasu."
+  },
+  "会計はどこですか？": {
+    "kana": "かいけいはどこですか？",
+    "romaji": "kaikei wa doko desu ka?"
+  },
+  "通訳をお願いします。": {
+    "kana": "つうやくをおねがいします。",
+    "romaji": "tsūyaku o onegai shimasu."
+  },
+  "診断書が必要です。": {
+    "kana": "しんだんしょがひつようです。",
+    "romaji": "shindansho ga hitsuyō desu."
+  },
+  "予防接種を受けたいです。": {
+    "kana": "よぼうせっしゅをうけたいです。",
+    "romaji": "yobō sesshu o uketai desu."
+  },
+  "のどが痛いです。": {
+    "kana": "のどがいたいです。",
+    "romaji": "nodo ga itai desu."
+  },
+  "目がかゆいです。": {
+    "kana": "めがかゆいです。",
+    "romaji": "me ga kayui desu."
+  },
+  "内科の予約を今日取ることはできますか？": {
+    "kana": "ないかのよやくをきょうとることはできますか？",
+    "romaji": "naika no yoyaku o kyō toru koto wa dekimasu ka?"
+  },
+  "保険証を忘れたので、次回持ってきてもいいですか？": {
+    "kana": "ほけんしょうをわすれたので、じかいもってきてもいいですか？",
+    "romaji": "hokenshō o wasureta node, jikai motte kite mo ii desu ka?"
+  },
+  "三日前から熱が下がらなくて、38度以上あります。": {
+    "kana": "みっかまえからねつがさがらなくて、38どいじょうあります。",
+    "romaji": "mikka mae kara netsu ga sagaranakute, 38-do ijō arimasu."
+  },
+  "この薬は食後に飲めばいいですか？": {
+    "kana": "このくすりはしょくごにのめばいいですか？",
+    "romaji": "kono kusuri wa shokugo ni nomeba ii desu ka?"
+  },
+  "薬局でこの処方箋を出すと薬をもらえますか？": {
+    "kana": "やっきょくでこのしょほうせんをだすとくすりをもらえますか？",
+    "romaji": "yakkyoku de kono shohōsen o dasu to kusuri o moraemasu ka?"
+  },
+  "虫歯があると言われたので、治療の予約をしたいです。": {
+    "kana": "むしばがあるといわれたので、ちりょうのよやくをしたいです。",
+    "romaji": "mushiba ga aru to iwareta node, chiryō no yoyaku o shitai desu."
+  },
+  "子供の一歳半健診はどこで受ければいいですか？": {
+    "kana": "こどものいっさいはんけんしんはどこでうければいいですか？",
+    "romaji": "kodomo no issaihan kenshin wa doko de ukereba ii desu ka?"
+  },
+  "卵のアレルギーがあるので、薬に卵が入っていないか確認してください。": {
+    "kana": "たまごのアレルギーがあるので、くすりにたまごがはいっていないかかくにんしてください。",
+    "romaji": "tamago no arerugi ga aru node, kusuri ni tamago ga haitte inai ka kakunin shite kudasai."
+  },
+  "レントゲンとエコー検査の両方が必要ですか？": {
+    "kana": "レントゲンとエコーけんさのりょうほうがひつようですか？",
+    "romaji": "Rentogen to Ekō kensa no ryōhō ga hitsuyō desu ka?"
+  },
+  "会社に提出するための診断書を書いていただけますか？": {
+    "kana": "かいしゃにていしゅつするためのしんだんしょをかいていただけますか？",
+    "romaji": "kaisha ni teishutsu suru tame no shindansho o kaite itadakemasu ka?"
+  },
+  "夜中に急に胸が痛くなったので救急に来ました。": {
+    "kana": "よなかにきゅうにむねがいたくなったのできゅうきゅうにきました。",
+    "romaji": "yonaka ni kyū ni mune ga itaku natta node kyūkyū ni kimashita."
+  },
+  "一週間入院すると言われましたが、仕事はどうすればいいですか？": {
+    "kana": "いっしゅうかんにゅういんするといわれましたが、しごとはどうすればいいですか？",
+    "romaji": "isshūkan nyūin suru to iwaremashita ga, shigoto wa dō sureba ii desu ka?"
+  },
+  "次の予約はいつにすればいいですか？": {
+    "kana": "つぎのよやくはいつにすればいいですか？",
+    "romaji": "tsugi no yoyaku wa itsu ni sureba ii desu ka?"
+  },
+  "日本語がよくわからないので、通訳を呼んでもらえますか？": {
+    "kana": "にほんごがよくわからないので、つうやくをよんでもらえますか？",
+    "romaji": "nihongo ga yoku wakaranai node, tsūyaku o yonde moraemasu ka?"
+  },
+  "咳が二週間以上続いているので、肺の検査をしてほしいです。": {
+    "kana": "せきがにしゅうかんいじょうつづいているので、はいのけんさをしてほしいです。",
+    "romaji": "seki ga nishūkan ijō tsuzuite iru node, hai no kensa o shite hoshii desu."
+  },
+  "子供に麻疹の予防接種を受けさせたいのですが、いつがいいですか？": {
+    "kana": "こどもにましんのよぼうせっしゅをうけさせたいのですが、いつがいいですか？",
+    "romaji": "kodomo ni mashin no yobō sesshu o ukesasetai no desu ga, itsu ga ii desu ka?"
+  },
+  "お腹の痛みが右下のほうにあって、昨日から続いています。": {
+    "kana": "おなかのいたみがみぎしたのほうにあって、きのうからつづいています。",
+    "romaji": "onaka no itami ga migi shita no hō ni atte, kinō kara tsuzuite imasu."
+  },
+  "国民健康保険に加入しているのですが、自己負担はどのくらいですか？": {
+    "kana": "こくみんけんこうほけんにかにゅうしているのですが、じこふたんはどのくらいですか？",
+    "romaji": "kokumin kenkō hoken ni kanyū shite iru no desu ga, jiko futan wa dono kurai desu ka?"
+  },
+  "鼻水と目のかゆみがひどいので、花粉症の検査をお願いします。": {
+    "kana": "はなみずとめのかゆみがひどいので、かふんしょうのけんさをおねがいします。",
+    "romaji": "hanamizu to me no kayumi ga hidoi node, kafunshō no kensa o onegai shimasu."
+  },
+  "歯医者で抜歯が必要だと言われたのですが、痛みはありますか？": {
+    "kana": "はいしゃでばっしがひつようだといわれたのですが、いたみはありますか？",
+    "romaji": "haisha de basshi ga hitsuyō da to iwareta no desu ga, itami wa arimasu ka?"
+  },
+  "手術後の傷口が化膿しているようで、膿が出ています。": {
+    "kana": "しゅじゅつごのきずぐちがかのうしているようで、うみがでています。",
+    "romaji": "shujutsu go no kizuguchi ga kanō shite iru yō de, umi ga dete imasu."
+  },
+  "MRI検査の結果を専門医に詳しく説明してもらえますか？": {
+    "kana": "MRIけんさのけっかをせんもんいにくわしくせつめいしてもらえますか？",
+    "romaji": "MRI kensa no kekka o senmon-i ni kuwashiku setsumei shite moraemasu ka?"
+  },
+  "この薬を飲み始めてから、めまいと吐き気が続いています。": {
+    "kana": "このくすりをのみはじめてから、めまいとはきけがつづいています。",
+    "romaji": "kono kusuri o nomi hajimete kara, memai to hakike ga tsuzuite imasu."
+  },
+  "紹介状を持参したので、大学病院を受診したいのですが。": {
+    "kana": "しょうかいじょうをじさんしたので、だいがくびょういんをじゅしんしたいのですが。",
+    "romaji": "shōkaijō o jisan shita node, daigaku byōin o jushin shitai no desu ga."
+  },
+  "セカンドオピニオンのため、別の病院でも診てもらえますか？": {
+    "kana": "セカンドオピニオンのため、べつのびょういんでもみてもらえますか？",
+    "romaji": "Sekando Opinion no tame, betsu no byōin de mo mite moraemasu ka?"
+  },
+  "妊娠中なのですが、この薬を服用しても問題ありませんか？": {
+    "kana": "にんしんちゅうなのですが、このくすりをふくようしてももんだいありませんか？",
+    "romaji": "ninshin-chū na no desu ga, kono kusuri o fukuyō shite mo mondai arimasen ka?"
+  },
+  "退院後の通院リハビリはどの頻度で来ればいいですか？": {
+    "kana": "たいいんごのつういんリハビリはどのひんどでくればいいですか？",
+    "romaji": "taiin go no tsūin Rihabiri wa dono hindo de kureba ii desu ka?"
+  },
+  "健康診断でコレステロール値が高いと指摘されました。": {
+    "kana": "けんこうしんだんでコレステロールちがたかいとしてきされました。",
+    "romaji": "kenkō shindan de Koresutorōru chi ga takai to shiteki saremashita."
+  },
+  "血圧の薬を毎日飲んでいますが、自己判断でやめてもいいですか？": {
+    "kana": "けつあつのくすりをまいにちのんでいますが、じこはんだんでやめてもいいですか？",
+    "romaji": "ketsuatsu no kusuri o mainichi nonde imasu ga, jiko handan de yamete mo ii desu ka?"
+  },
+  "内視鏡検査を受けたいのですが、前日から絶食が必要ですか？": {
+    "kana": "ないしきょうけんさをうけたいのですが、ぜんじつからぜっしょくがひつようですか？",
+    "romaji": "naishikyō kensa o uketai no desu ga, zenjitsu kara zesshoku ga hitsuyō desu ka?"
+  },
+  "骨折の疑いがあるので、整形外科に紹介していただけますか？": {
+    "kana": "こっせつのうたがいがあるので、せいけいげかにしょうかいしていただけますか？",
+    "romaji": "kossetsu no utagai ga aru node, seikei geka ni shōkai shite itadakemasu ka?"
+  },
+  "皮膚に発疹が広がっていて、かゆみも強くなっています。": {
+    "kana": "ひふにはっしんがひろがっていて、かゆみもつよくなっています。",
+    "romaji": "hifu ni hasshin ga hirogatte ite, kayumi mo tsuyoku natte imasu."
+  },
+  "不眠が三ヶ月以上続いており、精神科の受診を考えています。": {
+    "kana": "ふみんがさんかげついじょうつづいており、せいしんかのじゅしんをかんがえています。",
+    "romaji": "fumin ga sankagetsu ijō tsuzuite ori, seishinka no jushin o kangaete imasu."
+  },
+  "帝王切開と自然分娩、どちらのリスクが高いか教えてください。": {
+    "kana": "ていおうせっかいとしぜんぶんべん、どちらのリスクがたかいかおしえてください。",
+    "romaji": "teiō sekkai to shizen bunben, dochira no Risuku ga takai ka oshiete kudasai."
+  },
+  "検査結果が出たら、電話で知らせてもらうことはできますか？": {
+    "kana": "けんさけっかがでたら、でんわでしらせてもらうことはできますか？",
+    "romaji": "kensa kekka ga detara, denwa de shirasete morau koto wa dekimasu ka?"
+  },
+  "薬に重篤な副作用が出た場合、すぐに連絡する番号を教えてください。": {
+    "kana": "くすりにじゅうとくなふくさようがでたばあい、すぐにれんらくするばんごうをおしえてください。",
+    "romaji": "kusuri ni jūtoku na fukusayō ga deta baai, sugu ni renraku suru bangō o oshiete kudasai."
+  },
+  "慢性的な腰痛で、痛み止めが手放せない状態が続いています。": {
+    "kana": "まんせいてきなようつうで、いたみどめがてばなせないじょうたいがつづいています。",
+    "romaji": "mansei-teki na yōtsū de, itamidome ga tebanase nai jōtai ga tsuzuite imasu."
+  },
+  "糖尿病と診断されたのですが、食事制限はどのようにすればいいですか？": {
+    "kana": "とうにょうびょうとしんだんされたのですが、しょくじせいげんはどのようにすればいいですか？",
+    "romaji": "tōnyōbyō to shindan sareta no desu ga, shokuji seigen wa dono yō ni sureba ii desu ka?"
+  },
+  "視力が急に落ちた気がするので、眼科で詳しく検査したいです。": {
+    "kana": "しりょくがきゅうにおちたきがするので、がんかでくわしくけんさしたいです。",
+    "romaji": "shiryoku ga kyū ni ochita ki ga suru node, ganka de kuwashiku kensa shitai desu."
+  },
+  "メンタルクリニックに通っていますが、職場への報告義務はありますか？": {
+    "kana": "メンタルクリニックにかよっていますが、しょくばへのほうこくぎむはありますか？",
+    "romaji": "Mentaru Kurinikku ni kayotte imasu ga, shokuba e no hōkoku gimu wa arimasu ka?"
+  },
+  "アルバイトを探しています。": {
+    "kana": "アルバイトをさがしています。",
+    "romaji": "Arubaito o sagashite imasu."
+  },
+  "ハローワークはどこですか？": {
+    "kana": "ハローワークはどこですか？",
+    "romaji": "Harōwāku wa doko desu ka?"
+  },
+  "求人票を見せてください。": {
+    "kana": "きゅうじんひょうをみせてください。",
+    "romaji": "kyūjinhyō o misete kudasai."
+  },
+  "時給はいくらですか？": {
+    "kana": "じきゅうはいくらですか？",
+    "romaji": "jikyū wa ikura desu ka?"
+  },
+  "シフトは何時から何時ですか？": {
+    "kana": "シフトはなんじからなんじですか？",
+    "romaji": "Shifuto wa nanji kara nanji desu ka?"
+  },
+  "交通費は出ますか？": {
+    "kana": "こうつうひは でますか？",
+    "romaji": "kotsuhi wa demasu ka?"
+  },
+  "履歴書を書きました。": {
+    "kana": "りれきしょを かきました。",
+    "romaji": "rirekisho o kakimashita."
+  },
+  "面接は何時ですか？": {
+    "kana": "めんせつは なんじですか？",
+    "romaji": "mensetsu wa nanji desu ka?"
+  },
+  "社会保険に入れますか？": {
+    "kana": "しゃかいほけんに はいれますか？",
+    "romaji": "shakai hoken ni hairemasu ka?"
+  },
+  "給料の締め日はいつですか？": {
+    "kana": "きゅうりょうの しめびは いつですか？",
+    "romaji": "kyuryo no shimebi wa itsu desu ka?"
+  },
+  "今日から働きます。": {
+    "kana": "きょうから はたらきます。",
+    "romaji": "kyo kara hatarakimasu."
+  },
+  "仕事を教えてください。": {
+    "kana": "しごとを おしえてください。",
+    "romaji": "shigoto o oshiete kudasai."
+  },
+  "遅刻してしまいました。すみません。": {
+    "kana": "ちこくして しまいました。すみません。",
+    "romaji": "chikoku shite shimaimashita. sumimasen."
+  },
+  "今日は休んでもいいですか？": {
+    "kana": "きょうは やすんでも いいですか？",
+    "romaji": "kyo wa yasunde mo ii desu ka?"
+  },
+  "残業できます。": {
+    "kana": "ざんぎょう できます。",
+    "romaji": "zangyō dekimasu."
+  },
+  "辞めたいです。": {
+    "kana": "やめたいです。",
+    "romaji": "yametai desu."
+  },
+  "おはようございます。よろしくお願いします。": {
+    "kana": "おはようございます。よろしく おねがいします。",
+    "romaji": "ohayo gozaimasu. yoroshiku onegaishimasu."
+  },
+  "給料は銀行振込ですか？": {
+    "kana": "きゅうりょうは ぎんこうふりこみですか？",
+    "romaji": "kyuryo wa ginko furikomi desu ka?"
+  },
+  "月給はいくらですか？": {
+    "kana": "げっきゅうは いくらですか？",
+    "romaji": "gekkyu wa ikura desu ka?"
+  },
+  "通勤時間はどのくらいですか？": {
+    "kana": "つうきんじかんは どのくらいですか？",
+    "romaji": "tsūkin jikan wa dono kurai desu ka?"
+  },
+  "ハローワークで求人を紹介してもらいました。": {
+    "kana": "ハローワークで きゅうじんを しょうかいして もらいました。",
+    "romaji": "Haro Waku de kyujin o shokai shite moraimashita."
+  },
+  "この求人に応募したいのですが、どうすればいいですか？": {
+    "kana": "この きゅうじんに おうぼしたいのですが、どうすれば いいですか？",
+    "romaji": "kono kyujin ni obo shitai no desu ga, do sureba ii desu ka?"
+  },
+  "履歴書の書き方を教えていただけますか？": {
+    "kana": "りれきしょの かきかたを おしえて いただけますか？",
+    "romaji": "rirekisho no kakikata o oshiete itadakemasu ka?"
+  },
+  "面接では自己紹介をしっかり準備しました。": {
+    "kana": "めんせつでは じこしょうかいを しっかり じゅんびしました。",
+    "romaji": "mensetsu de wa jiko shokai o shikkari junbi shimashita."
+  },
+  "時給は1,100円で、交通費は月1万円まで支給されます。": {
+    "kana": "じきゅうは1,100えんで、こうつうひは つき1まんえんまで しきゅうされます。",
+    "romaji": "jikyu wa 1,100 en de, kotsuhi wa tsuki 1 man en made shikyu saremasu."
+  },
+  "週3日、1日6時間のシフトで働きたいです。": {
+    "kana": "しゅう3にち、1にち6じかんの シフトで はたらきたいです。",
+    "romaji": "shū 3 nichi, 1 nichi 6 jikan no shifuto de hatarakitai desu."
+  },
+  "締め日は毎月20日で、給料は月末に振り込まれます。": {
+    "kana": "しめびは まいつき20にちで、きゅうりょうは つきまつに ふりこまれます。",
+    "romaji": "shimebi wa maitsuki 20 nichi de, kyuryo wa tsukimatsu ni furikomaremasu."
+  },
+  "健康保険と厚生年金に加入することになりました。": {
+    "kana": "けんこうほけんと こうせいねんきんに かにゅうすることに なりました。",
+    "romaji": "kenko hoken to kosei nenkin ni kanyu suru koto ni narimashita."
+  },
+  "雇用保険に入っていると、仕事を辞めても手当がもらえます。": {
+    "kana": "こようほけんに はいっていると、しごとを やめても てあてが もらえます。",
+    "romaji": "koyo hoken ni haitte iru to, shigoto o yamete mo teate ga moraemasu."
+  },
+  "初出勤の日はユニフォームをもらって、職場を案内してもらいました。": {
+    "kana": "はつしゅっきんの ひは ユニフォームを もらって、しょくばを あんないして もらいました。",
+    "romaji": "hatsu shukkin no hi wa Yunifōmu o moratte, shokuba o annai shite moraimashita."
+  },
+  "先輩に仕事のやり方を丁寧に教えてもらいました。": {
+    "kana": "せんぱいに しごとの やりかたを ていねいに おしえて もらいました。",
+    "romaji": "senpai ni shigoto no yarikata o teinei ni oshiete moraimashita."
+  },
+  "急病で休む場合は、必ずシフトの前に電話で連絡してください。": {
+    "kana": "きゅうびょうで やすむ ばあいは、かならず シフトの まえに でんわで れんらくしてください。",
+    "romaji": "kyubyo de yasumu baai wa, kanarazu shifuto no mae ni denwa de renraku shite kudasai."
+  },
+  "今日は電車が遅れたので、10分遅刻してしまいました。": {
+    "kana": "きょうは でんしゃが おくれたので、10ふん ちこくして しまいました。",
+    "romaji": "kyo wa densha ga okureta node, 10 fun chikoku shite shimaimashita."
+  },
+  "残業が続いて疲れたので、シフトを減らしたいと相談しました。": {
+    "kana": "ざんぎょうが つづいて つかれたので、シフトを へらしたいと そうだんしました。",
+    "romaji": "zangyō ga tsuzuite tsukareta node, shifuto o herashitai to sodan shimashita."
+  },
+  "退職する場合は1か月前に申し出るのが一般的です。": {
+    "kana": "たいしょくする ばあいは 1かげつまえに もうしでるのが いっぱんてきです。",
+    "romaji": "taishoku suru baai wa 1 kagetsu mae ni mōshideru no ga ippanteki desu."
+  },
+  "職場では「お疲れ様です」と挨拶するのが基本のマナーです。": {
+    "kana": "しょくばでは「おつかれさまです」と あいさつするのが きほんの マナーです。",
+    "romaji": "shokuba de wa \"otsukaresama desu\" to aisatsu suru no ga kihon no Mana desu."
+  },
+  "福利厚生として、食事補助と社員割引があります。": {
+    "kana": "ふくりこうせいとして、しょくじほじょと しゃいんわりびきが あります。",
+    "romaji": "fukuri kosei to shite, shokuji hojo to shain waribiki ga arimasu."
+  },
+  "通勤に電車とバスを使うので、交通費が月1万2千円かかります。": {
+    "kana": "つうきんに でんしゃと バスを つかうので、こうつうひが つき1まん2せんえん かかります。",
+    "romaji": "tsūkin ni densha to Basu o tsukau node, kotsuhi ga tsuki 1 man 2 sen en kakarimasu."
+  },
+  "ハローワークの担当者に、在留資格で働ける時間を確認しました。": {
+    "kana": "ハローワークの たんとうしゃに、ざいりゅうしかくで はたらける じかんを かくにんしました。",
+    "romaji": "Haro Waku no tantōsha ni, zairyu shikaku de hatarakeru jikan o kakunin shimashita."
+  },
+  "給与明細を見たら、所得税と社会保険料が引かれていました。": {
+    "kana": "きゅうよめいさいを みたら、しょとくぜいと しゃかいほけんりょうが ひかれていました。",
+    "romaji": "kyuyo meisai o mitara, shotokuzei to shakai hokenryo ga hikarete imashita."
+  },
+  "試用期間中は時給が100円低くなる場合があるので、契約前に必ず確認してください。": {
+    "kana": "しようきかんちゅうは じきゅうが 100えん ひくくなる ばあいが あるので、けいやくまえに かならず かくにんしてください。",
+    "romaji": "shiyo kikan chū wa jikyu ga 100 en hikuku naru baai ga aru node, keiyaku mae ni kanarazu kakunin shite kudasai."
+  },
+  "在留カードの就労制限欄を確認しないまま働くと、資格外活動違反になります。": {
+    "kana": "ざいりゅう カードの しゅうろうせいげんらんを かくにんしないまま はたらくと、しかくがいかつどういはんに なります。",
+    "romaji": "zairyu Kado no shuro seigen ran o kakunin shinai mama hataraku to, shikaku gai katsudo ihan ni narimasu."
+  },
+  "週28時間の上限を超えないよう、複数のバイトのシフトを合算して管理しています。": {
+    "kana": "しゅう28じかんの じょうげんを こえないよう、ふくすうの バイトの シフトを がっさんして かんりしています。",
+    "romaji": "shū 28 jikan no jogen o koenai yo, fukusu no baito no shifuto o gassan shite kanri shite imasu."
+  },
+  "求人サイトで外国語対応可の職場を絞り込んで応募しました。": {
+    "kana": "きゅうじん サイトで がいこくごたいおうかの しょくばを しぼりこんで おうぼしました。",
+    "romaji": "kyujin Saito de gaikokugo taio ka no shokuba o shibori konde obo shimashita."
+  },
+  "面接で「長所と短所を教えてください」と聞かれたので、具体例を交えて答えました。": {
+    "kana": "めんせつで「ちょうしょと たんしょを おしえてください」と きかれたので、ぐたいれいを まじえて こたえました。",
+    "romaji": "mensetsu de \"chosho to tansho o oshiete kudasai\" to kikareta node, gutairei o majiete kotaemashita."
+  },
+  "アルバイト中に起きたミスは隠さず、すぐ上司に報告するのが鉄則です。": {
+    "kana": "アルバイトちゅうに おきた ミスは かくさず、すぐ じょうしに ほうこくするのが てっそくです。",
+    "romaji": "Arubaito chū ni okita Misu wa kakusazu, sugu joshi ni hokoku suru no ga tessoku desu."
+  },
+  "確定申告が必要かどうか、年間収入が103万円を超えるか計算して確認しました。": {
+    "kana": "かくていしんこくが ひつようか どうか、ねんかんしゅうにゅうが 103まんえんを こえるか けいさんして かくにんしました。",
+    "romaji": "kakutei shinkoku ga hitsuyō ka dō ka, nenkan shunyu ga 103 man en o koeru ka keisan shite kakunin shimashita."
+  },
+  "職場で日本語が十分でない場合、ミスを防ぐためメモを取る習慣をつけてください。": {
+    "kana": "しょくばで にほんごが じゅうぶんでない ばあい、ミスを ふせぐため メモを とる しゅうかんを つけてください。",
+    "romaji": "shokuba de nihongo ga jubun de nai baai, Misu o fusegu tame Memo o toru shukan o tsukete kudasai."
+  },
+  "労働条件通知書を受け取ったら、口頭説明と内容が一致しているか必ず照合してください。": {
+    "kana": "ろうどうじょうけんつうちしょを うけとったら、こうとうせつめいと ないようが いっちしているか かならず しょうごうしてください。",
+    "romaji": "rodo joken tsuchisho o uketottara, koto setsumei to naiyō ga itchi shite iru ka kanarazu shogo shite kudasai."
+  },
+  "ブラックバイトかどうか見極めるため、残業代の支払いや休憩時間の有無を確認しました。": {
+    "kana": "ブラックバイトか どうか みきわめるため、ざんぎょうだいの しはらいや きゅうけいじかんの うむを かくにんしました。",
+    "romaji": "Burakku Baito ka dō ka mikiwameru tame, zangyōdai no shiharai ya kyukei jikan no umu o kakunin shimashita."
+  },
+  "アルバイトを掛け持ちする際は、メインの職場に事前に許可を取ることが重要です。": {
+    "kana": "アルバイトを かけもちする さいは、メインの しょくばに じぜんに きょかを とることが じゅうようです。",
+    "romaji": "Arubaito o kakemochi suru sai wa, Mein no shokuba ni jizen ni kyoka o toru koto ga juyo desu."
+  },
+  "給料が最低賃金を下回っていると気づき、労働基準監督署に相談しました。": {
+    "kana": "きゅうりょうが さいていちんぎんを したまわっていると きづき、ろうどうきじゅんかんとくしょに そうだんしました。",
+    "romaji": "kyuryo ga saitei chingin o shitamawatte iru to kiduki, rodo kijun kantokusho ni sodan shimashita."
+  },
+  "面接後に採用通知が来たので、入社日や持参物をメールで確認しました。": {
+    "kana": "めんせつごに さいようつうちが きたので、にゅうしゃびや じさんぶつを メールで かくにんしました。",
+    "romaji": "mensetsu go ni saiyo tsuchi ga kita node, nyusha bi ya jisanbutsu o Meru de kakunin shimashita."
+  },
+  "繁忙期だけの短期バイトは、雇用期間と更新条件を事前にはっきり確認すべきです。": {
+    "kana": "はんぼうきだけの たんきバイトは、こようきかんと こうしんじょうけんを じぜんに はっきり かくにんすべきです。",
+    "romaji": "hanboki dake no tanki Baito wa, koyo kikan to koshin joken o jizen ni hakkiri kakunin subeki desu."
+  },
+  "職場でのハラスメントに悩んでいるときは、外部の相談窓口を利用する権利があります。": {
+    "kana": "しょくばでの ハラスメントに なやんでいる ときは、がいぶの そうだんまどぐちを りようする けんりが あります。",
+    "romaji": "shokuba de no Harasumento ni nayande iru toki wa, gaibu no sodan madoguchi o riyo suru kenri ga arimasu."
+  },
+  "税金の扶養控除を受けるため、家族の状況を勤務先に正確に申告しました。": {
+    "kana": "ぜいきんのふようこうじょをうけるため、かぞくのじょうきょうをきんむさきにせいかくにしんこくしました。",
+    "romaji": "zeikin no fuyō kōjo o ukeru tame, kazoku no jōkyō o kinmusaki ni seikaku ni shinkoku shimashita."
+  },
+  "正社員登用制度があるバイト先を意識的に選び、長期的なキャリアを考えています。": {
+    "kana": "せいしゃいんとうようせいどがあるバイトさきをいしきてきにえらび、ちょうきてきなキャリアをかんがえています。",
+    "romaji": "seishain tōyō seido ga aru baito saki o ishikiteki ni erabi, chōkiteki na kyaria o kangaete imasu."
+  },
+  "退職後に源泉徴収票を受け取り、次の職場に提出する必要があります。": {
+    "kana": "たいしょくごにげんせんちょうしゅうひょうをうけとり、つぎのしょくばにていしゅつするひつようがあります。",
+    "romaji": "taishoku go ni gensen chōshū hyō o uketori, tsugi no shokuba ni teishutsu suru hitsuyō ga arimasu."
+  },
+  "日本語能力が評価され、外国人スタッフのサポート役を任されました。": {
+    "kana": "にほんごのうりょくがひょうかされ、がいこくじんスタッフのサポートやくをまかされました。",
+    "romaji": "nihongo nōryoku ga hyōka sare, gaikokujin sutaffu no sapōto yaku o makasaremashita."
+  },
+  "職場の人間関係に問題を感じたら、早めに信頼できる先輩や上司に打ち明けるべきです。": {
+    "kana": "しょくばのにんげんかんけいにもんだいをかんじたら、はやめにしんらいできるせんぱいやじょうしにうちあけるべきです。",
+    "romaji": "shokuba no ningen kankei ni mondai o kanjitara, hayame ni shinrai dekiru senpai ya jōshi ni uchiakeru beki desu."
+  },
+  "わたしはアヌです。": {
+    "kana": "わたしはアヌです。",
+    "romaji": "watashi wa Anu desu."
+  },
+  "わたしはネパール人です。": {
+    "kana": "わたしはネパールじんです。",
+    "romaji": "watashi wa Nepāru jin desu."
+  },
+  "これはわたしのカードです。": {
+    "kana": "これはわたしのカードです。",
+    "romaji": "kore wa watashi no kādo desu."
+  },
+  "ここは病院です。": {
+    "kana": "ここはびょういんです。",
+    "romaji": "koko wa byōin desu."
+  },
+  "あれはバス停です。": {
+    "kana": "あれはバスていです。",
+    "romaji": "are wa basutei desu."
+  },
+  "わたしは学生です。": {
+    "kana": "わたしはがくせいです。",
+    "romaji": "watashi wa gakusei desu."
+  },
+  "今日は休みです。": {
+    "kana": "きょうはやすみです。",
+    "romaji": "kyō wa yasumi desu."
+  },
+  "これは在留カードではありません。": {
+    "kana": "これはざいりゅうカードではありません。",
+    "romaji": "kore wa zairyū kādo de wa arimasen."
+  },
+  "トイレはあそこです。": {
+    "kana": "トイレはあそこです。",
+    "romaji": "toire wa asoko desu."
+  },
+  "わたしは会社員ではありません。": {
+    "kana": "わたしはかいしゃいんではありません。",
+    "romaji": "watashi wa kaishain de wa arimasen."
+  },
+  "きのうは仕事でした。": {
+    "kana": "きのうはしごとでした。",
+    "romaji": "kinō wa shigoto deshita."
+  },
+  "この薬は食後です。": {
+    "kana": "このくすりはしょくごです。",
+    "romaji": "kono kusuri wa shokugo desu."
+  },
+  "わたしの仕事はコンビニの店員です。": {
+    "kana": "わたしのしごとはコンビニのてんいんです。",
+    "romaji": "watashi no shigoto wa konbini no ten'in desu."
+  },
+  "この書類は市役所のものです。": {
+    "kana": "このしょるいはしやくしょのものです。",
+    "romaji": "kono shorui wa shiyakusho no mono desu."
+  },
+  "先週は風邪で休みでした。": {
+    "kana": "せんしゅうはかぜでやすみでした。",
+    "romaji": "senshū wa kaze de yasumi deshita."
+  },
+  "娘はまだ小学生です。": {
+    "kana": "むすめはまだしょうがくせいです。",
+    "romaji": "musume wa mada shōgakusei desu."
+  },
+  "この値段は税込みではありません。": {
+    "kana": "このねだんはぜいこみではありません。",
+    "romaji": "kono nedan wa zeikomi de wa arimasen."
+  },
+  "あの方は近所の田中さんです。": {
+    "kana": "あのかたはきんじょのたなかさんです。",
+    "romaji": "ano kata wa kinjo no Tanaka san desu."
+  },
+  "この電車は各駅停車ではありません。": {
+    "kana": "このでんしゃはかくえきていしゃではありません。",
+    "romaji": "kono densha wa kakueki teisha de wa arimasen."
+  },
+  "前の住所は東京でしたが、今は大阪です。": {
+    "kana": "まえのじゅうしょはとうきょうでしたが、いまはおおさかです。",
+    "romaji": "mae no jūsho wa Tōkyō deshita ga, ima wa Ōsaka desu."
+  },
+  "トイレはどこですか。": {
+    "kana": "トイレはどこですか。",
+    "romaji": "toire wa doko desu ka."
+  },
+  "駅はあそこです。": {
+    "kana": "えきはあそこです。",
+    "romaji": "eki wa asoko desu."
+  },
+  "わたしはすしが好きです。": {
+    "kana": "わたしはすしがすきです。",
+    "romaji": "watashi wa sushi ga suki desu."
+  },
+  "市役所はどこにありますか。": {
+    "kana": "しやくしょはどこにありますか。",
+    "romaji": "shiyakusho wa doko ni arimasu ka."
+  },
+  "日本語が少しわかります。": {
+    "kana": "にほんごがすこしわかります。",
+    "romaji": "nihongo ga sukoshi wakarimasu."
+  },
+  "バス停はこのちかくにあります。": {
+    "kana": "バスていはこのちかくにあります。",
+    "romaji": "basutei wa kono chikaku ni arimasu."
+  },
+  "妹は料理が上手です。": {
+    "kana": "いもうとはりょうりがじょうずです。",
+    "romaji": "imōto wa ryōri ga jōzu desu."
+  },
+  "病院は何時からですか。": {
+    "kana": "びょういんはなんじからですか。",
+    "romaji": "byōin wa nanji kara desu ka."
+  },
+  "わたしは朝が弱いです。": {
+    "kana": "わたしはあさがよわいです。",
+    "romaji": "watashi wa asa ga yowai desu."
+  },
+  "このスーパーは野菜が安いです。": {
+    "kana": "このスーパーはやさいがやすいです。",
+    "romaji": "kono sūpā wa yasai ga yasui desu."
+  },
+  "子どもは学校がたのしいと言っています。": {
+    "kana": "こどもはがっこうがたのしいといっています。",
+    "romaji": "kodomo wa gakkō ga tanoshii to itte imasu."
+  },
+  "ここは外国人の相談ができます。": {
+    "kana": "ここはがいこくじんのそうだんができます。",
+    "romaji": "koko wa gaikokujin no sōdan ga dekimasu."
+  },
+  "わたしはひらがなは読めますが、漢字はむずかしいです。": {
+    "kana": "わたしはひらがなはよめますが、かんじはむずかしいです。",
+    "romaji": "watashi wa hiragana wa yomemasu ga, kanji wa muzukashii desu."
+  },
+  "近くに安い病院がありますか。": {
+    "kana": "ちかくにやすいびょういんがありますか。",
+    "romaji": "chikaku ni yasui byōin ga arimasu ka."
+  },
+  "仕事は大変ですが、人がやさしいです。": {
+    "kana": "しごとはたいへんですが、ひとがやさしいです。",
+    "romaji": "shigoto wa taihen desu ga, hito ga yasashii desu."
+  },
+  "電車は時間が正確で便利です。": {
+    "kana": "でんしゃはじかんがせいかくでべんりです。",
+    "romaji": "densha wa jikan ga seikaku de benri desu."
+  },
+  "在留カードはいつも持っていますが、保険証は家にあります。": {
+    "kana": "ざいりゅうカードはいつももっていますが、ほけんしょうはいえにあります。",
+    "romaji": "zairyū kādo wa itsumo motte imasu ga, hokenshō wa ie ni arimasu."
+  },
+  "日本は四季がはっきりしていて、わたしは秋が一番好きです。": {
+    "kana": "にほんはしきがはっきりしていて、わたしはあきがいちばんすきです。",
+    "romaji": "nihon wa shiki ga hakkiri shite ite, watashi wa aki ga ichiban suki desu."
+  },
+  "役所の人は親切でしたが、書類が多くて時間がかかりました。": {
+    "kana": "やくしょのひとはしんせつでしたが、しょるいがおおくてじかんがかかりました。",
+    "romaji": "yakusho no hito wa shinsetsu deshita ga, shorui ga ōkute jikan ga kakarimashita."
+  },
+  "これは何ですか。": {
+    "kana": "これはなんですか。",
+    "romaji": "kore wa nan desu ka."
+  },
+  "それをください。": {
+    "kana": "それをください。",
+    "romaji": "sore o kudasai."
+  },
+  "あれは何ですか。": {
+    "kana": "あれはなんですか。",
+    "romaji": "are wa nan desu ka."
+  },
+  "これはいくらですか。": {
+    "kana": "これはいくらですか。",
+    "romaji": "kore wa ikura desu ka."
+  },
+  "そこはトイレです。": {
+    "kana": "そこはトイレです。",
+    "romaji": "soko wa toire desu."
+  },
+  "この水をください。": {
+    "kana": "このみずをください。",
+    "romaji": "kono mizu o kudasai."
+  },
+  "その薬は一日三回飲みます。": {
+    "kana": "そのくすりはいちにちさんかいのみます。",
+    "romaji": "sono kusuri wa ichinichi sankai nomimasu."
+  },
+  "あそこに駅があります。": {
+    "kana": "あそこにえきがあります。",
+    "romaji": "asoko ni eki ga arimasu."
+  },
+  "ここで靴を脱いでください。": {
+    "kana": "ここでくつをぬいでください。",
+    "romaji": "koko de kutsu o nuide kudasai."
+  },
+  "その書類はどこですか。": {
+    "kana": "そのしょるいはどこですか。",
+    "romaji": "sono shorui wa doko desu ka."
+  },
+  "これを二つ買います。": {
+    "kana": "これをふたつかいます。",
+    "romaji": "kore o futatsu kaimasu."
+  },
+  "あの店は安いです。": {
+    "kana": "あのみせはやすいです。",
+    "romaji": "ano mise wa yasui desu."
+  },
+  "この道をまっすぐ行ってください。": {
+    "kana": "このみちをまっすぐいってください。",
+    "romaji": "kono michi o massugu itte kudasai."
+  },
+  "そこを右に曲がってください。": {
+    "kana": "そこをみぎにまがってください。",
+    "romaji": "soko o migi ni magatte kudasai."
+  },
+  "これは私のかばんではありません。": {
+    "kana": "これはわたしのかばんではありません。",
+    "romaji": "kore wa watashi no kaban de wa arimasen."
+  },
+  "その電車は新宿に行きますか。": {
+    "kana": "そのでんしゃはシンジュクにいきますか。",
+    "romaji": "sono densha wa Shinjuku ni ikimasu ka."
+  },
+  "あそこの病院は何時まで開いていますか。": {
+    "kana": "あそこのびょういんはなんじまであいていますか。",
+    "romaji": "asoko no byoin wa nanji made aite imasu ka."
+  },
+  "この用紙にここに名前を書いてください。": {
+    "kana": "このようしにここになまえをかいてください。",
+    "romaji": "kono yoshi ni koko ni namae o kaite kudasai."
+  },
+  "そのバス停であのバスを待ってください。": {
+    "kana": "そのバスていであのバスをまってください。",
+    "romaji": "sono basutei de ano basu o matte kudasai."
+  },
+  "これとそれ、どちらが新しいですか。": {
+    "kana": "これとそれ、どちらがあたらしいですか。",
+    "romaji": "kore to sore, dochira ga atarashii desu ka."
+  },
+  "ごはんを食べます。": {
+    "kana": "ごはんをたべます。",
+    "romaji": "gohan o tabemasu."
+  },
+  "学校に行きます。": {
+    "kana": "がっこうにいきます。",
+    "romaji": "gakko ni ikimasu."
+  },
+  "東京に住んでいます。": {
+    "kana": "トウキョウにすんでいます。",
+    "romaji": "Tokyo ni sunde imasu."
+  },
+  "会社で働きます。": {
+    "kana": "かいしゃではたらきます。",
+    "romaji": "kaisha de hatarakimasu."
+  },
+  "スーパーでパンを買います。": {
+    "kana": "スーパーでパンをかいます。",
+    "romaji": "supa de pan o kaimasu."
+  },
+  "家へ帰ります。": {
+    "kana": "いえへかえります。",
+    "romaji": "ie e kaerimasu."
+  },
+  "友だちと話します。": {
+    "kana": "ともだちとはなします。",
+    "romaji": "tomodachi to hanashimasu."
+  },
+  "くすりを飲んでください。": {
+    "kana": "くすりをのんでください。",
+    "romaji": "kusuri o nonde kudasai."
+  },
+  "病院に行きたいです。": {
+    "kana": "びょういんにいきたいです。",
+    "romaji": "byoin ni ikitai desu."
+  },
+  "コンビニで切手を買いました。": {
+    "kana": "コンビニできってをかいました。",
+    "romaji": "konbini de kitte o kaimashita."
+  },
+  "駅で電車に乗ります。": {
+    "kana": "えきででんしゃにのります。",
+    "romaji": "eki de densha ni norimasu."
+  },
+  "先生と日本語で話します。": {
+    "kana": "せんせいとにほんごではなします。",
+    "romaji": "sensei to nihongo de hanashimasu."
+  },
+  "市役所で書類をもらいました。": {
+    "kana": "しやくしょでしょるいをもらいました。",
+    "romaji": "shiyakusho de shorui o moraimashita."
+  },
+  "近所の人と仲よくなりたいです。": {
+    "kana": "きんじょのひととなかよくなりたいです。",
+    "romaji": "kinjo no hito to nakayoku naritai desu."
+  },
+  "毎朝バスで会社へ行きます。": {
+    "kana": "まいあさバスでかいしゃへいきます。",
+    "romaji": "maiasa basu de kaisha e ikimasu."
+  },
+  "銀行でお金をおろします。": {
+    "kana": "ぎんこうでおかねをおろします。",
+    "romaji": "ginko de okane o oroshimasu."
+  },
+  "国の家族と電話で話しました。": {
+    "kana": "くにのかぞくとでんわではなしました。",
+    "romaji": "kuni no kazoku to denwa de hanashimashita."
+  },
+  "区役所で在留カードのことを聞きました。": {
+    "kana": "くやくしょでザイリュウカードのことをききました。",
+    "romaji": "kuyakusho de zairyu kado no koto o kikimashita."
+  },
+  "日本の食堂でネパール料理を作って働いています。": {
+    "kana": "にほんのしょくどうでネパールりょうりをつくってはたらいています。",
+    "romaji": "nihon no shokudo de Neparu ryori o tsukutte hataraite imasu."
+  },
+  "トイレはあそこにあります。": {
+    "kana": "トイレはあそこにあります。",
+    "romaji": "toire wa asoko ni arimasu."
+  },
+  "ここに駅があります。": {
+    "kana": "ここにえきがあります。",
+    "romaji": "koko ni eki ga arimasu."
+  },
+  "あそこに先生がいます。": {
+    "kana": "あそこにせんせいがいます。",
+    "romaji": "asoko ni sensei ga imasu."
+  },
+  "机の上に本があります。": {
+    "kana": "つくえのうえにほんがあります。",
+    "romaji": "tsukue no ue ni hon ga arimasu."
+  },
+  "かばんの中に財布があります。": {
+    "kana": "かばんのなかにさいふがあります。",
+    "romaji": "kaban no naka ni saifu ga arimasu."
+  },
+  "病院は銀行のとなりにあります。": {
+    "kana": "びょういんはぎんこうのとなりにあります。",
+    "romaji": "byoin wa ginko no tonari ni arimasu."
+  },
+  "教室に学生がたくさんいます。": {
+    "kana": "きょうしつにがくせいがたくさんいます。",
+    "romaji": "kyoshitsu ni gakusei ga takusan imasu."
+  },
+  "冷蔵庫の中に牛乳があります。": {
+    "kana": "れいぞうこのなかにぎゅうにゅうがあります。",
+    "romaji": "reizoko no naka ni gyunyu ga arimasu."
+  },
+  "店の前に自転車があります。": {
+    "kana": "みせのまえにじてんしゃがあります。",
+    "romaji": "mise no mae ni jitensha ga arimasu."
+  },
+  "私の家は学校の近くにあります。": {
+    "kana": "わたしのいえはがっこうのちかくにあります。",
+    "romaji": "watashi no ie wa gakko no chikaku ni arimasu."
+  },
+  "受付は一階にあります。": {
+    "kana": "うけつけはいっかいにあります。",
+    "romaji": "uketsuke wa ikkai ni arimasu."
+  },
+  "コンビニはあの信号の右にあります。": {
+    "kana": "コンビニはあのしんごうのみぎにあります。",
+    "romaji": "konbini wa ano shingo no migi ni arimasu."
+  },
+  "スーパーの中に薬局があります。": {
+    "kana": "スーパーのなかにやっきょくがあります。",
+    "romaji": "supa no naka ni yakkyoku ga arimasu."
+  },
+  "駐車場は建物の後ろにあります。": {
+    "kana": "ちゅうしゃじょうはたてもののうしろにあります。",
+    "romaji": "chushajo wa tatemono no ushiro ni arimasu."
+  },
+  "待合室にお年寄りがいます。": {
+    "kana": "まちあいしつにおとしよりがいます。",
+    "romaji": "machiaishitsu ni otoshiyori ga imasu."
+  },
+  "郵便局は駅とコンビニの間にあります。": {
+    "kana": "ゆうびんきょくはえきとコンビニのあいだにあります。",
+    "romaji": "yubinkyoku wa eki to konbini no aida ni arimasu."
+  },
+  "役所の二階に外国人の相談窓口があります।": {
+    "kana": "やくしょのにかいにがいこくじんのそうだんまどぐちがあります।",
+    "romaji": "yakusho no nikai ni gaikokujin no sodan madoguchi ga arimasu."
+  },
+  "棚の一番下にゴミ袋があります。": {
+    "kana": "たなの いちばんしたに ゴミぶくろが あります。",
+    "romaji": "tana no ichiban shita ni gomi bukuro ga arimasu."
+  },
+  "バス停は横断歩道を渡った先にあります。": {
+    "kana": "バスていは おうだんほどうを わたった さきに あります。",
+    "romaji": "basutei wa ōdan hodō o watatta saki ni arimasu."
+  },
+  "市役所のとなりに無料で使える図書館があります。": {
+    "kana": "しやくしょの となりに むりょうで つかえる としょかんが あります。",
+    "romaji": "shiyakusho no tonari ni muryō de tsukaeru toshokan ga arimasu."
+  },
+  "りんごを三個ください。": {
+    "kana": "りんごを さんこ ください。",
+    "romaji": "ringo o sanko kudasai."
+  },
+  "切手を二枚買います。": {
+    "kana": "きってを にまい かいます。",
+    "romaji": "kitte o nimai kaimasu."
+  },
+  "水を一本ください。": {
+    "kana": "みずを いっぽん ください。",
+    "romaji": "mizu o ippon kudasai."
+  },
+  "大人二人、子供一人です。": {
+    "kana": "おとな ふたり、こども ひとりです。",
+    "romaji": "otona futari, kodomo hitori desu."
+  },
+  "これは百円です。": {
+    "kana": "これは ひゃくえんです。",
+    "romaji": "kore wa hyakuen desu."
+  },
+  "卵を六個お願いします。": {
+    "kana": "たまごを ろっこ おねがいします。",
+    "romaji": "tamago o rokko onegaishimasu."
+  },
+  "朝九時に病院へ行きます。": {
+    "kana": "あさ くじに びょういんへ いきます。",
+    "romaji": "asa kuji ni byōin e ikimasu."
+  },
+  "全部で五百円になります。": {
+    "kana": "ぜんぶで ごひゃくえんに なります。",
+    "romaji": "zenbu de gohyakuen ni narimasu."
+  },
+  "切符を三枚買いたいです。": {
+    "kana": "きっぷを さんまい かいたいです。",
+    "romaji": "kippu o sanmai kaitai desu."
+  },
+  "予約は明日の十時です。": {
+    "kana": "よやくは あしたの じゅうじです。",
+    "romaji": "yoyaku wa ashita no jūji desu."
+  },
+  "受付に四人並んでいます。": {
+    "kana": "うけつけに よにん ならんでいます。",
+    "romaji": "uketsuke ni yonin narande imasu."
+  },
+  "パンを二個と牛乳を一本ください。": {
+    "kana": "パンを ふたつと ぎゅうにゅうを いっぽん ください。",
+    "romaji": "pan o futatsu to gyūnyū o ippon kudasai."
+  },
+  "会議は午後二時から始まります。": {
+    "kana": "かいぎは ごご にじから はじまります。",
+    "romaji": "kaigi wa gogo niji kara hajimarimasu."
+  },
+  "この紙を五枚コピーしてください。": {
+    "kana": "この かみを ごまい コピーして ください。",
+    "romaji": "kono kami o gomai kopī shite kudasai."
+  },
+  "三千円の薬を買いました。": {
+    "kana": "さんぜんえんの くすりを かいました。",
+    "romaji": "sanzenen no kusuri o kaimashita."
+  },
+  "七時半に駅で会いましょう。": {
+    "kana": "しちじはんに えきで あいましょう。",
+    "romaji": "shichiji han ni eki de aimashō."
+  },
+  "病院の予約を二人分取りました。": {
+    "kana": "びょういんの よやくを ふたりぶん とりました。",
+    "romaji": "byōin no yoyaku o futaribun torimashita."
+  },
+  "レジで八百五十円払いました。": {
+    "kana": "レジで はっぴゃくごじゅうえん はらいました。",
+    "romaji": "reji de happyakugojūen haraimashita."
+  },
+  "申込書を三枚と写真を一枚出してください。": {
+    "kana": "もうしこみしょを さんまいと しゃしんを いちまい だしてください。",
+    "romaji": "mōshikomisho o sanmai to shashin o ichimai dashite kudasai."
+  },
+  "窓口は午前九時から午後五時までで、整理券を一枚お取りください。": {
+    "kana": "まどぐちは ごぜん くじから ごご ごじまでで、せいりけんを いちまい おとりください。",
+    "romaji": "madoguchi wa gozen kuji kara gogo goji made de, seiriken o ichimai otori kudasai."
+  },
+  "このパンは安い。": {
+    "kana": "この パンは やすい。",
+    "romaji": "kono pan wa yasui."
+  },
+  "今日は暑い。": {
+    "kana": "きょうは あつい。",
+    "romaji": "kyō wa atsui."
+  },
+  "この部屋は広い。": {
+    "kana": "この へやは ひろい。",
+    "romaji": "kono heya wa hiroi."
+  },
+  "駅は近い。": {
+    "kana": "えきは ちかい。",
+    "romaji": "eki wa chikai."
+  },
+  "このスープは熱くない。": {
+    "kana": "この スープは あつくない。",
+    "romaji": "kono sūpu wa atsukunai."
+  },
+  "野菜は高くない。": {
+    "kana": "やさいは たかくない。",
+    "romaji": "yasai wa takakunai."
+  },
+  "昨日は寒かった。": {
+    "kana": "きのうは さむかった。",
+    "romaji": "kinō wa samukatta."
+  },
+  "テストは難しかった。": {
+    "kana": "テストは むずかしかった。",
+    "romaji": "tesuto wa muzukashikatta."
+  },
+  "映画は面白くなかった。": {
+    "kana": "えいがは おもしろくなかった。",
+    "romaji": "eiga wa omoshirokunakatta."
+  },
+  "昨日は忙しくなかった。": {
+    "kana": "きのうは いそがしくなかった。",
+    "romaji": "kinō wa isogashikunakatta."
+  },
+  "この店は新しくて、きれいだ。": {
+    "kana": "この みせは あたらしくて、きれいだ。",
+    "romaji": "kono mise wa atarashikute, kirei da."
+  },
+  "このカバンは軽くて、便利だ。": {
+    "kana": "この カバンは かるくて、べんりだ。",
+    "romaji": "kono kaban wa karukute, benri da."
+  },
+  "病院は遠くて、行くのが大変だ。": {
+    "kana": "びょういんは とおくて、いくのが たいへんだ。",
+    "romaji": "byōin wa tōkute, iku no ga taihen da."
+  },
+  "今日の天気は良くて、気持ちがいい。": {
+    "kana": "きょうの てんきは よくて、きもちが いい。",
+    "romaji": "kyō no tenki wa yokute, kimochi ga ii."
+  },
+  "この薬は苦くて、飲みにくい。": {
+    "kana": "この くすりは にがくて、のみにくい。",
+    "romaji": "kono kusuri wa nigakute, nominikui."
+  },
+  "スーパーのお弁当は安くておいしい。": {
+    "kana": "スーパーの おべんとうは やすくて おいしい。",
+    "romaji": "sūpā no obentō wa yasukute oishii."
+  },
+  "電車が混んでいて、とても苦しかった。": {
+    "kana": "でんしゃが こんでいて、とても くるしかった。",
+    "romaji": "densha ga konde ite, totemo kurushikatta."
+  },
+  "役所の手続きは細かくて、時間がかかった。": {
+    "kana": "やくしょの てつづきは こまかくて、じかんが かかった。",
+    "romaji": "yakusho no tetsuzuki wa komakakute, jikan ga kakatta."
+  },
+  "新しい仕事は楽しいけれど、覚えることが多い。": {
+    "kana": "あたらしい しごとは たのしいけれど、おぼえることが おおい。",
+    "romaji": "atarashii shigoto wa tanoshii keredo, oboeru koto ga ōi."
+  },
+  "アパートの部屋は古くて狭かったが、家賃は安かった。": {
+    "kana": "アパートの へやは ふるくて せまかったが、やちんは やすかった。",
+    "romaji": "apāto no heya wa furukute semakatta ga, yachin wa yasukatta."
+  },
+  "この店は便利です。": {
+    "kana": "この みせは べんりです。",
+    "romaji": "kono mise wa benri desu."
+  },
+  "駅は静かじゃないです。": {
+    "kana": "えきは しずかじゃないです。",
+    "romaji": "eki wa shizuka ja nai desu."
+  },
+  "この薬は大切です。": {
+    "kana": "この くすりは たいせつです。",
+    "romaji": "kono kusuri wa taisetsu desu."
+  },
+  "先生はとても親切です。": {
+    "kana": "せんせいは とても しんせつです。",
+    "romaji": "sensei wa totemo shinsetsu desu."
+  },
+  "その公園はきれいです。": {
+    "kana": "その こうえんは きれいです。",
+    "romaji": "sono kōen wa kirei desu."
+  },
+  "この道は安全じゃないです。": {
+    "kana": "この みちは あんぜんじゃないです。",
+    "romaji": "kono michi wa anzen ja nai desu."
+  },
+  "昨日の天気は変でした。": {
+    "kana": "きのうの てんきは へんでした。",
+    "romaji": "kinō no tenki wa hen deshita."
+  },
+  "ここは静かな場所です。": {
+    "kana": "ここは しずかな ばしょです。",
+    "romaji": "koko wa shizuka na basho desu."
+  },
+  "スーパーは新鮮な野菜が多いです。": {
+    "kana": "スーパーは しんせんな やさいが おおいです。",
+    "romaji": "suupaa wa shinsen na yasai ga ooi desu."
+  },
+  "区役所の人は丁寧でした。": {
+    "kana": "くやくしょの ひとは ていねいでした。",
+    "romaji": "kuyakusho no hito wa teinei deshita."
+  },
+  "電車は便利で速いです。": {
+    "kana": "でんしゃは べんりで はやいです。",
+    "romaji": "densha wa benri de hayai desu."
+  },
+  "この仕事は大変じゃないです。": {
+    "kana": "この しごとは たいへんじゃないです。",
+    "romaji": "kono shigoto wa taihen ja nai desu."
+  },
+  "健康はとても大切です。": {
+    "kana": "けんこうは とても たいせつです。",
+    "romaji": "kenkou wa totemo taisetsu desu."
+  },
+  "近所の人は親切で優しいです。": {
+    "kana": "きんじょの ひとは しんせつで やさしいです。",
+    "romaji": "kinjo no hito wa shinsetsu de yasashii desu."
+  },
+  "昨日の病院はとても暇でした。": {
+    "kana": "きのうの びょういんは とても ひまでした。",
+    "romaji": "kinou no byouin wa totemo hima deshita."
+  },
+  "これは便利な道具です。": {
+    "kana": "これは べんりな どうぐです。",
+    "romaji": "kore wa benri na dougu desu."
+  },
+  "日本語の勉強は大変ですが、好きです。": {
+    "kana": "にほんごの べんきょうは たいへんですが、すきです。",
+    "romaji": "nihongo no benkyou wa taihen desu ga, suki desu."
+  },
+  "この書類はとても重要で、なくさないでください。": {
+    "kana": "この しょるいは とても じゅうようで、なくさないでください。",
+    "romaji": "kono shorui wa totemo juuyou de, nakusanaide kudasai."
+  },
+  "駅前の店は有名で、いつもにぎやかです。": {
+    "kana": "えきまえの みせは ゆうめいで、いつも にぎやかです。",
+    "romaji": "ekimae no mise wa yuumei de, itsumo nigiyaka desu."
+  },
+  "ここは交通が便利で、買い物にも便利な町です。": {
+    "kana": "ここは こうつうが べんりで、かいものにも べんりな まちです。",
+    "romaji": "koko wa koutsuu ga benri de, kaimono ni mo benri na machi desu."
+  },
+  "わたしは毎日テレビを見ます。": {
+    "kana": "わたしは まいにち テレビを みます。",
+    "romaji": "watashi wa mainichi terebi o mimasu."
+  },
+  "わたしは水を飲みます。": {
+    "kana": "わたしは みずを のみます。",
+    "romaji": "watashi wa mizu o nomimasu."
+  },
+  "朝ごはんを食べます。": {
+    "kana": "あさごはんを たべます。",
+    "romaji": "asagohan o tabemasu."
+  },
+  "わたしは日本語を勉強します。": {
+    "kana": "わたしは にほんごを べんきょうします。",
+    "romaji": "watashi wa nihongo o benkyou shimasu."
+  },
+  "明日、買い物に行きます。": {
+    "kana": "あした、かいものに いきます。",
+    "romaji": "ashita, kaimono ni ikimasu."
+  },
+  "毎朝七時に起きます。": {
+    "kana": "まいあさ しちじに おきます。",
+    "romaji": "maiasa shichiji ni okimasu."
+  },
+  "夜十一時に寝ます。": {
+    "kana": "よる じゅういちじに ねます。",
+    "romaji": "yoru juuichiji ni nemasu."
+  },
+  "バスで会社へ行きます。": {
+    "kana": "バスで かいしゃへ いきます。",
+    "romaji": "basu de kaisha e ikimasu."
+  },
+  "明日、病院へ行きます。": {
+    "kana": "あした、びょういんへ いきます。",
+    "romaji": "ashita, byouin e ikimasu."
+  },
+  "スーパーで野菜を買います。": {
+    "kana": "スーパーで やさいを かいます。",
+    "romaji": "suupaa de yasai o kaimasu."
+  },
+  "日曜日に部屋を掃除します。": {
+    "kana": "にちようびに へやを そうじします。",
+    "romaji": "nichiyoubi ni heya o souji shimasu."
+  },
+  "あした、役所で書類を出します。": {
+    "kana": "あした、やくしょで しょるいを だします。",
+    "romaji": "ashita, yakusho de shorui o dashimasu."
+  },
+  "毎週、日本語の学校で漢字を習います。": {
+    "kana": "まいしゅう、にほんごの がっこうで かんじを ならいます。",
+    "romaji": "maishuu, nihongo no gakkou de kanji o naraimasu."
+  },
+  "あさって、銀行でお金をおろします。": {
+    "kana": "あさって、ぎんこうで おかねを おろします。",
+    "romaji": "asatte, ginkou de okane o oroshimasu."
+  },
+  "昼休みに同僚とごはんを食べます。": {
+    "kana": "ひるやすみに どうりょうと ごはんを たべます。",
+    "romaji": "hiruyasumi ni douryou to gohan o tabemasu."
+  },
+  "明日、子どもを学校まで送ります。": {
+    "kana": "あした、こどもを がっこうまで おくります。",
+    "romaji": "ashita, kodomo o gakkou made okurimasu."
+  },
+  "近所のクリニックで予約をします。": {
+    "kana": "きんじょの クリニックで よやくを します。",
+    "romaji": "kinjo no kurinikku de yoyaku o shimasu."
+  },
+  "来週、家賃を大家さんに払います。": {
+    "kana": "らいしゅう、やちんを おおやさんに はらいます。",
+    "romaji": "raishuu, yachin o ooya-san ni haraimasu."
+  },
+  "明日、駅で電車の定期券を買います。": {
+    "kana": "あした、えきで でんしゃの ていきけんを かいます。",
+    "romaji": "ashita, eki de densha no teikiken o kaimasu."
+  },
+  "今度の休みに区役所で在留カードの手続きをします。": {
+    "kana": "こんどの やすみに くやくしょで ざいりゅうカードの てつづきを します。",
+    "romaji": "kondo no yasumi ni kuyakusho de zairyuu kaado no tetsuzuki o shimasu."
+  },
+  "きのう買い物に行きました。": {
+    "kana": "きのう かいものに いきました。",
+    "romaji": "kinou kaimono ni ikimashita."
+  },
+  "今日は学校に行きません。": {
+    "kana": "きょうは がっこうに いきません。",
+    "romaji": "kyou wa gakkou ni ikimasen."
+  },
+  "朝ごはんを食べませんでした。": {
+    "kana": "あさごはんを たべませんでした。",
+    "romaji": "asagohan o tabemasen deshita."
+  },
+  "薬を飲みました。": {
+    "kana": "くすりを のみました。",
+    "romaji": "kusuri o nomimashita."
+  },
+  "お酒は飲みません。": {
+    "kana": "おさけは のみません。",
+    "romaji": "osake wa nomimasen."
+  },
+  "電車に乗りました。": {
+    "kana": "でんしゃに のりました。",
+    "romaji": "densha ni norimashita."
+  },
+  "昨日は仕事に行きませんでした。": {
+    "kana": "きのうは しごとに いきませんでした。",
+    "romaji": "kinou wa shigoto ni ikimasen deshita."
+  },
+  "病院で待ちました。": {
+    "kana": "びょういんで まちました。",
+    "romaji": "byouin de machimashita."
+  },
+  "今日は雨が降りませんでした。": {
+    "kana": "きょうは あめが ふりませんでした。",
+    "romaji": "kyou wa ame ga furimasen deshita."
+  },
+  "市役所で書類を出しました。": {
+    "kana": "しやくしょで しょるいを だしました。",
+    "romaji": "shiyakusho de shorui o dashimashita."
+  },
+  "となりの人に挨拶しました。": {
+    "kana": "となりの ひとに あいさつしました。",
+    "romaji": "tonari no hito ni aisatsu shimashita."
+  },
+  "あの店はまだ開きません。": {
+    "kana": "あの みせは まだ あきません。",
+    "romaji": "ano mise wa mada akimasen."
+  },
+  "きのうは熱があって、会社を休みました。": {
+    "kana": "きのうは ねつが あって、かいしゃを やすみました。",
+    "romaji": "kinou wa netsu ga atte, kaisha o yasumimashita."
+  },
+  "バスが時間どおりに来ませんでした。": {
+    "kana": "バスが じかんどおりに きませんでした。",
+    "romaji": "basu ga jikan doori ni kimasen deshita."
+  },
+  "先週、日本語のテストを受けました。": {
+    "kana": "せんしゅう、にほんごの テストを うけました。",
+    "romaji": "senshuu, nihongo no tesuto o ukemashita."
+  },
+  "店員にお釣りをもらいませんでした。": {
+    "kana": "てんいんに おつりを もらいませんでした。",
+    "romaji": "ten-in ni otsuri o moraimasen deshita."
+  },
+  "予約をしなかったので、診てもらえませんでした。": {
+    "kana": "よやくを しなかったので、みて もらえませんでした。",
+    "romaji": "yoyaku o shinakatta node, mite moraemasen deshita."
+  },
+  "引っ越しの手続きはもう終わりました。": {
+    "kana": "ひっこしの てつづきは もう おわりました。",
+    "romaji": "hikkoshi no tetsuzuki wa mō owarimashita."
+  },
+  "保険証を忘れたので、窓口で困りました。": {
+    "kana": "ほけんしょうを わすれたので、まどぐちで こまりました。",
+    "romaji": "hokenshō o wasureta node, madoguchi de komarimashita."
+  },
+  "ごみの出し方がわからなかったので、近所の人に聞きました。": {
+    "kana": "ごみの だしかたが わからなかったので、きんじょの ひとに ききました。",
+    "romaji": "gomi no dashikata ga wakaranakatta node, kinjo no hito ni kikimashita."
+  },
+  "明日、休む。": {
+    "kana": "あした、やすむ。",
+    "romaji": "ashita, yasumu."
+  },
+  "今日は行かない。": {
+    "kana": "きょうは いかない。",
+    "romaji": "kyō wa ikanai."
+  },
+  "昨日、薬を飲んだ。": {
+    "kana": "きのう、くすりを のんだ。",
+    "romaji": "kinō, kusuri o nonda."
+  },
+  "今、ご飯を食べる。": {
+    "kana": "いま、ごはんを たべる。",
+    "romaji": "ima, gohan o taberu."
+  },
+  "お金がないから買わない。": {
+    "kana": "おかねが ないから かわない。",
+    "romaji": "okane ga nai kara kawanai."
+  },
+  "駅まで歩いた。": {
+    "kana": "えきまで あるいた。",
+    "romaji": "eki made aruita."
+  },
+  "週末は仕事しない。": {
+    "kana": "しゅうまつは しごとしない。",
+    "romaji": "shūmatsu wa shigoto shinai."
+  },
+  "友だちと映画を見た。": {
+    "kana": "ともだちと えいがを みた。",
+    "romaji": "tomodachi to eiga o mita."
+  },
+  "バスがまだ来ない。": {
+    "kana": "バスが まだ こない。",
+    "romaji": "basu ga mada konai."
+  },
+  "スーパーで野菜を買う。": {
+    "kana": "スーパーで やさいを かう。",
+    "romaji": "sūpā de yasai o kau."
+  },
+  "今日は病院に行った。": {
+    "kana": "きょうは びょういんに いった。",
+    "romaji": "kyō wa byōin ni itta."
+  },
+  "日本語、まだよく分からない。": {
+    "kana": "にほんご、まだ よく わからない。",
+    "romaji": "nihongo, mada yoku wakaranai."
+  },
+  "次の電車に乗る。": {
+    "kana": "つぎの でんしゃに のる。",
+    "romaji": "tsugi no densha ni noru."
+  },
+  "昨日は夜まで残業した。": {
+    "kana": "きのうは よるまで ざんぎょうした。",
+    "romaji": "kinō wa yoru made zangyō shita."
+  },
+  "ごみは月曜日に出す。": {
+    "kana": "ごみは げつようびに だす。",
+    "romaji": "gomi wa getsuyōbi ni dasu."
+  },
+  "その店、もう開いてないよ。": {
+    "kana": "その みせ、もう あいてないよ。",
+    "romaji": "sono mise, mō aitenaī yo."
+  },
+  "区役所で書類をもらった。": {
+    "kana": "くやくしょで しょるいを もらった。",
+    "romaji": "kuyakusho de shorui o moratta."
+  },
+  "頭が痛いから今日は出かけない。": {
+    "kana": "あたまが いたいから きょうは でかけない。",
+    "romaji": "atama ga itai kara kyō wa dekakenai."
+  },
+  "先週、銀行で口座を作った。": {
+    "kana": "せんしゅう、ぎんこうで こうざを つくった。",
+    "romaji": "senshū, ginkō de kōza o tsukutta."
+  },
+  "道が分からなかったから、近所の人に聞いた。": {
+    "kana": "みちが わからなかったから、きんじょの ひとに きいた。",
+    "romaji": "michi ga wakaranakatta kara, kinjo no hito ni kiita."
+  },
+  "ここに座ってください。": {
+    "kana": "ここに すわって ください。",
+    "romaji": "koko ni suwatte kudasai."
+  },
+  "靴を脱いで、中に入ってください。": {
+    "kana": "くつを ぬいで、なかに はいって ください。",
+    "romaji": "kutsu o nuide, naka ni haitte kudasai."
+  },
+  "手を洗って、席に着いてください。": {
+    "kana": "てを あらって、せきに ついて ください。",
+    "romaji": "te o aratte, seki ni tsuite kudasai."
+  },
+  "この薬を朝と夜に飲んでください。": {
+    "kana": "この くすりを あさと よるに のんで ください。",
+    "romaji": "kono kusuri o asa to yoru ni nonde kudasai."
+  },
+  "番号を取って、椅子に座って待ってください。": {
+    "kana": "ばんごうを とって、いすに すわって まって ください。",
+    "romaji": "bangō o totte, isu ni suwatte matte kudasai."
+  },
+  "ここにはんこを押して、書類を出してください。": {
+    "kana": "ここに はんこを おして、しょるいを だして ください。",
+    "romaji": "koko ni hanko o oshite, shorui o dashite kudasai."
+  },
+  "電気を消して、窓を閉めてください。": {
+    "kana": "でんきを けして、まどを しめて ください。",
+    "romaji": "denki o keshite, mado o shimete kudasai."
+  },
+  "このボタンを押して、切符を取ってください。": {
+    "kana": "この ボタンを おして、きっぷを とって ください。",
+    "romaji": "kono botan o oshite, kippu o totte kudasai."
+  },
+  "熱があるので、明日は休んでください。": {
+    "kana": "ねつが あるので、あしたは やすんで ください。",
+    "romaji": "netsu ga aru node, ashita wa yasunde kudasai."
+  },
+  "困ったことがあったら、いつでも連絡してください。": {
+    "kana": "こまった ことが あったら、いつでも れんらくして ください。",
+    "romaji": "komatta koto ga attara, itsudemo renraku shite kudasai."
+  },
+  "住所が変わったら、市役所に届けてください。": {
+    "kana": "じゅうしょが かわったら、しやくしょに とどけて ください。",
+    "romaji": "jūsho ga kawattara, shiyakusho ni todokete kudasai."
+  },
+  "この用紙に記入して、受付に持って行ってください。": {
+    "kana": "この ようしに きにゅうして、うけつけに もって いって ください。",
+    "romaji": "kono yōshi ni kinyū shite, uketsuke ni motte itte kudasai."
+  },
+  "電車を降りて、北口から出てください。": {
+    "kana": "でんしゃを おりて、きたぐちから でて ください。",
+    "romaji": "densha o orite, kitaguchi kara dete kudasai."
+  },
+  "レジでお金を払って、レシートをもらってください。": {
+    "kana": "レジで おかねを はらって、レシートを もらって ください。",
+    "romaji": "reji de okane o haratte, reshīto o moratte kudasai."
+  },
+  "具合が悪くなったら、すぐに先生に言って、保健室に行ってください。": {
+    "kana": "ぐあいが わるくなったら、すぐに せんせいに いって、ほけんしつに いって ください。",
+    "romaji": "guai ga waruku nattara, sugu ni sensei ni itte, hokenshitsu ni itte kudasai."
+  },
+  "今、ご飯を食べています。": {
+    "kana": "いま、ごはんを たべています。",
+    "romaji": "ima, gohan o tabete imasu."
+  },
+  "今、テレビを見ています。": {
+    "kana": "いま、テレビを みています。",
+    "romaji": "ima, terebi o mite imasu."
+  },
+  "私は結婚しています。": {
+    "kana": "わたしは けっこんしています。",
+    "romaji": "watashi wa kekkon shite imasu."
+  },
+  "今、電車を待っています。": {
+    "kana": "いま、でんしゃを まっています。",
+    "romaji": "ima, densha o matte imasu."
+  },
+  "毎日、日本語を勉強しています。": {
+    "kana": "まいにち、にほんごを べんきょうしています。",
+    "romaji": "mainichi, nihongo o benkyō shite imasu."
+  },
+  "今、スーパーで買い物をしています。": {
+    "kana": "いま、スーパーで かいものを しています。",
+    "romaji": "ima, sūpā de kaimono o shite imasu."
+  },
+  "兄は東京に住んでいます。": {
+    "kana": "あには とうきょうに すんでいます。",
+    "romaji": "ani wa tōkyō ni sunde imasu."
+  },
+  "毎朝、駅まで歩いています。": {
+    "kana": "まいあさ、えきまで あるいています。",
+    "romaji": "maiasa, eki made aruite imasu."
+  },
+  "今、子どもが寝ています。": {
+    "kana": "いま、こどもが ねています。",
+    "romaji": "ima, kodomo ga nete imasu."
+  },
+  "私はコンビニで働いています。": {
+    "kana": "わたしは コンビニで はたらいています。",
+    "romaji": "watashi wa konbini de hataraite imasu."
+  },
+  "今、病院で順番を待っています。": {
+    "kana": "いま、びょういんで じゅんばんを まっています。",
+    "romaji": "ima, byōin de junban o matte imasu."
+  },
+  "毎週日曜日に部屋を掃除しています。": {
+    "kana": "まいしゅう にちようびに へやを そうじしています。",
+    "romaji": "maishū nichiyōbi ni heya o sōji shite imasu."
+  },
+  "妻は今、料理をしています。": {
+    "kana": "つまは いま、りょうりを しています。",
+    "romaji": "tsuma wa ima, ryōri o shite imasu."
+  },
+  "私は銀行に口座を持っています。": {
+    "kana": "わたしは ぎんこうに こうざを もっています。",
+    "romaji": "watashi wa ginkō ni kōza o motte imasu."
+  },
+  "今、役所で書類を書いています。": {
+    "kana": "いま、やくしょで しょるいを かいています。",
+    "romaji": "ima, yakusho de shorui o kaite imasu."
+  },
+  "毎日、薬を飲んでいます。": {
+    "kana": "まいにち、くすりを のんでいます。",
+    "romaji": "mainichi, kusuri o nonde imasu."
+  },
+  "今、雨が降っているので傘を持っています。": {
+    "kana": "いま、あめが ふっているので かさを もっています。",
+    "romaji": "ima, ame ga futte iru node kasa o motte imasu."
+  },
+  "近所の人と仲良くしています。": {
+    "kana": "きんじょの ひとと なかよくしています。",
+    "romaji": "kinjo no hito to nakayoku shite imasu."
+  },
+  "今、仕事で会議に出ています。": {
+    "kana": "いま、しごとで かいぎに でています。",
+    "romaji": "ima, shigoto de kaigi ni dete imasu."
+  },
+  "私は日本の運転免許証を持っていて、毎日車を運転しています。": {
+    "kana": "わたしは にほんの うんてんめんきょしょうを もっていて、まいにち くるまを うんてんしています。",
+    "romaji": "watashi wa nihon no unten menkyoshō o motte ite, mainichi kuruma o unten shite imasu."
+  },
+  "ご飯が食べたいです。": {
+    "kana": "ごはんが たべたいです。",
+    "romaji": "gohan ga tabetai desu."
+  },
+  "家に帰りたいです。": {
+    "kana": "いえに かえりたいです。",
+    "romaji": "ie ni kaeritai desu."
+  },
+  "少し休みたいです。": {
+    "kana": "すこし やすみたいです。",
+    "romaji": "sukoshi yasumitai desu."
+  },
+  "日本語が話したいです。": {
+    "kana": "にほんごが はなしたいです。",
+    "romaji": "nihongo ga hanashitai desu."
+  },
+  "今日は買い物がしたいです。": {
+    "kana": "きょうは かいものが したいです。",
+    "romaji": "kyō wa kaimono ga shitai desu."
+  },
+  "トイレに行きたいです。": {
+    "kana": "トイレに いきたいです。",
+    "romaji": "toire ni ikitai desu."
+  },
+  "今は何も食べたくないです。": {
+    "kana": "いまは なにも たべたくないです。",
+    "romaji": "ima wa nani mo tabetakunai desu."
+  },
+  "病院で薬がもらいたいです。": {
+    "kana": "びょういんで くすりが もらいたいです。",
+    "romaji": "byōin de kusuri ga moraitai desu."
+  },
+  "駅までの道が知りたいです。": {
+    "kana": "えきまでの みちが しりたいです。",
+    "romaji": "eki made no michi ga shiritai desu."
+  },
+  "日本でもっと働きたいです。": {
+    "kana": "にほんで もっと はたらきたいです。",
+    "romaji": "nihon de motto hatarakitai desu."
+  },
+  "今日は残業したくないです。": {
+    "kana": "きょうは ざんぎょうしたくないです。",
+    "romaji": "kyō wa zangyō shitakunai desu."
+  },
+  "子どもを保育園に入れたいです。": {
+    "kana": "こどもを ほいくえんに いれたいです。",
+    "romaji": "kodomo o hoikuen ni iretai desu."
+  },
+  "役所で在留カードの住所を変えたいです。": {
+    "kana": "やくしょで ざいりゅうカードの じゅうしょを かえたいです。",
+    "romaji": "yakusho de zairyū kādo no jūsho o kaetai desu."
+  },
+  "銀行で新しい口座を作りたいです。": {
+    "kana": "ぎんこうで あたらしい こうざを つくりたいです。",
+    "romaji": "ginkō de atarashii kōza o tsukuritai desu."
+  },
+  "医者にこの痛みについて聞きたいです。": {
+    "kana": "いしゃに この いたみに ついて ききたいです。",
+    "romaji": "isha ni kono itami ni tsuite kikitai desu."
+  },
+  "今日はあまり高い物は買いたくないです。": {
+    "kana": "きょうは あまり たかい ものは かいたくないです。",
+    "romaji": "kyō wa amari takai mono wa kaitakunai desu."
+  },
+  "日本語学校でもっと漢字を勉強したいです。": {
+    "kana": "にほんごがっこうで もっと かんじを べんきょうしたいです。",
+    "romaji": "nihongo gakkō de motto kanji o benkyō shitai desu."
+  },
+  "隣の人とあいさつができるようになりたいです。": {
+    "kana": "となりの ひとと あいさつが できるように なりたいです。",
+    "romaji": "tonari no hito to aisatsu ga dekiru yō ni naritai desu."
+  },
+  "いつか家族を日本に呼びたいです。": {
+    "kana": "いつか かぞくを にほんに よびたいです。",
+    "romaji": "itsuka kazoku o nihon ni yobitai desu."
+  },
+  "ここに座ってもいいですか。": {
+    "kana": "ここに すわっても いいですか。",
+    "romaji": "koko ni suwatte mo ii desu ka."
+  },
+  "トイレに行ってもいいですか。": {
+    "kana": "トイレに いっても いいですか。",
+    "romaji": "toire ni itte mo ii desu ka."
+  },
+  "写真を撮ってもいいですか。": {
+    "kana": "しゃしんを とっても いいですか。",
+    "romaji": "shashin o totte mo ii desu ka."
+  },
+  "ここでタバコを吸ってはいけません。": {
+    "kana": "ここで タバコを すっては いけません。",
+    "romaji": "koko de tabako o sutte wa ikemasen."
+  },
+  "この水を飲んでもいいですか。": {
+    "kana": "この みずを のんでも いいですか。",
+    "romaji": "kono mizu o nonde mo ii desu ka."
+  },
+  "電車の中で電話してはいけません。": {
+    "kana": "でんしゃの なかで でんわしては いけません。",
+    "romaji": "densha no naka de denwa shite wa ikemasen."
+  },
+  "少し休んでもいいですか。": {
+    "kana": "すこし やすんでも いいですか。",
+    "romaji": "sukoshi yasunde mo ii desu ka."
+  },
+  "病院の中で走ってはいけません。": {
+    "kana": "びょういんの なかで はしっては いけません。",
+    "romaji": "byōin no naka de hashitte wa ikemasen."
+  },
+  "ここに車を止めてもいいですか。": {
+    "kana": "ここに くるまを とめても いいですか。",
+    "romaji": "koko ni kuruma o tomete mo ii desu ka."
+  },
+  "教室で食べ物を食べてはいけません।": {
+    "kana": "きょうしつで たべものを たべては いけません।",
+    "romaji": "kyōshitsu de tabemono o tabete wa ikemasen."
+  },
+  "明日、休んでもいいですか。": {
+    "kana": "あした、やすんでも いいですか。",
+    "romaji": "ashita, yasunde mo ii desu ka."
+  },
+  "この書類をコピーしてもいいですか。": {
+    "kana": "この しょるいを コピーしても いいですか。",
+    "romaji": "kono shorui o kopī shite mo ii desu ka."
+  },
+  "夜遅くにピアノを弾いてはいけません。": {
+    "kana": "よるおそくに ピアノを ひいては いけません。",
+    "romaji": "yoru osoku ni piano o hiite wa ikemasen."
+  },
+  "先に帰ってもいいですか。": {
+    "kana": "さきに かえっても いいですか。",
+    "romaji": "saki ni kaette mo ii desu ka."
+  },
+  "診察の前に何か食べてはいけません。": {
+    "kana": "しんさつの まえに なにか たべては いけません。",
+    "romaji": "shinsatsu no mae ni nanika tabete wa ikemasen."
+  },
+  "このペンを使ってもいいですか。": {
+    "kana": "この ペンを つかっても いいですか。",
+    "romaji": "kono pen o tsukatte mo ii desu ka."
+  },
+  "駐車場以外に自転車を置いてはいけません。": {
+    "kana": "ちゅうしゃじょう いがいに じてんしゃを おいては いけません。",
+    "romaji": "chūshajō igai ni jitensha o oite wa ikemasen."
+  },
+  "会議中にスマートフォンを見てはいけません。": {
+    "kana": "かいぎちゅうに スマートフォンを みては いけません。",
+    "romaji": "kaigichū ni sumātofon o mite wa ikemasen."
+  },
+  "提出期限を過ぎてから書類を出してはいけません。": {
+    "kana": "ていしゅつきげんを すぎてから しょるいを だしては いけません。",
+    "romaji": "teishutsu kigen o sugite kara shorui o dashite wa ikemasen."
+  },
+  "私は日本語を話すことができます。": {
+    "kana": "わたしは にほんごを はなすことが できます。",
+    "romaji": "watashi wa nihongo o hanasu koto ga dekimasu."
+  },
+  "ひらがなを読むことができます。": {
+    "kana": "ひらがなを よむことが できます。",
+    "romaji": "hiragana o yomu koto ga dekimasu."
+  },
+  "少し漢字を書くことができます。": {
+    "kana": "すこし かんじを かくことが できます。",
+    "romaji": "sukoshi kanji o kaku koto ga dekimasu."
+  },
+  "ここでお金をおろすことができます。": {
+    "kana": "ここで おかねを おろすことが できます。",
+    "romaji": "koko de okane o orosu koto ga dekimasu."
+  },
+  "カードで払うことができますか。": {
+    "kana": "カードで はらう ことが できますか。",
+    "romaji": "Kaado de harau koto ga dekimasu ka."
+  },
+  "この道を歩いて駅まで行くことができます。": {
+    "kana": "この みちを あるいて えきまで いく ことが できます。",
+    "romaji": "Kono michi o aruite eki made iku koto ga dekimasu."
+  },
+  "日曜日は買い物に行くことができます。": {
+    "kana": "にちようびは かいものに いく ことが できます。",
+    "romaji": "Nichiyobi wa kaimono ni iku koto ga dekimasu."
+  },
+  "私は自転車に乗ることができます。": {
+    "kana": "わたしは じてんしゃに のる ことが できます。",
+    "romaji": "Watashi wa jitensha ni noru koto ga dekimasu."
+  },
+  "病院で英語を話すことができますか。": {
+    "kana": "びょういんで えいごを はなす ことが できますか。",
+    "romaji": "Byoin de eigo o hanasu koto ga dekimasu ka."
+  },
+  "明日の朝、早く起きることができます。": {
+    "kana": "あしたの あさ、はやく おきる ことが できます。",
+    "romaji": "Ashita no asa, hayaku okiru koto ga dekimasu."
+  },
+  "このアプリで日本語を勉強することができます。": {
+    "kana": "この アプリで にほんごを べんきょう する ことが できます。",
+    "romaji": "Kono Apuri de nihongo o benkyo suru koto ga dekimasu."
+  },
+  "役所で書類をもらうことができます。": {
+    "kana": "やくしょで しょるいを もらう ことが できます。",
+    "romaji": "Yakusho de shorui o morau koto ga dekimasu."
+  },
+  "私は車を運転することができます。": {
+    "kana": "わたしは くるまを うんてん する ことが できます。",
+    "romaji": "Watashi wa kuruma o unten suru koto ga dekimasu."
+  },
+  "ここで電車の切符を買うことができます。": {
+    "kana": "ここで でんしゃの きっぷを かう ことが できます。",
+    "romaji": "Koko de densha no kippu o kau koto ga dekimasu."
+  },
+  "スーパーで安く野菜を買うことができます。": {
+    "kana": "スーパーで やすく やさいを かう ことが できます。",
+    "romaji": "Supa de yasuku yasai o kau koto ga dekimasu."
+  },
+  "仕事の後で日本語の授業に出ることができます。": {
+    "kana": "しごとの あとで にほんごの じゅぎょうに でる ことが できます。",
+    "romaji": "Shigoto no ato de nihongo no jugyo ni deru koto ga dekimasu."
+  },
+  "インターネットで病院の予約を取ることができます。": {
+    "kana": "インターネットで びょういんの よやくを とる ことが できます。",
+    "romaji": "Intanetto de byoin no yoyaku o toru koto ga dekimasu."
+  },
+  "近所の人と日本語であいさつをすることができます。": {
+    "kana": "きんじょの ひとと にほんごで あいさつを する ことが できます。",
+    "romaji": "Kinjo no hito to nihongo de aisatsu o suru koto ga dekimasu."
+  },
+  "区役所で在留カードの住所を変えることができます。": {
+    "kana": "くやくしょで ざいりゅう カードの じゅうしょを かえる ことが できます。",
+    "romaji": "Kuyakusho de zairyu Kaado no jusho o kaeru koto ga dekimasu."
+  },
+  "通訳を頼めば、医者の説明をよく理解することができます。": {
+    "kana": "つうやくを たのめば、いしゃの せつめいを よく りかい する ことが できます。",
+    "romaji": "Tsuyaku o tanomeba, isha no setsumei o yoku rikai suru koto ga dekimasu."
+  },
+  "明日は会社に行かなければなりません。": {
+    "kana": "あしたは かいしゃに いかなければ なりません。",
+    "romaji": "Ashita wa kaisha ni ikanereba narimasen."
+  },
+  "今日は薬を飲まなくてもいいです。": {
+    "kana": "きょうは くすりを のまなくても いいです。",
+    "romaji": "Kyo wa kusuri o nomanakute mo ii desu."
+  },
+  "病院では保険証を見せなければなりません。": {
+    "kana": "びょういんでは ほけんしょうを みせなければ なりません。",
+    "romaji": "Byoin de wa hokensho o misenakereba narimasen."
+  },
+  "このゴミは分けて出さなければなりません。": {
+    "kana": "この ゴミは わけて ださなければ なりません。",
+    "romaji": "Kono Gomi wa wakete dasanakereba narimasen."
+  },
+  "靴を脱がなくてもいいですよ。": {
+    "kana": "くつを ぬがなくても いいですよ。",
+    "romaji": "Kutsu o nuganakute mo ii desu yo."
+  },
+  "電車の中では静かにしなければなりません。": {
+    "kana": "でんしゃの なかでは しずかに しなければ なりません。",
+    "romaji": "Densha no naka de wa shizuka ni shinakereba narimasen."
+  },
+  "今日は残業しなくてもいいです。": {
+    "kana": "きょうは ざんぎょう しなくても いいです。",
+    "romaji": "Kyo wa zangyo shinakute mo ii desu."
+  },
+  "役所で書類にサインしなければなりません。": {
+    "kana": "やくしょで しょるいに サイン しなければ なりません。",
+    "romaji": "Yakusho de shorui ni Sain shinakereba narimasen."
+  },
+  "予約があるので、並ばなくてもいいです。": {
+    "kana": "よやくが あるので、ならばなくても いいです。",
+    "romaji": "Yoyaku ga aru no de, narabanakute mo ii desu."
+  },
+  "学校に子どもの熱を連絡しなければなりません。": {
+    "kana": "がっこうに こどもの ねつを れんらく しなければ なりません。",
+    "romaji": "Gakko ni kodomo no netsu o renraku shinakereba narimasen."
+  },
+  "明日は休みなので、早く起きなくてもいいです。": {
+    "kana": "あしたは やすみなので、はやく おきなくても いいです。",
+    "romaji": "Ashita wa yasumi na no de, hayaku okinakute mo ii desu."
+  },
+  "レジでお金を先に払わなければなりません。": {
+    "kana": "レジで おかねを さきに はらわなければ なりません。",
+    "romaji": "Reji de okane o saki ni harawanakereba narimasen."
+  },
+  "このアンケートは答えなくてもいいです。": {
+    "kana": "この アンケートは こたえなくても いいです。",
+    "romaji": "Kono Anketo wa kotaenakute mo ii desu."
+  },
+  "引っ越したら住所を変更しなければなりません。": {
+    "kana": "ひっこしたら じゅうしょを へんこう しなければ なりません。",
+    "romaji": "Hikkoshitara jusho o henkou shinakereba narimasen."
+  },
+  "今日はマスクをつけなくてもいいです。": {
+    "kana": "きょうは マスクを つけなくても いいです。",
+    "romaji": "Kyo wa Masuku o tsukenakute mo ii desu."
+  },
+  "ビザの更新は早めに申請しなければなりません。": {
+    "kana": "ビザの こうしんは はやめに しんせい しなければ なりません。",
+    "romaji": "Biza no koshin wa hayame ni shinsei shinakereba narimasen."
+  },
+  "このバスは整理券を取らなければなりません。": {
+    "kana": "この バスは せいりけんを とらなければ なりません。",
+    "romaji": "Kono Basu wa seiriken o toranakereba narimasen."
+  },
+  "領収書は必ずもらわなくてもいいですが、あると便利です。": {
+    "kana": "りょうしゅうしょは かならず もらわなくても いいですが、あると べんりです。",
+    "romaji": "Ryoshusho wa kanarazu morawanakute mo ii desu ga, aru to benri desu."
+  },
+  "健康診断は会社のルールで毎年受けなければなりません。": {
+    "kana": "けんこうしんだんは かいしゃの ルールで まいとし うけなければ なりません。",
+    "romaji": "Kenko shindan wa kaisha no Ruru de maitoshi ukenakereba narimasen."
+  },
+  "確定申告は人によって、しなくてもいい場合があります。": {
+    "kana": "かくていしんこくは ひとに よって、しなくても いい ばあいが あります。",
+    "romaji": "Kakutei shinkoku wa hito ni yotte, shinakute mo ii baai ga arimasu."
+  },
+  "早く寝た方がいいですよ。": {
+    "kana": "はやく ねた ほうが いいですよ。",
+    "romaji": "Hayaku neta ho ga ii desu yo."
+  },
+  "水をたくさん飲んだ方がいいです。": {
+    "kana": "みずを たくさん のんだ ほうが いいです。",
+    "romaji": "Mizu o takusan nonda ho ga ii desu."
+  },
+  "今日は出かけない方がいいです。": {
+    "kana": "きょうは でかけない ほうが いいです。",
+    "romaji": "Kyo wa dekakenai ho ga ii desu."
+  },
+  "薬を飲んだ方がいいですよ。": {
+    "kana": "くすりを のんだ ほうが いいですよ。",
+    "romaji": "Kusuri o nonda ho ga ii desu yo."
+  },
+  "少し休んだ方がいいです。": {
+    "kana": "すこし やすんだ ほうが いいです。",
+    "romaji": "Sukoshi yasunda ho ga ii desu."
+  },
+  "傘を持って行った方がいいです。": {
+    "kana": "かさを もって いった ほうが いいです。",
+    "romaji": "Kasa o motte itta ho ga ii desu."
+  },
+  "無理をしない方がいいですよ。": {
+    "kana": "むりを しない ほうが いいですよ。",
+    "romaji": "Muri o shinai ho ga ii desu yo."
+  },
+  "早めに病院へ行った方がいいです。": {
+    "kana": "はやめに びょういんへ いった ほうが いいです。",
+    "romaji": "Hayame ni byoin e itta ho ga ii desu."
+  },
+  "電車が混むから、早く家を出た方がいいです。": {
+    "kana": "でんしゃが こむから、はやく いえを でた ほうが いいです。",
+    "romaji": "Densha ga komu kara, hayaku ie o deta ho ga ii desu."
+  },
+  "風邪のときはお風呂に入らない方がいいです。": {
+    "kana": "かぜの ときは おふろに はいらない ほうが いいです。",
+    "romaji": "Kaze no toki wa ofuro ni hairanai ho ga ii desu."
+  },
+  "役所には午前中に行った方がいいですよ。": {
+    "kana": "やくしょには ごぜんちゅうに いった ほうが いいですよ。",
+    "romaji": "Yakusho ni wa gozenchuu ni itta ho ga ii desu yo."
+  },
+  "わからないことは先生に聞いた方がいいです。": {
+    "kana": "わからない ことは せんせいに きいた ほうが いいです。",
+    "romaji": "Wakaranai koto wa sensei ni kiita ho ga ii desu."
+  },
+  "夜遅くに大きな音を出さない方がいいです。": {
+    "kana": "よる おそくに おおきな おとを ださない ほうが いいです。",
+    "romaji": "Yoru osoku ni okina oto o dasanai ho ga ii desu."
+  },
+  "契約書はよく読んでから、サインした方がいいです。": {
+    "kana": "けいやくしょは よく よんでから、サイン した ほうが いいです。",
+    "romaji": "Keiyakusho wa yoku yonde kara, Sain shita ho ga ii desu."
+  },
+  "ゴミは決められた日に出した方がいいですよ。": {
+    "kana": "ゴミは きめられた ひに だした ほうが いいですよ。",
+    "romaji": "Gomi wa kimerareta hi ni dashita hō ga ii desu yo."
+  },
+  "在留カードはいつも持っていた方がいいです。": {
+    "kana": "ざいりゅうカードは いつも もっていた ほうが いいです。",
+    "romaji": "Zairyū Kādo wa itsumo motte ita hō ga ii desu."
+  },
+  "熱があるなら、仕事を休んだ方がいいですよ。": {
+    "kana": "ねつが あるなら、しごとを やすんだ ほうが いいですよ。",
+    "romaji": "Netsu ga aru nara, shigoto o yasunda hō ga ii desu yo."
+  },
+  "自転車は決められた場所に止めた方がいいです。": {
+    "kana": "じてんしゃは きめられた ばしょに とめた ほうが いいです。",
+    "romaji": "Jitensha wa kimerareta basho ni tometa hō ga ii desu."
+  },
+  "大事な書類はコピーを取っておいた方がいいです。": {
+    "kana": "だいじな しょるいは コピーを とっておいた ほうが いいです。",
+    "romaji": "Daiji na shorui wa Kopī o totte oita hō ga ii desu."
+  },
+  "体調が悪いときは、無理に出勤しない方がいいですよ。": {
+    "kana": "たいちょうが わるい ときは、むりに しゅっきんしない ほうが いいですよ。",
+    "romaji": "Taichō ga warui toki wa, muri ni shukkin shinai hō ga ii desu yo."
+  },
+  "休みの日は、洗濯したり掃除したりします。": {
+    "kana": "やすみの ひは、せんたくしたり そうじしたり します。",
+    "romaji": "Yasumi no hi wa, sentaku shitari sōji shitari shimasu."
+  },
+  "音楽を聞きながら、ご飯を作ります。": {
+    "kana": "おんがくを ききながら、ごはんを つくります。",
+    "romaji": "Ongaku o kiki nagara, gohan o tsukurimasu."
+  },
+  "スーパーで野菜を買ったり、肉を買ったりしました。": {
+    "kana": "スーパーで やさいを かったり、にくを かったり しました。",
+    "romaji": "Sūpā de yasai o kattari, niku o kattari shimashita."
+  },
+  "歩きながら、スマホを見ないでください。": {
+    "kana": "あるきながら、スマホを みないで ください。",
+    "romaji": "Aruki nagara, Sumaho o minaide kudasai."
+  },
+  "休みの日は、家で寝たりテレビを見たりします。": {
+    "kana": "やすみの ひは、いえで ねたり テレビを みたり します。",
+    "romaji": "Yasumi no hi wa, ie de netari Terebi o mitari shimasu."
+  },
+  "子どもは公園で走ったり遊んだりしています。": {
+    "kana": "こどもは こうえんで はしったり あそんだり しています。",
+    "romaji": "Kodomo wa kōen de hashittari asondari shite imasu."
+  },
+  "道を歩きながら、電話で話していました。": {
+    "kana": "みちを あるきながら、でんわで はなして いました。",
+    "romaji": "Michi o aruki nagara, denwa de hanashite imashita."
+  },
+  "病院で、座ったり立ったりして待ちました。": {
+    "kana": "びょういんで、すわったり たったり して まちました。",
+    "romaji": "Byōin de, suwattari tattari shite machimashita."
+  },
+  "テレビを見ながら、晩ご飯を食べます。": {
+    "kana": "テレビを みながら、ばんごはんを たべます。",
+    "romaji": "Terebi o mi nagara, bangohan o tabemasu."
+  },
+  "日本語の勉強は、書いたり話したりすることが大切です。": {
+    "kana": "にほんごの べんきょうは、かいたり はなしたり することが たいせつです。",
+    "romaji": "Nihongo no benkyō wa, kaitari hanashitari suru koto ga taisetsu desu."
+  },
+  "電車の中で、本を読みながら座っていました。": {
+    "kana": "でんしゃの なかで、ほんを よみながら すわって いました。",
+    "romaji": "Densha no naka de, hon o yomi nagara suwatte imashita."
+  },
+  "週末は買い物に行ったり、友だちに会ったりします。": {
+    "kana": "しゅうまつは かいものに いったり、ともだちに あったり します。",
+    "romaji": "Shūmatsu wa kaimono ni ittari, tomodachi ni attari shimasu."
+  },
+  "地図を見ながら、役所まで歩いて行きました。": {
+    "kana": "ちずを みながら、やくしょまで あるいて いきました。",
+    "romaji": "Chizu o mi nagara, yakusho made aruite ikimashita."
+  },
+  "仕事中は、電話に出たり書類を書いたりして忙しいです।": {
+    "kana": "しごとちゅうは、でんわに でたり しょるいを かいたり して いそがしいです।",
+    "romaji": "Shigotochū wa, denwa ni detari shorui o kaitari shite isogashii desu."
+  },
+  "赤ちゃんを抱きながら、料理をするのは大変です。": {
+    "kana": "あかちゃんを だきながら、りょうりを するのは たいへんです。",
+    "romaji": "Akachan o daki nagara, ryōri o suru no wa taihen desu."
+  },
+  "風邪のときは、熱が出たり咳が出たりします。": {
+    "kana": "かぜの ときは、ねつが でたり せきが でたり します。",
+    "romaji": "Kaze no toki wa, netsu ga detari seki ga detari shimasu."
+  },
+  "メモを取りながら、先生の説明を聞きました。": {
+    "kana": "メモを とりながら、せんせいの せつめいを ききました。",
+    "romaji": "Memo o tori nagara, sensei no setsumei o kikimashita."
+  },
+  "市役所では、待ったり書類を出したりして一時間かかりました。": {
+    "kana": "しやくしょでは、まったり しょるいを だしたり して いちじかん かかりました。",
+    "romaji": "Shiyakusho de wa, mattari shorui o dashitari shite ichijikan kakarimashita."
+  },
+  "子どもの世話をしながら、パートの仕事も続けています。": {
+    "kana": "こどもの せわを しながら、パートの しごとも つづけています。",
+    "romaji": "Kodomo no sewa o shi nagara, Pāto no shigoto mo tsuzukete imasu."
+  },
+  "今日は寒いから、上着を着ます。": {
+    "kana": "きょうは さむいから、うわぎを きます。",
+    "romaji": "Kyō wa samui kara, uwagi o kimasu."
+  },
+  "お腹が痛いから、病院へ行きます。": {
+    "kana": "おなかが いたいから、びょういんへ いきます。",
+    "romaji": "Onaka ga itai kara, byōin e ikimasu."
+  },
+  "明日は休みだから、ゆっくり寝ます。": {
+    "kana": "あしたは やすみだから、ゆっくり ねます。",
+    "romaji": "Ashita wa yasumi da kara, yukkuri nemasu."
+  },
+  "安いから、この野菜を買います。": {
+    "kana": "やすいから、この やさいを かいます。",
+    "romaji": "Yasui kara, kono yasai o kaimasu."
+  },
+  "日本語がわからないから、ゆっくり話してください。": {
+    "kana": "にほんごが わからないから、ゆっくり はなして ください。",
+    "romaji": "Nihongo ga wakaranai kara, yukkuri hanashite kudasai."
+  },
+  "電車が遅れたので、会社に遅刻しました。": {
+    "kana": "でんしゃが おくれたので、かいしゃに ちこく しました。",
+    "romaji": "Densha ga okureta node, kaisha ni chikoku shimashita."
+  },
+  "熱があるので、今日は仕事を休みます。": {
+    "kana": "ねつが あるので、きょうは しごとを やすみます。",
+    "romaji": "Netsu ga aru node, kyō wa shigoto o yasumimasu."
+  },
+  "雨が降っているから、傘を持って行きます。": {
+    "kana": "あめが ふって いるから、かさを もって いきます。",
+    "romaji": "Ame ga futte iru kara, kasa o motte ikimasu."
+  },
+  "子どもが小さいので、近くの公園で遊びます。": {
+    "kana": "こどもが ちいさいので、ちかくの こうえんで あそびます。",
+    "romaji": "Kodomo ga chiisai node, chikaku no kōen de asobimasu."
+  },
+  "お金がないから、今月は外食しません。": {
+    "kana": "おかねが ないから、こんげつは がいしょく しません。",
+    "romaji": "Okane ga nai kara, kongetsu wa gaishoku shimasen."
+  },
+  "日本語の勉強がしたいので、学校に申し込みました。": {
+    "kana": "にほんごの べんきょうが したいので、がっこうに もうしこみました。",
+    "romaji": "Nihongo no benkyō ga shitai node, gakkō ni mōshikomimashita."
+  },
+  "道がわからないので、駅まで案内してもらえますか。": {
+    "kana": "みちが わからないので、えきまで あんないして もらえますか。",
+    "romaji": "Michi ga wakaranai node, eki made annai shite moraemasu ka."
+  },
+  "今日は予約があるので、午後三時に来てください。": {
+    "kana": "きょうは よやくが あるので、ごごさんじに きて ください。",
+    "romaji": "Kyō wa yoyaku ga aru node, gogo sanji ni kite kudasai."
+  },
+  "在留カードを忘れたので、もう一度来てもいいですか。": {
+    "kana": "ざいりゅうカードを わすれたので、もういちど きても いいですか。",
+    "romaji": "Zairyū Kādo o wasureta node, mō ichido kite mo ii desu ka."
+  },
+  "店が混んでいるので、しばらくお待ちください。": {
+    "kana": "みせが こんで いるので、しばらく おまち ください。",
+    "romaji": "Mise ga konde iru node, shibaraku omachi kudasai."
+  },
+  "明日は子どもの学校の行事があるので、休ませていただきます。": {
+    "kana": "あしたは こどもの がっこうの ぎょうじが あるので、やすませて いただきます。",
+    "romaji": "Ashita wa kodomo no gakkō no gyōji ga aru node, yasumasete itadakimasu."
+  },
+  "書類が足りないので、後日また提出します。": {
+    "kana": "しょるいが たりないので、ごじつ また ていしゅつ します。",
+    "romaji": "Shorui ga tarinai node, gojitsu mata teishutsu shimasu."
+  },
+  "言葉がまだ上手ではないので、ゆっくり説明してくださると助かります。": {
+    "kana": "ことばが まだ じょうずでは ないので、ゆっくり せつめいして くださると たすかります。",
+    "romaji": "Kotoba ga mada jōzu de wa nai node, yukkuri setsumei shite kudasaru to tasukarimasu."
+  },
+  "夜は働いているので、昼間は電話に出られないことがあります。": {
+    "kana": "よるは はたらいて いるので、ひるまは でんわに でられない ことが あります。",
+    "romaji": "Yoru wa hataraite iru node, hiruma wa denwa ni derarenai koto ga arimasu."
+  },
+  "健康保険証を持っていないので、手続きの方法を教えていただけますか。": {
+    "kana": "けんこうほけんしょうを もって いないので、てつづきの ほうほうを おしえて いただけますか。",
+    "romaji": "Kenkō hokenshō o motte inai node, tetsuzuki no hōhō o oshiete itadakemasu ka."
+  },
+  "バスより電車のほうが早いです。": {
+    "kana": "バスより でんしゃの ほうが はやいです。",
+    "romaji": "Basu yori densha no hō ga hayai desu."
+  },
+  "この店はあの店より安いです。": {
+    "kana": "この みせは あの みせより やすいです。",
+    "romaji": "Kono mise wa ano mise yori yasui desu."
+  },
+  "水よりお茶のほうが好きです。": {
+    "kana": "みずより おちゃの ほうが すきです。",
+    "romaji": "Mizu yori ocha no hō ga suki desu."
+  },
+  "このスーパーがいちばん近いです。": {
+    "kana": "この スーパーが いちばん ちかいです。",
+    "romaji": "Kono Sūpā ga ichiban chikai desu."
+  },
+  "駅は病院より遠いです。": {
+    "kana": "えきは びょういんより とおいです。",
+    "romaji": "Eki wa byōin yori tōi desu."
+  },
+  "魚より肉のほうが安いです。": {
+    "kana": "さかなよりにくのほうがやすいです。",
+    "romaji": "sakana yori niku no hō ga yasui desu."
+  },
+  "朝より夜のほうが時間があります。": {
+    "kana": "あさよりよるのほうがじかんがあります。",
+    "romaji": "asa yori yoru no hō ga jikan ga arimasu."
+  },
+  "この薬がいちばんよく効きます。": {
+    "kana": "このくすりがいちばんよくききます。",
+    "romaji": "kono kusuri ga ichiban yoku kikimasu."
+  },
+  "自転車より歩くほうがいいです。": {
+    "kana": "じてんしゃよりあるくほうがいいです。",
+    "romaji": "jitensha yori aruku hō ga ii desu."
+  },
+  "日本語は英語より難しいと思います。": {
+    "kana": "にほんごはえいごよりむずかしいとおもいます。",
+    "romaji": "nihongo wa eigo yori muzukashii to omoimasu."
+  },
+  "土曜日より日曜日のほうが混んでいます。": {
+    "kana": "どようびよりにちようびのほうがこんでいます。",
+    "romaji": "doyōbi yori nichiyōbi no hō ga konde imasu."
+  },
+  "この区役所がいちばんサービスがいいです。": {
+    "kana": "このくやくしょがいちばんサービスがいいです。",
+    "romaji": "kono kuyakusho ga ichiban Sābisu ga ii desu."
+  },
+  "電話より直接行くほうが早く分かります。": {
+    "kana": "でんわよりちょくせついくほうがはやくわかります。",
+    "romaji": "denwa yori chokusetsu iku hō ga hayaku wakarimasu."
+  },
+  "この仕事は前の仕事より給料が高いです。": {
+    "kana": "このしごとはまえのしごとよりきゅうりょうがたかいです。",
+    "romaji": "kono shigoto wa mae no shigoto yori kyūryō ga takai desu."
+  },
+  "午前中より午後のほうが病院がすいています。": {
+    "kana": "ごぜんちゅうよりごごのほうがびょういんがすいています。",
+    "romaji": "gozenchū yori gogo no hō ga byōin ga suite imasu."
+  },
+  "いろいろな店の中で、この八百屋がいちばん新鮮です。": {
+    "kana": "いろいろなみせのなかで、このやおやがいちばんしんせんです。",
+    "romaji": "iroiro na mise no naka de, kono yaoya ga ichiban shinsen desu."
+  },
+  "電車で行くより車で行くほうが荷物が運びやすいです。": {
+    "kana": "でんしゃでいくよりくるまでいくほうがにもつがはこびやすいです。",
+    "romaji": "densha de iku yori kuruma de iku hō ga nimotsu ga hakobiyasui desu."
+  },
+  "窓口で聞くより、先に書類を用意するほうがスムーズです。": {
+    "kana": "まどぐちできくより、さきにしょるいをようするほうがスムーズです。",
+    "romaji": "madoguchi de kiku yori, saki ni shorui o yōi suru hō ga Sumūzu desu."
+  },
+  "子どもの学校の中で、この小学校が家からいちばん通いやすいです。": {
+    "kana": "こどものがっこうのなかで、このしょうがっこうがいえからいちばんかよいやすいです。",
+    "romaji": "kodomo no gakkō no naka de, kono shōgakkō ga ie kara ichiban kayoiyasui desu."
+  },
+  "朝起きたとき、まず水を飲みます。": {
+    "kana": "あさおきたとき、まずみずをのみます。",
+    "romaji": "asa okita toki, mazu mizu o nomimasu."
+  },
+  "ご飯を食べるまえに、手を洗います。": {
+    "kana": "ごはんをたべるまえに、てをあらいます。",
+    "romaji": "gohan o taberu mae ni, te o araimasu."
+  },
+  "仕事が終わったあとで、買い物に行きます。": {
+    "kana": "しごとがおわったあとで、かいものにいきます。",
+    "romaji": "shigoto ga owatta ato de, kaimono ni ikimasu."
+  },
+  "電車に乗るとき、ICカードを使います。": {
+    "kana": "でんしゃにのるとき、ICカードをつかいます。",
+    "romaji": "densha ni noru toki, IC Kādo o tsukaimasu."
+  },
+  "寝るまえに、子どもに歯を磨かせます。": {
+    "kana": "ねるまえに、こどもにはをみがかせます。",
+    "romaji": "neru mae ni, kodomo ni ha o migakasemasu."
+  },
+  "薬を飲んだあとで、少し休みます。": {
+    "kana": "くすりをのんだあとで、すこしやすみます。",
+    "romaji": "kusuri o nonda ato de, sukoshi yasumimasu."
+  },
+  "わからないとき、先生に質問します。": {
+    "kana": "わからないとき、せんせいにしつもんします。",
+    "romaji": "wakaranai toki, sensei ni shitsumon shimasu."
+  },
+  "家を出るまえに、火を消したか確認します。": {
+    "kana": "いえをでるまえに、ひをけしたかかくにんします。",
+    "romaji": "ie o deru mae ni, hi o keshita ka kakunin shimasu."
+  },
+  "病院に着いたあとで、受付で名前を書きます。": {
+    "kana": "びょういんについたあとで、うけつけでなまえをかきます。",
+    "romaji": "byōin ni atsita ato de, uketsuke de namae o kakimasu."
+  },
+  "雨が降っているとき、傘を持って行きます。": {
+    "kana": "あめがふっているとき、かさをもっていきます。",
+    "romaji": "ame ga futte iru toki, kasa o motte ikimasu."
+  },
+  "料理をするまえに、レシピを読みます。": {
+    "kana": "りょうりをするまえに、レシピをよみます。",
+    "romaji": "ryōri o suru mae ni, Reshipi o yomimasu."
+  },
+  "給料をもらったあとで、家賃を払います。": {
+    "kana": "きゅうりょうをもらったあとで、やちんをはらいます。",
+    "romaji": "kyūryō o moratta ato de, yachin o haraimasu."
+  },
+  "子どもが熱を出したとき、すぐ病院に電話します。": {
+    "kana": "こどもがねつをだしたとき、すぐびょういんにでんわします。",
+    "romaji": "kodomo ga netsu o dashita toki, sugu byōin ni denwa shimasu."
+  },
+  "役所へ行くまえに、必要な書類を準備します。": {
+    "kana": "やくしょへいくまえに、ひつような書類をじゅんびします。",
+    "romaji": "yakusho e iku mae ni, hitsuyō na shorui o junbi shimasu."
+  },
+  "スーパーで買い物をしたあとで、レシートをもらいます。": {
+    "kana": "スーパーでかいものをしたあとで、レシートをもらいます。",
+    "romaji": "Sūpā de kaimono o shita ato de, Reshīto o moraimasu."
+  },
+  "道がわからないとき、駅員さんに聞きます。": {
+    "kana": "みちがわからないとき、えきいんさんにききます。",
+    "romaji": "michi ga wakaranai toki, ekiin-san ni kikimasu."
+  },
+  "ゴミを出すまえに、種類ごとに分けます。": {
+    "kana": "ゴミをだすまえに、しゅるいごとにわけます。",
+    "romaji": "Gomi o dasu mae ni, shurui goto ni wakemasu."
+  },
+  "引っ越しをしたあとで、住所変更の手続きをします。": {
+    "kana": "ひっこしをしたあとで、じゅうしょへんこうのてつづきをします。",
+    "romaji": "hikkoshi o shita ato de, jūsho henkō no tetsuzuki o shimasu."
+  },
+  "近所の人に会ったとき、笑顔であいさつします。": {
+    "kana": "きんじょのひとにあったとき、えがおであいさつします。",
+    "romaji": "kinjo no hito ni atta toki, egao de aisatsu shimasu."
+  },
+  "面接を受けるまえに、会社のことをよく調べておきます。": {
+    "kana": "めんせつをうけるまえに、かいしゃのことをよくしらべておきます。",
+    "romaji": "mensetsu o ukeru mae ni, kaisha no koto o yoku shirabete okimasu."
+  },
+  "春になると、桜が咲きます。": {
+    "kana": "はるになると、さくらがさきます。",
+    "romaji": "haru ni naru to, sakura ga sakimasu."
+  },
+  "このボタンを押すと、切符が出ます。": {
+    "kana": "このボタンをおすと、きっぷがでます。",
+    "romaji": "kono Botan o osu to, kippu ga demasu."
+  },
+  "安ければ、買います。": {
+    "kana": "やすければ、かいます。",
+    "romaji": "yasukereba, kaimasu."
+  },
+  "時間があれば、銀行に行きます。": {
+    "kana": "じかんがあれば、ぎんこうにいきます。",
+    "romaji": "jikan ga areba, ginkō ni ikimasu."
+  },
+  "駅に着いたら、電話してください。": {
+    "kana": "えきについたら、でんわしてください。",
+    "romaji": "eki ni tsuitara, denwa shite kudasai."
+  },
+  "薬を飲んだら、すぐ寝てください。": {
+    "kana": "くすりをのんだら、すぐねてください。",
+    "romaji": "kusuri o nondara, sugu nete kudasai."
+  },
+  "日本語を勉強するなら、この本がいいです。": {
+    "kana": "にほんごをべんきょうするなら、このほんがいいです。",
+    "romaji": "nihongo o benkyō suru nara, kono hon ga ii desu."
+  },
+  "病院に行くなら、保険証を持って行ってください。": {
+    "kana": "びょういんにいくなら、ほけんしょうをもっていってください。",
+    "romaji": "byōin ni iku nara, hokenshō o motte itte kudasai."
+  },
+  "右に曲がると、コンビニがあります。": {
+    "kana": "みぎにまがると、コンビニがあります。",
+    "romaji": "migi ni magaru to, Konbini ga arimasu."
+  },
+  "雨が降ったら、運動会は中止です。": {
+    "kana": "あめがふったら、うんどうかいはちゅうしです。",
+    "romaji": "ame ga futtara, undōkai wa chūshi desu."
+  },
+  "道がわからなければ、駅員に聞いてください。": {
+    "kana": "みちがわからなければ、えきいんにきいてください。",
+    "romaji": "michi ga wakaranakereba, ekiin ni kiite kudasai."
+  },
+  "市役所に行くなら、午前中がすいています。": {
+    "kana": "しやくしょにいくなら、ごぜんちゅうがすいています。",
+    "romaji": "shiyakusho ni iku nara, gozenchū ga suite imasu."
+  },
+  "このボタンを押すと、お湯が出ます。": {
+    "kana": "このボタンをおすと、おゆがでます。",
+    "romaji": "kono Botan o osu to, oyu ga demasu."
+  },
+  "仕事が終わったら、一緒に食事しませんか。": {
+    "kana": "しごとがおわったら、いっしょにしょくじしませんか。",
+    "romaji": "shigoto ga owattara, issho ni shokuji shimasen ka."
+  },
+  "安ければ安いほど、たくさん売れます。": {
+    "kana": "やすければやすいほど、たくさんうれます。",
+    "romaji": "yasukereba yasui hodo, takusan uremasu."
+  },
+  "熱が下がらなかったら、もう一度来てください。": {
+    "kana": "ねつがさがらなかったら、もういちどきてください。",
+    "romaji": "netsu ga sagaranakattara, mō ichido kite kudasai."
+  },
+  "電車が遅れたら、会社に連絡したほうがいいです。": {
+    "kana": "でんしゃが おくれたら、かいしゃに れんらくした ほうが いいです。",
+    "romaji": "densha ga okuretara, kaisha ni renraku shita hō ga ii desu."
+  },
+  "区役所で手続きするなら、まず番号札を取ってください。": {
+    "kana": "くやくしょで てつづきするなら、まず ばんごうふだを とってください。",
+    "romaji": "kuyakusho de tetsuzuki suru nara, mazu bangōfuda o totte kudasai."
+  },
+  "在留カードを更新するなら、期限の前に申請したほうがいいです。": {
+    "kana": "ざいりゅうカードを こうしんするなら、きげんの まえに しんせいした ほうが いいです。",
+    "romaji": "zairyū Kādo o kōshin suru nara, kigen no mae ni shinsei shita hō ga ii desu."
+  },
+  "もし家賃が払えなければ、早めに大家さんに相談してください。": {
+    "kana": "もし やちんが はらえなければ、はやめに おおやさんに そうだんしてください。",
+    "romaji": "moshi yachin ga haraenakereba, hayame ni ōya-san ni sōdan shite kudasai."
+  },
+  "日本語が上手になるために、毎日勉強します。": {
+    "kana": "にほんごが じょうずに なるために、まいにち べんきょうします。",
+    "romaji": "nihongo ga jōzu ni naru tame ni, mainichi benkyō shimasu."
+  },
+  "電車に乗るために、駅へ行きます。": {
+    "kana": "でんしゃに のるために、えきへ いきます。",
+    "romaji": "densha ni noru tame ni, eki e ikimasu."
+  },
+  "健康のために、野菜をたくさん食べます。": {
+    "kana": "けんこうの ために、やさいを たくさん たべます。",
+    "romaji": "kenkō no tame ni, yasai o takusan tabemasu."
+  },
+  "忘れないように、メモを書きます。": {
+    "kana": "わすれないように、メモを かきます。",
+    "romaji": "wasurenai yō ni, Memo o kakimasu."
+  },
+  "風邪をひかないように、暖かい服を着ます。": {
+    "kana": "かぜを ひかないように、あたたかい ふくを きます。",
+    "romaji": "kaze o hikanai yō ni, atatakai fuku o kimasu."
+  },
+  "家族のために、一生懸命働きます。": {
+    "kana": "かぞくの ために、いっしょうけんめい はたらきます。",
+    "romaji": "kazoku no tame ni, isshōkenmei hatarakimasu."
+  },
+  "病気を治すために、薬を飲みます。": {
+    "kana": "びょうきを なおすために、くすりを のみます。",
+    "romaji": "byōki o naosu tame ni, kusuri o nomimasu."
+  },
+  "遅刻しないように、早く家を出ます。": {
+    "kana": "ちこくしないように、はやく いえを でます。",
+    "romaji": "chikoku shinai yō ni, hayaku ie o demasu."
+  },
+  "お金をためるために、節約しています。": {
+    "kana": "おかねを ためるために、せつやくしています。",
+    "romaji": "okane o tameru tame ni, setsuyaku shite imasu."
+  },
+  "日本で働くために、ビザを申請しました。": {
+    "kana": "にほんで はたらくために、ビザを しんせいしました。",
+    "romaji": "nihon de hataraku tame ni, Biza o shinsei shimashita."
+  },
+  "みんなに聞こえるように、大きい声で話します。": {
+    "kana": "みんなに きこえるように、おおきい こえで はなします。",
+    "romaji": "minna ni kikoeru yō ni, ōkii koe de hanashimasu."
+  },
+  "子どもが安全に通学できるように、道を確認します。": {
+    "kana": "こどもが あんぜんに つうがくできるように、みちを かくにんします。",
+    "romaji": "kodomo ga anzen ni tsūgaku dekiru yō ni, michi o kakunin shimasu."
+  },
+  "試験に合格するために、夜遅くまで復習します。": {
+    "kana": "しけんに ごうかくするために、よるおそくまで ふくしゅうします。",
+    "romaji": "shiken ni gōkaku suru tame ni, yoru osoku made fukushū shimasu."
+  },
+  "道に迷わないように、地図を見ながら歩きます。": {
+    "kana": "みちに まよわないように、ちずを みながら あるきます。",
+    "romaji": "michi ni mayowanai yō ni, chizu o minagara arukimasu."
+  },
+  "漢字が読めるように、毎日練習しています。": {
+    "kana": "かんじが よめるように、まいにち れんしゅうしています。",
+    "romaji": "kanji ga yomeru yō ni, mainichi renshū shite imasu."
+  },
+  "急な病気に備えるために、保険証をいつも持っています。": {
+    "kana": "きゅうな びょうきに そなえるために、ほけんしょうを いつも もっています。",
+    "romaji": "kyū na byōki ni sonaeru tame ni, hokenshō o itsumo motte imasu."
+  },
+  "近所の人と仲良くなるために、進んで挨拶します。": {
+    "kana": "きんじょの ひとと なかよくなるために、すすんで あいさつします。",
+    "romaji": "kinjo no hito to nakayoku naru tame ni, susunde aisatsu shimasu."
+  },
+  "赤ちゃんが起きないように、静かにドアを閉めます。": {
+    "kana": "あかちゃんが おきないように、しずかに ドアを しめます。",
+    "romaji": "akachan ga okinai yō ni, shizuka ni Doa o shimemasu."
+  },
+  "手続きがスムーズに進むように、必要な書類を全部そろえました。": {
+    "kana": "てつづきが スムーズに すすむように、ひつような しょるいを ぜんぶ そろえました。",
+    "romaji": "tetsuzuki ga Sumūzu ni susumu yō ni, hitsuyō na shorui o zenbu soroemashita."
+  },
+  "将来この国で安定した生活ができるように、今から資格を取る準備をしています。": {
+    "kana": "しょうらい この くにで あんていした せいかつが できるように、いまから しかくを とる じゅんびを しています。",
+    "romaji": "shōrai kono kuni de antei shita seikatsu ga dekiru yō ni, ima kara shikaku o toru junbi o shite imasu."
+  },
+  "すしを食べたことがあります。": {
+    "kana": "すしを たべた ことが あります。",
+    "romaji": "sushi o tabeta koto ga arimasu."
+  },
+  "東京へ行ったことがあります。": {
+    "kana": "とうきょうへ いった ことが あります。",
+    "romaji": "Tōkyō e itta koto ga arimasu."
+  },
+  "電車に乗ったことがあります。": {
+    "kana": "でんしゃに のった ことが あります。",
+    "romaji": "densha ni notta koto ga arimasu."
+  },
+  "温泉に入ったことがありません。": {
+    "kana": "おんせんに はいった ことが ありません。",
+    "romaji": "onsen ni haitta koto ga arimasen."
+  },
+  "コンビニで働いたことがあります。": {
+    "kana": "コンビニで はたらいた ことが あります。",
+    "romaji": "Konbini de hataraita koto ga arimasu."
+  },
+  "雪を見たことがありません。": {
+    "kana": "ゆきを みた ことが ありません。",
+    "romaji": "yuki o mita koto ga arimasen."
+  },
+  "病院で薬をもらったことがあります。": {
+    "kana": "びょういんで くすりを もらった ことが あります。",
+    "romaji": "byōin de kusuri o moratta koto ga arimasu."
+  },
+  "市役所で手続きをしたことがあります。": {
+    "kana": "しやくしょで てつづきを した ことが あります。",
+    "romaji": "shiyakusho de tetsuzuki o shita koto ga arimasu."
+  },
+  "近所の人と話したことがあります。": {
+    "kana": "きんじょの ひとと はなした ことが あります。",
+    "romaji": "kinjo no hito to hanashita koto ga arimasu."
+  },
+  "日本のラーメンを食べたことがありますか。": {
+    "kana": "にほんの ラーメンを たべた ことが ありますか。",
+    "romaji": "nihon no Rāmen o tabeta koto ga arimasu ka."
+  },
+  "一人でバスに乗ったことがありません。": {
+    "kana": "ひとりで バスに のった ことが ありません。",
+    "romaji": "hitori de Basu ni notta koto ga arimasen."
+  },
+  "区役所で外国人登録をしたことがあります。": {
+    "kana": "くやくしょで がいこくじんとうろくを した ことが あります。",
+    "romaji": "kuyakusho de gaikokujin tōroku o shita koto ga arimasu."
+  },
+  "アルバイトの面接を受けたことがあります。": {
+    "kana": "アルバイトの めんせつを うけた ことが あります。",
+    "romaji": "Arubaito no mensetsu o uketa koto ga arimasu."
+  },
+  "救急車を呼んだことがありません。": {
+    "kana": "きゅうきゅうしゃを よんだ ことが ありません。",
+    "romaji": "kyūkyūsha o yonda koto ga arimasen."
+  },
+  "銀行で口座を作ったことがあります。": {
+    "kana": "ぎんこうで こうざを つくった ことが あります。",
+    "romaji": "ginkō de kōza o tsukutta koto ga arimasu."
+  },
+  "日本語で電話をかけたことがありますか。": {
+    "kana": "にほんごで でんわを かけた ことが ありますか。",
+    "romaji": "nihongo de denwa o kaketa koto ga arimasu ka."
+  },
+  "ゴミの出し方を間違えたことがあります。": {
+    "kana": "ゴミの だしかたを まちがえた ことが あります。",
+    "romaji": "Gomi no dashikata o machigaeta koto ga arimasu."
+  },
+  "台風で電車が止まって困ったことがあります。": {
+    "kana": "たいふうで でんしゃが とまって こまった ことが あります。",
+    "romaji": "taifū de densha ga tomatte komatta koto ga arimasu."
+  },
+  "子どもの学校で先生と面談したことがあります。": {
+    "kana": "こどもの がっこうで せんせいと めんだんした ことが あります。",
+    "romaji": "kodomo no gakkō de sensei to mendan shita koto ga arimasu."
+  },
+  "明日は晴れるでしょう。": {
+    "kana": "あしたは はれるでしょう。",
+    "romaji": "ashita wa hareru deshō."
+  },
+  "午後は雨が降るかもしれません。": {
+    "kana": "ごごは あめが ふるかもしれません。",
+    "romaji": "gogo wa ame ga furu kamo shiremasen."
+  },
+  "バスはもうすぐ来るはずです。": {
+    "kana": "バスは もうすぐ くる はずです。",
+    "romaji": "Basu wa mōsugu kuru hazu desu."
+  },
+  "今日は寒くなるでしょう。": {
+    "kana": "きょうは さむくなるでしょう。",
+    "romaji": "kyō wa samuku naru deshō."
+  },
+  "この薬で熱が下がるはずです。": {
+    "kana": "この くすりで ねつが さがる はずです。",
+    "romaji": "kono kusuri de netsu ga sagaru hazu desu."
+  },
+  "店は今日休みかもしれません。": {
+    "kana": "みせは きょう やすみかもしれません。",
+    "romaji": "mise wa kyō yasumi kamo shiremasen."
+  },
+  "電車は時間どおりに着くでしょう。": {
+    "kana": "でんしゃは じかんどおりに つくでしょう。",
+    "romaji": "densha wa jikan dōri ni tsuku deshō."
+  },
+  "明日の朝は道が混むかもしれません。": {
+    "kana": "あしたのあさはみちがこむかもしれません。",
+    "romaji": "ashita no asa wa michi ga komu kamo shiremasen."
+  },
+  "先生は教室にいるはずです。": {
+    "kana": "せんせいはきょうしつにいるはずです。",
+    "romaji": "sensei wa kyoshitsu ni iru hazu desu."
+  },
+  "週末はもっと暖かくなるでしょう。": {
+    "kana": "しゅうまつはもっとあたたかくなるでしょう。",
+    "romaji": "shumatsu wa motto atatakaku naru desho."
+  },
+  "市役所は五時で閉まるはずです。": {
+    "kana": "しやくしょはごじでしまるはずです。",
+    "romaji": "shiyakusho wa goji de shimaru hazu desu."
+  },
+  "台風が来るので、電車が止まるかもしれません。": {
+    "kana": "たいふうがくるので、でんしゃがとまるかもしれません。",
+    "romaji": "taifu ga kuru node, densha ga tomaru kamo shiremasen."
+  },
+  "この書類は今日中に届くでしょう。": {
+    "kana": "このしょるいはきょうじゅうにとどくでしょう。",
+    "romaji": "kono shorui wa kyoju ni todoku desho."
+  },
+  "あの人はネパール語が話せるかもしれません。": {
+    "kana": "あのひとはネパールごがはなせるかもしれません。",
+    "romaji": "ano hito wa Neparu-go ga hanaseru kamo shiremasen."
+  },
+  "予約してあるので、すぐに診てもらえるはずです。": {
+    "kana": "よやくしてあるので、すぐにみてもらえるはずです。",
+    "romaji": "yoyaku shite aru node, sugu ni mite moraeru hazu desu."
+  },
+  "夜には雪に変わるでしょう。": {
+    "kana": "よるにはゆきにかわるでしょう。",
+    "romaji": "yoru ni wa yuki ni kawaru desho."
+  },
+  "課長は午後の会議に出るはずです。": {
+    "kana": "かちょうはごごのかいぎにでるはずです。",
+    "romaji": "kacho wa gogo no kaigi ni deru hazu desu."
+  },
+  "値段が高いので、品質はいいはずです。": {
+    "kana": "ねだんがたかいので、ひんしつはいいはずです。",
+    "romaji": "nedan ga takai node, hinshitsu wa ii hazu desu."
+  },
+  "この時間なら、病院はまだ空いているかもしれません。": {
+    "kana": "このじかんなら、びょういんはまだあいているかもしれません。",
+    "romaji": "kono jikan nara, byoin wa mada aite iru kamo shiremasen."
+  },
+  "申請が通れば、来月には在留カードが届くでしょう。": {
+    "kana": "しんせいがとおれば、らいげつにはざいりゅうカードがとどくでしょう。",
+    "romaji": "shinsei ga toreba, raigetsu ni wa zairyu Kado ga todoku desho."
+  },
+  "この店は安いと思います。": {
+    "kana": "このみせはやすいとおもいます。",
+    "romaji": "kono mise wa yasui to omoimasu."
+  },
+  "先生は今日休みだと思います。": {
+    "kana": "せんせいはきょうやすみだとおもいます。",
+    "romaji": "sensei wa kyo yasumi da to omoimasu."
+  },
+  "駅はあっちだと思います。": {
+    "kana": "えきはあっちだとおもいます。",
+    "romaji": "eki wa acchi da to omoimasu."
+  },
+  "この薬はよく効くと思います。": {
+    "kana": "このくすりはよくきくとおもいます。",
+    "romaji": "kono kusuri wa yoku kiku to omoimasu."
+  },
+  "店員さんはもうすぐ来ると言っていました。": {
+    "kana": "てんいんさんはもうすぐくると いっていました。",
+    "romaji": "tenin-san wa mosugu kuru to itte imashita."
+  },
+  "友達はその映画は面白いと言っていました。": {
+    "kana": "ともだちはそのえいがはおもしろいといっていました。",
+    "romaji": "tomodachi wa sono eiga wa omoshiroi to itte imashita."
+  },
+  "課長は明日会議があると言っていました。": {
+    "kana": "かちょうはあしたかいぎがあるといっていました。",
+    "romaji": "kacho wa ashita kaigi ga aru to itte imashita."
+  },
+  "隣の人はゴミの日は火曜日だと言っていました。": {
+    "kana": "となりのひとはゴミのひはかようびだといっていました。",
+    "romaji": "tonari no hito wa Gomi no hi wa kayobi da to itte imashita."
+  },
+  "このバスは病院の前を通ると思います。": {
+    "kana": "このバスはびょういんのまえをとおるとおもいます。",
+    "romaji": "kono Basu wa byoin no mae o toru to omoimasu."
+  },
+  "役所は五時に閉まると思います。": {
+    "kana": "やくしょはごじにしまるとおもいます。",
+    "romaji": "yakusho wa goji ni shimaru to omoimasu."
+  },
+  "医者は来週もう一度来てくださいと言っていました。": {
+    "kana": "いしゃはらいしゅうもういちどきてくださいといっていました。",
+    "romaji": "isha wa raishū mo ichido kite kudasai to itte imashita."
+  },
+  "子供の学校は来月運動会があると言っていました。": {
+    "kana": "こどものがっこうはらいげつうんどうかいがあるといっていました。",
+    "romaji": "kodomo no gakko wa raigetsu undokai ga aru to itte imashita."
+  },
+  "この仕事は思ったより大変だと思います。": {
+    "kana": "このしごとはおもったよりたいへんだとおもいます。",
+    "romaji": "kono shigoto wa omotta yori taihen da to omoimasu."
+  },
+  "店長は今日は忙しくなると言っていました。": {
+    "kana": "てんちょうはきょうはいそがしくなるといっていました。",
+    "romaji": "tencho wa kyo wa isogashiku naru to itte imashita."
+  },
+  "日本語はだんだん上手になると思います。": {
+    "kana": "にほんごはだんだんじょうずになるとおもいます。",
+    "romaji": "Nihongo wa dandan jozu ni naru to omoimasu."
+  },
+  "市役所の人はこの書類が必要だと言っていました。": {
+    "kana": "しやくしょのひとはこのしょるいがひつようだといっていました。",
+    "romaji": "shiyakusho no hito wa kono shorui ga hitsuyо da to itte imashita."
+  },
+  "値段が上がったから、生活が大変だと思います。": {
+    "kana": "ねだんがあがったから、せいかつがたいへんだとおもいます。",
+    "romaji": "nedan ga agatta kara, seikatsu ga taihen da to omoimasu."
+  },
+  "大家さんは来月から家賃が変わると言っていました。": {
+    "kana": "おおやさんはらいげつからやちんがかわるといっていました。",
+    "romaji": "oya-san wa raigetsu kara yachin ga kawaru to itte imashita."
+  },
+  "看護師さんは検査の結果は三日後に出ると言っていました。": {
+    "kana": "かんごしさんはけんさのけっかはみっかごにでるといっていました。",
+    "romaji": "kangoshi-san wa kensa no kekka wa mikka-go ni deru to itte imashita."
+  },
+  "わたしは友だちにプレゼントをあげました。": {
+    "kana": "わたしはともだちにプレゼントをあげました。",
+    "romaji": "watashi wa tomodachi ni Purezento o agemashita."
+  },
+  "母が弁当を作ってくれました。": {
+    "kana": "はははべんとうをつくってくれました。",
+    "romaji": "haha ga bento o tsukutte kuremashita."
+  },
+  "先生に本をもらいました。": {
+    "kana": "せんせいにほんをもらいました。",
+    "romaji": "sensei ni hon o moraimashita."
+  },
+  "隣の人に野菜をあげました。": {
+    "kana": "となりのひとにやさいをあげました。",
+    "romaji": "tonari no hito ni yasai o agemashita."
+  },
+  "友だちが日本語を教えてくれました。": {
+    "kana": "ともだちがにほんごをおしえてくれました。",
+    "romaji": "tomodachi ga Nihongo o oshiete kuremashita."
+  },
+  "病院で薬をもらいました。": {
+    "kana": "びょういんでくすりをもらいました。",
+    "romaji": "byoin de kusuri o moraimashita."
+  },
+  "子どもにおもちゃを買ってあげました。": {
+    "kana": "こどもにおもちゃをかってあげました。",
+    "romaji": "kodomo ni omocha o katte agemashita."
+  },
+  "店員さんが道を教えてくれました。": {
+    "kana": "てんいんさんがみちをおしえてくれました。",
+    "romaji": "tenin-san ga michi o oshiete kuremashita."
+  },
+  "会社の人に仕事を手伝ってもらいました。": {
+    "kana": "かいしゃのひとにしごとをてつだってもらいました。",
+    "romaji": "kaisha no hito ni shigoto o tetsudatte moraimashita."
+  },
+  "お年寄りに席をゆずってあげました。": {
+    "kana": "おとしよりにせきをゆずってあげました。",
+    "romaji": "otoshiyori ni seki o yuzutte agemashita."
+  },
+  "近所の人がごみの出し方を教えてくれました。": {
+    "kana": "きんじょのひとがごみのだしかたをおしえてくれました。",
+    "romaji": "kinjo no hito ga gomi no dashikata o oshiete kuremashita."
+  },
+  "市役所で書類の書き方を教えてもらいました。": {
+    "kana": "しやくしょでしょるいのかきかたをおしえてもらいました。",
+    "romaji": "shiyakusho de shorui no kakikata o oshiete moraimashita."
+  },
+  "友だちに引っ越しを手伝ってあげるつもりです。": {
+    "kana": "ともだちにひっこしをてつだってあげるつもりです。",
+    "romaji": "tomodachi ni hikkoshi o tetsudatte ageru tsumori desu."
+  },
+  "駅員さんが切符の買い方を説明してくれました。": {
+    "kana": "えきいんさんがきっぷのかいかたをせつめいしてくれました。",
+    "romaji": "ekiin-san ga kippu no kaikata o setsumei shite kuremashita."
+  },
+  "医者に病気についてくわしく説明してもらいました。": {
+    "kana": "いしゃにびょうきについてくわしくせつめいしてもらいました。",
+    "romaji": "isha ni byoki ni tsuite kuwashiku setsumei shite moraimashita."
+  },
+  "言葉がわからなかったので、同僚に通訳してもらいました。": {
+    "kana": "ことばがわからなかったので、どうりょうにつうやくしてもらいました。",
+    "romaji": "kotoba ga wakaranakatta node, doryo ni tsuyaku shite moraimashita."
+  },
+  "道に迷っている人に行き方を教えてあげました。": {
+    "kana": "みちにまよっているひとにいきかたをおしえてあげました。",
+    "romaji": "michi ni mayotte iru hito ni ikikata o oshiete agemashita."
+  },
+  "大家さんが部屋の修理をすぐにしてくれて助かりました。": {
+    "kana": "おおやさんがへやのしゅうりをすぐにしてくれてたすかりました。",
+    "romaji": "oya-san ga heya no shuri o sugu ni shite kurete tasukarimashita."
+  },
+  "区役所の窓口で在留カードの手続きを案内してもらいました。": {
+    "kana": "くやくしょの まどぐちで ざいりゅうカードの てつづきを あんないして もらいました。",
+    "romaji": "kuyakusho no madoguchi de zairyu kado no tetsuzuki o annai shite moraimashita."
+  },
+  "子どもが学校でいじめられたとき、先生が親身になって相談に乗ってくれました。": {
+    "kana": "こどもが がっこうで いじめられたとき、せんせいが しんみんに なって そうだんに のって くれました。",
+    "romaji": "kodomo ga gakko de ijimerareta toki, sensei ga shinmi ni natte sodan ni notte kuremashita."
+  },
+  "電車で足を踏まれました。": {
+    "kana": "でんしゃで あしを ふまれました。",
+    "romaji": "densha de ashi o fumaremashita."
+  },
+  "駅で切符を確認されました。": {
+    "kana": "えきで きっぷを かくにんされました。",
+    "romaji": "eki de kippu o kakunin saremashita."
+  },
+  "子供に服をよごされました。": {
+    "kana": "こどもに ふくを よごされました。",
+    "romaji": "kodomo ni fuku o yogosaremashita."
+  },
+  "店で道を聞かれました。": {
+    "kana": "みせで みちを きかれました。",
+    "romaji": "mise de michi o kikaremashita."
+  },
+  "財布を盗まれました。": {
+    "kana": "さいふを ぬすまれました。",
+    "romaji": "saifu o nusumaremashita."
+  },
+  "猫にひっかかれました。": {
+    "kana": "ねこに ひっかかれました。",
+    "romaji": "neko ni hikkakaremashita."
+  },
+  "友達に秘密を話されました。": {
+    "kana": "ともだちに ひみつを はなされました。",
+    "romaji": "tomodachi ni himitsu o hanasaremashita."
+  },
+  "会社で名前を間違えられました。": {
+    "kana": "かいしゃで なまえを まちがえられました。",
+    "romaji": "kaisha de namae o machigaeraremashita."
+  },
+  "電車で肩をぶつけられました。": {
+    "kana": "でんしゃで かたを ぶつけられました。",
+    "romaji": "densha de kata o butsukeraremashita."
+  },
+  "病院で待たされました。": {
+    "kana": "びょういんで またされました。",
+    "romaji": "byoin de matasaremashita."
+  },
+  "市役所で書類を直されました。": {
+    "kana": "しやくしょで しょるいを なおされました。",
+    "romaji": "shiyakusho de shorui o naosaremashita."
+  },
+  "スーパーで割引のチラシを渡されました。": {
+    "kana": "スーパーで わりびきの チラシを わたされました。",
+    "romaji": "supa de waribiki no chirashi o watasaremashita."
+  },
+  "病院で血液検査をされました。": {
+    "kana": "びょういんで けつえきけんさを されました。",
+    "romaji": "byoin de ketsueki kensa o saremashita."
+  },
+  "会社で新しい仕事をまかされました。": {
+    "kana": "かいしゃで あたらしい しごとを まかされました。",
+    "romaji": "kaisha de atarashii shigoto o makasaremashita."
+  },
+  "病院で名前と生年月日を聞かれました。": {
+    "kana": "びょういんで なまえと せいねんがっぴを きかれました。",
+    "romaji": "byoin de namae to seinengappi o kikaremashita."
+  },
+  "子供に大切な書類を破られました。": {
+    "kana": "こどもに たいせつな しょるいを やぶられました。",
+    "romaji": "kodomo ni taisetsu na shorui o yabuaremashita."
+  },
+  "面接でいろいろな質問をされました。": {
+    "kana": "めんせつで いろいろな しつもんを されました。",
+    "romaji": "mensetsu de iroiro na shitsumon o saremashita."
+  },
+  "会議で急に意見を求められました।": {
+    "kana": "かいぎで きゅうに いけんを もとめられました।",
+    "romaji": "kaigi de kyu ni iken o motomeraremashita."
+  },
+  "アンケートに答えるように頼まれました。": {
+    "kana": "アンケートに こたえるように たのまれました。",
+    "romaji": "anketo ni kotaeru yo ni tanomaremashita."
+  },
+  "市役所で在留カードの提示を求められました。": {
+    "kana": "しやくしょで ざいりゅうカードの ていじを もとめられました。",
+    "romaji": "shiyakusho de zairyu kado no teiji o motomeraremashita."
+  },
+  "先生は学生に教科書を読ませました。": {
+    "kana": "せんせいは がくせいに きょうかしょを よませました。",
+    "romaji": "sensei wa gakusei ni kyokasho o yomasemashita."
+  },
+  "母は子どもに薬を飲ませました。": {
+    "kana": "ははは こどもに くすりを のませました。",
+    "romaji": "haha wa kodomo ni kusuri o nomasemashita."
+  },
+  "父は私にお皿を洗わせました。": {
+    "kana": "ちちは わたしに おさらを あらわせました。",
+    "romaji": "chichi wa watashi ni osara o arawasemashita."
+  },
+  "コーチは選手に毎日走らせます。": {
+    "kana": "コーチは せんしゅに まいにち はしらせます。",
+    "romaji": "kochi wa senshu ni mainichi hashirasemasu."
+  },
+  "親が子どもに野菜を食べさせます。": {
+    "kana": "おやが こどもに やさいを たべさせます。",
+    "romaji": "oya ga kodomo ni yasai o tabesasemasu."
+  },
+  "会社は社員に書類を書かせます。": {
+    "kana": "かいしゃは しゃいんに しょるいを かかせます。",
+    "romaji": "kaisha wa shain ni shorui o kakasemasu."
+  },
+  "先生は私たちに日本語で話させました。": {
+    "kana": "せんせいは わたしたちに にほんごで はなさせました。",
+    "romaji": "sensei wa watashitachi ni nihongo de hanasasemashita."
+  },
+  "姉は弟に部屋を片付けさせました。": {
+    "kana": "あねは おとうとに へやを かたづけさせました。",
+    "romaji": "ane wa ototo ni heya o katazukesasemashita."
+  },
+  "店長は私に早く来させました。": {
+    "kana": "てんちょうは わたしに はやく こさせました。",
+    "romaji": "tencho wa watashi ni hayaku kosasemashita."
+  },
+  "先生は生徒に宿題を提出させました。": {
+    "kana": "せんせいは せいとに しゅくだいを ていしゅつさせました。",
+    "romaji": "sensei wa seito ni shukudai o teishutsu sasemashita."
+  },
+  "課長は私に残業をさせました。": {
+    "kana": "かちょうは わたしに ざんぎょうを させました。",
+    "romaji": "kacho wa watashi ni zangyo o sasemashita."
+  },
+  "市役所で長い時間待たされました。": {
+    "kana": "しやくしょで ながい じかん またされました。",
+    "romaji": "shiyakusho de nagai jikan matasaremashita."
+  },
+  "子どもの頃、毎日漢字を書かされました。": {
+    "kana": "こどもの ころ、まいにち かんじを かかされました。",
+    "romaji": "kodomo no koro, mainichi kanji o kakasaremashita."
+  },
+  "病院でたくさん検査を受けさせられました。": {
+    "kana": "びょういんで たくさん けんさを うけさせられました。",
+    "romaji": "byoin de takusan kensa o ukesaseraremashita."
+  },
+  "先輩に重い荷物を運ばされました。": {
+    "kana": "せんぱいに おもい にもつを はこばされました。",
+    "romaji": "senpai ni omoi nimotsu o hakobасаremashita."
+  },
+  "母は娘にピアノを習わせています。": {
+    "kana": "ははは むすめに ピアノを ならわせています。",
+    "romaji": "haha wa musume ni piano o narawasete imasu."
+  },
+  "急に予定を変更させられて困りました。": {
+    "kana": "きゅうに よていを へんこうさせられて こまりました。",
+    "romaji": "kyu ni yotei o henко sasererarete komarimashita."
+  },
+  "近所の人にゴミの分け方を覚えさせられました。": {
+    "kana": "きんじょの ひとに ゴミの わけかたを おぼえさせられました。",
+    "romaji": "kinjo no hito ni gomi no wakekata o oboesaseraremashita."
+  },
+  "保育園の先生は子どもたちに手を洗わせます。": {
+    "kana": "ほいくえんの せんせいは こどもたちに てを あらわせます。",
+    "romaji": "hoikuen no sensei wa kodomotachi ni te o arawasemasu."
+  },
+  "会議で意見を言わされて、とても緊張しました。": {
+    "kana": "かいぎで いけんを いわされて、とても きんちょうしました。",
+    "romaji": "kaigi de iken o iwasarete, totemo kincho shimashita."
   }
 }
