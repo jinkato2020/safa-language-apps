@@ -442,9 +442,9 @@ jobs:
           packageName: com.safa.japanese
           releaseFiles: ${{ env.APP_DIR }}/android/app/build/outputs/bundle/release/*.aab
           track: internal
-          # draft でアップロード: Play Console で手動 publish。
-          # 詳細は ios-build-nepali.yml の同箇所コメント参照。
-          status: draft
+          # completed = 内部テストへ自動ロールアウト(手動publish不要)。
+          # 互換性エラー("既存ユーザーがアップグレード不可")が出る場合のみ draft に戻す。
+          status: completed
 
       - name: Cleanup service account
         if: always()
