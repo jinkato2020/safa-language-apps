@@ -308,15 +308,20 @@ export default function PracticeScreen() {
             </View>
             {items.map((it, i) => {
               const unknown = !it.jaTrans;
-              // 母語(訳)UI(ja/en)=単語列に学習対象、意味列に訳。それ以外(ne/bn)=逆向き。
-              const primary = glossUI ? it.word : (it.jaTrans || it.word);
-              const primaryRom = glossUI ? it.rom : '';
-              const meaning = glossUI ? it.jaTrans : it.word;
+              // 単語列に学習対象、意味列に訳を出す。
+              //  App A(target=ネパール語): 母語UI(ja/en)で単語列=ne。
+              //  App B(vocabTokenize='jp', target=日本語): 全母語UI(bn/vi/ne/en)で単語列=日本語(it.word)、意味列=母語訳。
+              const wordIsTarget = vocabTokenize === 'jp' || glossUI;
+              // 単語列が日本語になるのは App B(jp) または App A の ne UI(母語=訳=日本語)。
+              const wordIsJa = vocabTokenize === 'jp' || !glossUI;
+              const primary = wordIsTarget ? it.word : (it.jaTrans || it.word);
+              const primaryRom = wordIsTarget ? it.rom : '';
+              const meaning = wordIsTarget ? it.jaTrans : it.word;
               return (
                 <View key={i} style={[styles.wordRow, unknown && styles.wordRowUnknown]}>
                   <Text style={styles.wordNum}>{String(i + 1).padStart(2, '0')}</Text>
                   <View style={styles.wordContent}>
-                    <Text style={[glossUI ? styles.wordDeva : styles.wordJa, ss(16)]}>{primary}</Text>
+                    <Text style={[wordIsJa ? styles.wordJa : styles.wordDeva, ss(16)]}>{primary}</Text>
                     {romaji && primaryRom ? <Text style={[styles.wordRom, ss(11)]}>{primaryRom}</Text> : null}
                   </View>
                   <View style={styles.wordMeaningCol}>
