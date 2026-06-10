@@ -10,67 +10,67 @@
     "exampleCount": 20
   },
   {
-    "id": 4,
+    "id": 3,
     "name": "指示詞「これ・それ・あれ」",
     "exampleCount": 20
   },
   {
-    "id": 3,
+    "id": 4,
     "name": "格助詞「を・に・で・へ・と」",
     "exampleCount": 20
   },
   {
-    "id": 11,
+    "id": 5,
     "name": "存在と位置",
     "exampleCount": 20
   },
   {
-    "id": 12,
+    "id": 6,
     "name": "数・助数詞・時間",
     "exampleCount": 20
   },
   {
-    "id": 5,
+    "id": 7,
     "name": "形容詞(い)",
     "exampleCount": 20
   },
   {
-    "id": 6,
+    "id": 8,
     "name": "形容詞(な)",
     "exampleCount": 20
   },
   {
-    "id": 7,
+    "id": 9,
     "name": "動詞(現在・未来)",
     "exampleCount": 20
   },
   {
-    "id": 8,
+    "id": 10,
     "name": "動詞(過去・否定)",
     "exampleCount": 20
   },
   {
-    "id": 15,
+    "id": 11,
     "name": "動詞(辞書形)",
     "exampleCount": 20
   },
   {
-    "id": 9,
+    "id": 12,
     "name": "依頼",
     "exampleCount": 20
   },
   {
-    "id": 10,
+    "id": 13,
     "name": "進行・状態・習慣",
     "exampleCount": 20
   },
   {
-    "id": 13,
+    "id": 14,
     "name": "願望",
     "exampleCount": 20
   },
   {
-    "id": 14,
+    "id": 15,
     "name": "許可・禁止",
     "exampleCount": 20
   },
@@ -85,52 +85,52 @@
     "exampleCount": 20
   },
   {
-    "id": 20,
+    "id": 18,
     "name": "助言",
     "exampleCount": 20
   },
   {
-    "id": 22,
+    "id": 19,
     "name": "並列・同時進行",
     "exampleCount": 20
   },
   {
-    "id": 18,
+    "id": 20,
     "name": "理由",
     "exampleCount": 20
   },
   {
-    "id": 19,
+    "id": 21,
     "name": "比較",
     "exampleCount": 20
   },
   {
-    "id": 23,
+    "id": 22,
     "name": "時の表現",
     "exampleCount": 20
   },
   {
-    "id": 26,
+    "id": 23,
     "name": "条件",
     "exampleCount": 20
   },
   {
-    "id": 27,
+    "id": 24,
     "name": "目的",
     "exampleCount": 20
   },
   {
-    "id": 21,
+    "id": 25,
     "name": "経験",
     "exampleCount": 20
   },
   {
-    "id": 25,
+    "id": 26,
     "name": "推量",
     "exampleCount": 20
   },
   {
-    "id": 24,
+    "id": 27,
     "name": "意見・伝聞",
     "exampleCount": 20
   },
