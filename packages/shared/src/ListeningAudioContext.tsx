@@ -220,6 +220,12 @@ export function ListeningAudioProvider({ children }: { children: ReactNode }) {
   // 最後に play() を呼んだ時刻（直後の遅延イベントを無視するガード）
   const lastPlayStartRef = useRef(0);
 
+  // ストール対策ウォッチドッグ: 音源欠落/再生不能でも止まらず次へ進める。
+  const watchdogRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clearWatchdog = () => {
+    if (watchdogRef.current) { clearTimeout(watchdogRef.current); watchdogRef.current = null; }
+  };
+
   // 単一プレイヤー: 指定ソースをロード（必要なら）→ 先頭から再生
   const playSrc = (src: number | string) => {
     try {
@@ -239,6 +245,26 @@ export function ListeningAudioProvider({ children }: { children: ReactNode }) {
     } catch {}
   };
 
+  // 音源があれば再生、無ければ「即終了」とみなして次フェーズへ。
+  // さらに、再生しても didJustFinish が来ない(音源欠落/再生不能)場合に備え、
+  // 一定時間で強制的に次へ進めるウォッチドッグを仕掛ける（無音ストール防止）。
+  const playSrcOrSkip = (src: number | string | undefined | null) => {
+    clearWatchdog();
+    if (src == null) {
+      // この言語の音源が無い → 即「終了」扱いで状態機械を前進させる
+      finishHandledRef.current = false;
+      lastPlayStartRef.current = 0; // 200msガードを無効化
+      watchdogRef.current = setTimeout(() => handleFinishRef.current(), 60);
+      return;
+    }
+    playSrc(src);
+    // 保険: 12秒以内に終了イベントが来なければ強制前進（file:// 再生失敗等のストール対策）
+    watchdogRef.current = setTimeout(() => {
+      if (!playingRef.current || finishHandledRef.current) return;
+      handleFinishRef.current();
+    }, 12000);
+  };
+
   const advanceRef = useRef<() => void>(() => {});
 
   const themeName = isGrammarSrc
@@ -256,14 +282,14 @@ export function ListeningAudioProvider({ children }: { children: ReactNode }) {
     if (isGrammarSrc) {
       const nxt = findNextGrammar(gramDeps, themeId, index, listenLoop);
       if (nxt.ended) {
-        setPlaying(false); setPhase('idle'); phaseRef.current = 'idle'; return;
+        clearWatchdog(); setPlaying(false); setPhase('idle'); phaseRef.current = 'idle'; return;
       }
       setThemeId(nxt.themeId);
       setIndex(nxt.index);
     } else {
       const nxt = findNextConversation(convDeps, themeId, levelId, index, listenLoop);
       if (nxt.ended) {
-        setPlaying(false); setPhase('idle'); phaseRef.current = 'idle'; return;
+        clearWatchdog(); setPlaying(false); setPhase('idle'); phaseRef.current = 'idle'; return;
       }
       setThemeId(nxt.themeId);
       setLevelId(nxt.levelId);
@@ -304,7 +330,7 @@ export function ListeningAudioProvider({ children }: { children: ReactNode }) {
     if (!active || !started || !playing || !ex) return;
     if (phase !== 'idle') return;
     const firstSrc = isJa2Ne ? jaSrc : neSrc;
-    playSrc(firstSrc);
+    playSrcOrSkip(firstSrc);
     nePlayCountRef.current = 0;
     finishHandledRef.current = false;
     setPhase('first');
@@ -335,13 +361,13 @@ export function ListeningAudioProvider({ children }: { children: ReactNode }) {
       if (firstRep) {
         nePlayCountRef.current++;
         if (nePlayCountRef.current < rep) {
-          playSrc(firstSrc);
+          playSrcOrSkip(firstSrc);
           finishHandledRef.current = false;
         } else {
           gapTimerRef.current = setTimeout(() => {
             phaseRef.current = 'second';
             setPhase('second');
-            playSrc(secondSrc);
+            playSrcOrSkip(secondSrc);
             finishHandledRef.current = false;
           }, gaps.first);
         }
@@ -350,7 +376,7 @@ export function ListeningAudioProvider({ children }: { children: ReactNode }) {
           phaseRef.current = 'second';
           setPhase('second');
           nePlayCountRef.current = 0;
-          playSrc(secondSrc);
+          playSrcOrSkip(secondSrc);
           finishHandledRef.current = false;
         }, gaps.first);
       }
@@ -358,7 +384,7 @@ export function ListeningAudioProvider({ children }: { children: ReactNode }) {
       if (secondRep) {
         nePlayCountRef.current++;
         if (nePlayCountRef.current < rep) {
-          playSrc(secondSrc);
+          playSrcOrSkip(secondSrc);
           finishHandledRef.current = false;
         } else {
           gapTimerRef.current = setTimeout(() => {
@@ -438,6 +464,7 @@ export function ListeningAudioProvider({ children }: { children: ReactNode }) {
     if (playing) {
       // 一時停止: 音声と gap タイマーを止めるが、phase は維持
       try { player.pause(); } catch {}
+      clearWatchdog();
       if (gapTimerRef.current) {
         clearTimeout(gapTimerRef.current);
         gapTimerRef.current = null;
@@ -469,6 +496,7 @@ export function ListeningAudioProvider({ children }: { children: ReactNode }) {
 
   const go = (delta: number) => {
     try { player.pause(); } catch {}
+    clearWatchdog();
     if (gapTimerRef.current) clearTimeout(gapTimerRef.current);
     if (delta > 0) {
       lastBackTapRef.current = 0;
@@ -528,6 +556,7 @@ export function ListeningAudioProvider({ children }: { children: ReactNode }) {
     // 同一パラメータで既に再生中なら「再接続」＝現在のセッションをそのまま継続
     if (active && sameParams(sessionParamsRef.current, params)) return;
     sessionParamsRef.current = params;
+    clearWatchdog();
     if (gapTimerRef.current) {
       clearTimeout(gapTimerRef.current);
       gapTimerRef.current = null;

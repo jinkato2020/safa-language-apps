@@ -133,17 +133,22 @@ async function ensureAudio(lang: string, entry: any, onProgress?: ProgressFn): P
   await dl.downloadAsync();
 
   // 2) 展開して各mp3を保存 (進捗: ファイル数)
-  const bytes = b64ToU8(await FileSystem.readAsStringAsync(zipUri, { encoding: 'base64' as any }));
+  //   メモリ対策: zipバイト列は展開後すぐ解放し、各mp3は書き出し後に都度解放する
+  //   (Android で 70〜80MB のzipを一括保持するとOOM/フリーズしやすいため)。
+  let bytes: Uint8Array | null = b64ToU8(await FileSystem.readAsStringAsync(zipUri, { encoding: 'base64' as any }));
   const files = unzipSync(bytes);
+  bytes = null; // 元zipバイト列を解放
   const names = Object.keys(files);
   let i = 0;
   onProgress?.(Math.round(DL_FRAC * SCALE), SCALE, '展開中'); // 80%から継続
   for (const name of names) {
     await FileSystem.writeAsStringAsync(`${audioDir(lang)}${name}`, u8ToB64(files[name]), { encoding: 'base64' as any });
+    delete (files as any)[name]; // 書き出し済みmp3を解放(ピークメモリ抑制)
     i++;
     const f = DL_FRAC + (i / names.length) * (1 - DL_FRAC);
     onProgress?.(Math.round(f * SCALE), SCALE, '展開中'); // 80〜100%
   }
+  // 全mp3の保存が完了してからマーカーを書く(途中失敗時は未完=次回再取得)。
   await FileSystem.writeAsStringAsync(marker, String(entry.audioVersion ?? ''));
   await FileSystem.deleteAsync(zipUri, { idempotent: true });
 }
