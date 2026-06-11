@@ -42,6 +42,11 @@ export const L1_REGISTRY: Record<string, L1Config> = {
     romanizeSentence: sentenceToRomaji,
     romanizeSentenceWithDict: sentenceToRomajiWithDict,
   },
+  // ベトナム語: ラテン文字なのでローマ字補助なし。自称表示は "Tiếng Việt"。
+  vi: {
+    code: 'vi',
+    name: 'Tiếng Việt',
+  },
 };
 
 /** code に対応する L1 設定を返す。未知/未指定なら ne にフォールバック。 */
