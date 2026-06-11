@@ -253,8 +253,13 @@ export type AppShellProps = {
   posterLessons?: PosterLesson[];
 };
 
+// スプラッシュは「アプリ起動時の1回だけ」。言語切替で PackGate が data=null にして
+// AppShell が再マウントされても、このモジュールレベルのフラグで再生をスキップする
+// (毎回スプラッシュ動画が再生されて白画面で固まって見えるのを防ぐ)。
+let splashShownOnce = false;
+
 export function AppShell({ splashSource, posterLessons }: AppShellProps) {
-  const [splashDone, setSplashDone] = useState(false);
+  const [splashDone, setSplashDone] = useState(splashShownOnce);
   const defaultStackOptions = useRef(makeDefaultStackOptions(HeaderTitle)).current;
 
   useEffect(() => {
@@ -277,7 +282,7 @@ export function AppShell({ splashSource, posterLessons }: AppShellProps) {
   }, []);
 
   if (!splashDone) {
-    return <VideoSplash source={splashSource} onDone={() => setSplashDone(true)} />;
+    return <VideoSplash source={splashSource} onDone={() => { splashShownOnce = true; setSplashDone(true); }} />;
   }
 
   return (
