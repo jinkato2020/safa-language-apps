@@ -73,7 +73,7 @@ function DownloadView(
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
       <ActivityIndicator />
       <Text style={{ marginTop: 16, fontSize: 13, color: '#52525b' }}>
-        {`${label === '展開中' ? t.prep : (label || t.dl)}… ${pct}%`}
+        {`${label === '展開中' ? t.prep : t.dl}… ${pct}%`}
       </Text>
       <View style={{ marginTop: 12, width: 220, height: 6, borderRadius: 3, backgroundColor: '#e4e4e7', overflow: 'hidden' }}>
         <View style={{ width: `${pct}%`, height: '100%', backgroundColor: '#2563eb' }} />
