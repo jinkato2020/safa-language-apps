@@ -216,6 +216,7 @@ export async function loadPack(lang: string, onProgress?: ProgressFn): Promise<A
   //  未キャッシュ(新規言語)は catalog 必須なので通常リトライ。
   const cachedExists = (await FileSystem.getInfoAsync(overlayUri(lang))).exists;
   let catalog: any = null, catalogErr = '';
+  onProgress?.(0, 1, '①カタログ'); // どの段階で止まるか診断用ラベル
   try {
     catalog = cachedExists
       ? await fetchJson(CATALOG_URL, 5000)
@@ -223,9 +224,12 @@ export async function loadPack(lang: string, onProgress?: ProgressFn): Promise<A
   } catch (e: any) { catalogErr = String(e?.message ?? e); }
   const entry = catalog?.packs?.find((p: any) => p.l1 === lang);
 
+  onProgress?.(0, 1, '②訳データ');
   const overlayJson = await getOverlay(lang, entry, { catalog, catalogErr });
   try { await ensureAudio(lang, entry, onProgress); } catch {} // 音声DL失敗でもテキストは表示
+  onProgress?.(0, 1, '③音声マップ');
   const { l1Audio, l1GrammarAudio } = await buildAudioMaps(lang, overlayJson);
+  onProgress?.(1, 1, '④結合');
 
   const overlay: L1Overlay = { ...toOverlay(overlayJson), l1Audio, l1GrammarAudio };
   return composePack(jaCore, overlay, { version: appJson.expo.version, review: REVIEW });

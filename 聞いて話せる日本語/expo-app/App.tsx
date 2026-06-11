@@ -2,7 +2,7 @@
 // UI / ナビゲーション / 画面は @safa/shared に集約。
 // アプリ固有: ne UI を Primary、方向は ne→ja を デフォルトに。
 
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -73,7 +73,7 @@ function DownloadView(
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
       <ActivityIndicator />
       <Text style={{ marginTop: 16, fontSize: 13, color: '#52525b' }}>
-        {`${label === '展開中' ? t.prep : t.dl}… ${pct}%`}
+        {`${label === '展開中' ? t.prep : (label || t.dl)}… ${pct}%`}
       </Text>
       <View style={{ marginTop: 12, width: 220, height: 6, borderRadius: 3, backgroundColor: '#e4e4e7', overflow: 'hidden' }}>
         <View style={{ width: `${pct}%`, height: '100%', backgroundColor: '#2563eb' }} />
@@ -83,29 +83,49 @@ function DownloadView(
 }
 
 // 現在のUI言語(=L1)に応じてデータパックを解決して供給する。
-// 同梱言語(ne)は即時。DL言語(bn等)は null→進捗バー表示→DL完了で差し替え。
+// ★言語切替でも AppShell(=children)を破棄(unmount)しない。
+//  従来は data=null にして AppShell を毎回破棄→再マウントしていたが、破棄の途中
+//  (音声プレイヤー解放等)で固まる/スプラッシュ再生で白画面になる問題があった。
+//  そこで「旧データを保持したまま新パックを読み込み、完了で差し替え」、読み込み中/
+//  失敗は AppShell の上にオーバーレイで重ねる方式に変更(再マウントしない)。
 function PackGate({ children }: { children: ReactNode }) {
   const { lang } = useI18n();
   const packLang = toPackLang(lang); // ja等→ne。実際にDL/同梱判定するL1。
   const [data, setData] = useState<AppData | null>(() => bundledPack(packLang));
+  const dataLangRef = useRef<string | null>(data ? packLang : null); // dataがどの言語のものか
   const [progress, setProgress] = useState<{ done: number; total: number; label?: string }>({ done: 0, total: 0 });
   const [error, setError] = useState(false);
   const [errMsg, setErrMsg] = useState<string>('');
   const [attempt, setAttempt] = useState(0);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     let alive = true;
     const bundled = bundledPack(packLang);
-    if (bundled) { setData(bundled); return; } // 同梱(現状なし)なら即時
-    // 母語はすべてDL。null→進捗バー、失敗→再試行画面(エラー内容も表示)。
-    setData(null); setError(false); setErrMsg(''); setProgress({ done: 0, total: 0 });
+    if (bundled) { setData(bundled); dataLangRef.current = packLang; setLoading(false); setError(false); return; }
+    // 既に表示中のデータが目的言語なら何もしない(無駄な再読込を避ける)
+    if (dataLangRef.current === packLang && !error) return;
+    setError(false); setErrMsg(''); setProgress({ done: 0, total: 0 }); setLoading(true);
     loadPack(packLang, (done, total, label) => { if (alive) setProgress({ done, total, label }); })
-      .then(d => { if (alive) setData(d); })
-      .catch((e: any) => { if (alive) { setErrMsg(String(e?.message ?? e)); setError(true); } });
+      .then(d => { if (alive) { setData(d); dataLangRef.current = packLang; setLoading(false); } })
+      .catch((e: any) => { if (alive) { setErrMsg(String(e?.message ?? e)); setError(true); setLoading(false); } });
     return () => { alive = false; };
   }, [packLang, attempt]);
-  if (error) return <DownloadView done={0} total={0} lang={lang} error errMsg={errMsg} onRetry={() => setAttempt(a => a + 1)} />;
-  if (!data) return <DownloadView done={progress.done} total={progress.total} label={progress.label} lang={lang} />;
-  return <AppDataProvider data={data}>{children}</AppDataProvider>;
+
+  // 初回(まだ一度もデータが無い) → 全画面の DL/エラー画面
+  if (!data) {
+    return <DownloadView done={progress.done} total={progress.total} label={progress.label} lang={lang} error={error} errMsg={errMsg} onRetry={() => setAttempt(a => a + 1)} />;
+  }
+  // データあり → AppShell は維持し、読み込み中/失敗のみ上にオーバーレイ(再マウントしない)
+  return (
+    <AppDataProvider data={data}>
+      {children}
+      {(loading || error) && (
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#fff' }}>
+          <DownloadView done={progress.done} total={progress.total} label={progress.label} lang={lang} error={error} errMsg={errMsg} onRetry={() => setAttempt(a => a + 1)} />
+        </View>
+      )}
+    </AppDataProvider>
+  );
 }
 
 // 母語選択画面 (初回のみ)。選んだ言語が UI言語=L1=DLするパックになる。
