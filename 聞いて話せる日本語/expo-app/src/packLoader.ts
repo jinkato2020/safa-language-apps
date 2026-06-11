@@ -76,8 +76,14 @@ async function getOverlay(lang: string, entry: any, diag?: { catalog: any; catal
   const uri = overlayUri(lang);
   const info = await FileSystem.getInfoAsync(uri);
   if (info.exists) {
-    const cached = JSON.parse(await FileSystem.readAsStringAsync(uri));
-    if (!entry || (cached.version ?? 0) >= (entry.version ?? 0)) return cached;
+    // キャッシュが壊れている(以前のフリーズ/中断で途中書き込み)場合に備え try で保護。
+    // 壊れていたら削除して再DLに回す(=毎回同じ壊れたキャッシュで失敗し続けるのを防ぐ)。
+    try {
+      const cached = JSON.parse(await FileSystem.readAsStringAsync(uri));
+      if (!entry || (cached.version ?? 0) >= (entry.version ?? 0)) return cached;
+    } catch {
+      await FileSystem.deleteAsync(uri, { idempotent: true });
+    }
   }
   if (!entry?.url) {
     // catalog取得失敗 と「neが載っていない(古いcatalog等)」を区別して原因を明示。
