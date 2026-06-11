@@ -46,12 +46,20 @@ function toOverlay(json: any): L1Overlay {
   };
 }
 
-async function fetchJson(url: string): Promise<any> {
+async function fetchJson(url: string, timeoutMs = 8000): Promise<any> {
   // キャッシュ無効化 (古い catalog を掴まないよう毎回最新を取得)。
   const busted = `${url}${url.includes('?') ? '&' : '?'}t=${Date.now()}`;
-  const res = await fetch(busted, { cache: 'no-store' as any, headers: { 'Cache-Control': 'no-cache' } });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+  // タイムアウト必須: モバイルで通信がハング(失敗ではなく無応答)すると
+  // fetch は既定でタイムアウトせず永久に待つ→言語切替画面が固まる。Abortで打ち切る。
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    const res = await fetch(busted, { cache: 'no-store' as any, headers: { 'Cache-Control': 'no-cache' }, signal: ctrl.signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
@@ -203,9 +211,16 @@ export async function loadPack(lang: string, onProgress?: ProgressFn): Promise<A
   const bundled = BUNDLED[lang];
   if (bundled) return bundled;
 
+  // 既にオーバーレイがキャッシュ済みなら、catalog取得は「短時間・1回」で諦める。
+  //  → 通信ハング時でもキャッシュ済み言語は固まらず即座に開ける(オフラインでも動く)。
+  //  未キャッシュ(新規言語)は catalog 必須なので通常リトライ。
+  const cachedExists = (await FileSystem.getInfoAsync(overlayUri(lang))).exists;
   let catalog: any = null, catalogErr = '';
-  try { catalog = await withRetry(() => fetchJson(CATALOG_URL)); }
-  catch (e: any) { catalogErr = String(e?.message ?? e); }
+  try {
+    catalog = cachedExists
+      ? await fetchJson(CATALOG_URL, 5000)
+      : await withRetry(() => fetchJson(CATALOG_URL, 8000));
+  } catch (e: any) { catalogErr = String(e?.message ?? e); }
   const entry = catalog?.packs?.find((p: any) => p.l1 === lang);
 
   const overlayJson = await getOverlay(lang, entry, { catalog, catalogErr });
