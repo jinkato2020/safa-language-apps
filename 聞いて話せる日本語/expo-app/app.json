@@ -2,7 +2,7 @@
   "expo": {
     "name": "聞いて話せる日本語",
     "slug": "ListenSpeakJapanese",
-    "version": "1.0.21",
+    "version": "1.0.22",
     "runtimeVersion": {
       "policy": "appVersion"
     },
@@ -30,6 +30,9 @@
       "predictiveBackGestureEnabled": false,
       "permissions": [
         "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "plugins": [

@@ -166,7 +166,16 @@ async function ensureAudio(lang: string, entry: any, onProgress?: ProgressFn): P
 }
 
 // FSの音声から文ID→file:// マップを構築 (会話=examplesL1 / 文法=grammarL1)。
+//  ディレクトリ一覧を1回だけ取得しSetで存在判定する(全2400件をgetInfoAsyncで
+//  個別確認すると起動・言語切替のたびに数千回のFS呼び出しで重く固まるため)。
 async function buildAudioMaps(lang: string, overlayJson: any) {
+  const dir = audioDir(lang);
+  let present: Set<string>;
+  try {
+    present = new Set(await FileSystem.readDirectoryAsync(dir));
+  } catch {
+    present = new Set(); // ディレクトリ未作成等
+  }
   const collect = (m: any) => {
     const ids: string[] = [];
     for (const [key, arr] of Object.entries(m || {})) (arr as string[]).forEach((_, i) => ids.push(`${key}-${i + 1}`));
@@ -175,12 +184,10 @@ async function buildAudioMaps(lang: string, overlayJson: any) {
   const l1Audio: Record<string, string> = {};
   const l1GrammarAudio: Record<string, string> = {};
   for (const id of collect(overlayJson.examplesL1)) {
-    const u = `${audioDir(lang)}${id}.mp3`;
-    if ((await FileSystem.getInfoAsync(u)).exists) l1Audio[id] = u;
+    if (present.has(`${id}.mp3`)) l1Audio[id] = `${dir}${id}.mp3`;
   }
   for (const id of collect(overlayJson.grammarL1)) {
-    const u = `${audioDir(lang)}${id}.mp3`;
-    if ((await FileSystem.getInfoAsync(u)).exists) l1GrammarAudio[id] = u;
+    if (present.has(`${id}.mp3`)) l1GrammarAudio[id] = `${dir}${id}.mp3`;
   }
   return { l1Audio, l1GrammarAudio };
 }
