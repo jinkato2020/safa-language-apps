@@ -2,7 +2,7 @@
   "expo": {
     "name": "聞いて話せる日本語",
     "slug": "ListenSpeakJapanese",
-    "version": "1.0.31",
+    "version": "1.0.32",
     "runtimeVersion": {
       "policy": "appVersion"
     },
@@ -14,6 +14,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.safa.japanese",
       "infoPlist": {
+        "CFBundleDisplayName": "Listen & Speak Japanese",
         "UIBackgroundModes": [
           "audio"
         ],
