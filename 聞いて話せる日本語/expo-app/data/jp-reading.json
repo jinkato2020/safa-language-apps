@@ -12582,5 +12582,953 @@
   "学業の傍ら福祉施設でのボランティアにも力を入れ、人を支える活動に大きなやりがいを感じます。": {
     "kana": "がくぎょうのかたわらふくししせつでのボランティアにもちからをいれ、ひとをささえるかつどうにおおきなやりがいをかんじます。",
     "romaji": "gakugyō no katawara fukushi shisetsu de no borantia ni mo chikara o ire, hito o sasaeru katsudō ni ōkina yarigai o kanjimasu."
+  },
+  "金閣寺はきれいだ。": {
+    "kana": "きんかくじはきれいだ。",
+    "romaji": "Kinkakuji wa kirei da."
+  },
+  "鹿がいますね。": {
+    "kana": "しかがいますね。",
+    "romaji": "Shika ga imasu ne."
+  },
+  "富士山を見たい。": {
+    "kana": "ふじさんをみたい。",
+    "romaji": "Fujisan o mitai."
+  },
+  "大仏は大きい。": {
+    "kana": "だいぶつはおおきい。",
+    "romaji": "Daibutsu wa okii."
+  },
+  "浅草へ行こう。": {
+    "kana": "あさくさへいこう。",
+    "romaji": "Asakusa e ikou."
+  },
+  "雪が降ったよ。": {
+    "kana": "ゆきがふったよ。",
+    "romaji": "Yuki ga futta yo."
+  },
+  "海が青いね。": {
+    "kana": "うみがあおいね。",
+    "romaji": "Umi ga aoi ne."
+  },
+  "大阪城は古い。": {
+    "kana": "おおさかじょうはふるい。",
+    "romaji": "Osakajo wa furui."
+  },
+  "清水寺は有名。": {
+    "kana": "きよみずでらはゆうめい。",
+    "romaji": "Kiyomizudera wa yumei."
+  },
+  "東京は広いな。": {
+    "kana": "とうきょうはひろいな。",
+    "romaji": "Tokyo wa hiroi na."
+  },
+  "札幌は寒い。": {
+    "kana": "さっぽろはさむい。",
+    "romaji": "Sapporo wa samui."
+  },
+  "東照宮を見た。": {
+    "kana": "とうしょうぐうをみた。",
+    "romaji": "Toshogu o mita."
+  },
+  "首里城は赤い。": {
+    "kana": "しゅりじょうはあかい。",
+    "romaji": "Shurijo wa akai."
+  },
+  "雷門は大きい。": {
+    "kana": "かみなりもんはおおきい。",
+    "romaji": "Kaminarimon wa okii."
+  },
+  "奈良は近いよ。": {
+    "kana": "ならはちかいよ。",
+    "romaji": "Nara wa chikai yo."
+  },
+  "公園を歩こう。": {
+    "kana": "こうえんをあるこう。",
+    "romaji": "Koen o aruko."
+  },
+  "景色がいいね。": {
+    "kana": "けしきがいいね。",
+    "romaji": "Keshiki ga ii ne."
+  },
+  "沖縄へ行きたい。": {
+    "kana": "おきなわへいきたい。",
+    "romaji": "Okinawa e ikitai."
+  },
+  "スカイツリー高い。": {
+    "kana": "スカイツリーたかい。",
+    "romaji": "Sukaitsuri takai."
+  },
+  "京都が好きだ。": {
+    "kana": "きょうとがすきだ。",
+    "romaji": "Kyoto ga suki da."
+  },
+  "金閣寺は金色でとても美しいですね。": {
+    "kana": "きんかくじはきんいろでとてもうつくしいですね。",
+    "romaji": "Kinkakuji wa kin'iro de totemo utsukushii desu ne."
+  },
+  "富士山に登ったことはありますか。": {
+    "kana": "ふじさんにのぼったことはありますか。",
+    "romaji": "Fujisan ni nobotta koto wa arimasu ka."
+  },
+  "奈良の鹿はとても人なつこいですよ。": {
+    "kana": "ならのしかはとてもひとなつこいですよ。",
+    "romaji": "Nara no shika wa totemo hitonatsukoi desu yo."
+  },
+  "東大寺の大仏はなんて大きいのでしょう。": {
+    "kana": "とうだいじのだいぶつはなんておおきいのでしょう。",
+    "romaji": "Todaiji no daibutsu wa nante okii no desho."
+  },
+  "清水寺の舞台から町がよく見えます。": {
+    "kana": "きよみずでらのぶたいからまちがよくみえます。",
+    "romaji": "Kiyomizudera no butai kara machi ga yoku miemasu."
+  },
+  "札幌の雪まつりへ行ってみませんか。": {
+    "kana": "さっぽろのゆきまつりへいってみませんか。",
+    "romaji": "Sapporo no yukimatsuri e itte mimasen ka."
+  },
+  "スカイツリーは東京で一番高い建物です。": {
+    "kana": "スカイツリーはとうきょうでいちばんたかいたてものです。",
+    "romaji": "Sukaitsuri wa Tokyo de ichiban takai tatemono desu."
+  },
+  "沖縄の海は本当に透き通っていますね。": {
+    "kana": "おきなわのうみはほんとうにすきとおっていますね。",
+    "romaji": "Okinawa no umi wa honto ni sukitotte imasu ne."
+  },
+  "平和記念公園を静かに歩いてみましょう。": {
+    "kana": "へいわきねんこうえんをしずかにあるいてみましょう。",
+    "romaji": "Heiwa kinen koen o shizuka ni aruite mimasho."
+  },
+  "大阪城は緑の中にそびえています。": {
+    "kana": "おおさかじょうはみどりのなかにそびえています。",
+    "romaji": "Osakajo wa midori no naka ni sobiete imasu."
+  },
+  "浅草の雷門は赤くて目立ちますね。": {
+    "kana": "あさくさのかみなりもんはあかくてめだちますね。",
+    "romaji": "Asakusa no Kaminarimon wa akakute medachimasu ne."
+  },
+  "日光東照宮の彫刻はとても細かいです。": {
+    "kana": "にっこうとうしょうぐうのちょうこくはとてもこまかいです。",
+    "romaji": "Nikko Toshogu no chokoku wa totemo komakai desu."
+  },
+  "首里城は沖縄の歴史を伝える城です。": {
+    "kana": "しゅりじょうはおきなわのれきしをつたえるしろです。",
+    "romaji": "Shurijo wa Okinawa no rekishi o tsutaeru shiro desu."
+  },
+  "富士山より高い山は日本にありません。": {
+    "kana": "ふじさんよりたかいやまはにほんにありません。",
+    "romaji": "Fujisan yori takai yama wa Nihon ni arimasen."
+  },
+  "金閣寺と銀閣寺はどちらが好きですか。": {
+    "kana": "きんかくじとぎんかくじはどちらがすきですか。",
+    "romaji": "Kinkakuji to Ginkakuji wa dochira ga suki desu ka."
+  },
+  "北海道なら冬の景色がおすすめですよ。": {
+    "kana": "ほっかいどうならふゆのけしきがおすすめですよ。",
+    "romaji": "Hokkaido nara fuyu no keshiki ga osusume desu yo."
+  },
+  "京都には古いお寺がたくさんあります。": {
+    "kana": "きょうとにはふるいおてらがたくさんあります。",
+    "romaji": "Kyoto ni wa furui otera ga takusan arimasu."
+  },
+  "春に上野公園で桜を見たいです。": {
+    "kana": "はるにうえのこうえんでさくらをみたいです。",
+    "romaji": "Haru ni Ueno koen de sakura o mitai desu."
+  },
+  "スカイツリーから富士山が見えるかもしれません。": {
+    "kana": "スカイツリーからふじさんがみえるかもしれません。",
+    "romaji": "Sukaitsuri kara Fujisan ga mieru kamo shiremasen."
+  },
+  "奈良で鹿にせんべいをあげてみてください。": {
+    "kana": "ならでしかにせんべいをあげてみてください。",
+    "romaji": "Nara de shika ni senbei o agete mite kudasai."
+  },
+  "清水寺の舞台は崖の上に建ち、京都の街並みを一望できます。": {
+    "kana": "きよみずでらのぶたいはがけのうえにたち、きょうとのまちなみをいちぼうできます。",
+    "romaji": "Kiyomizudera no butai wa gake no ue ni tachi, Kyoto no machinami o ichibo dekimasu."
+  },
+  "富士山は日本一の高さを誇り、世界遺産にも登録されています。": {
+    "kana": "ふじさんはにほんいちのたかさをほこり、せかいいさんにもとうろくされています。",
+    "romaji": "Fujisan wa Nihon'ichi no takasa o hokori, sekai isan ni mo toroku sarete imasu."
+  },
+  "奈良公園を歩いていると、鹿が自然に近づいてくるでしょう。": {
+    "kana": "ならこうえんをあるいていると、しかがしぜんにちかづいてくるでしょう。",
+    "romaji": "Nara koen o aruite iru to, shika ga shizen ni chikazuite kuru desho."
+  },
+  "金閣寺の金色の壁が池に映る光景は、なんて幻想的なのでしょう。": {
+    "kana": "きんかくじのきんいろのかべがいけにうつるこうけいは、なんてげんそうてきなのでしょう。",
+    "romaji": "Kinkakuji no kin'iro no kabe ga ike ni utsuru kokei wa, nante gensoteki na no desho."
+  },
+  "東京スカイツリーは高さ六百三十四メートルで、展望台から街を見渡せます。": {
+    "kana": "とうきょうスカイツリーはたかさろっぴゃくさんじゅうしメートルで、てんぼうだいからまちをみわたせます。",
+    "romaji": "Tokyo Sukaitsuri wa takasa roppyaku sanjushi metoru de, tenbodai kara machi o miwatasemasu."
+  },
+  "平和記念公園は世界の人々が平和を願って訪れる場所です。": {
+    "kana": "へいわきねんこうえんはせかいのひとびとがへいわをねがってとずれるばしょです。",
+    "romaji": "Heiwa kinen koen wa sekai no hitobito ga heiwa o negatte otozureru basho desu."
+  },
+  "浅草の雷門をくぐると、にぎやかな仲見世通りが続いています。": {
+    "kana": "あさくさのかみなりもんをくぐると、にぎやかななかみせどおりがつづいています。",
+    "romaji": "Asakusa no Kaminarimon o kuguru to, nigiyaka na Nakamise-dori ga tsuzuite imasu."
+  },
+  "沖縄の青い海でシュノーケリングをしたら、きっと感動するはずです。": {
+    "kana": "おきなわのあおいうみでシュノーケリングをしたら、きっとかんどうするはずです。",
+    "romaji": "Okinawa no aoi umi de Shunokерingu o shitara, kitto kando suru hazu desu."
+  },
+  "札幌では二月になると雪まつりが開かれ、巨大な雪像が並びます。": {
+    "kana": "さっぽろではにがつになるとゆきまつりがひらかれ、きょだいなせつぞうがならびます。",
+    "romaji": "Sapporo de wa nigatsu ni naru to yukimatsuri ga hirakaре, kyodai na setsuzо ga narabimasu."
+  },
+  "東大寺の大仏は高さ約十五メートルで、見る人を圧倒します。": {
+    "kana": "とうだいじのだいぶつはたかさやくじゅうごメートルで、みるひとをあっとうします。",
+    "romaji": "Todaiji no daibutsu wa takasa yaku jugo metoru de, miru hito o atto shimasu."
+  },
+  "日光東照宮には徳川家康が祀られ、豪華な彫刻が見どころです。": {
+    "kana": "にっこうとうしょうぐうには とくがわいえやすが まつられ、ごうかな ちょうこくが みどころです。",
+    "romaji": "Nikko Toshogu ni wa Tokugawa Ieyasu ga matsurare, goka na chokoku ga midokoro desu."
+  },
+  "大阪城は豊臣秀吉が築いた城で、今も大阪の象徴となっています。": {
+    "kana": "おおさかじょうは とよとみひでよしが きずいた しろで、いまも おおさかの しょうちょうと なっています。",
+    "romaji": "Osakajo wa Toyotomi Hideyoshi ga kizuita shiro de, ima mo Osaka no shōchō to natte imasu."
+  },
+  "首里城は沖縄独自の文化を映し、鮮やかな朱色が印象的です。": {
+    "kana": "しゅりじょうは おきなわどくじの ぶんかを うつし、あざやかな しゅいろが いんしょうてきです。",
+    "romaji": "Shurijo wa Okinawa dokuji no bunka o utsushi, azayaka na shuiro ga inshōteki desu."
+  },
+  "京都を訪れるなら、紅葉が美しい秋の季節をおすすめします。": {
+    "kana": "きょうとを おとずれるなら、もみじが うつくしい あきの きせつを おすすめします。",
+    "romaji": "Kyoto o otozureru nara, momiji ga utsukushii aki no kisetsu o osusume shimasu."
+  },
+  "金閣寺と清水寺を比べると、雰囲気がまったく違って面白いですね。": {
+    "kana": "きんかくじと きよみずでらを くらべると、ふんいきが まったく ちがって おもしろいですね。",
+    "romaji": "Kinkakuji to Kiyomizudera o kuraberu to, fun'iki ga mattaku chigatte omoshiroi desu ne."
+  },
+  "北海道の冬は寒さが厳しいものの、雪景色がとても美しいです。": {
+    "kana": "ほっかいどうの ふゆは さむさが きびしいものの、ゆきげしきが とても うつくしいです。",
+    "romaji": "Hokkaido no fuyu wa samusa ga kibishii mono no, yukigeshiki ga totemo utsukushii desu."
+  },
+  "富士山に登ったことはありますか、それとも遠くから眺めましたか。": {
+    "kana": "ふじさんに のぼったことは ありますか、それとも とおくから ながめましたか。",
+    "romaji": "Fujisan ni nobotta koto wa arimasu ka, soretomo toku kara nagamemashita ka."
+  },
+  "奈良の大仏を一度でも見れば、その大きさに驚かされるでしょう。": {
+    "kana": "ならの だいぶつを いちどでも みれば、その おおきさに おどろかされる でしょう。",
+    "romaji": "Nara no Daibutsu o ichido demo mireba, sono okisa ni odorokasareru desho."
+  },
+  "沖縄の海なら、本州ではなかなか見られない透明度を楽しめます。": {
+    "kana": "おきなわの うみなら、ほんしゅうでは なかなか みられない とうめいどを たのしめます。",
+    "romaji": "Okinawa no umi nara, Honshu de wa nakanaka mirarenai tomeido o tanoshimemasu."
+  },
+  "スカイツリーと東京タワー、どちらがより高いか知っていますか。": {
+    "kana": "スカイツリーと とうきょうタワー、どちらが より たかいか しっていますか。",
+    "romaji": "Sukaitsuri to Tokyo Tawa, dochira ga yori takai ka shitte imasu ka."
+  },
+  "奈良に都があった。": {
+    "kana": "ならに みやこが あった。",
+    "romaji": "Nara ni miyako ga atta."
+  },
+  "国会は東京にある。": {
+    "kana": "こっかいは とうきょうに ある。",
+    "romaji": "Kokkai wa Tokyo ni aru."
+  },
+  "天皇は象徴です。": {
+    "kana": "てんのうは しょうちょうです。",
+    "romaji": "Tenno wa shōchō desu."
+  },
+  "江戸時代は長かった。": {
+    "kana": "えどじだいは ながかった。",
+    "romaji": "Edo jidai wa nagakatta."
+  },
+  "選挙に行こう。": {
+    "kana": "せんきょに いこう。",
+    "romaji": "Senkyo ni iko."
+  },
+  "車をよく作る。": {
+    "kana": "くるまを よく つくる。",
+    "romaji": "Kuruma o yoku tsukuru."
+  },
+  "平安京を見たい。": {
+    "kana": "へいあんきょうを みたい。",
+    "romaji": "Heian-kyo o mitai."
+  },
+  "国会は二院制だ。": {
+    "kana": "こっかいは にいんせいだ。",
+    "romaji": "Kokkai wa niinsei da."
+  },
+  "縄文土器は古い。": {
+    "kana": "じょうもんどきは ふるい。",
+    "romaji": "Jomon doki wa furui."
+  },
+  "地方自治って何？": {
+    "kana": "ちほうじちって なに？",
+    "romaji": "Chiho jichi tte nani?"
+  },
+  "観光客が増えた。": {
+    "kana": "かんこうきゃくが ふえた。",
+    "romaji": "Kankokyaku ga fueta."
+  },
+  "憲法を読んだ。": {
+    "kana": "けんぽうを よんだ。",
+    "romaji": "Kenpo o yonda."
+  },
+  "明治に変わった。": {
+    "kana": "めいじに かわった。",
+    "romaji": "Meiji ni kawatta."
+  },
+  "投票は大切だね。": {
+    "kana": "とうひょうは たいせつだね。",
+    "romaji": "Tohyo wa taisetsu da ne."
+  },
+  "衆議院と参議院。": {
+    "kana": "しゅうぎいんと さんぎいん。",
+    "romaji": "Shugiin to Sangiin."
+  },
+  "少子化が進む。": {
+    "kana": "しょうしかが すすむ。",
+    "romaji": "Shoshika ga susumu."
+  },
+  "電機産業が強い。": {
+    "kana": "でんきさんぎょうが つよい。",
+    "romaji": "Denki sangyo ga tsuyoi."
+  },
+  "戦後は復興した。": {
+    "kana": "せんごは ふっこうした。",
+    "romaji": "Sengo wa fukko shita."
+  },
+  "高齢者が多いね。": {
+    "kana": "こうれいしゃが おおいね。",
+    "romaji": "Koreisha ga oi ne."
+  },
+  "三権が分かれる。": {
+    "kana": "さんけんが わかれる。",
+    "romaji": "Sanken ga wakareru."
+  },
+  "縄文時代の暮らしを学ぶのは、とても面白いですね。": {
+    "kana": "じょうもんじだいの くらしを まなぶのは、とても おもしろいですね。",
+    "romaji": "Jomon jidai no kurashi o manabu no wa, totemo omoshiroi desu ne."
+  },
+  "国会は衆議院と参議院の二つに分かれています。": {
+    "kana": "こっかいは しゅうぎいんと さんぎいんの ふたつに わかれています。",
+    "romaji": "Kokkai wa Shugiin to Sangiin no futatsu ni wakarete imasu."
+  },
+  "日本では議院内閣制がとられているそうです。": {
+    "kana": "にほんでは ぎいんないかくせいが とられているそうです。",
+    "romaji": "Nihon de wa giin naikakusei ga torarete iru so desu."
+  },
+  "少子高齢化はどんな影響を社会に与えますか。": {
+    "kana": "しょうしこうれいかは どんな えいきょうを しゃかいに あたえますか。",
+    "romaji": "Shoshi koreika wa donna eikyo o shakai ni ataemasu ka."
+  },
+  "江戸時代には町人の文化が大きく発展しました。": {
+    "kana": "えどじだいには ちょうにんの ぶんかが おおきく はってんしました。",
+    "romaji": "Edo jidai ni wa chonin no bunka ga okiku hatten shimashita."
+  },
+  "自動車産業は日本経済を長く支えてきました。": {
+    "kana": "じどうしゃさんぎょうは にほんけいざいを ながく ささえてきました。",
+    "romaji": "Jidosha sangyo wa Nihon keizai o nagaku sasaete kimashita."
+  },
+  "天皇は政治には関わらない象徴的な存在です。": {
+    "kana": "てんのうは せいじには かかわらない しょうちょうてきな そんざいです。",
+    "romaji": "Tenno wa seiji ni wa kakawaranai shōchōteki na sonzai desu."
+  },
+  "もし選挙に行かなければ、意見は届きません。": {
+    "kana": "もし せんきょに いかなければ、いけんは とどきません。",
+    "romaji": "Moshi senkyo ni ikanakereba, iken wa todokimasen."
+  },
+  "観光立国として、外国人客の誘致を進めています。": {
+    "kana": "かんこうりっこくとして、がいこくじんきゃくの ゆうちを すすめています。",
+    "romaji": "Kankō rikkoku to shite, gaikokujin kyaku no yuchi o susumete imasu."
+  },
+  "明治維新で、社会の仕組みが大きく変わりました。": {
+    "kana": "めいじいしんで、しゃかいの しくみが おおきく かわりました。",
+    "romaji": "Meiji Ishin de, shakai no shikumi ga okiku kawarimashita."
+  },
+  "日本国憲法は三つの原則を定めているそうです。": {
+    "kana": "にほんこくけんぽうは みっつの げんそくを さだめているそうです。",
+    "romaji": "Nihonkoku Kenpo wa mittsu no gensoku o sadamete iru so desu."
+  },
+  "地方自治では、住民が首長を選挙で選びます。": {
+    "kana": "ちほうじちでは、じゅうみんが しゅちょうを せんきょで えらびます。",
+    "romaji": "Chiho jichi de wa, jumin ga shucho o senkyo de erabimasu."
+  },
+  "電機産業の技術力は世界でも知られています。": {
+    "kana": "でんきさんぎょうの ぎじゅつりょくは せかいでも しられています。",
+    "romaji": "Denki sangyo no gijutsuryoku wa sekai de mo shirarete imasu."
+  },
+  "平安時代には、かな文字が広く使われました。": {
+    "kana": "へいあんじだいには、かなもじが ひろく つかわれました。",
+    "romaji": "Heian jidai ni wa, kana moji ga hiroku tsukawaremashita."
+  },
+  "三権分立とは、権力を三つに分ける仕組みです。": {
+    "kana": "さんけんぶんりつとは、けんりょくを みっつに わける しくみです。",
+    "romaji": "Sanken bunritsu to wa, kenryoku o mittsu ni wakeru shikumi desu."
+  },
+  "戦後の復興は、なんと速かったのでしょうか。": {
+    "kana": "せんごの ふっこうは、なんと はやかったの でしょうか。",
+    "romaji": "Sengo no fukko wa, nanto hayakatta no desho ka."
+  },
+  "参議院は衆議院より任期が長く決まっています。": {
+    "kana": "さんぎいんは しゅうぎいんより にんきが ながく きまっています。",
+    "romaji": "Sangiin wa Shugiin yori ninki ga nagaku kimatte imasu."
+  },
+  "奈良時代には、仏教が国によって保護されました。": {
+    "kana": "ならじだいには、ぶっきょうが くにによって ほごされました。",
+    "romaji": "Nara jidai ni wa, Bukkyo ga kuni ni yotte hogo saremashita."
+  },
+  "国民は選挙を通して代表者を選んでいます。": {
+    "kana": "こくみんは せんきょを とおして だいひょうしゃを えらんでいます。",
+    "romaji": "Kokumin wa senkyo o toshite daihyosha o erande imasu."
+  },
+  "高齢化が進むと、社会保障の負担が増えます。": {
+    "kana": "こうれいかが すすむと、しゃかいほしょうの ふたんが ふえます。",
+    "romaji": "Koreika ga susumu to, shakai hosho no futan ga fuemasu."
+  },
+  "日本国憲法は国民主権・基本的人権の尊重・平和主義を三原則として定めています。": {
+    "kana": "にほんこくけんぽうはこくみんしゅけん・きほんてきじんけんのそんちょう・へいわしゅぎをさんげんそくとしてさだめています。",
+    "romaji": "Nihon koku kenpō wa kokumin shuken · kihonteki jinken no sonchō · heiwa shugi o san gensoku to shite sadamete imasu."
+  },
+  "三権分立では、立法・行政・司法がそれぞれ独立して互いを抑制し合っています。": {
+    "kana": "さんけんぶんりつでは、りっぽう・ぎょうせい・しほうがそれぞれどくりつしてたがいをよくせいしあっています。",
+    "romaji": "Sanken bunritsu de wa, rippō · gyōsei · shihō ga sorezore dokuritsu shite tagai o yokusei shi atte imasu."
+  },
+  "明治維新を経て、近代的な政治制度や産業の基礎が築かれていったといわれます。": {
+    "kana": "めいじいしんをへて、きんだいてきなせいじせいどやさんぎょうのきそがきずかれていったといわれます。",
+    "romaji": "Meiji ishin o hete, kindaiteki na seiji seido ya sangyō no kiso ga kizukare itte to iwaremasu."
+  },
+  "少子高齢化の進行は、労働力人口や社会保障制度の在り方に影響を及ぼしています。": {
+    "kana": "しょうしこうれいかのしんこうは、ろうどうりょくじんこうやしゃかいほしょうせいどのありかたにえいきょうをおよぼしています。",
+    "romaji": "Shōshi kōreika no shinkō wa, rōdōryoku jinkō ya shakai hoshō seido no arikata ni eikyō o oyoboshite imasu."
+  },
+  "観光立国を目指し、地域の文化や自然を生かした誘客の取り組みが進められています。": {
+    "kana": "かんこうりっこくをめざし、ちいきのぶんかやしぜんをいかしたゆうきゃくのとりくみがすすめられています。",
+    "romaji": "Kankō rikkoku o mezashi, chiiki no bunka ya shizen o ikashita yūkyaku no torikumi ga susumerarete imasu."
+  },
+  "国会は衆議院と参議院の二院制で、両院の議決を経て法律が成立する仕組みです。": {
+    "kana": "こっかいはしゅうぎいんとさんぎいんのにいんせいで、りょういんのぎけつをへてほうりつがせいりつするしくみです。",
+    "romaji": "Kokkai wa Shūgiin to Sangiin no niinsei de, ryōin no giketsu o hete hōritsu ga seiritsu suru shikumi desu."
+  },
+  "江戸時代には参勤交代の制度があり、街道や宿場町の整備が大きく進みました。": {
+    "kana": "えどじだいにはさんきんこうたいのせいどがあり、かいどうやしゅくばまちのせいびがおおきくすすみました。",
+    "romaji": "Edo jidai ni wa sankin kōtai no seido ga ari, kaidō ya shukuba machi no seibi ga ōkiku susumimashita."
+  },
+  "議院内閣制では、内閣が国会の信任に基づいて行政を担う仕組みになっています。": {
+    "kana": "ぎいんないかくせいでは、ないかくがこっかいのしんにんにもとづいてぎょうせいをになうしくみになっています。",
+    "romaji": "Giin naikaku sei de wa, naikaku ga kokkai no shinnin ni motozuite gyōsei o ninau shikumi ni natte imasu."
+  },
+  "戦後の復興期には、技術革新を背景に製造業が急速に成長したと記録されています。": {
+    "kana": "せんごのふっこうきには、ぎじゅつかくしんをはいけいにせいぞうぎょうがきゅうそくにせいちょうしたときろくされています。",
+    "romaji": "Sengo no fukkōki ni wa, gijutsu kakushin o haikei ni seizō gyō ga kyūsoku ni seichō shita to kiroku sarete imasu."
+  },
+  "自動車や電機の産業は、輸出を通じて日本経済の発展を支えてきたとされています。": {
+    "kana": "じどうしゃやでんきのさんぎょうは、ゆしゅつをつうじてにほんけいざいのはってんをささえてきたとされています。",
+    "romaji": "Jidōsha ya denki no sangyō wa, yushutsu o tsūjite Nihon keizai no hatten o sasaete kita to sarete imasu."
+  },
+  "縄文時代には狩猟や採集を中心とした生活が長く続いていたと考えられています。": {
+    "kana": "じょうもんじだいにはしゅりょうやさいしゅうをちゅうしんとしたせいかつがながくつづいていたとかんがえられています。",
+    "romaji": "Jōmon jidai ni wa shuryō ya saishū o chūshin to shita seikatsu ga nagaku tsuzuite ita to kangaerarete imasu."
+  },
+  "地方自治は、住民が選んだ首長と議会が地域の行政を担う仕組みになっています。": {
+    "kana": "ちほうじちは、じゅうみんがえらんだしゅちょうとぎかいがちいきのぎょうせいをになうしくみになっています。",
+    "romaji": "Chihō jichi wa, jūmin ga eranda shuchō to gikai ga chiiki no gyōsei o ninau shikumi ni natte imasu."
+  },
+  "平安時代には貴族が政治を主導し、独自の宮廷文化が花開いていったといわれます。": {
+    "kana": "へいあんじだいにはきぞくがせいじをしゅどうし、どくじのきゅうていぶんかがはなひらいていったといわれます。",
+    "romaji": "Heian jidai ni wa kizoku ga seiji o shudō shi, dokuji no kyūtei bunka ga hana hiraite itta to iwaremasu."
+  },
+  "天皇は日本国の象徴であり、国政に関する権能を持たないと憲法に定められています。": {
+    "kana": "てんのうはにほんこくのしょうちょうであり、こくせいにかんするけんのうをもたないとけんぽうにさだめられています。",
+    "romaji": "Tennō wa Nihon koku no shōchō de ari, kokusei ni kansuru kennō o motanai to kenpō ni sadamerarete imasu."
+  },
+  "奈良時代には律令に基づく中央集権的な統治体制が整えられていったとされています。": {
+    "kana": "ならじだいにはりつりょうにもとづくちゅうおうしゅうけんてきなとうちたいせいがととのえられていったとされています。",
+    "romaji": "Nara jidai ni wa ritsuryō ni motozuku chūō shūkenteki na tōchi taisei ga totonoerarete itta to sarete imasu."
+  },
+  "選挙制度では、一定の年齢に達した国民が投票によって代表者を選んでいます。": {
+    "kana": "せんきょせいどでは、いっていのねんれいにたっしたこくみんがとうひょうによってだいひょうしゃをえらんでいます。",
+    "romaji": "Senkyo seido de wa, ittei no nenrei ni tasshita kokumin ga tōhyō ni yotte daihyōsha o erande imasu."
+  },
+  "参議院は解散がなく、半数ずつ改選される仕組みで運営されているそうです。": {
+    "kana": "さんぎいんはかいさんがなく、はんすうずつかいせんされるしくみでうんえいされているそうです。",
+    "romaji": "Sangiin wa kaisan ga naku, hansū zutsu kaisen sareru shikumi de un'ei sarete iru sō desu."
+  },
+  "内閣総理大臣は国会議員の中から国会の議決によって指名される仕組みです。": {
+    "kana": "ないかくそうりだいじんはこっかいぎいんのなかからこっかいのぎけつによってしめいされるしくみです。",
+    "romaji": "Naikaku sōri daijin wa kokkai giin no naka kara kokkai no giketsu ni yotte shimei sareru shikumi desu."
+  },
+  "高齢化に伴い、医療や介護に関わる費用の増加が課題として指摘されています。": {
+    "kana": "こうれいかにともない、いりょうやかいごにかかわるひようのぞうかがかだいとしてしてきされています。",
+    "romaji": "Kōreika ni tomonai, iryō ya kaigo ni kakawaru hiyō no zōka ga kadai to shite shiteki sarete imasu."
+  },
+  "日本の経済は加工貿易を基盤に発展し、高い技術力で知られるようになりました。": {
+    "kana": "にほんのけいざいはかこうぼうえきをきばんにはってんし、たかいぎじゅつりょくでしられるようになりました。",
+    "romaji": "Nihon no keizai wa kakō bōeki o kiban ni hatten shi, takai gijutsuryoku de shirareru yō ni narimashita."
+  },
+  "新幹線の切符を買いたい。": {
+    "kana": "しんかんせんのきっぷをかいたい。",
+    "romaji": "Shinkansen no kippu o kaitai."
+  },
+  "部屋はありますか。": {
+    "kana": "へやはありますか。",
+    "romaji": "Heya wa arimasu ka."
+  },
+  "荷物が重いです。": {
+    "kana": "にもつがおもいです。",
+    "romaji": "Nimotsu ga omoi desu."
+  },
+  "予約しましたか。": {
+    "kana": "よやくしましたか。",
+    "romaji": "Yoyaku shimashita ka."
+  },
+  "朝食はいつですか。": {
+    "kana": "ちょうしょくはいつですか。",
+    "romaji": "Chōshoku wa itsu desu ka."
+  },
+  "円に両替できますか。": {
+    "kana": "えんにりょうがえできますか。",
+    "romaji": "En ni ryōgae dekimasu ka."
+  },
+  "Wi-Fiは無料です。": {
+    "kana": "Wi-Fiはむりょうです。",
+    "romaji": "Wi-Fi wa muryō desu."
+  },
+  "バスに乗りませんか。": {
+    "kana": "バスにのりませんか。",
+    "romaji": "Basu ni norimasen ka."
+  },
+  "東京駅は遠いですか。": {
+    "kana": "とうきょうえきはとおいですか。",
+    "romaji": "Tōkyō eki wa tōi desu ka."
+  },
+  "チェックアウトです。": {
+    "kana": "チェックアウトです。",
+    "romaji": "Chekku auto desu."
+  },
+  "この席空いてますか。": {
+    "kana": "このせきあいてますか。",
+    "romaji": "Kono seki aite masu ka."
+  },
+  "タオルがないです。": {
+    "kana": "タオルがないです。",
+    "romaji": "Taoru ga nai desu."
+  },
+  "写真を撮りたい。": {
+    "kana": "しゃしんをとりたい。",
+    "romaji": "Shashin o toritai."
+  },
+  "ここで降ります。": {
+    "kana": "ここでおります。",
+    "romaji": "Koko de orimasu."
+  },
+  "部屋を変えたい。": {
+    "kana": "へやをかえたい。",
+    "romaji": "Heya o kaetai."
+  },
+  "京都へ観光に行こう。": {
+    "kana": "きょうとへかんこうにいこう。",
+    "romaji": "Kyōto e kankō ni ikō."
+  },
+  "荷物を預けたい。": {
+    "kana": "にもつをあずけたい。",
+    "romaji": "Nimotsu o azuketai."
+  },
+  "飛行機の予約は変更できますか。": {
+    "kana": "ひこうきのよやくはへんこうできますか。",
+    "romaji": "Hikōki no yoyaku wa henkō dekimasu ka."
+  },
+  "この近くに両替所はありませんか。": {
+    "kana": "このちかくにりょうがえじょはありませんか。",
+    "romaji": "Kono chikaku ni ryōgaejo wa arimasen ka."
+  },
+  "タオルをもう一枚いただけますか。": {
+    "kana": "タオルをもういちまいいただけますか。",
+    "romaji": "Taoru o mō ichimai itadakemasu ka."
+  },
+  "チェックインは何時からですか。": {
+    "kana": "チェックインはなんじからですか。",
+    "romaji": "Chekku in wa nanji kara desu ka."
+  },
+  "バスより新幹線のほうが速いですよ。": {
+    "kana": "バスよりしんかんせんのほうがはやいですよ。",
+    "romaji": "Basu yori Shinkansen no hō ga hayai desu yo."
+  },
+  "もし道に迷ったら電話してください。": {
+    "kana": "もしみちにまよったらでんわしてください。",
+    "romaji": "Moshi michi ni mayottara denwa shite kudasai."
+  },
+  "部屋からの景色がとてもきれいです。": {
+    "kana": "へやからのけしきがとてもきれいです。",
+    "romaji": "Heya kara no keshiki ga totemo kirei desu."
+  },
+  "朝食付きのプランにしませんか。": {
+    "kana": "ちょうしょくつきのプランにしませんか。",
+    "romaji": "Chōshoku tsuki no Puran ni shimasen ka."
+  },
+  "Wi-Fiのパスワードを教えてください。": {
+    "kana": "Wi-Fiのパスワードをおしえてください。",
+    "romaji": "Wi-Fi no Pasuwādo o oshiete kudasai."
+  },
+  "成田空港まではどう行けばいいですか。": {
+    "kana": "なりたくうこうまではどういけばいいですか。",
+    "romaji": "Narita kūkō made wa dō ikeba ii desu ka."
+  },
+  "予約した部屋と違う気がします。": {
+    "kana": "よやくしたへやとちがうきがします。",
+    "romaji": "Yoyaku shita heya to chigau ki ga shimasu."
+  },
+  "荷物を部屋まで運んでもらえますか。": {
+    "kana": "にもつをへやまではこんでもらえますか。",
+    "romaji": "Nimotsu o heya made hakonde moraemasu ka."
+  },
+  "この時間ならまだ観光できますね。": {
+    "kana": "このじかんならまだかんこうできますね。",
+    "romaji": "Kono jikan nara mada kankō dekimasu ne."
+  },
+  "エアコンが故障しているようです。": {
+    "kana": "エアコンが こしょうして いる ようです。",
+    "romaji": "Eakon ga koshō shite iru yō desu."
+  },
+  "切符をなくしてしまったんです。": {
+    "kana": "きっぷを なくして しまったん です。",
+    "romaji": "Kippu o nakushite shimattan desu."
+  },
+  "チェックアウトを延ばせますか。": {
+    "kana": "チェックアウトを のばせますか。",
+    "romaji": "Chekku auto o nobasemasu ka."
+  },
+  "隣の部屋がうるさくて眠れません。": {
+    "kana": "となりの へやが うるさくて ねむれません。",
+    "romaji": "Tonari no heya ga urusakute nemuremassen."
+  },
+  "料金には税金が含まれていますか。": {
+    "kana": "りょうきんには ぜいきんが ふくまれて いますか。",
+    "romaji": "Ryōkin ni wa zeikin ga fukumarete imasu ka."
+  },
+  "海外旅行をしたことがありますか。": {
+    "kana": "かいがい りょこうを した ことが ありますか。",
+    "romaji": "Kaigai ryokō o shita koto ga arimasu ka."
+  },
+  "早めに予約すれば安くなりますよ。": {
+    "kana": "はやめに よやくすれば やすく なりますよ。",
+    "romaji": "Hayame ni yoyaku sureba yasuku narimasu yo."
+  },
+  "もし予定より早く着いたら、荷物だけ預かっていただけませんか。": {
+    "kana": "もし よていより はやく ついたら、にもつだけ あずかって いただけませんか。",
+    "romaji": "Moshi yotei yori hayaku tsuitara, nimotsu dake azukatte itadakemasen ka."
+  },
+  "チェックインの際にパスポートの提示が必要だと伺っております。": {
+    "kana": "チェックインの さいに パスポートの ていじが ひつようだと うかがって おります。",
+    "romaji": "Chekku in no sai ni Pasupōto no teiji ga hitsuyō da to ukagatte orimasu."
+  },
+  "せっかくの旅行なのに雨ばかりで、なんて残念なのでしょう。": {
+    "kana": "せっかくの りょこうなのに あめばかりで、なんて ざんねんなの でしょう。",
+    "romaji": "Sekkaku no ryokō na no ni ame bakari de, nante zannen na no deshō."
+  },
+  "予約サイトと現地の料金が違うのですが、どちらが正しいのでしょうか。": {
+    "kana": "よやく サイトと げんちの りょうきんが ちがうの ですが、どちらが ただしいの でしょうか。",
+    "romaji": "Yoyaku saito to genchi no ryōkin ga chigau no desu ga, dochira ga tadashii no deshō ka."
+  },
+  "バスの本数が少ないので、タクシーを使ったほうが早いかもしれません。": {
+    "kana": "バスの ほんすうが すくないので、タクシーを つかった ほうが はやい かもしれません。",
+    "romaji": "Basu no honsū ga sukunai no de, Takushī o tsukatta hō ga hayai kamo shiremasen."
+  },
+  "部屋のお湯が出ないので、できれば別の部屋に移りたいのですが。": {
+    "kana": "へやの おゆが でないので、できれば べつの へやに うつりたいの ですが。",
+    "romaji": "Heya no oyu ga denai no de, dekireba betsu no heya ni utsuritai no desu ga."
+  },
+  "両替はホテルより銀行のほうがレートが良いと聞いたことがあります。": {
+    "kana": "りょうがえは ホテルより ぎんこうの ほうが レートが よいと きいた ことが あります。",
+    "romaji": "Ryōgae wa Hoteru yori ginkō no hō ga Rēto ga yoi to kiita koto ga arimasu."
+  },
+  "観光の計画を立てるなら、まず移動手段を決めたほうがいいでしょう。": {
+    "kana": "かんこうの けいかくを たてるなら、まず いどう しゅだんを きめた ほうが いい でしょう。",
+    "romaji": "Kankō no keikaku o tateru nara, mazu idō shudan o kimeta hō ga ii deshō."
+  },
+  "チェックアウト後も荷物をフロントで預かっていただけると助かります。": {
+    "kana": "チェックアウト ごも にもつを フロントで あずかって いただけると たすかります。",
+    "romaji": "Chekku auto go mo nimotsu o Furonto de azukatte itadakeru to tasukarimasu."
+  },
+  "飛行機が遅れたため、予約していた送迎に間に合わないかもしれません。": {
+    "kana": "ひこうきが おくれたため、よやくして いた そうげいに まにあわない かもしれません。",
+    "romaji": "Hikōki ga okureta tame, yoyaku shite ita sōgei ni maniawanai kamo shiremasen."
+  },
+  "Wi-Fiがつながらないので、設定を確認していただけませんでしょうか。": {
+    "kana": "Wi-Fiが つながらないので、せっていを かくにんして いただけません でしょうか。",
+    "romaji": "Wi-Fi ga tsunagaranai no de, settei o kakunin shite itadakemasen deshō ka."
+  },
+  "せっかく予約したのに部屋が空いていないとは、どういうことでしょう。": {
+    "kana": "せっかく よやくしたのに へやが あいて いないとは、どういう ことでしょう。",
+    "romaji": "Sekkaku yoyaku shita no ni heya ga aite inai to wa, dō iu koto deshō."
+  },
+  "道がわからなくなったときは、近くの駅員に尋ねるのが一番確実です。": {
+    "kana": "みちが わからなく なった ときは、ちかくの えきいんに たずねるのが いちばん かくじつです。",
+    "romaji": "Michi ga wakaranaku natta toki wa, chikaku no ekiin ni tazuneru no ga ichiban kakujitsu desu."
+  },
+  "朝食の時間に間に合わなかった場合、何か別の対応はありますか。": {
+    "kana": "ちょうしょくの じかんに まにあわなかった ばあい、なにか べつの たいおうは ありますか。",
+    "romaji": "Chōshoku no jikan ni maniawanakatta baai, nanika betsu no taiō wa arimasu ka."
+  },
+  "荷物が成田空港で行方不明になり、ホテルに届くのを待っている状況です。": {
+    "kana": "にもつが なりたくうこうで ゆくえふめいに なり、ホテルに とどくのを まって いる じょうきょうです。",
+    "romaji": "Nimotsu ga Narita Kūkō de yukue fumei ni nari, Hoteru ni todoku no o matte iru jōkyō desu."
+  },
+  "早朝に出発したいので、タクシーを手配していただけると助かります。": {
+    "kana": "そうちょうに しゅっぱつしたいので、タクシーを てはいして いただけると たすかります。",
+    "romaji": "Sōchō ni shuppatsu shitai no de, Takushī o tehai shite itadakeru to tasukarimasu."
+  },
+  "この料金には朝食と税金の両方が含まれているという理解で合っていますか。": {
+    "kana": "この りょうきんには ちょうしょくと ぜいきんの りょうほうが ふくまれて いるという りかいで あって いますか。",
+    "romaji": "Kono ryōkin ni wa chōshoku to zeikin no ryōhō ga fukumarete iru to iu rikai de atte imasu ka."
+  },
+  "隣の工事の音がひどくて、もう少し静かな部屋に変えてもらえませんか。": {
+    "kana": "となりの こうじの おとが ひどくて、もうすこし しずかな へやに かえて もらえませんか。",
+    "romaji": "Tonari no kōji no oto ga hidokute, mō sukoshi shizuka na heya ni kaete moraemasen ka."
+  },
+  "旅行保険に入っておけば、トラブルがあっても安心できるでしょう。": {
+    "kana": "りょこう ほけんに はいって おけば、トラブルが あっても あんしん できる でしょう。",
+    "romaji": "Ryokō hoken ni haitte okeba, Toraburu ga atte mo anshin dekiru deshō."
+  },
+  "観光地までのバスが混雑する時間帯を、教えていただけませんでしょうか。": {
+    "kana": "かんこうちまでの バスが こんざつする じかんたいを、おしえて いただけません でしょうか。",
+    "romaji": "Kankōchi made no basu ga konzatsu suru jikantai o, oshiete itadakemasen deshō ka."
+  },
+  "この部屋は明るい。": {
+    "kana": "この へやは あかるい。",
+    "romaji": "Kono heya wa akarui."
+  },
+  "家賃はいくらですか。": {
+    "kana": "やちんは いくらですか。",
+    "romaji": "Yachin wa ikura desu ka."
+  },
+  "新しい家具がほしい。": {
+    "kana": "あたらしい かぐが ほしい。",
+    "romaji": "Atarashii kagu ga hoshii."
+  },
+  "エアコンを付けて。": {
+    "kana": "エアコンを つけて。",
+    "romaji": "Eakon o tsukete."
+  },
+  "ごみ袋を買った。": {
+    "kana": "ごみぶくろを かった。",
+    "romaji": "Gomibukuro o katta."
+  },
+  "水道が止まった。": {
+    "kana": "すいどうが とまった。",
+    "romaji": "Suidō ga tomatta."
+  },
+  "引っ越しは大変だ。": {
+    "kana": "ひっこしは たいへんだ。",
+    "romaji": "Hikkoshi wa taihen da."
+  },
+  "収集日は何曜日。": {
+    "kana": "しゅうしゅうびは なんようび。",
+    "romaji": "Shūshūbi wa nan yōbi."
+  },
+  "となりの人は親切。": {
+    "kana": "となりの ひとは しんせつ。",
+    "romaji": "Tonari no hito wa shinsetsu."
+  },
+  "駅から近い家だ。": {
+    "kana": "えきから ちかい いえだ。",
+    "romaji": "Eki kara chikai ie da."
+  },
+  "電気を消してね。": {
+    "kana": "でんきを けしてね。",
+    "romaji": "Denki o keshite ne."
+  },
+  "燃えるごみを出す。": {
+    "kana": "もえる ごみを だす。",
+    "romaji": "Moeru gomi o dasu."
+  },
+  "この部屋は広いね。": {
+    "kana": "この へやは ひろいね。",
+    "romaji": "Kono heya wa hiroi ne."
+  },
+  "収納が少ない。": {
+    "kana": "しゅうのうが すくない。",
+    "romaji": "Shūnō ga sukunai."
+  },
+  "資源ごみは火曜日。": {
+    "kana": "しげん ごみは かようび。",
+    "romaji": "Shigen gomi wa kayōbi."
+  },
+  "日当たりがいい。": {
+    "kana": "ひあたりが いい。",
+    "romaji": "Hiatari ga ii."
+  },
+  "契約をしました。": {
+    "kana": "けいやくを しました。",
+    "romaji": "Keiyaku o shimashita."
+  },
+  "管理費も払う。": {
+    "kana": "かんりひも はらう。",
+    "romaji": "Kanrihi mo harau."
+  },
+  "粗大ごみを捨てる。": {
+    "kana": "そだい ごみを すてる。",
+    "romaji": "Sodai gomi o suteru."
+  },
+  "この家は静かだ。": {
+    "kana": "この いえは しずかだ。",
+    "romaji": "Kono ie wa shizuka da."
+  },
+  "この部屋は日当たりがよくて、とても暖かいですね。": {
+    "kana": "この へやは ひあたりが よくて、とても あたたかいですね。",
+    "romaji": "Kono heya wa hiatari ga yokute, totemo atatakai desu ne."
+  },
+  "ごみは朝の八時までに出してください。": {
+    "kana": "ごみは あさの はちじまでに だして ください。",
+    "romaji": "Gomi wa asa no hachiji made ni dashite kudasai."
+  },
+  "駅まで歩いて五分の立地が気に入っています。": {
+    "kana": "えきまで あるいて ごふんの りっちが きに いって います。",
+    "romaji": "Eki made aruite gofun no ricchi ga ki ni itte imasu."
+  },
+  "引っ越しの前に、契約書をよく読みましょう。": {
+    "kana": "ひっこしのまえに、けいやくしょをよくよみましょう。",
+    "romaji": "hikkoshi no mae ni, keiyakusho o yoku yomimasho."
+  },
+  "エアコンが古いので、新しいものに替えたい。": {
+    "kana": "エアコンがふるいので、あたらしいものにかえたい。",
+    "romaji": "Eakon ga furui node, atarashii mono ni kaetai."
+  },
+  "燃えないごみは、いつ出せばいいですか。": {
+    "kana": "もえないごみは、いつだせばいいですか。",
+    "romaji": "moenai gomi wa, itsu daseba ii desu ka."
+  },
+  "家賃と管理費を合わせて、毎月いくらですか。": {
+    "kana": "やちんとかんりひをあわせて、まいつきいくらですか。",
+    "romaji": "yachin to kanrihi o awasete, maitsuki ikura desu ka."
+  },
+  "収納が多い部屋を探しているのですが。": {
+    "kana": "しゅうのうがおおいへやをさがしているのですが。",
+    "romaji": "shuno ga oi heya o sagashite iru no desu ga."
+  },
+  "近所の人とは、あいさつをよくしています。": {
+    "kana": "きんじょのひととは、あいさつをよくしています。",
+    "romaji": "kinjo no hito to wa, aisatsu o yoku shite imasu."
+  },
+  "指定のごみ袋でないと、捨てられません。": {
+    "kana": "してのごみぶくろでないと、すてられません。",
+    "romaji": "shite no gomibukuro de nai to, suterare masen."
+  },
+  "この家具は大きすぎて、部屋に入らない。": {
+    "kana": "このかぐはおおきすぎて、へやにはいらない。",
+    "romaji": "kono kagu wa okisugite, heya ni hairanai."
+  },
+  "水道の水が出ないので、困っています。": {
+    "kana": "すいどうのみずがでないので、こまっています。",
+    "romaji": "suido no mizu ga denai node, komatte imasu."
+  },
+  "南向きの部屋は、北向きより明るいです。": {
+    "kana": "みなみむきのへやは、きたむきよりあかるいです。",
+    "romaji": "minamimuki no heya wa, kitamuki yori akarui desu."
+  },
+  "粗大ごみは事前に申し込みが必要です。": {
+    "kana": "そだいごみはじぜんにもうしこみがひつようです。",
+    "romaji": "sodai gomi wa jizen ni moshikomi ga hitsuyо desu."
+  },
+  "アパートの隣の音が、少し気になります。": {
+    "kana": "アパートのとなりのおとが、すこしきになります。",
+    "romaji": "Apato no tonari no oto ga, sukoshi ki ni narimasu."
+  },
+  "電気代が先月より高くなっていました。": {
+    "kana": "でんきだいがせんげつよりたかくなっていました。",
+    "romaji": "denkidai ga sengetsu yori takaku natte imashita."
+  },
+  "この物件は駅から遠いが、家賃が安い。": {
+    "kana": "このぶっけんはえきからとおいが、やちんがやすい。",
+    "romaji": "kono bukken wa eki kara toi ga, yachin ga yasui."
+  },
+  "ごみ置き場は、建物の裏にあります。": {
+    "kana": "ごみおきばは、たてもののうらにあります。",
+    "romaji": "gomi okiba wa, tatemono no ura ni arimasu."
+  },
+  "引っ越し先がまだ決まっていません。": {
+    "kana": "ひっこしさきがまだきまっていません。",
+    "romaji": "hikkoshisaki ga mada kimatte imasen."
+  },
+  "設備が新しい部屋に住みたいです。": {
+    "kana": "せつびがあたらしいへやにすみたいです。",
+    "romaji": "setsubi ga atarashii heya ni sumitai desu."
+  },
+  "この部屋は収納が充実しているうえに日当たりも良いので、すぐに決めてしまいました。": {
+    "kana": "このへやはしゅうのうがじゅうじつしているうえにひあたりもよいので、すぐにきめてしまいました。",
+    "romaji": "kono heya wa shuno ga jujitsu shite iru ue ni hiatari mo yoi node, sugu ni kimete shimaimashita."
+  },
+  "資源ごみは種類ごとに分けて、決められた曜日に出さなければなりません。": {
+    "kana": "しげんごみはしゅるいごとにわけて、きめられたようびにださなければなりません。",
+    "romaji": "shigen gomi wa shurui goto ni wakete, kimerareta yobi ni dasanakereba narimasen."
+  },
+  "引っ越しの際は、電気や水道の手続きを忘れずに済ませておくとよいでしょう。": {
+    "kana": "ひっこしのさいは、でんきやすいどうのてつづきをわすれずにすませておくとよいでしょう。",
+    "romaji": "hikkoshi no sai wa, denki ya suido no tetsuzuki o wasurezu ni sumasete oku to yoi desho."
+  },
+  "駅に近い立地は便利ですが、その分だけ家賃が高くなる傾向にあります。": {
+    "kana": "えきにちかいたっちはべんりですが、そのぶんだけやちんがたかくなるけいこうにあります。",
+    "romaji": "eki ni chikai tacchi wa benri desu ga, sono bun dake yachin ga takaku naru keiko ni arimasu."
+  },
+  "燃えるごみの収集日は週に二回あるので、生活がしやすいと感じています。": {
+    "kana": "もえるごみのしゅうしゅうびはしゅうににかいあるので、せいかつがしやすいとかんじています。",
+    "romaji": "moeru gomi no shushubi wa shu ni nikai aru node, seikatsu ga shiyasui to kanjite imasu."
+  },
+  "契約を更新するかどうか、来月までに決めなければならないようです。": {
+    "kana": "けいやくをこうしんするかどうか、らいげつまでにきめなければならないようです。",
+    "romaji": "keiyaku o koshin suru ka do ka, raigetsu made ni kimenakereba naranai yo desu."
+  },
+  "近所付き合いが良好だと、いざという時に助け合えて安心できますね。": {
+    "kana": "きんじょづきあいがりょうこうだと、いざというときにたすけあえてあんしんできますね。",
+    "romaji": "kinjo zukiai ga ryoko da to, iza to iu toki ni tasukiaete anshin dekimasu ne."
+  },
+  "以前住んでいたアパートは、水道の水圧が弱くて不便でした。": {
+    "kana": "いぜんすんでいたアパートは、すいどうのすいあつがよわくてふべんでした。",
+    "romaji": "izen sunde ita Apato wa, suido no suiatsu ga yowakute fuben deshita."
+  },
+  "粗大ごみを出すには、コンビニで処理券を購入する必要があるそうです。": {
+    "kana": "そだいごみをだすには、コンビニでしょりけんをこうにゅうするひつようがあるそうです。",
+    "romaji": "sodai gomi o dasu ni wa, Konbini de shoriken o konyu suru hitsuyо ga aru so desu."
+  },
+  "エアコンが備え付けられている物件なら、初期費用を抑えられるでしょう。": {
+    "kana": "エアコンがそなえつけられているぶっけんなら、しょきひようをおさえられるでしょう。",
+    "romaji": "Eakon ga sonaetsuke rarete iru bukken nara, shoki hiyo o osaerareru desho."
+  },
+  "家具の配置を工夫すれば、狭い部屋でも広く使えるのではないでしょうか。": {
+    "kana": "かぐのはいちをくふうすれば、せまいへやでもひろくつかえるのではないでしょうか。",
+    "romaji": "kagu no haichi o kufu sureba, semai heya demo hiroku tsukaeru no de wa nai desho ka."
+  },
+  "管理費に共用部分の清掃費が含まれているか、確認しておきたいところです。": {
+    "kana": "かんりひにきょうようぶぶんのせいそうひがふくまれているか、かくにんしておきたいところです。",
+    "romaji": "kanrihi ni kyoyo bubu no sesohi ga fukumarete iru ka, kakunin shite okitai tokoro desu."
+  },
+  "指定の袋以外で出されたごみは、収集してもらえないことがあります。": {
+    "kana": "してのふくろいがいででされたごみは、しゅうしゅうしてもらえないことがあります。",
+    "romaji": "shite no fukuro igai de dasareta gomi wa, shushu shite moraenai koto ga arimasu."
+  },
+  "北向きの部屋は日当たりが悪いものの、夏は涼しく過ごせるという利点があります。": {
+    "kana": "きたむきのへやはひあたりがわるいものの、なつはすずしくすごせるというりてんがあります。",
+    "romaji": "kitamuki no heya wa hiatari ga warui mono no, natsu wa suzushiku sugoseru to iu riten ga arimasu."
+  },
+  "この物件を契約する前に、周辺の環境をもう一度見ておきたいと思います。": {
+    "kana": "このぶっけんをけいやくするまえに、しゅうへんのかんきょうをもういちどみておきたいとおもいます。",
+    "romaji": "kono bukken o keiyaku suru mae ni, shuhen no kankyo o mo ichido mite okitai to omoimasu."
+  },
+  "ごみ置き場が清潔に保たれているかどうかも、物件選びの重要な点です。": {
+    "kana": "ごみおきばがせいけつにたもたれているかどうかも、ぶっけんえらびのじゅうようなてんです。",
+    "romaji": "gomi okiba ga seiketsu ni tamotarete iru ka do ka mo, bukken erabi no juyo na ten desu."
+  },
+  "電気とガスの基本料金を含めると、毎月の出費はかなりの額になります。": {
+    "kana": "でんきとガスのきほんりょうきんをふくめると、まいつきのしゅっぴはかなりのがくになります。",
+    "romaji": "denki to Gasu no kihon ryokin o fukumeru to, maitsuki no shuppi wa kanari no gaku ni narimasu."
+  },
+  "引っ越して以来、近所の方々が温かく迎えてくれて感謝しています。": {
+    "kana": "ひっこしていらい、きんじょのかたがたがあたたかくむかえてくれてかんしゃしています。",
+    "romaji": "hikkoshite irai, kinjo no katagata ga atatakaku mukaete kurete kansha shite imasu."
+  },
+  "収集時間に間に合わなかったので、ごみを翌日まで家に置いておきました。": {
+    "kana": "しゅうしゅうじかんにまにあわなかったので、ごみをよくじつまでいえにおいておきました。",
+    "romaji": "shushu jikan ni ma ni awanakatta node, gomi o yokujitsu made ie ni oite okimashita."
+  },
+  "この立地なら通勤も買い物も便利で、これ以上の条件は望めないでしょう。": {
+    "kana": "このたっちならつうきんもかいものもべんりで、これいじょうのじょうけんはのぞめないでしょう。",
+    "romaji": "kono tacchi nara tskin mo kaimono mo benri de, kore ijo no joken wa nozomenai desho."
   }
 }

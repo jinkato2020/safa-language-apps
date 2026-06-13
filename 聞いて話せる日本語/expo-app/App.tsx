@@ -19,7 +19,7 @@ import ne from './src/i18n/ne.json';
 import bn from './src/i18n/bn.json';
 import en from './src/i18n/en.json';
 import vi from './src/i18n/vi.json';
-import { bundledPack, loadPack } from './src/packLoader';
+import { bundledPack, loadPack, getPackDownloadInfo } from './src/packLoader';
 import { POSTER_LESSONS } from './src/posterLessons';
 
 const splashSource = require('./assets/safa-splash.mp4');
@@ -40,14 +40,31 @@ const LANG_OPTIONS = [
 // 母語を一度でも選んだかのフラグ (i18n の lang とは別管理)。
 const L1_CHOSEN_KEY = '@japanese_app/l1_chosen_v1';
 
-// DL画面の文言 (UI言語=L1ごと)。
-const DL_TEXT: Record<string, { dl: string; prep: string; fail: string; retry: string }> = {
-  ne: { dl: 'डाउनलोड हुँदैछ', prep: 'तयार पारिँदैछ', fail: 'डाउनलोड असफल भयो', retry: 'पुनः प्रयास गर्नुहोस्' },
-  bn: { dl: 'ডাউনলোড হচ্ছে', prep: 'প্রস্তুত হচ্ছে', fail: 'ডাউনলোড ব্যর্থ হয়েছে', retry: 'আবার চেষ্টা করুন' },
-  en: { dl: 'Downloading', prep: 'Preparing', fail: 'Download failed', retry: 'Retry' },
-  vi: { dl: 'Đang tải xuống', prep: 'Đang chuẩn bị', fail: 'Tải xuống thất bại', retry: 'Thử lại' },
-  ja: { dl: 'ダウンロード中', prep: '準備中', fail: 'ダウンロードに失敗しました', retry: '再試行' },
+// DL画面の文言 (UI言語=L1ごと)。confirmTitle/confirmBody({size}) はDL前の同意ダイアログ用 (Apple GL4.2.3)。
+type DlText = { dl: string; prep: string; fail: string; retry: string; confirmTitle: string; confirmBody: string; download: string };
+const DL_TEXT: Record<string, DlText> = {
+  ne: { dl: 'डाउनलोड हुँदैछ', prep: 'तयार पारिँदैछ', fail: 'डाउनलोड असफल भयो', retry: 'पुनः प्रयास गर्नुहोस्', confirmTitle: 'भाषा सामग्री डाउनलोड', confirmBody: 'यो भाषाको लागि अडियो र अनुवाद (लगभग {size}) डाउनलोड गर्न आवश्यक छ।', download: 'डाउनलोड गर्नुहोस् ({size})' },
+  bn: { dl: 'ডাউনলোড হচ্ছে', prep: 'প্রস্তুত হচ্ছে', fail: 'ডাউনলোড ব্যর্থ হয়েছে', retry: 'আবার চেষ্টা করুন', confirmTitle: 'ভাষা সামগ্রী ডাউনলোড', confirmBody: 'এই ভাষার জন্য অডিও ও অনুবাদ (প্রায় {size}) ডাউনলোড করতে হবে।', download: 'ডাউনলোড করুন ({size})' },
+  en: { dl: 'Downloading', prep: 'Preparing', fail: 'Download failed', retry: 'Retry', confirmTitle: 'Download language content', confirmBody: 'This language needs audio and translations (about {size}) to be downloaded.', download: 'Download ({size})' },
+  vi: { dl: 'Đang tải xuống', prep: 'Đang chuẩn bị', fail: 'Tải xuống thất bại', retry: 'Thử lại', confirmTitle: 'Tải nội dung ngôn ngữ', confirmBody: 'Ngôn ngữ này cần tải âm thanh và bản dịch (khoảng {size}).', download: 'Tải xuống ({size})' },
+  ja: { dl: 'ダウンロード中', prep: '準備中', fail: 'ダウンロードに失敗しました', retry: '再試行', confirmTitle: '言語データのダウンロード', confirmBody: 'この言語の音声と翻訳（約{size}）をダウンロードします。', download: 'ダウンロード（{size}）' },
 };
+function fmtMB(bytes: number): string { return bytes > 0 ? `${Math.max(1, Math.round(bytes / 1048576))} MB` : '—'; }
+
+// DL前の同意画面 (サイズ開示+ユーザーが選択して開始)。Apple GL4.2.3対応。
+function ConfirmDownloadView({ bytes, lang, onConfirm }: { bytes: number; lang: string; onConfirm: () => void }) {
+  const t = DL_TEXT[lang] ?? DL_TEXT.en;
+  const size = fmtMB(bytes);
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32, backgroundColor: '#fff' }}>
+      <Text style={{ fontSize: 17, fontWeight: '700', color: '#18181b', marginBottom: 12, textAlign: 'center' }}>{t.confirmTitle}</Text>
+      <Text style={{ fontSize: 14, color: '#52525b', marginBottom: 28, textAlign: 'center', lineHeight: 21 }}>{t.confirmBody.replace('{size}', size)}</Text>
+      <Pressable onPress={onConfirm} style={{ paddingVertical: 14, paddingHorizontal: 32, borderRadius: 10, backgroundColor: '#2563eb' }}>
+        <Text style={{ color: '#fff', fontSize: 16, fontWeight: '700' }}>{t.download.replace('{size}', size)}</Text>
+      </Pressable>
+    </View>
+  );
+}
 
 // DLローディング画面 (進捗バー付き / 失敗時は再試行)。
 function DownloadView(
@@ -88,6 +105,10 @@ function DownloadView(
 //  (音声プレイヤー解放等)で固まる/スプラッシュ再生で白画面になる問題があった。
 //  そこで「旧データを保持したまま新パックを読み込み、完了で差し替え」、読み込み中/
 //  失敗は AppShell の上にオーバーレイで重ねる方式に変更(再マウントしない)。
+// セッション中に一度ロードした言語パックをメモリ保持。再切替を即時化(再DL/再チェック/再composeなし)。
+//  最新版チェックは初回ロード時とアプリ再起動時に行えば十分。
+const sessionPackCache: Record<string, AppData> = {};
+
 function PackGate({ children }: { children: ReactNode }) {
   const { lang } = useI18n();
   const packLang = toPackLang(lang); // ja等→ne。実際にDL/同梱判定するL1。
@@ -98,28 +119,50 @@ function PackGate({ children }: { children: ReactNode }) {
   const [errMsg, setErrMsg] = useState<string>('');
   const [attempt, setAttempt] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [confirm, setConfirm] = useState<{ bytes: number } | null>(null); // DL同意待ち (Apple GL4.2.3)
+  const confirmedLangRef = useRef<string | null>(null); // ユーザーがDL同意した言語
   useEffect(() => {
     let alive = true;
     const bundled = bundledPack(packLang);
-    if (bundled) { setData(bundled); dataLangRef.current = packLang; setLoading(false); setError(false); return; }
+    if (bundled) { setData(bundled); dataLangRef.current = packLang; setLoading(false); setError(false); setConfirm(null); return; }
     // 既に表示中のデータが目的言語なら何もしない(無駄な再読込を避ける)
     if (dataLangRef.current === packLang && !error) return;
-    setError(false); setErrMsg(''); setProgress({ done: 0, total: 0 }); setLoading(true);
-    loadPack(packLang, (done, total, label) => { if (alive) setProgress({ done, total, label }); })
-      .then(d => { if (alive) { setData(d); dataLangRef.current = packLang; setLoading(false); } })
-      .catch((e: any) => { if (alive) { setErrMsg(String(e?.message ?? e)); setError(true); setLoading(false); } });
+    // セッション中に一度ロード済みなら即時表示(ネット通信もloadPackも無し)
+    const cached = sessionPackCache[packLang];
+    if (cached && !error) { setData(cached); dataLangRef.current = packLang; setLoading(false); setConfirm(null); return; }
+    setError(false); setErrMsg(''); setConfirm(null);
+    (async () => {
+      // まずDL要否とサイズを確認。DLが必要で未同意の言語なら、サイズ開示+同意画面を出してから。
+      let info: { needsDownload: boolean; bytes: number };
+      try { info = await getPackDownloadInfo(packLang); } catch { info = { needsDownload: true, bytes: 0 }; }
+      if (!alive) return;
+      if (info.needsDownload && confirmedLangRef.current !== packLang) { setConfirm({ bytes: info.bytes }); return; }
+      setProgress({ done: 0, total: 0 }); setLoading(true);
+      loadPack(packLang, (done, total, label) => { if (alive) setProgress({ done, total, label }); })
+        .then(d => { if (alive) { sessionPackCache[packLang] = d; setData(d); dataLangRef.current = packLang; setLoading(false); } })
+        .catch((e: any) => { if (alive) { setErrMsg(String(e?.message ?? e)); setError(true); setLoading(false); } });
+    })();
     return () => { alive = false; };
   }, [packLang, attempt]);
 
-  // 初回(まだ一度もデータが無い) → 全画面の DL/エラー画面
+  // ユーザーがDLに同意 → 同意済みに記録して再実行(今度はDLへ)。
+  const onConfirm = () => { confirmedLangRef.current = packLang; setConfirm(null); setAttempt(a => a + 1); };
+
+  // 初回(まだ一度もデータが無い)
   if (!data) {
+    if (confirm) return <ConfirmDownloadView bytes={confirm.bytes} lang={lang} onConfirm={onConfirm} />;
     return <DownloadView done={progress.done} total={progress.total} label={progress.label} lang={lang} error={error} errMsg={errMsg} onRetry={() => setAttempt(a => a + 1)} />;
   }
-  // データあり → AppShell は維持し、読み込み中/失敗のみ上にオーバーレイ(再マウントしない)
+  // データあり → AppShell は維持し、確認/読み込み/失敗のみ上にオーバーレイ(再マウントしない)
   return (
     <AppDataProvider data={data}>
       {children}
-      {(loading || error) && (
+      {confirm && (
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#fff' }}>
+          <ConfirmDownloadView bytes={confirm.bytes} lang={lang} onConfirm={onConfirm} />
+        </View>
+      )}
+      {(loading || error) && !confirm && (
         <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#fff' }}>
           <DownloadView done={progress.done} total={progress.total} label={progress.label} lang={lang} error={error} errMsg={errMsg} onRetry={() => setAttempt(a => a + 1)} />
         </View>

@@ -152,6 +152,30 @@ async function buildAudioMaps(lang: string, overlayJson: any) {
   return { l1Audio, l1GrammarAudio };
 }
 
+/** ダウンロード要否と必要バイト数を返す(DL前の確認ダイアログ用)。
+ *  同梱/キャッシュ済み(版が最新)なら needsDownload=false。Apple GL4.2.3対応: 事前にサイズ開示+同意を取るため。 */
+export async function getPackDownloadInfo(lang: string): Promise<{ needsDownload: boolean; bytes: number }> {
+  if (BUNDLED[lang]) return { needsDownload: false, bytes: 0 };
+  let catalog: any = null;
+  try { catalog = await withRetry(() => fetchJson(CATALOG_URL)); } catch {}
+  const entry = catalog?.packs?.find((p: any) => p.l1 === lang);
+  // overlay 要DL?
+  let overlayNeed = !!entry;
+  const oInfo = await FileSystem.getInfoAsync(overlayUri(lang));
+  if (oInfo.exists) {
+    if (!entry) overlayNeed = false; // キャッシュ有り&catalog取れず → 既存で動く
+    else { try { const c = JSON.parse(await FileSystem.readAsStringAsync(overlayUri(lang))); if ((c.version ?? 0) >= (entry.version ?? 0)) overlayNeed = false; } catch {} }
+  }
+  // audio 要DL?
+  let audioNeed = !!entry?.audioZip;
+  const mInfo = await FileSystem.getInfoAsync(audioMarkerUri(lang));
+  if (mInfo.exists && entry) { try { const v = await FileSystem.readAsStringAsync(audioMarkerUri(lang)); if (v === String(entry.audioVersion ?? '')) audioNeed = false; } catch {} }
+  let bytes = 0;
+  if (overlayNeed) bytes += entry?.sizeBytes ?? 0;
+  if (audioNeed) bytes += entry?.audioZipBytes ?? 0;
+  return { needsDownload: overlayNeed || audioNeed, bytes };
+}
+
 /** L1パックを解決。ja=同梱。en=オーバーレイ+英語音声zipをFS/DLし neCore と結合。 */
 export async function loadPack(lang: string, onProgress?: ProgressFn): Promise<AppData> {
   const bundled = BUNDLED[lang];

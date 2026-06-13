@@ -41,7 +41,7 @@
   },
   "themes": {
     "1": "Self-introduction",
-    "2": "Greetings & Manners",
+    "2": "Tourist Destinations",
     "3": "Family",
     "4": "Numbers & Time",
     "5": "Food & Drink",
@@ -53,8 +53,8 @@
     "11": "Body & Health",
     "12": "Emotions & Feelings",
     "13": "School & Study",
-    "14": "Travel & Sightseeing",
-    "15": "Hotels & Lodging",
+    "14": "History, Economy & Politics",
+    "15": "Travel, Hotels & Lodging",
     "16": "Restaurants & Ordering",
     "17": "Phone & Contact",
     "18": "Colors & Shapes",
@@ -197,7 +197,11 @@
     "neLang": "🇳🇵 Nepali",
     "jaLang": "🇬🇧 English",
     "neToJaDesc": "Nepali is shown; tap to see the English meaning. Builds reading skills.",
-    "jaToNeDesc": "English is shown; tap to see the Nepali. Builds quick recall."
+    "jaToNeDesc": "English is shown; tap to see the Nepali. Builds quick recall.",
+    "modeFlashcard": "Shuffle cards",
+    "modeFlashcardDesc": "Flip cards to learn words",
+    "modePoster": "Audio reading (poster)",
+    "modePosterDesc": "Listen while viewing the poster"
   },
   "settings": {
     "title": "Settings",
