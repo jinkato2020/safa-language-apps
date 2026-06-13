@@ -5,49 +5,49 @@
       "l1": "bn",
       "name": "বাংলা",
       "nameJa": "ベンガル語",
-      "version": 12,
+      "version": 13,
       "access": "free",
-      "sizeBytes": 2767944,
-      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-bn-v12.json",
-      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-bn-v11.zip",
-      "audioVersion": 11,
-      "audioZipBytes": 39853510
+      "sizeBytes": 2761126,
+      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-bn-v13.json",
+      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-bn-v12.zip",
+      "audioVersion": 12,
+      "audioZipBytes": 39723334
     },
     {
       "l1": "ne",
       "name": "नेपाली",
       "nameJa": "ネパール語",
-      "version": 6,
+      "version": 7,
       "access": "free",
-      "sizeBytes": 3011177,
-      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-ne-v6.json",
-      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-ne-v7.zip",
-      "audioVersion": 7,
-      "audioZipBytes": 67078486
+      "sizeBytes": 3006218,
+      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-ne-v7.json",
+      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-ne-v8.zip",
+      "audioVersion": 8,
+      "audioZipBytes": 66941686
     },
     {
       "l1": "en",
       "name": "English",
       "nameJa": "英語",
-      "version": 4,
+      "version": 5,
       "access": "free",
-      "sizeBytes": 2281624,
-      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-en-v4.json",
-      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-en-v5.zip",
-      "audioVersion": 5,
-      "audioZipBytes": 68910118
+      "sizeBytes": 2269928,
+      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-en-v5.json",
+      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-en-v6.zip",
+      "audioVersion": 6,
+      "audioZipBytes": 69602854
     },
     {
       "l1": "vi",
       "name": "Tiếng Việt",
       "nameJa": "ベトナム語",
       "access": "free",
-      "version": 6,
-      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-vi-v6.json",
-      "sizeBytes": 2473295,
-      "audioVersion": 5,
-      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-vi-v5.zip",
-      "audioZipBytes": 32505382
+      "version": 7,
+      "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/overlay-vi-v7.json",
+      "sizeBytes": 2462811,
+      "audioVersion": 6,
+      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs/audio-vi-v6.zip",
+      "audioZipBytes": 32481286
     }
   ]
 }
