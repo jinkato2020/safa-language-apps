@@ -442,7 +442,7 @@ jobs:
 
           echo "SA_JSON_PATH=/tmp/service-account.json" >> $GITHUB_ENV
 
-      - name: Upload to Google Play (Internal Testing)
+      - name: Upload to Google Play (Closed Testing - alpha)
         if: ${{ github.event.inputs.submit != 'false' }}
         uses: r0adkll/upload-google-play@v1
         with:
@@ -450,9 +450,10 @@ jobs:
           # App C の package name
           packageName: com.safa.english
           releaseFiles: ${{ env.APP_DIR }}/android/app/build/outputs/bundle/release/*.aab
-          track: internal
-          # completed = 内部テストへ自動ロールアウト(手動publish不要)。
-          # 互換性エラー("既存ユーザーがアップグレード不可")が出る場合のみ draft に戻す。
+          # クローズドテスト(既定トラック名=alpha)へ自動アップロード。
+          # 別名のクローズドトラックを使う場合はその名前に変更する。
+          track: alpha
+          # completed = クローズドテストへ自動ロールアウト(手動publish不要)。
           status: completed
 
       - name: Cleanup service account
