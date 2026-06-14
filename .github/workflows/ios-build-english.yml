@@ -1,0 +1,452 @@
+name: Build iOS and Android (English)
+
+# =============================================================================
+# App C: 聞いて話せる英語 (com.safa.english)
+#
+# 必要な GitHub Secrets (まだ未設定の場合は Settings > Secrets and variables で追加):
+#
+# 【iOS - App A と共有可能（同じ Apple Developer Account 前提）】
+#   - IOS_DIST_CERT_BASE64
+#   - IOS_DIST_CERT_PASSWORD
+#   - IOS_TEAM_ID
+#   - APP_STORE_CONNECT_KEY_ID
+#   - APP_STORE_CONNECT_ISSUER_ID
+#   - APP_STORE_CONNECT_API_KEY_BASE64
+#
+# 【iOS - App C 専用（bundle ID が異なるため新規必須）】
+#   - IOS_PROVISIONING_PROFILE_ENGLISH_BASE64
+#   - IOS_BUNDLE_ID_ENGLISH  (値: com.safa.english)
+#
+# 【Android - App C 専用（別 keystore 推奨）】
+#   - ANDROID_KEYSTORE_ENGLISH_BASE64
+#   - ANDROID_KEYSTORE_PASSWORD_ENGLISH
+#   - ANDROID_KEY_ALIAS_ENGLISH
+#   - ANDROID_KEY_PASSWORD_ENGLISH
+#
+# 【Android - Play Console の Service Account に com.safa.english のアクセス権を追加】
+#   - GOOGLE_PLAY_SERVICE_ACCOUNT_JSON_BASE64 (App A と共有可、要権限付与)
+#
+# secrets 設定済み。下の `push:` トリガーにより main への push で自動ビルド + 提出する
+# （iOS → TestFlight / Android → Play 内部テスト draft）。App A (Nepali) と同じ構成。
+# =============================================================================
+
+on:
+  # 手動トリガー（プラットフォーム選択可能）
+  workflow_dispatch:
+    inputs:
+      submit:
+        description: 'Submit to TestFlight / Play Store after build?'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      platform:
+        description: 'Which platform(s) to build?'
+        required: false
+        default: 'both'
+        type: choice
+        options:
+          - 'both'
+          - 'ios'
+          - 'android'
+
+  # main に push されたら自動ビルド（App C の本体 + @safa/shared 経由でも反応）
+  # コミットメッセージに [skip ci] を含めるとスキップ可能
+  push:
+    branches:
+      - main
+    paths:
+      - '聞いて話せる英語/expo-app/**'
+      - '聞いて話せる英語/audio/**'
+      - 'packages/shared/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/ios-build-english.yml'
+
+env:
+  APP_DIR: 聞いて話せる英語/expo-app
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────────
+  # iOS Build
+  # ─────────────────────────────────────────────────────────────────────────
+  build-ios:
+    if: ${{ github.event.inputs.platform != 'android' }}
+    runs-on: macos-26
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          # commit count を build 番号計算に使うため full history が必要
+          fetch-depth: 0
+
+      - name: Verify Xcode version
+        run: |
+          echo "Default Xcode:"
+          xcodebuild -version
+          echo "Current SDK:"
+          xcodebuild -showsdks | grep iphoneos || true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install npm dependencies (monorepo root)
+        run: npm ci
+
+      - name: Calculate build number
+        run: |
+          # commit 総数 + 1000 オフセット (App A と同じ計算式)。
+          # 詳細は ios-build-nepali.yml の同箇所コメント参照。
+          BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD)))
+          echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_ENV
+          echo "::notice::Build number: $BUILD_NUMBER"
+
+      - name: Expo prebuild
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          EXPO_NO_TELEMETRY: '1'
+        run: npx expo prebuild --platform ios --clean
+
+      - name: Detect Xcode project name
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          XCODEPROJ=$(ls -d ios/*.xcodeproj 2>/dev/null | head -1)
+          if [ -z "$XCODEPROJ" ]; then
+            echo "::error::No .xcodeproj found in ios/ directory after prebuild"
+            ls -la ios/ || true
+            exit 1
+          fi
+          PROJECT_NAME=$(basename "$XCODEPROJ" .xcodeproj)
+          if [ -z "$PROJECT_NAME" ]; then
+            echo "::error::Could not extract project name from $XCODEPROJ"
+            exit 1
+          fi
+          echo "PROJECT_NAME=$PROJECT_NAME" >> $GITHUB_ENV
+          echo "::notice::Detected project name: $PROJECT_NAME"
+
+      - name: Set build number in Info.plist
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "ios/$PROJECT_NAME/Info.plist"
+          echo "::notice::Set CFBundleVersion to $BUILD_NUMBER"
+
+      - name: Install CocoaPods dependencies
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          cd ios
+          pod install
+
+      - name: Setup signing keychain
+        env:
+          CERT_B64: ${{ secrets.IOS_DIST_CERT_BASE64 }}
+          CERT_PWD: ${{ secrets.IOS_DIST_CERT_PASSWORD }}
+        run: |
+          CERT_PWD_CLEAN=$(printf '%s' "$CERT_PWD" | tr -d '\r\n[:space:]')
+
+          KEYCHAIN_PATH="$RUNNER_TEMP/build.keychain-db"
+          security create-keychain -p "tempkeychain" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "tempkeychain" "$KEYCHAIN_PATH"
+
+          printf '%s' "$CERT_B64" | base64 --decode > cert.p12
+
+          if [ ! -s cert.p12 ]; then
+            echo "::error::Decoded .p12 file is empty"
+            exit 1
+          fi
+          echo "::notice::Decoded cert.p12 size: $(wc -c < cert.p12) bytes"
+
+          security import cert.p12 -k "$KEYCHAIN_PATH" -P "$CERT_PWD_CLEAN" -A -t cert -f pkcs12
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "tempkeychain" "$KEYCHAIN_PATH"
+          security list-keychains -d user -s "$KEYCHAIN_PATH" $(security list-keychains -d user | xargs)
+          rm cert.p12
+
+      - name: Install provisioning profile
+        env:
+          # App C 用の provisioning profile
+          PROFILE_B64: ${{ secrets.IOS_PROVISIONING_PROFILE_ENGLISH_BASE64 }}
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo "$PROFILE_B64" | base64 --decode > profile.mobileprovision
+
+          PROFILE_UUID=$(security cms -D -i profile.mobileprovision | plutil -extract UUID raw -o - -)
+          echo "PROFILE_UUID=$PROFILE_UUID" >> $GITHUB_ENV
+          echo "::notice::Provisioning profile UUID: $PROFILE_UUID"
+
+          cp profile.mobileprovision "$HOME/Library/MobileDevice/Provisioning Profiles/$PROFILE_UUID.mobileprovision"
+          rm profile.mobileprovision
+
+      - name: Create ExportOptions.plist
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          TEAM_ID_RAW: ${{ secrets.IOS_TEAM_ID }}
+          # App C 用の bundle ID (= com.safa.english)
+          BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID_ENGLISH }}
+        run: |
+          TEAM_ID=$(printf '%s' "$TEAM_ID_RAW" | tr -d '\r\n[:space:]')
+          BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
+          cat > ExportOptions.plist <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store-connect</string>
+            <key>teamID</key>
+            <string>$TEAM_ID</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>$BUNDLE_ID</key>
+              <string>$PROFILE_UUID</string>
+            </dict>
+            <key>uploadSymbols</key>
+            <true/>
+            <key>stripSwiftSymbols</key>
+            <true/>
+          </dict>
+          </plist>
+          EOF
+
+      - name: Build archive
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          TEAM_ID_RAW: ${{ secrets.IOS_TEAM_ID }}
+        run: |
+          set -o pipefail
+          TEAM_ID=$(printf '%s' "$TEAM_ID_RAW" | tr -d '\r\n[:space:]')
+          cd ios
+          xcodebuild \
+            -workspace "${PROJECT_NAME}.xcworkspace" \
+            -scheme "${PROJECT_NAME}" \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -archivePath "build/App.xcarchive" \
+            CODE_SIGN_STYLE=Manual \
+            DEVELOPMENT_TEAM="$TEAM_ID" \
+            PROVISIONING_PROFILE_SPECIFIER="$PROFILE_UUID" \
+            CODE_SIGN_IDENTITY="Apple Distribution" \
+            archive
+
+      - name: Export IPA
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          set -o pipefail
+          cd ios
+          xcodebuild -exportArchive \
+            -archivePath build/App.xcarchive \
+            -exportPath build \
+            -exportOptionsPlist ../ExportOptions.plist
+
+          IPA_PATH=$(find build -name "*.ipa" | head -1)
+          if [ -z "$IPA_PATH" ]; then
+            echo "::error::IPA export failed"
+            exit 1
+          fi
+          echo "::notice::IPA created: $IPA_PATH"
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: ios-ipa-japanese-build-${{ env.BUILD_NUMBER }}
+          path: ${{ env.APP_DIR }}/ios/build/*.ipa
+          retention-days: 30
+
+      - name: Upload to TestFlight
+        if: ${{ github.event.inputs.submit != 'false' }}
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          KEY_ID_RAW: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ISSUER_ID_RAW: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+        run: |
+          KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
+          ISSUER_ID=$(printf '%s' "$ISSUER_ID_RAW" | tr -d '\r\n[:space:]')
+
+          mkdir -p ~/.appstoreconnect/private_keys
+          printf '%s' "$KEY_B64" | base64 --decode > ~/.appstoreconnect/private_keys/AuthKey_${KEY_ID}.p8
+
+          IPA_PATH=$(find ios/build -name "*.ipa" | head -1)
+          echo "::notice::Uploading $IPA_PATH to TestFlight..."
+
+          xcrun altool --upload-app \
+            --file "$IPA_PATH" \
+            --type ios \
+            --apiKey "$KEY_ID" \
+            --apiIssuer "$ISSUER_ID"
+
+          rm -rf ~/.appstoreconnect
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Android Build
+  # ─────────────────────────────────────────────────────────────────────────
+  build-android:
+    if: ${{ github.event.inputs.platform != 'ios' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          # commit count を build 番号計算に使うため full history が必要
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install npm dependencies (monorepo root)
+        run: npm ci
+
+      - name: Calculate version code
+        run: |
+          # commit 総数 + 1000 オフセット (App A と同じ計算式)。
+          VERSION_CODE=$((1000 + $(git rev-list --count HEAD)))
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          echo "::notice::Android versionCode: $VERSION_CODE"
+
+      - name: Expo prebuild
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          EXPO_NO_TELEMETRY: '1'
+        run: npx expo prebuild --platform android --clean
+
+      - name: Decode and place keystore
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          # App C 用の keystore
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_ENGLISH_BASE64 }}
+        run: |
+          printf '%s' "$KEYSTORE_B64" | base64 --decode > android/app/release.keystore
+          if [ ! -s android/app/release.keystore ]; then
+            echo "::error::Decoded keystore is empty"
+            exit 1
+          fi
+          echo "::notice::Keystore placed: $(wc -c < android/app/release.keystore) bytes"
+
+      - name: Configure release signing in build.gradle
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          echo "--- build.gradle BEFORE patch ---"
+          grep -n -A 20 "signingConfigs" android/app/build.gradle || true
+          echo ""
+
+          node scripts/patch-android-build.js
+
+          echo ""
+          echo "--- build.gradle AFTER patch ---"
+          grep -n -A 25 "signingConfigs" android/app/build.gradle || true
+          echo ""
+          echo "--- buildTypes section ---"
+          grep -n -A 15 "buildTypes {" android/app/build.gradle || true
+
+      - name: Set versionCode in build.gradle
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          sed -i.bak "s/versionCode [0-9]\+/versionCode $VERSION_CODE/" android/app/build.gradle
+          grep -E "versionCode|versionName" android/app/build.gradle | head -5
+
+      - name: Increase Gradle memory
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          echo "org.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=2g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" >> android/gradle.properties
+          echo "org.gradle.parallel=true" >> android/gradle.properties
+          echo "org.gradle.daemon=false" >> android/gradle.properties
+          echo "--- gradle.properties ---"
+          cat android/gradle.properties
+
+      - name: Build AAB
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          # App C 用 keystore のパスワード等
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD_ENGLISH }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS_ENGLISH }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD_ENGLISH }}
+          GRADLE_OPTS: "-Xmx6g -XX:MaxMetaspaceSize=2g"
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew bundleRelease --no-daemon \
+            -x lint \
+            -x lintRelease \
+            -x lintVitalRelease \
+            -x lintVitalAnalyzeRelease
+
+          AAB_PATH=$(find app/build/outputs/bundle/release -name "*.aab" | head -1)
+          if [ -z "$AAB_PATH" ]; then
+            echo "::error::AAB build failed - file not found"
+            ls -la app/build/outputs/bundle/release/ || true
+            exit 1
+          fi
+          echo "::notice::AAB created: android/$AAB_PATH"
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: android-aab-japanese-${{ env.VERSION_CODE }}
+          path: ${{ env.APP_DIR }}/android/app/build/outputs/bundle/release/*.aab
+          retention-days: 30
+
+      - name: Decode service account JSON
+        if: ${{ github.event.inputs.submit != 'false' }}
+        env:
+          SA_JSON_B64: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON_BASE64 }}
+        run: |
+          printf '%s' "$SA_JSON_B64" | base64 --decode > /tmp/service-account-raw.json
+          if [ ! -s /tmp/service-account-raw.json ]; then
+            echo "::error::Decoded service account JSON is empty"
+            exit 1
+          fi
+
+          echo "::notice::Decoded file size: $(wc -c < /tmp/service-account-raw.json) bytes"
+          echo "First 4 bytes (hex): $(head -c 4 /tmp/service-account-raw.json | xxd -p)"
+
+          node -e "
+            const fs = require('fs');
+            let content = fs.readFileSync('/tmp/service-account-raw.json', 'utf8');
+            if (content.charCodeAt(0) === 0xFEFF) {
+              console.log('Removed BOM from JSON');
+              content = content.slice(1);
+            }
+            content = content.trim();
+            const parsed = JSON.parse(content);
+            console.log('JSON validated. Keys:', Object.keys(parsed).join(', '));
+            fs.writeFileSync('/tmp/service-account.json', JSON.stringify(parsed));
+            console.log('Clean JSON written. Size:', fs.statSync('/tmp/service-account.json').size, 'bytes');
+          "
+
+          echo "SA_JSON_PATH=/tmp/service-account.json" >> $GITHUB_ENV
+
+      - name: Upload to Google Play (Internal Testing)
+        if: ${{ github.event.inputs.submit != 'false' }}
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: ${{ env.SA_JSON_PATH }}
+          # App C の package name
+          packageName: com.safa.english
+          releaseFiles: ${{ env.APP_DIR }}/android/app/build/outputs/bundle/release/*.aab
+          track: internal
+          # completed = 内部テストへ自動ロールアウト(手動publish不要)。
+          # 互換性エラー("既存ユーザーがアップグレード不可")が出る場合のみ draft に戻す。
+          status: completed
+
+      - name: Cleanup service account
+        if: always()
+        run: rm -f /tmp/service-account.json
