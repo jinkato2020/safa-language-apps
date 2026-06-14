@@ -1,0 +1,14 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@safa/shared": ["../../packages/shared/src/index.ts"],
+      "@safa/shared/*": ["../../packages/shared/src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "../../packages/shared/src/**/*.ts", "../../packages/shared/src/**/*.tsx"]
+}

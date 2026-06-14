@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "name": "be動詞（現在）",
+    "exampleCount": 20
+  },
+  {
+    "id": 2,
+    "name": "一般動詞（現在）",
+    "exampleCount": 20
+  },
+  {
+    "id": 3,
+    "name": "三人称単数現在（三単現）",
+    "exampleCount": 12
+  },
+  {
+    "id": 4,
+    "name": "名詞の複数形・冠詞（a/an/the）",
+    "exampleCount": 12
+  },
+  {
+    "id": 5,
+    "name": "代名詞（主格・目的格・所有格）",
+    "exampleCount": 12
+  },
+  {
+    "id": 6,
+    "name": "指示詞（this/that/these/those）",
+    "exampleCount": 12
+  },
+  {
+    "id": 7,
+    "name": "疑問詞（what/who/where/when/why/how）",
+    "exampleCount": 20
+  },
+  {
+    "id": 8,
+    "name": "形容詞・副詞",
+    "exampleCount": 20
+  },
+  {
+    "id": 9,
+    "name": "現在進行形",
+    "exampleCount": 20
+  },
+  {
+    "id": 10,
+    "name": "過去形（be動詞・一般動詞）",
+    "exampleCount": 20
+  },
+  {
+    "id": 11,
+    "name": "過去進行形",
+    "exampleCount": 20
+  },
+  {
+    "id": 12,
+    "name": "未来表現（will / be going to）",
+    "exampleCount": 20
+  },
+  {
+    "id": 13,
+    "name": "助動詞①（can / could）",
+    "exampleCount": 20
+  },
+  {
+    "id": 14,
+    "name": "助動詞②（must / have to / should）",
+    "exampleCount": 20
+  },
+  {
+    "id": 15,
+    "name": "助動詞③（may / might / would）",
+    "exampleCount": 20
+  },
+  {
+    "id": 16,
+    "name": "命令文・感嘆文",
+    "exampleCount": 12
+  },
+  {
+    "id": 17,
+    "name": "There is / There are（存在）",
+    "exampleCount": 12
+  },
+  {
+    "id": 18,
+    "name": "前置詞（場所・時間・方向）",
+    "exampleCount": 30
+  },
+  {
+    "id": 19,
+    "name": "比較級・最上級",
+    "exampleCount": 30
+  },
+  {
+    "id": 20,
+    "name": "不定詞（to + 動詞）",
+    "exampleCount": 30
+  },
+  {
+    "id": 21,
+    "name": "動名詞（-ing）",
+    "exampleCount": 20
+  },
+  {
+    "id": 22,
+    "name": "現在完了（経験・完了・継続）",
+    "exampleCount": 30
+  },
+  {
+    "id": 23,
+    "name": "過去完了",
+    "exampleCount": 20
+  },
+  {
+    "id": 24,
+    "name": "受動態（受け身）",
+    "exampleCount": 30
+  },
+  {
+    "id": 25,
+    "name": "接続詞（and/but/or・because/when/if）",
+    "exampleCount": 20
+  },
+  {
+    "id": 26,
+    "name": "関係代名詞（who/which/that）",
+    "exampleCount": 30
+  },
+  {
+    "id": 27,
+    "name": "関係副詞・関係詞の応用",
+    "exampleCount": 30
+  },
+  {
+    "id": 28,
+    "name": "仮定法（if I were… / I wish…）",
+    "exampleCount": 30
+  },
+  {
+    "id": 29,
+    "name": "分詞（修飾・分詞構文の基礎）",
+    "exampleCount": 30
+  },
+  {
+    "id": 30,
+    "name": "間接話法・時制の一致",
+    "exampleCount": 30
+  }
+]
