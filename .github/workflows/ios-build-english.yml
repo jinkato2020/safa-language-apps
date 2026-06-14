@@ -453,10 +453,9 @@ jobs:
           # クローズドテスト(既定トラック名=alpha)へ自動アップロード。
           # 別名のクローズドトラックを使う場合はその名前に変更する。
           track: alpha
-          # draft = ドラフトアプリ(初公開前)用。Googleは draft app へ completed を許可しない
-          # ("Only releases with status draft may be created on draft app")。
-          # App C を一度クローズド公開して draft 状態を脱したら completed に戻すと自動ロールアウト可。
-          status: draft
+          # App C は 2026-06-14 にクローズド(Alpha)初公開済み → draft アプリ状態を脱出。
+          # completed = クローズドテスターへ自動ロールアウト(App A/B と同じ運用)。
+          status: completed
 
       - name: Cleanup service account
         if: always()
