@@ -188,7 +188,7 @@ jobs:
         env:
           TEAM_ID_RAW: ${{ secrets.IOS_TEAM_ID }}
           # App C 用の bundle ID (= com.safa.english)
-          BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID_ENGLISH }}
+          BUNDLE_ID_RAW: com.safa.english
         run: |
           TEAM_ID=$(printf '%s' "$TEAM_ID_RAW" | tr -d '\r\n[:space:]')
           BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
