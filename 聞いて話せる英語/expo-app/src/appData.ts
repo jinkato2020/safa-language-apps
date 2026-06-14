@@ -8,9 +8,11 @@ import examplesJson from '../data/examples.json';
 import grammarThemesJson from '../data/grammarThemes.json';
 import grammarExamplesJson from '../data/grammarExamples.json';
 import dictJson from '../data/dict.json';
+import wordCategoriesJson from '../data/wordCategories.json';
+import wordsJson from '../data/words.json';
 import { englishAudio, englishGrammarAudio, japaneseNativeAudio, japaneseNativeGrammarAudio } from '../data/audioMap';
 import appJson from '../app.json';
-import type { ThemeMeta, LevelMeta, GrammarThemeMeta, AppData } from '@safa/shared';
+import type { ThemeMeta, LevelMeta, GrammarThemeMeta, WordCategoryMeta, Word, AppData } from '@safa/shared';
 import { composePack, type JaCore, type L1Overlay } from './pack/compose';
 
 type Pair = { en: string; ja: string };
@@ -19,19 +21,27 @@ const LEVELS = levelsJson as LevelMeta[];
 const GRAMMAR_THEMES = grammarThemesJson as GrammarThemeMeta[];
 const EXAMPLES = examplesJson as Record<string, Pair[]>;
 const GRAMMAR = grammarExamplesJson as Record<string, Pair[]>;
+// 単語モード: words.json は {catId: [{ja:英語, ne:日本語}]}（ja=コア=英語 / ne=L1=日本語）
+const WORD_CATEGORIES = wordCategoriesJson as WordCategoryMeta[];
+const WORDS = wordsJson as Record<string, Word[]>;
 
 const pick = (m: Record<string, Pair[]>, key: 'en' | 'ja'): Record<string, string[]> =>
   Object.fromEntries(Object.entries(m).map(([k, arr]) => [k, arr.map(e => e[key] ?? '')]));
+// 単語の英語側(w.ja=コア) / 日本語側(w.ne=L1) を位置順で取り出す
+const pickWordJa = (m: Record<string, Word[]>): Record<string, string[]> =>
+  Object.fromEntries(Object.entries(m).map(([k, arr]) => [k, arr.map(w => w.ja)]));
+const pickWordNe = (m: Record<string, Word[]>): Record<string, string[]> =>
+  Object.fromEntries(Object.entries(m).map(([k, arr]) => [k, arr.map(w => w.ne)]));
 
 // ── 英語=共通コア(学習対象。compose上は「Jp」スロットだが中身は英語) ──
 const enCore: JaCore = {
   themes: THEMES,
   levels: LEVELS,
-  wordCategories: [],
+  wordCategories: WORD_CATEGORIES,
   grammarThemes: GRAMMAR_THEMES,
   examplesJp: pick(EXAMPLES, 'en'),
   grammarJp: pick(GRAMMAR, 'en'),
-  wordsJa: {},
+  wordsJa: pickWordJa(WORDS),   // 英単語(学習対象)
   jpReading: undefined,        // 英語コアはふりがな不要
   wordsReading: undefined,
   japaneseAudio: englishAudio,            // 英語(学習対象)音声
@@ -43,7 +53,7 @@ const jaOverlay: L1Overlay = {
   nativeLang: 'ja',
   examplesL1: pick(EXAMPLES, 'ja'),
   grammarL1: pick(GRAMMAR, 'ja'),
-  wordsL1: {},
+  wordsL1: pickWordNe(WORDS),   // 日本語語釈(母語)
   vocab: {},
   convVocab: (dictJson as any).convVocab,   // 英単語→日本語語釈(GPT-4o)
   grammarVocab: (dictJson as any).grammarVocab,

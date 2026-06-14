@@ -1,1 +1,152 @@
-[]
+[
+  {
+    "id": 1,
+    "name": "方向・位置",
+    "wordCount": 20
+  },
+  {
+    "id": 2,
+    "name": "時刻・カレンダー",
+    "wordCount": 20
+  },
+  {
+    "id": 3,
+    "name": "副詞（時・程度・頻度）",
+    "wordCount": 20
+  },
+  {
+    "id": 4,
+    "name": "形容詞（感覚・触感）",
+    "wordCount": 20
+  },
+  {
+    "id": 5,
+    "name": "形容詞（評価・状態）",
+    "wordCount": 20
+  },
+  {
+    "id": 6,
+    "name": "形容詞（性格・印象）",
+    "wordCount": 20
+  },
+  {
+    "id": 7,
+    "name": "動詞（移動・動作）",
+    "wordCount": 20
+  },
+  {
+    "id": 8,
+    "name": "動詞（生活・日常）",
+    "wordCount": 20
+  },
+  {
+    "id": 9,
+    "name": "動詞（コミュニケーション）",
+    "wordCount": 20
+  },
+  {
+    "id": 10,
+    "name": "動詞（思考・感情）",
+    "wordCount": 20
+  },
+  {
+    "id": 11,
+    "name": "家族・親族",
+    "wordCount": 40
+  },
+  {
+    "id": 12,
+    "name": "体の部位",
+    "wordCount": 40
+  },
+  {
+    "id": 13,
+    "name": "感情・気持ち",
+    "wordCount": 40
+  },
+  {
+    "id": 14,
+    "name": "色・形",
+    "wordCount": 40
+  },
+  {
+    "id": 15,
+    "name": "服・身に着けるもの",
+    "wordCount": 40
+  },
+  {
+    "id": 16,
+    "name": "食べ物・料理",
+    "wordCount": 40
+  },
+  {
+    "id": 17,
+    "name": "飲み物・調味料",
+    "wordCount": 40
+  },
+  {
+    "id": 18,
+    "name": "動物・植物",
+    "wordCount": 40
+  },
+  {
+    "id": 19,
+    "name": "天気・自然現象",
+    "wordCount": 40
+  },
+  {
+    "id": 20,
+    "name": "季節・時間帯",
+    "wordCount": 40
+  },
+  {
+    "id": 21,
+    "name": "家・部屋・家具",
+    "wordCount": 40
+  },
+  {
+    "id": 22,
+    "name": "街・建物",
+    "wordCount": 40
+  },
+  {
+    "id": 23,
+    "name": "交通・乗り物",
+    "wordCount": 40
+  },
+  {
+    "id": 24,
+    "name": "職業・仕事",
+    "wordCount": 40
+  },
+  {
+    "id": 25,
+    "name": "学校・学習",
+    "wordCount": 40
+  },
+  {
+    "id": 26,
+    "name": "お金・経済",
+    "wordCount": 40
+  },
+  {
+    "id": 27,
+    "name": "趣味・娯楽",
+    "wordCount": 40
+  },
+  {
+    "id": 28,
+    "name": "宗教・行事",
+    "wordCount": 40
+  },
+  {
+    "id": 29,
+    "name": "旅行・観光",
+    "wordCount": 40
+  },
+  {
+    "id": 30,
+    "name": "緊急・健康",
+    "wordCount": 40
+  }
+]

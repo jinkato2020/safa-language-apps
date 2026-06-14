@@ -1,6 +1,6 @@
 name: Build iOS and Android (English)
 # ↓ run-name は app.json を読めない(github/inputs/varsのみ)。版はリテラル。app.json の version を上げたらここも更新。
-run-name: "App C・英語・v1.0.3 (com.safa.english) — ${{ github.event.head_commit.message || github.ref_name }}"
+run-name: "App C・英語・v1.0.4 (com.safa.english) — ${{ github.event.head_commit.message || github.ref_name }}"
 
 # =============================================================================
 # App C: 聞いて話せる英語 (com.safa.english)

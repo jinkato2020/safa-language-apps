@@ -1,1 +1,4062 @@
-{}
+{
+  "1": [
+    {
+      "ja": "up",
+      "ne": "上へ（副）"
+    },
+    {
+      "ja": "down",
+      "ne": "下へ（副）"
+    },
+    {
+      "ja": "left",
+      "ne": "左（名・形）"
+    },
+    {
+      "ja": "right",
+      "ne": "右（名・形）"
+    },
+    {
+      "ja": "top",
+      "ne": "頂上・上部（名）"
+    },
+    {
+      "ja": "bottom",
+      "ne": "底・下部（名）"
+    },
+    {
+      "ja": "front",
+      "ne": "前・正面（名）"
+    },
+    {
+      "ja": "back",
+      "ne": "後ろ・背後（名）"
+    },
+    {
+      "ja": "side",
+      "ne": "横・側面（名）"
+    },
+    {
+      "ja": "middle",
+      "ne": "真ん中（名）"
+    },
+    {
+      "ja": "center",
+      "ne": "中心（名）"
+    },
+    {
+      "ja": "north",
+      "ne": "北（名）"
+    },
+    {
+      "ja": "south",
+      "ne": "南（名）"
+    },
+    {
+      "ja": "east",
+      "ne": "東（名）"
+    },
+    {
+      "ja": "west",
+      "ne": "西（名）"
+    },
+    {
+      "ja": "near",
+      "ne": "近くに（形・前）"
+    },
+    {
+      "ja": "far",
+      "ne": "遠くに（副・形）"
+    },
+    {
+      "ja": "between",
+      "ne": "～の間に（前）"
+    },
+    {
+      "ja": "above",
+      "ne": "～の上方に（前）"
+    },
+    {
+      "ja": "below",
+      "ne": "～の下方に（前）"
+    }
+  ],
+  "2": [
+    {
+      "ja": "time",
+      "ne": "時間・時刻"
+    },
+    {
+      "ja": "clock",
+      "ne": "時計"
+    },
+    {
+      "ja": "hour",
+      "ne": "時間(1時間)"
+    },
+    {
+      "ja": "minute",
+      "ne": "分"
+    },
+    {
+      "ja": "second",
+      "ne": "秒"
+    },
+    {
+      "ja": "day",
+      "ne": "日・一日"
+    },
+    {
+      "ja": "week",
+      "ne": "週"
+    },
+    {
+      "ja": "month",
+      "ne": "月(暦の月)"
+    },
+    {
+      "ja": "year",
+      "ne": "年"
+    },
+    {
+      "ja": "morning",
+      "ne": "朝・午前"
+    },
+    {
+      "ja": "afternoon",
+      "ne": "午後"
+    },
+    {
+      "ja": "evening",
+      "ne": "夕方・晩"
+    },
+    {
+      "ja": "night",
+      "ne": "夜"
+    },
+    {
+      "ja": "today",
+      "ne": "今日"
+    },
+    {
+      "ja": "tomorrow",
+      "ne": "明日"
+    },
+    {
+      "ja": "yesterday",
+      "ne": "昨日"
+    },
+    {
+      "ja": "calendar",
+      "ne": "カレンダー・暦"
+    },
+    {
+      "ja": "date",
+      "ne": "日付"
+    },
+    {
+      "ja": "noon",
+      "ne": "正午"
+    },
+    {
+      "ja": "midnight",
+      "ne": "真夜中・午前0時"
+    }
+  ],
+  "3": [
+    {
+      "ja": "now",
+      "ne": "今"
+    },
+    {
+      "ja": "then",
+      "ne": "その時・それから"
+    },
+    {
+      "ja": "soon",
+      "ne": "まもなく"
+    },
+    {
+      "ja": "late",
+      "ne": "遅く"
+    },
+    {
+      "ja": "early",
+      "ne": "早く"
+    },
+    {
+      "ja": "always",
+      "ne": "いつも"
+    },
+    {
+      "ja": "often",
+      "ne": "よく・しばしば"
+    },
+    {
+      "ja": "sometimes",
+      "ne": "時々"
+    },
+    {
+      "ja": "never",
+      "ne": "決して〜ない"
+    },
+    {
+      "ja": "usually",
+      "ne": "たいてい"
+    },
+    {
+      "ja": "very",
+      "ne": "とても"
+    },
+    {
+      "ja": "too",
+      "ne": "〜すぎる・〜もまた"
+    },
+    {
+      "ja": "quite",
+      "ne": "かなり"
+    },
+    {
+      "ja": "almost",
+      "ne": "ほとんど"
+    },
+    {
+      "ja": "already",
+      "ne": "すでに"
+    },
+    {
+      "ja": "still",
+      "ne": "まだ・依然として"
+    },
+    {
+      "ja": "yet",
+      "ne": "まだ（〜ない）"
+    },
+    {
+      "ja": "again",
+      "ne": "再び"
+    },
+    {
+      "ja": "rarely",
+      "ne": "めったに〜ない"
+    },
+    {
+      "ja": "recently",
+      "ne": "最近"
+    }
+  ],
+  "4": [
+    {
+      "ja": "hot",
+      "ne": "熱い・暑い"
+    },
+    {
+      "ja": "cold",
+      "ne": "冷たい・寒い"
+    },
+    {
+      "ja": "warm",
+      "ne": "暖かい"
+    },
+    {
+      "ja": "cool",
+      "ne": "涼しい・冷たい"
+    },
+    {
+      "ja": "soft",
+      "ne": "柔らかい"
+    },
+    {
+      "ja": "hard",
+      "ne": "硬い"
+    },
+    {
+      "ja": "smooth",
+      "ne": "なめらかな"
+    },
+    {
+      "ja": "rough",
+      "ne": "ざらざらした"
+    },
+    {
+      "ja": "wet",
+      "ne": "濡れた"
+    },
+    {
+      "ja": "dry",
+      "ne": "乾いた"
+    },
+    {
+      "ja": "sharp",
+      "ne": "鋭い・とがった"
+    },
+    {
+      "ja": "sticky",
+      "ne": "べたべたした"
+    },
+    {
+      "ja": "slippery",
+      "ne": "滑りやすい"
+    },
+    {
+      "ja": "heavy",
+      "ne": "重い"
+    },
+    {
+      "ja": "light",
+      "ne": "軽い"
+    },
+    {
+      "ja": "warm",
+      "ne": "生ぬるい"
+    },
+    {
+      "ja": "fluffy",
+      "ne": "ふわふわした"
+    },
+    {
+      "ja": "firm",
+      "ne": "しっかりした・硬めの"
+    },
+    {
+      "ja": "silky",
+      "ne": "絹のように滑らかな"
+    },
+    {
+      "ja": "numb",
+      "ne": "感覚がまひした"
+    }
+  ],
+  "5": [
+    {
+      "ja": "good",
+      "ne": "良い"
+    },
+    {
+      "ja": "bad",
+      "ne": "悪い"
+    },
+    {
+      "ja": "nice",
+      "ne": "すてきな"
+    },
+    {
+      "ja": "great",
+      "ne": "素晴らしい"
+    },
+    {
+      "ja": "important",
+      "ne": "重要な"
+    },
+    {
+      "ja": "easy",
+      "ne": "簡単な"
+    },
+    {
+      "ja": "difficult",
+      "ne": "難しい"
+    },
+    {
+      "ja": "useful",
+      "ne": "役立つ"
+    },
+    {
+      "ja": "perfect",
+      "ne": "完璧な"
+    },
+    {
+      "ja": "wonderful",
+      "ne": "すばらしい"
+    },
+    {
+      "ja": "excellent",
+      "ne": "優れた"
+    },
+    {
+      "ja": "terrible",
+      "ne": "ひどい"
+    },
+    {
+      "ja": "correct",
+      "ne": "正しい"
+    },
+    {
+      "ja": "wrong",
+      "ne": "間違った"
+    },
+    {
+      "ja": "serious",
+      "ne": "深刻な"
+    },
+    {
+      "ja": "common",
+      "ne": "ありふれた"
+    },
+    {
+      "ja": "rare",
+      "ne": "まれな"
+    },
+    {
+      "ja": "available",
+      "ne": "利用できる"
+    },
+    {
+      "ja": "necessary",
+      "ne": "必要な"
+    },
+    {
+      "ja": "valuable",
+      "ne": "価値のある"
+    }
+  ],
+  "6": [
+    {
+      "ja": "kind",
+      "ne": "親切な"
+    },
+    {
+      "ja": "nice",
+      "ne": "感じのよい"
+    },
+    {
+      "ja": "friendly",
+      "ne": "友好的な"
+    },
+    {
+      "ja": "funny",
+      "ne": "おもしろい"
+    },
+    {
+      "ja": "shy",
+      "ne": "内気な"
+    },
+    {
+      "ja": "honest",
+      "ne": "正直な"
+    },
+    {
+      "ja": "polite",
+      "ne": "礼儀正しい"
+    },
+    {
+      "ja": "brave",
+      "ne": "勇敢な"
+    },
+    {
+      "ja": "lazy",
+      "ne": "怠惰な"
+    },
+    {
+      "ja": "selfish",
+      "ne": "わがままな"
+    },
+    {
+      "ja": "cheerful",
+      "ne": "陽気な"
+    },
+    {
+      "ja": "gentle",
+      "ne": "優しい・穏やかな"
+    },
+    {
+      "ja": "serious",
+      "ne": "まじめな"
+    },
+    {
+      "ja": "patient",
+      "ne": "忍耐強い"
+    },
+    {
+      "ja": "generous",
+      "ne": "気前のよい"
+    },
+    {
+      "ja": "confident",
+      "ne": "自信のある"
+    },
+    {
+      "ja": "curious",
+      "ne": "好奇心の強い"
+    },
+    {
+      "ja": "ambitious",
+      "ne": "野心的な"
+    },
+    {
+      "ja": "stubborn",
+      "ne": "頑固な"
+    },
+    {
+      "ja": "reliable",
+      "ne": "信頼できる"
+    }
+  ],
+  "7": [
+    {
+      "ja": "go",
+      "ne": "行く"
+    },
+    {
+      "ja": "come",
+      "ne": "来る"
+    },
+    {
+      "ja": "walk",
+      "ne": "歩く"
+    },
+    {
+      "ja": "run",
+      "ne": "走る"
+    },
+    {
+      "ja": "jump",
+      "ne": "跳ぶ"
+    },
+    {
+      "ja": "sit",
+      "ne": "座る"
+    },
+    {
+      "ja": "stand",
+      "ne": "立つ"
+    },
+    {
+      "ja": "move",
+      "ne": "動く・移動する"
+    },
+    {
+      "ja": "turn",
+      "ne": "曲がる・向きを変える"
+    },
+    {
+      "ja": "stop",
+      "ne": "止まる・止める"
+    },
+    {
+      "ja": "fall",
+      "ne": "落ちる・倒れる"
+    },
+    {
+      "ja": "climb",
+      "ne": "登る"
+    },
+    {
+      "ja": "swim",
+      "ne": "泳ぐ"
+    },
+    {
+      "ja": "fly",
+      "ne": "飛ぶ"
+    },
+    {
+      "ja": "drive",
+      "ne": "運転する"
+    },
+    {
+      "ja": "ride",
+      "ne": "乗る"
+    },
+    {
+      "ja": "push",
+      "ne": "押す"
+    },
+    {
+      "ja": "pull",
+      "ne": "引く"
+    },
+    {
+      "ja": "carry",
+      "ne": "運ぶ"
+    },
+    {
+      "ja": "enter",
+      "ne": "入る"
+    }
+  ],
+  "8": [
+    {
+      "ja": "eat",
+      "ne": "食べる"
+    },
+    {
+      "ja": "drink",
+      "ne": "飲む"
+    },
+    {
+      "ja": "sleep",
+      "ne": "眠る"
+    },
+    {
+      "ja": "wake",
+      "ne": "目を覚ます"
+    },
+    {
+      "ja": "wash",
+      "ne": "洗う"
+    },
+    {
+      "ja": "cook",
+      "ne": "料理する"
+    },
+    {
+      "ja": "clean",
+      "ne": "掃除する"
+    },
+    {
+      "ja": "wear",
+      "ne": "着る"
+    },
+    {
+      "ja": "buy",
+      "ne": "買う"
+    },
+    {
+      "ja": "open",
+      "ne": "開ける"
+    },
+    {
+      "ja": "close",
+      "ne": "閉める"
+    },
+    {
+      "ja": "walk",
+      "ne": "歩く"
+    },
+    {
+      "ja": "sit",
+      "ne": "座る"
+    },
+    {
+      "ja": "stand",
+      "ne": "立つ"
+    },
+    {
+      "ja": "rest",
+      "ne": "休む"
+    },
+    {
+      "ja": "brush",
+      "ne": "（歯を）磨く"
+    },
+    {
+      "ja": "prepare",
+      "ne": "準備する"
+    },
+    {
+      "ja": "shop",
+      "ne": "買い物をする"
+    },
+    {
+      "ja": "relax",
+      "ne": "くつろぐ"
+    },
+    {
+      "ja": "tidy",
+      "ne": "片づける"
+    }
+  ],
+  "9": [
+    {
+      "ja": "say",
+      "ne": "言う"
+    },
+    {
+      "ja": "tell",
+      "ne": "伝える、告げる"
+    },
+    {
+      "ja": "talk",
+      "ne": "話す、しゃべる"
+    },
+    {
+      "ja": "speak",
+      "ne": "話す、発言する"
+    },
+    {
+      "ja": "ask",
+      "ne": "尋ねる、頼む"
+    },
+    {
+      "ja": "answer",
+      "ne": "答える"
+    },
+    {
+      "ja": "call",
+      "ne": "電話する、呼ぶ"
+    },
+    {
+      "ja": "explain",
+      "ne": "説明する"
+    },
+    {
+      "ja": "describe",
+      "ne": "描写する、説明する"
+    },
+    {
+      "ja": "discuss",
+      "ne": "話し合う、議論する"
+    },
+    {
+      "ja": "express",
+      "ne": "表現する、述べる"
+    },
+    {
+      "ja": "mention",
+      "ne": "言及する、触れる"
+    },
+    {
+      "ja": "reply",
+      "ne": "返事する、応答する"
+    },
+    {
+      "ja": "respond",
+      "ne": "応答する、反応する"
+    },
+    {
+      "ja": "suggest",
+      "ne": "提案する"
+    },
+    {
+      "ja": "announce",
+      "ne": "発表する、告知する"
+    },
+    {
+      "ja": "argue",
+      "ne": "主張する、口論する"
+    },
+    {
+      "ja": "complain",
+      "ne": "不平を言う、苦情を言う"
+    },
+    {
+      "ja": "inform",
+      "ne": "知らせる、通知する"
+    },
+    {
+      "ja": "communicate",
+      "ne": "伝える、意思疎通する"
+    }
+  ],
+  "10": [
+    {
+      "ja": "think",
+      "ne": "考える、思う"
+    },
+    {
+      "ja": "know",
+      "ne": "知っている"
+    },
+    {
+      "ja": "feel",
+      "ne": "感じる"
+    },
+    {
+      "ja": "want",
+      "ne": "欲しい、〜したい"
+    },
+    {
+      "ja": "like",
+      "ne": "好む"
+    },
+    {
+      "ja": "love",
+      "ne": "愛する、大好きである"
+    },
+    {
+      "ja": "hate",
+      "ne": "憎む、ひどく嫌う"
+    },
+    {
+      "ja": "believe",
+      "ne": "信じる"
+    },
+    {
+      "ja": "hope",
+      "ne": "望む、期待する"
+    },
+    {
+      "ja": "wish",
+      "ne": "願う"
+    },
+    {
+      "ja": "remember",
+      "ne": "覚えている、思い出す"
+    },
+    {
+      "ja": "forget",
+      "ne": "忘れる"
+    },
+    {
+      "ja": "understand",
+      "ne": "理解する"
+    },
+    {
+      "ja": "worry",
+      "ne": "心配する"
+    },
+    {
+      "ja": "fear",
+      "ne": "恐れる"
+    },
+    {
+      "ja": "enjoy",
+      "ne": "楽しむ"
+    },
+    {
+      "ja": "prefer",
+      "ne": "〜のほうを好む"
+    },
+    {
+      "ja": "imagine",
+      "ne": "想像する"
+    },
+    {
+      "ja": "doubt",
+      "ne": "疑う"
+    },
+    {
+      "ja": "realize",
+      "ne": "気づく、悟る"
+    }
+  ],
+  "11": [
+    {
+      "ja": "family",
+      "ne": "家族"
+    },
+    {
+      "ja": "father",
+      "ne": "父"
+    },
+    {
+      "ja": "mother",
+      "ne": "母"
+    },
+    {
+      "ja": "parent",
+      "ne": "親"
+    },
+    {
+      "ja": "son",
+      "ne": "息子"
+    },
+    {
+      "ja": "daughter",
+      "ne": "娘"
+    },
+    {
+      "ja": "child",
+      "ne": "子供"
+    },
+    {
+      "ja": "baby",
+      "ne": "赤ちゃん"
+    },
+    {
+      "ja": "brother",
+      "ne": "兄弟"
+    },
+    {
+      "ja": "sister",
+      "ne": "姉妹"
+    },
+    {
+      "ja": "grandfather",
+      "ne": "祖父"
+    },
+    {
+      "ja": "grandmother",
+      "ne": "祖母"
+    },
+    {
+      "ja": "grandparent",
+      "ne": "祖父母"
+    },
+    {
+      "ja": "grandson",
+      "ne": "孫息子"
+    },
+    {
+      "ja": "granddaughter",
+      "ne": "孫娘"
+    },
+    {
+      "ja": "grandchild",
+      "ne": "孫"
+    },
+    {
+      "ja": "uncle",
+      "ne": "おじ"
+    },
+    {
+      "ja": "aunt",
+      "ne": "おば"
+    },
+    {
+      "ja": "cousin",
+      "ne": "いとこ"
+    },
+    {
+      "ja": "nephew",
+      "ne": "おい"
+    },
+    {
+      "ja": "niece",
+      "ne": "めい"
+    },
+    {
+      "ja": "husband",
+      "ne": "夫"
+    },
+    {
+      "ja": "wife",
+      "ne": "妻"
+    },
+    {
+      "ja": "dad",
+      "ne": "パパ"
+    },
+    {
+      "ja": "mom",
+      "ne": "ママ"
+    },
+    {
+      "ja": "twin",
+      "ne": "双子"
+    },
+    {
+      "ja": "relative",
+      "ne": "親戚"
+    },
+    {
+      "ja": "couple",
+      "ne": "夫婦・カップル"
+    },
+    {
+      "ja": "kid",
+      "ne": "子供(口語)"
+    },
+    {
+      "ja": "sibling",
+      "ne": "兄弟姉妹"
+    },
+    {
+      "ja": "spouse",
+      "ne": "配偶者"
+    },
+    {
+      "ja": "stepfather",
+      "ne": "継父"
+    },
+    {
+      "ja": "stepmother",
+      "ne": "継母"
+    },
+    {
+      "ja": "stepson",
+      "ne": "継息子"
+    },
+    {
+      "ja": "stepdaughter",
+      "ne": "継娘"
+    },
+    {
+      "ja": "mother-in-law",
+      "ne": "義母"
+    },
+    {
+      "ja": "father-in-law",
+      "ne": "義父"
+    },
+    {
+      "ja": "ancestor",
+      "ne": "先祖"
+    },
+    {
+      "ja": "descendant",
+      "ne": "子孫"
+    },
+    {
+      "ja": "orphan",
+      "ne": "孤児"
+    }
+  ],
+  "12": [
+    {
+      "ja": "head",
+      "ne": "頭"
+    },
+    {
+      "ja": "face",
+      "ne": "顔"
+    },
+    {
+      "ja": "hair",
+      "ne": "髪"
+    },
+    {
+      "ja": "eye",
+      "ne": "目"
+    },
+    {
+      "ja": "ear",
+      "ne": "耳"
+    },
+    {
+      "ja": "nose",
+      "ne": "鼻"
+    },
+    {
+      "ja": "mouth",
+      "ne": "口"
+    },
+    {
+      "ja": "lip",
+      "ne": "唇"
+    },
+    {
+      "ja": "tooth",
+      "ne": "歯"
+    },
+    {
+      "ja": "tongue",
+      "ne": "舌"
+    },
+    {
+      "ja": "cheek",
+      "ne": "頬"
+    },
+    {
+      "ja": "chin",
+      "ne": "あご(先)"
+    },
+    {
+      "ja": "jaw",
+      "ne": "あご"
+    },
+    {
+      "ja": "forehead",
+      "ne": "額(ひたい)"
+    },
+    {
+      "ja": "eyebrow",
+      "ne": "眉(まゆ)"
+    },
+    {
+      "ja": "neck",
+      "ne": "首"
+    },
+    {
+      "ja": "throat",
+      "ne": "のど"
+    },
+    {
+      "ja": "shoulder",
+      "ne": "肩"
+    },
+    {
+      "ja": "arm",
+      "ne": "腕"
+    },
+    {
+      "ja": "elbow",
+      "ne": "ひじ"
+    },
+    {
+      "ja": "wrist",
+      "ne": "手首"
+    },
+    {
+      "ja": "hand",
+      "ne": "手"
+    },
+    {
+      "ja": "finger",
+      "ne": "指"
+    },
+    {
+      "ja": "thumb",
+      "ne": "親指"
+    },
+    {
+      "ja": "nail",
+      "ne": "爪"
+    },
+    {
+      "ja": "chest",
+      "ne": "胸"
+    },
+    {
+      "ja": "back",
+      "ne": "背中"
+    },
+    {
+      "ja": "stomach",
+      "ne": "おなか・胃"
+    },
+    {
+      "ja": "waist",
+      "ne": "腰(ウエスト)"
+    },
+    {
+      "ja": "hip",
+      "ne": "尻・腰回り"
+    },
+    {
+      "ja": "leg",
+      "ne": "脚"
+    },
+    {
+      "ja": "knee",
+      "ne": "ひざ"
+    },
+    {
+      "ja": "ankle",
+      "ne": "足首"
+    },
+    {
+      "ja": "foot",
+      "ne": "足"
+    },
+    {
+      "ja": "toe",
+      "ne": "足の指"
+    },
+    {
+      "ja": "heel",
+      "ne": "かかと"
+    },
+    {
+      "ja": "skin",
+      "ne": "肌・皮膚"
+    },
+    {
+      "ja": "bone",
+      "ne": "骨"
+    },
+    {
+      "ja": "muscle",
+      "ne": "筋肉"
+    },
+    {
+      "ja": "heart",
+      "ne": "心臓"
+    }
+  ],
+  "13": [
+    {
+      "ja": "happy",
+      "ne": "幸せな、うれしい"
+    },
+    {
+      "ja": "sad",
+      "ne": "悲しい"
+    },
+    {
+      "ja": "angry",
+      "ne": "怒った"
+    },
+    {
+      "ja": "glad",
+      "ne": "うれしい"
+    },
+    {
+      "ja": "afraid",
+      "ne": "恐れて、怖がって"
+    },
+    {
+      "ja": "tired",
+      "ne": "疲れた"
+    },
+    {
+      "ja": "bored",
+      "ne": "退屈した"
+    },
+    {
+      "ja": "excited",
+      "ne": "わくわくした"
+    },
+    {
+      "ja": "nervous",
+      "ne": "緊張した"
+    },
+    {
+      "ja": "worried",
+      "ne": "心配した"
+    },
+    {
+      "ja": "surprised",
+      "ne": "驚いた"
+    },
+    {
+      "ja": "scared",
+      "ne": "おびえた"
+    },
+    {
+      "ja": "lonely",
+      "ne": "孤独な、寂しい"
+    },
+    {
+      "ja": "proud",
+      "ne": "誇りに思う"
+    },
+    {
+      "ja": "shy",
+      "ne": "恥ずかしがりの"
+    },
+    {
+      "ja": "calm",
+      "ne": "落ち着いた"
+    },
+    {
+      "ja": "upset",
+      "ne": "動揺した、気が動転した"
+    },
+    {
+      "ja": "confused",
+      "ne": "混乱した"
+    },
+    {
+      "ja": "disappointed",
+      "ne": "がっかりした"
+    },
+    {
+      "ja": "jealous",
+      "ne": "嫉妬した"
+    },
+    {
+      "ja": "embarrassed",
+      "ne": "恥ずかしい、きまり悪い"
+    },
+    {
+      "ja": "relaxed",
+      "ne": "くつろいだ"
+    },
+    {
+      "ja": "comfortable",
+      "ne": "心地よい、快適な"
+    },
+    {
+      "ja": "uncomfortable",
+      "ne": "不快な、居心地が悪い"
+    },
+    {
+      "ja": "grateful",
+      "ne": "感謝している"
+    },
+    {
+      "ja": "satisfied",
+      "ne": "満足した"
+    },
+    {
+      "ja": "frustrated",
+      "ne": "いらだった、もどかしい"
+    },
+    {
+      "ja": "anxious",
+      "ne": "不安な"
+    },
+    {
+      "ja": "depressed",
+      "ne": "落ち込んだ、憂うつな"
+    },
+    {
+      "ja": "cheerful",
+      "ne": "陽気な、元気な"
+    },
+    {
+      "ja": "joy",
+      "ne": "喜び(名詞)"
+    },
+    {
+      "ja": "fear",
+      "ne": "恐怖(名詞)"
+    },
+    {
+      "ja": "anger",
+      "ne": "怒り(名詞)"
+    },
+    {
+      "ja": "love",
+      "ne": "愛(名詞)"
+    },
+    {
+      "ja": "hate",
+      "ne": "憎しみ、嫌う"
+    },
+    {
+      "ja": "hope",
+      "ne": "希望、望む"
+    },
+    {
+      "ja": "feeling",
+      "ne": "気持ち、感情"
+    },
+    {
+      "ja": "emotion",
+      "ne": "感情"
+    },
+    {
+      "ja": "mood",
+      "ne": "気分"
+    },
+    {
+      "ja": "stress",
+      "ne": "ストレス"
+    }
+  ],
+  "14": [
+    {
+      "ja": "red",
+      "ne": "赤(い)"
+    },
+    {
+      "ja": "blue",
+      "ne": "青(い)"
+    },
+    {
+      "ja": "yellow",
+      "ne": "黄色(い)"
+    },
+    {
+      "ja": "green",
+      "ne": "緑(の)"
+    },
+    {
+      "ja": "black",
+      "ne": "黒(い)"
+    },
+    {
+      "ja": "white",
+      "ne": "白(い)"
+    },
+    {
+      "ja": "pink",
+      "ne": "ピンク(の)"
+    },
+    {
+      "ja": "orange",
+      "ne": "オレンジ色(の)"
+    },
+    {
+      "ja": "purple",
+      "ne": "紫(の)"
+    },
+    {
+      "ja": "brown",
+      "ne": "茶色(の)"
+    },
+    {
+      "ja": "gray",
+      "ne": "灰色(の)"
+    },
+    {
+      "ja": "gold",
+      "ne": "金色(の)"
+    },
+    {
+      "ja": "silver",
+      "ne": "銀色(の)"
+    },
+    {
+      "ja": "color",
+      "ne": "色"
+    },
+    {
+      "ja": "dark",
+      "ne": "濃い・暗い(色)"
+    },
+    {
+      "ja": "light",
+      "ne": "薄い・明るい(色)"
+    },
+    {
+      "ja": "bright",
+      "ne": "鮮やかな"
+    },
+    {
+      "ja": "pale",
+      "ne": "淡い・青白い"
+    },
+    {
+      "ja": "shape",
+      "ne": "形"
+    },
+    {
+      "ja": "circle",
+      "ne": "円"
+    },
+    {
+      "ja": "square",
+      "ne": "正方形"
+    },
+    {
+      "ja": "triangle",
+      "ne": "三角形"
+    },
+    {
+      "ja": "rectangle",
+      "ne": "長方形"
+    },
+    {
+      "ja": "oval",
+      "ne": "楕円形"
+    },
+    {
+      "ja": "star",
+      "ne": "星形"
+    },
+    {
+      "ja": "heart",
+      "ne": "ハート形"
+    },
+    {
+      "ja": "diamond",
+      "ne": "ひし形"
+    },
+    {
+      "ja": "line",
+      "ne": "線"
+    },
+    {
+      "ja": "curve",
+      "ne": "曲線"
+    },
+    {
+      "ja": "point",
+      "ne": "点・先端"
+    },
+    {
+      "ja": "round",
+      "ne": "丸い"
+    },
+    {
+      "ja": "flat",
+      "ne": "平らな"
+    },
+    {
+      "ja": "straight",
+      "ne": "まっすぐな"
+    },
+    {
+      "ja": "sharp",
+      "ne": "鋭い・とがった"
+    },
+    {
+      "ja": "thick",
+      "ne": "厚い・太い"
+    },
+    {
+      "ja": "thin",
+      "ne": "薄い・細い"
+    },
+    {
+      "ja": "wide",
+      "ne": "幅広い"
+    },
+    {
+      "ja": "narrow",
+      "ne": "狭い・細い"
+    },
+    {
+      "ja": "angle",
+      "ne": "角・角度"
+    },
+    {
+      "ja": "side",
+      "ne": "辺・側面"
+    }
+  ],
+  "15": [
+    {
+      "ja": "shirt",
+      "ne": "シャツ"
+    },
+    {
+      "ja": "pants",
+      "ne": "ズボン"
+    },
+    {
+      "ja": "shoes",
+      "ne": "靴"
+    },
+    {
+      "ja": "hat",
+      "ne": "帽子（つば付き）"
+    },
+    {
+      "ja": "cap",
+      "ne": "帽子（縁なし）"
+    },
+    {
+      "ja": "socks",
+      "ne": "靴下"
+    },
+    {
+      "ja": "dress",
+      "ne": "ワンピース・ドレス"
+    },
+    {
+      "ja": "skirt",
+      "ne": "スカート"
+    },
+    {
+      "ja": "coat",
+      "ne": "コート"
+    },
+    {
+      "ja": "jacket",
+      "ne": "上着・ジャケット"
+    },
+    {
+      "ja": "sweater",
+      "ne": "セーター"
+    },
+    {
+      "ja": "jeans",
+      "ne": "ジーンズ"
+    },
+    {
+      "ja": "shorts",
+      "ne": "半ズボン"
+    },
+    {
+      "ja": "T-shirt",
+      "ne": "Tシャツ"
+    },
+    {
+      "ja": "glove",
+      "ne": "手袋"
+    },
+    {
+      "ja": "scarf",
+      "ne": "マフラー・スカーフ"
+    },
+    {
+      "ja": "tie",
+      "ne": "ネクタイ"
+    },
+    {
+      "ja": "belt",
+      "ne": "ベルト"
+    },
+    {
+      "ja": "glasses",
+      "ne": "眼鏡"
+    },
+    {
+      "ja": "watch",
+      "ne": "腕時計"
+    },
+    {
+      "ja": "ring",
+      "ne": "指輪"
+    },
+    {
+      "ja": "boots",
+      "ne": "ブーツ・長靴"
+    },
+    {
+      "ja": "suit",
+      "ne": "スーツ"
+    },
+    {
+      "ja": "uniform",
+      "ne": "制服"
+    },
+    {
+      "ja": "button",
+      "ne": "ボタン"
+    },
+    {
+      "ja": "pocket",
+      "ne": "ポケット"
+    },
+    {
+      "ja": "underwear",
+      "ne": "下着"
+    },
+    {
+      "ja": "pajamas",
+      "ne": "パジャマ"
+    },
+    {
+      "ja": "raincoat",
+      "ne": "レインコート"
+    },
+    {
+      "ja": "gloves",
+      "ne": "手袋（両手）"
+    },
+    {
+      "ja": "slipper",
+      "ne": "スリッパ"
+    },
+    {
+      "ja": "sandal",
+      "ne": "サンダル"
+    },
+    {
+      "ja": "sneaker",
+      "ne": "スニーカー"
+    },
+    {
+      "ja": "vest",
+      "ne": "ベスト・チョッキ"
+    },
+    {
+      "ja": "blouse",
+      "ne": "ブラウス"
+    },
+    {
+      "ja": "hood",
+      "ne": "フード・頭巾"
+    },
+    {
+      "ja": "necklace",
+      "ne": "ネックレス"
+    },
+    {
+      "ja": "bracelet",
+      "ne": "ブレスレット"
+    },
+    {
+      "ja": "earring",
+      "ne": "イヤリング"
+    },
+    {
+      "ja": "umbrella",
+      "ne": "傘"
+    }
+  ],
+  "16": [
+    {
+      "ja": "food",
+      "ne": "食べ物"
+    },
+    {
+      "ja": "rice",
+      "ne": "米、ごはん"
+    },
+    {
+      "ja": "bread",
+      "ne": "パン"
+    },
+    {
+      "ja": "meat",
+      "ne": "肉"
+    },
+    {
+      "ja": "fish",
+      "ne": "魚"
+    },
+    {
+      "ja": "egg",
+      "ne": "卵"
+    },
+    {
+      "ja": "milk",
+      "ne": "牛乳"
+    },
+    {
+      "ja": "water",
+      "ne": "水"
+    },
+    {
+      "ja": "fruit",
+      "ne": "果物"
+    },
+    {
+      "ja": "apple",
+      "ne": "りんご"
+    },
+    {
+      "ja": "banana",
+      "ne": "バナナ"
+    },
+    {
+      "ja": "orange",
+      "ne": "オレンジ"
+    },
+    {
+      "ja": "vegetable",
+      "ne": "野菜"
+    },
+    {
+      "ja": "potato",
+      "ne": "じゃがいも"
+    },
+    {
+      "ja": "tomato",
+      "ne": "トマト"
+    },
+    {
+      "ja": "carrot",
+      "ne": "にんじん"
+    },
+    {
+      "ja": "onion",
+      "ne": "玉ねぎ"
+    },
+    {
+      "ja": "chicken",
+      "ne": "鶏肉"
+    },
+    {
+      "ja": "beef",
+      "ne": "牛肉"
+    },
+    {
+      "ja": "pork",
+      "ne": "豚肉"
+    },
+    {
+      "ja": "cheese",
+      "ne": "チーズ"
+    },
+    {
+      "ja": "butter",
+      "ne": "バター"
+    },
+    {
+      "ja": "sugar",
+      "ne": "砂糖"
+    },
+    {
+      "ja": "salt",
+      "ne": "塩"
+    },
+    {
+      "ja": "pepper",
+      "ne": "こしょう"
+    },
+    {
+      "ja": "oil",
+      "ne": "油"
+    },
+    {
+      "ja": "soup",
+      "ne": "スープ"
+    },
+    {
+      "ja": "salad",
+      "ne": "サラダ"
+    },
+    {
+      "ja": "noodle",
+      "ne": "麺"
+    },
+    {
+      "ja": "meal",
+      "ne": "食事"
+    },
+    {
+      "ja": "breakfast",
+      "ne": "朝食"
+    },
+    {
+      "ja": "lunch",
+      "ne": "昼食"
+    },
+    {
+      "ja": "dinner",
+      "ne": "夕食"
+    },
+    {
+      "ja": "snack",
+      "ne": "軽食、おやつ"
+    },
+    {
+      "ja": "dessert",
+      "ne": "デザート"
+    },
+    {
+      "ja": "cake",
+      "ne": "ケーキ"
+    },
+    {
+      "ja": "dish",
+      "ne": "料理、皿"
+    },
+    {
+      "ja": "recipe",
+      "ne": "レシピ、調理法"
+    },
+    {
+      "ja": "sauce",
+      "ne": "ソース"
+    },
+    {
+      "ja": "flour",
+      "ne": "小麦粉"
+    }
+  ],
+  "17": [
+    {
+      "ja": "water",
+      "ne": "水"
+    },
+    {
+      "ja": "tea",
+      "ne": "お茶"
+    },
+    {
+      "ja": "coffee",
+      "ne": "コーヒー"
+    },
+    {
+      "ja": "milk",
+      "ne": "牛乳"
+    },
+    {
+      "ja": "juice",
+      "ne": "ジュース"
+    },
+    {
+      "ja": "soda",
+      "ne": "炭酸飲料"
+    },
+    {
+      "ja": "wine",
+      "ne": "ワイン"
+    },
+    {
+      "ja": "beer",
+      "ne": "ビール"
+    },
+    {
+      "ja": "sugar",
+      "ne": "砂糖"
+    },
+    {
+      "ja": "salt",
+      "ne": "塩"
+    },
+    {
+      "ja": "pepper",
+      "ne": "こしょう"
+    },
+    {
+      "ja": "oil",
+      "ne": "油"
+    },
+    {
+      "ja": "vinegar",
+      "ne": "酢"
+    },
+    {
+      "ja": "sauce",
+      "ne": "ソース"
+    },
+    {
+      "ja": "honey",
+      "ne": "はちみつ"
+    },
+    {
+      "ja": "jam",
+      "ne": "ジャム"
+    },
+    {
+      "ja": "butter",
+      "ne": "バター"
+    },
+    {
+      "ja": "cream",
+      "ne": "クリーム"
+    },
+    {
+      "ja": "ketchup",
+      "ne": "ケチャップ"
+    },
+    {
+      "ja": "mustard",
+      "ne": "マスタード"
+    },
+    {
+      "ja": "mayonnaise",
+      "ne": "マヨネーズ"
+    },
+    {
+      "ja": "spice",
+      "ne": "香辛料"
+    },
+    {
+      "ja": "herb",
+      "ne": "ハーブ"
+    },
+    {
+      "ja": "garlic",
+      "ne": "にんにく"
+    },
+    {
+      "ja": "ginger",
+      "ne": "しょうが"
+    },
+    {
+      "ja": "syrup",
+      "ne": "シロップ"
+    },
+    {
+      "ja": "cocoa",
+      "ne": "ココア"
+    },
+    {
+      "ja": "lemonade",
+      "ne": "レモネード"
+    },
+    {
+      "ja": "cider",
+      "ne": "りんご酒・サイダー"
+    },
+    {
+      "ja": "liquor",
+      "ne": "蒸留酒"
+    },
+    {
+      "ja": "cocktail",
+      "ne": "カクテル"
+    },
+    {
+      "ja": "smoothie",
+      "ne": "スムージー"
+    },
+    {
+      "ja": "broth",
+      "ne": "だし汁"
+    },
+    {
+      "ja": "soy sauce",
+      "ne": "しょうゆ"
+    },
+    {
+      "ja": "chili",
+      "ne": "とうがらし"
+    },
+    {
+      "ja": "flour",
+      "ne": "小麦粉"
+    },
+    {
+      "ja": "cinnamon",
+      "ne": "シナモン"
+    },
+    {
+      "ja": "yogurt",
+      "ne": "ヨーグルト"
+    },
+    {
+      "ja": "beverage",
+      "ne": "飲み物（総称）"
+    },
+    {
+      "ja": "seasoning",
+      "ne": "調味料"
+    }
+  ],
+  "18": [
+    {
+      "ja": "dog",
+      "ne": "犬"
+    },
+    {
+      "ja": "cat",
+      "ne": "猫"
+    },
+    {
+      "ja": "bird",
+      "ne": "鳥"
+    },
+    {
+      "ja": "fish",
+      "ne": "魚"
+    },
+    {
+      "ja": "horse",
+      "ne": "馬"
+    },
+    {
+      "ja": "cow",
+      "ne": "牛"
+    },
+    {
+      "ja": "pig",
+      "ne": "豚"
+    },
+    {
+      "ja": "sheep",
+      "ne": "羊"
+    },
+    {
+      "ja": "rabbit",
+      "ne": "うさぎ"
+    },
+    {
+      "ja": "mouse",
+      "ne": "ねずみ"
+    },
+    {
+      "ja": "lion",
+      "ne": "ライオン"
+    },
+    {
+      "ja": "tiger",
+      "ne": "虎"
+    },
+    {
+      "ja": "bear",
+      "ne": "熊"
+    },
+    {
+      "ja": "elephant",
+      "ne": "象"
+    },
+    {
+      "ja": "monkey",
+      "ne": "猿"
+    },
+    {
+      "ja": "fox",
+      "ne": "きつね"
+    },
+    {
+      "ja": "wolf",
+      "ne": "狼"
+    },
+    {
+      "ja": "deer",
+      "ne": "鹿"
+    },
+    {
+      "ja": "frog",
+      "ne": "かえる"
+    },
+    {
+      "ja": "snake",
+      "ne": "蛇"
+    },
+    {
+      "ja": "duck",
+      "ne": "あひる・カモ"
+    },
+    {
+      "ja": "chicken",
+      "ne": "にわとり"
+    },
+    {
+      "ja": "butterfly",
+      "ne": "蝶"
+    },
+    {
+      "ja": "bee",
+      "ne": "蜂"
+    },
+    {
+      "ja": "ant",
+      "ne": "あり"
+    },
+    {
+      "ja": "spider",
+      "ne": "くも"
+    },
+    {
+      "ja": "insect",
+      "ne": "昆虫"
+    },
+    {
+      "ja": "animal",
+      "ne": "動物"
+    },
+    {
+      "ja": "plant",
+      "ne": "植物"
+    },
+    {
+      "ja": "tree",
+      "ne": "木"
+    },
+    {
+      "ja": "flower",
+      "ne": "花"
+    },
+    {
+      "ja": "grass",
+      "ne": "草"
+    },
+    {
+      "ja": "leaf",
+      "ne": "葉"
+    },
+    {
+      "ja": "root",
+      "ne": "根"
+    },
+    {
+      "ja": "seed",
+      "ne": "種"
+    },
+    {
+      "ja": "branch",
+      "ne": "枝"
+    },
+    {
+      "ja": "forest",
+      "ne": "森"
+    },
+    {
+      "ja": "bamboo",
+      "ne": "竹"
+    },
+    {
+      "ja": "rose",
+      "ne": "バラ"
+    },
+    {
+      "ja": "mushroom",
+      "ne": "きのこ"
+    }
+  ],
+  "19": [
+    {
+      "ja": "sun",
+      "ne": "太陽"
+    },
+    {
+      "ja": "rain",
+      "ne": "雨"
+    },
+    {
+      "ja": "snow",
+      "ne": "雪"
+    },
+    {
+      "ja": "wind",
+      "ne": "風"
+    },
+    {
+      "ja": "cloud",
+      "ne": "雲"
+    },
+    {
+      "ja": "sky",
+      "ne": "空"
+    },
+    {
+      "ja": "hot",
+      "ne": "暑い"
+    },
+    {
+      "ja": "cold",
+      "ne": "寒い"
+    },
+    {
+      "ja": "warm",
+      "ne": "暖かい"
+    },
+    {
+      "ja": "cool",
+      "ne": "涼しい"
+    },
+    {
+      "ja": "weather",
+      "ne": "天気"
+    },
+    {
+      "ja": "sunny",
+      "ne": "晴れた"
+    },
+    {
+      "ja": "rainy",
+      "ne": "雨の"
+    },
+    {
+      "ja": "cloudy",
+      "ne": "曇った"
+    },
+    {
+      "ja": "windy",
+      "ne": "風の強い"
+    },
+    {
+      "ja": "snowy",
+      "ne": "雪の降る"
+    },
+    {
+      "ja": "storm",
+      "ne": "嵐"
+    },
+    {
+      "ja": "thunder",
+      "ne": "雷鳴"
+    },
+    {
+      "ja": "lightning",
+      "ne": "稲妻"
+    },
+    {
+      "ja": "fog",
+      "ne": "霧"
+    },
+    {
+      "ja": "ice",
+      "ne": "氷"
+    },
+    {
+      "ja": "temperature",
+      "ne": "気温"
+    },
+    {
+      "ja": "rainbow",
+      "ne": "虹"
+    },
+    {
+      "ja": "shower",
+      "ne": "にわか雨"
+    },
+    {
+      "ja": "breeze",
+      "ne": "そよ風"
+    },
+    {
+      "ja": "humid",
+      "ne": "湿気の多い"
+    },
+    {
+      "ja": "dry",
+      "ne": "乾いた"
+    },
+    {
+      "ja": "wet",
+      "ne": "濡れた"
+    },
+    {
+      "ja": "frost",
+      "ne": "霜"
+    },
+    {
+      "ja": "hail",
+      "ne": "あられ・ひょう"
+    },
+    {
+      "ja": "flood",
+      "ne": "洪水"
+    },
+    {
+      "ja": "typhoon",
+      "ne": "台風"
+    },
+    {
+      "ja": "hurricane",
+      "ne": "ハリケーン"
+    },
+    {
+      "ja": "tornado",
+      "ne": "竜巻"
+    },
+    {
+      "ja": "drought",
+      "ne": "干ばつ"
+    },
+    {
+      "ja": "forecast",
+      "ne": "天気予報"
+    },
+    {
+      "ja": "climate",
+      "ne": "気候"
+    },
+    {
+      "ja": "mist",
+      "ne": "もや"
+    },
+    {
+      "ja": "earthquake",
+      "ne": "地震"
+    },
+    {
+      "ja": "heatwave",
+      "ne": "熱波"
+    }
+  ],
+  "20": [
+    {
+      "ja": "spring",
+      "ne": "春"
+    },
+    {
+      "ja": "summer",
+      "ne": "夏"
+    },
+    {
+      "ja": "fall",
+      "ne": "秋"
+    },
+    {
+      "ja": "autumn",
+      "ne": "秋"
+    },
+    {
+      "ja": "winter",
+      "ne": "冬"
+    },
+    {
+      "ja": "season",
+      "ne": "季節"
+    },
+    {
+      "ja": "morning",
+      "ne": "朝・午前"
+    },
+    {
+      "ja": "noon",
+      "ne": "正午"
+    },
+    {
+      "ja": "afternoon",
+      "ne": "午後"
+    },
+    {
+      "ja": "evening",
+      "ne": "夕方・晩"
+    },
+    {
+      "ja": "night",
+      "ne": "夜"
+    },
+    {
+      "ja": "midnight",
+      "ne": "真夜中"
+    },
+    {
+      "ja": "day",
+      "ne": "昼・一日"
+    },
+    {
+      "ja": "today",
+      "ne": "今日"
+    },
+    {
+      "ja": "tomorrow",
+      "ne": "明日"
+    },
+    {
+      "ja": "yesterday",
+      "ne": "昨日"
+    },
+    {
+      "ja": "week",
+      "ne": "週"
+    },
+    {
+      "ja": "weekend",
+      "ne": "週末"
+    },
+    {
+      "ja": "month",
+      "ne": "月（暦の）"
+    },
+    {
+      "ja": "year",
+      "ne": "年"
+    },
+    {
+      "ja": "hour",
+      "ne": "時間（1時間）"
+    },
+    {
+      "ja": "minute",
+      "ne": "分"
+    },
+    {
+      "ja": "second",
+      "ne": "秒"
+    },
+    {
+      "ja": "time",
+      "ne": "時間・時刻"
+    },
+    {
+      "ja": "clock",
+      "ne": "時計"
+    },
+    {
+      "ja": "calendar",
+      "ne": "カレンダー"
+    },
+    {
+      "ja": "date",
+      "ne": "日付"
+    },
+    {
+      "ja": "dawn",
+      "ne": "夜明け"
+    },
+    {
+      "ja": "sunrise",
+      "ne": "日の出"
+    },
+    {
+      "ja": "sunset",
+      "ne": "日の入り"
+    },
+    {
+      "ja": "dusk",
+      "ne": "たそがれ"
+    },
+    {
+      "ja": "daytime",
+      "ne": "日中"
+    },
+    {
+      "ja": "nighttime",
+      "ne": "夜間"
+    },
+    {
+      "ja": "early",
+      "ne": "早い・早く"
+    },
+    {
+      "ja": "late",
+      "ne": "遅い・遅く"
+    },
+    {
+      "ja": "holiday",
+      "ne": "休日・祝日"
+    },
+    {
+      "ja": "weekday",
+      "ne": "平日"
+    },
+    {
+      "ja": "daily",
+      "ne": "毎日の"
+    },
+    {
+      "ja": "hourly",
+      "ne": "1時間ごとの"
+    },
+    {
+      "ja": "decade",
+      "ne": "10年間"
+    }
+  ],
+  "21": [
+    {
+      "ja": "house",
+      "ne": "家"
+    },
+    {
+      "ja": "home",
+      "ne": "家庭・自宅"
+    },
+    {
+      "ja": "room",
+      "ne": "部屋"
+    },
+    {
+      "ja": "door",
+      "ne": "ドア"
+    },
+    {
+      "ja": "window",
+      "ne": "窓"
+    },
+    {
+      "ja": "wall",
+      "ne": "壁"
+    },
+    {
+      "ja": "floor",
+      "ne": "床"
+    },
+    {
+      "ja": "roof",
+      "ne": "屋根"
+    },
+    {
+      "ja": "table",
+      "ne": "テーブル"
+    },
+    {
+      "ja": "chair",
+      "ne": "椅子"
+    },
+    {
+      "ja": "bed",
+      "ne": "ベッド"
+    },
+    {
+      "ja": "desk",
+      "ne": "机"
+    },
+    {
+      "ja": "sofa",
+      "ne": "ソファ"
+    },
+    {
+      "ja": "kitchen",
+      "ne": "台所"
+    },
+    {
+      "ja": "bathroom",
+      "ne": "浴室・トイレ"
+    },
+    {
+      "ja": "bedroom",
+      "ne": "寝室"
+    },
+    {
+      "ja": "garden",
+      "ne": "庭"
+    },
+    {
+      "ja": "key",
+      "ne": "鍵"
+    },
+    {
+      "ja": "lamp",
+      "ne": "ランプ・電気スタンド"
+    },
+    {
+      "ja": "clock",
+      "ne": "時計"
+    },
+    {
+      "ja": "mirror",
+      "ne": "鏡"
+    },
+    {
+      "ja": "shelf",
+      "ne": "棚"
+    },
+    {
+      "ja": "drawer",
+      "ne": "引き出し"
+    },
+    {
+      "ja": "closet",
+      "ne": "クローゼット・押し入れ"
+    },
+    {
+      "ja": "curtain",
+      "ne": "カーテン"
+    },
+    {
+      "ja": "carpet",
+      "ne": "じゅうたん"
+    },
+    {
+      "ja": "stair",
+      "ne": "階段"
+    },
+    {
+      "ja": "ceiling",
+      "ne": "天井"
+    },
+    {
+      "ja": "garage",
+      "ne": "車庫"
+    },
+    {
+      "ja": "furniture",
+      "ne": "家具"
+    },
+    {
+      "ja": "refrigerator",
+      "ne": "冷蔵庫"
+    },
+    {
+      "ja": "oven",
+      "ne": "オーブン"
+    },
+    {
+      "ja": "sink",
+      "ne": "流し台・洗面台"
+    },
+    {
+      "ja": "toilet",
+      "ne": "トイレ・便器"
+    },
+    {
+      "ja": "shower",
+      "ne": "シャワー"
+    },
+    {
+      "ja": "pillow",
+      "ne": "枕"
+    },
+    {
+      "ja": "blanket",
+      "ne": "毛布"
+    },
+    {
+      "ja": "cupboard",
+      "ne": "戸棚"
+    },
+    {
+      "ja": "fence",
+      "ne": "塀・柵"
+    },
+    {
+      "ja": "apartment",
+      "ne": "アパート・マンション"
+    }
+  ],
+  "22": [
+    {
+      "ja": "city",
+      "ne": "都市"
+    },
+    {
+      "ja": "town",
+      "ne": "町"
+    },
+    {
+      "ja": "street",
+      "ne": "通り"
+    },
+    {
+      "ja": "road",
+      "ne": "道路"
+    },
+    {
+      "ja": "building",
+      "ne": "建物"
+    },
+    {
+      "ja": "house",
+      "ne": "家"
+    },
+    {
+      "ja": "shop",
+      "ne": "店"
+    },
+    {
+      "ja": "store",
+      "ne": "商店"
+    },
+    {
+      "ja": "school",
+      "ne": "学校"
+    },
+    {
+      "ja": "park",
+      "ne": "公園"
+    },
+    {
+      "ja": "station",
+      "ne": "駅"
+    },
+    {
+      "ja": "hospital",
+      "ne": "病院"
+    },
+    {
+      "ja": "library",
+      "ne": "図書館"
+    },
+    {
+      "ja": "hotel",
+      "ne": "ホテル"
+    },
+    {
+      "ja": "restaurant",
+      "ne": "レストラン"
+    },
+    {
+      "ja": "bank",
+      "ne": "銀行"
+    },
+    {
+      "ja": "church",
+      "ne": "教会"
+    },
+    {
+      "ja": "museum",
+      "ne": "博物館"
+    },
+    {
+      "ja": "market",
+      "ne": "市場"
+    },
+    {
+      "ja": "office",
+      "ne": "事務所"
+    },
+    {
+      "ja": "factory",
+      "ne": "工場"
+    },
+    {
+      "ja": "bridge",
+      "ne": "橋"
+    },
+    {
+      "ja": "tower",
+      "ne": "塔"
+    },
+    {
+      "ja": "square",
+      "ne": "広場"
+    },
+    {
+      "ja": "corner",
+      "ne": "角"
+    },
+    {
+      "ja": "sidewalk",
+      "ne": "歩道"
+    },
+    {
+      "ja": "crossing",
+      "ne": "横断歩道"
+    },
+    {
+      "ja": "traffic light",
+      "ne": "信号機"
+    },
+    {
+      "ja": "sign",
+      "ne": "標識"
+    },
+    {
+      "ja": "map",
+      "ne": "地図"
+    },
+    {
+      "ja": "theater",
+      "ne": "劇場"
+    },
+    {
+      "ja": "stadium",
+      "ne": "競技場"
+    },
+    {
+      "ja": "airport",
+      "ne": "空港"
+    },
+    {
+      "ja": "post office",
+      "ne": "郵便局"
+    },
+    {
+      "ja": "supermarket",
+      "ne": "スーパー"
+    },
+    {
+      "ja": "apartment",
+      "ne": "アパート"
+    },
+    {
+      "ja": "gate",
+      "ne": "門"
+    },
+    {
+      "ja": "fountain",
+      "ne": "噴水"
+    },
+    {
+      "ja": "parking lot",
+      "ne": "駐車場"
+    },
+    {
+      "ja": "neighborhood",
+      "ne": "近所・地域"
+    }
+  ],
+  "23": [
+    {
+      "ja": "car",
+      "ne": "車"
+    },
+    {
+      "ja": "bus",
+      "ne": "バス"
+    },
+    {
+      "ja": "train",
+      "ne": "電車・列車"
+    },
+    {
+      "ja": "taxi",
+      "ne": "タクシー"
+    },
+    {
+      "ja": "bike",
+      "ne": "自転車"
+    },
+    {
+      "ja": "bicycle",
+      "ne": "自転車"
+    },
+    {
+      "ja": "plane",
+      "ne": "飛行機"
+    },
+    {
+      "ja": "airplane",
+      "ne": "飛行機"
+    },
+    {
+      "ja": "ship",
+      "ne": "船"
+    },
+    {
+      "ja": "boat",
+      "ne": "ボート・小舟"
+    },
+    {
+      "ja": "truck",
+      "ne": "トラック"
+    },
+    {
+      "ja": "subway",
+      "ne": "地下鉄"
+    },
+    {
+      "ja": "motorcycle",
+      "ne": "オートバイ"
+    },
+    {
+      "ja": "helicopter",
+      "ne": "ヘリコプター"
+    },
+    {
+      "ja": "road",
+      "ne": "道路"
+    },
+    {
+      "ja": "street",
+      "ne": "通り"
+    },
+    {
+      "ja": "highway",
+      "ne": "幹線道路・高速道路"
+    },
+    {
+      "ja": "bridge",
+      "ne": "橋"
+    },
+    {
+      "ja": "station",
+      "ne": "駅"
+    },
+    {
+      "ja": "airport",
+      "ne": "空港"
+    },
+    {
+      "ja": "port",
+      "ne": "港"
+    },
+    {
+      "ja": "stop",
+      "ne": "停留所"
+    },
+    {
+      "ja": "ticket",
+      "ne": "切符・チケット"
+    },
+    {
+      "ja": "seat",
+      "ne": "座席"
+    },
+    {
+      "ja": "driver",
+      "ne": "運転手"
+    },
+    {
+      "ja": "passenger",
+      "ne": "乗客"
+    },
+    {
+      "ja": "engine",
+      "ne": "エンジン"
+    },
+    {
+      "ja": "wheel",
+      "ne": "車輪・ハンドル"
+    },
+    {
+      "ja": "tire",
+      "ne": "タイヤ"
+    },
+    {
+      "ja": "fuel",
+      "ne": "燃料"
+    },
+    {
+      "ja": "traffic",
+      "ne": "交通・交通量"
+    },
+    {
+      "ja": "signal",
+      "ne": "信号"
+    },
+    {
+      "ja": "parking",
+      "ne": "駐車"
+    },
+    {
+      "ja": "speed",
+      "ne": "速度"
+    },
+    {
+      "ja": "route",
+      "ne": "経路・路線"
+    },
+    {
+      "ja": "drive",
+      "ne": "運転する"
+    },
+    {
+      "ja": "ride",
+      "ne": "乗る"
+    },
+    {
+      "ja": "travel",
+      "ne": "旅行する・移動する"
+    },
+    {
+      "ja": "transport",
+      "ne": "輸送する・交通機関"
+    },
+    {
+      "ja": "vehicle",
+      "ne": "乗り物・車両"
+    }
+  ],
+  "24": [
+    {
+      "ja": "job",
+      "ne": "仕事・職"
+    },
+    {
+      "ja": "work",
+      "ne": "働く・仕事"
+    },
+    {
+      "ja": "teacher",
+      "ne": "教師"
+    },
+    {
+      "ja": "doctor",
+      "ne": "医者"
+    },
+    {
+      "ja": "nurse",
+      "ne": "看護師"
+    },
+    {
+      "ja": "cook",
+      "ne": "料理人"
+    },
+    {
+      "ja": "farmer",
+      "ne": "農家・農業従事者"
+    },
+    {
+      "ja": "driver",
+      "ne": "運転手"
+    },
+    {
+      "ja": "police officer",
+      "ne": "警察官"
+    },
+    {
+      "ja": "firefighter",
+      "ne": "消防士"
+    },
+    {
+      "ja": "singer",
+      "ne": "歌手"
+    },
+    {
+      "ja": "actor",
+      "ne": "俳優"
+    },
+    {
+      "ja": "artist",
+      "ne": "芸術家"
+    },
+    {
+      "ja": "writer",
+      "ne": "作家"
+    },
+    {
+      "ja": "musician",
+      "ne": "音楽家"
+    },
+    {
+      "ja": "dentist",
+      "ne": "歯科医"
+    },
+    {
+      "ja": "pilot",
+      "ne": "操縦士"
+    },
+    {
+      "ja": "waiter",
+      "ne": "給仕・ウェイター"
+    },
+    {
+      "ja": "clerk",
+      "ne": "店員・事務員"
+    },
+    {
+      "ja": "manager",
+      "ne": "管理者・店長"
+    },
+    {
+      "ja": "engineer",
+      "ne": "技術者・エンジニア"
+    },
+    {
+      "ja": "scientist",
+      "ne": "科学者"
+    },
+    {
+      "ja": "lawyer",
+      "ne": "弁護士"
+    },
+    {
+      "ja": "banker",
+      "ne": "銀行員"
+    },
+    {
+      "ja": "reporter",
+      "ne": "記者"
+    },
+    {
+      "ja": "photographer",
+      "ne": "写真家"
+    },
+    {
+      "ja": "designer",
+      "ne": "デザイナー"
+    },
+    {
+      "ja": "carpenter",
+      "ne": "大工"
+    },
+    {
+      "ja": "mechanic",
+      "ne": "整備士"
+    },
+    {
+      "ja": "chef",
+      "ne": "シェフ・料理長"
+    },
+    {
+      "ja": "barber",
+      "ne": "理髪師"
+    },
+    {
+      "ja": "secretary",
+      "ne": "秘書"
+    },
+    {
+      "ja": "accountant",
+      "ne": "会計士"
+    },
+    {
+      "ja": "professor",
+      "ne": "教授"
+    },
+    {
+      "ja": "officer",
+      "ne": "役人・将校"
+    },
+    {
+      "ja": "worker",
+      "ne": "労働者"
+    },
+    {
+      "ja": "employee",
+      "ne": "従業員"
+    },
+    {
+      "ja": "employer",
+      "ne": "雇用主"
+    },
+    {
+      "ja": "salary",
+      "ne": "給料"
+    },
+    {
+      "ja": "career",
+      "ne": "経歴・職業生活"
+    }
+  ],
+  "25": [
+    {
+      "ja": "school",
+      "ne": "学校"
+    },
+    {
+      "ja": "student",
+      "ne": "生徒・学生"
+    },
+    {
+      "ja": "teacher",
+      "ne": "先生・教師"
+    },
+    {
+      "ja": "class",
+      "ne": "授業・クラス"
+    },
+    {
+      "ja": "book",
+      "ne": "本"
+    },
+    {
+      "ja": "pen",
+      "ne": "ペン"
+    },
+    {
+      "ja": "pencil",
+      "ne": "鉛筆"
+    },
+    {
+      "ja": "desk",
+      "ne": "机"
+    },
+    {
+      "ja": "chair",
+      "ne": "椅子"
+    },
+    {
+      "ja": "notebook",
+      "ne": "ノート"
+    },
+    {
+      "ja": "eraser",
+      "ne": "消しゴム"
+    },
+    {
+      "ja": "ruler",
+      "ne": "定規"
+    },
+    {
+      "ja": "bag",
+      "ne": "かばん"
+    },
+    {
+      "ja": "classroom",
+      "ne": "教室"
+    },
+    {
+      "ja": "blackboard",
+      "ne": "黒板"
+    },
+    {
+      "ja": "lesson",
+      "ne": "授業・レッスン"
+    },
+    {
+      "ja": "homework",
+      "ne": "宿題"
+    },
+    {
+      "ja": "test",
+      "ne": "テスト"
+    },
+    {
+      "ja": "exam",
+      "ne": "試験"
+    },
+    {
+      "ja": "question",
+      "ne": "質問"
+    },
+    {
+      "ja": "answer",
+      "ne": "答え"
+    },
+    {
+      "ja": "study",
+      "ne": "勉強する"
+    },
+    {
+      "ja": "learn",
+      "ne": "学ぶ"
+    },
+    {
+      "ja": "read",
+      "ne": "読む"
+    },
+    {
+      "ja": "write",
+      "ne": "書く"
+    },
+    {
+      "ja": "subject",
+      "ne": "教科"
+    },
+    {
+      "ja": "math",
+      "ne": "数学"
+    },
+    {
+      "ja": "science",
+      "ne": "理科・科学"
+    },
+    {
+      "ja": "history",
+      "ne": "歴史"
+    },
+    {
+      "ja": "English",
+      "ne": "英語"
+    },
+    {
+      "ja": "library",
+      "ne": "図書館"
+    },
+    {
+      "ja": "dictionary",
+      "ne": "辞書"
+    },
+    {
+      "ja": "grade",
+      "ne": "成績・学年"
+    },
+    {
+      "ja": "university",
+      "ne": "大学"
+    },
+    {
+      "ja": "college",
+      "ne": "大学・単科大学"
+    },
+    {
+      "ja": "教育",
+      "ne": "education"
+    },
+    {
+      "ja": "knowledge",
+      "ne": "知識"
+    },
+    {
+      "ja": "uniform",
+      "ne": "制服"
+    },
+    {
+      "ja": "schedule",
+      "ne": "時間割・予定"
+    },
+    {
+      "ja": "graduate",
+      "ne": "卒業する"
+    }
+  ],
+  "26": [
+    {
+      "ja": "money",
+      "ne": "お金"
+    },
+    {
+      "ja": "cash",
+      "ne": "現金"
+    },
+    {
+      "ja": "coin",
+      "ne": "硬貨"
+    },
+    {
+      "ja": "bill",
+      "ne": "紙幣、請求書"
+    },
+    {
+      "ja": "price",
+      "ne": "価格"
+    },
+    {
+      "ja": "cost",
+      "ne": "費用、かかる"
+    },
+    {
+      "ja": "pay",
+      "ne": "支払う"
+    },
+    {
+      "ja": "buy",
+      "ne": "買う"
+    },
+    {
+      "ja": "sell",
+      "ne": "売る"
+    },
+    {
+      "ja": "spend",
+      "ne": "(お金を)使う"
+    },
+    {
+      "ja": "save",
+      "ne": "貯金する、節約する"
+    },
+    {
+      "ja": "bank",
+      "ne": "銀行"
+    },
+    {
+      "ja": "account",
+      "ne": "口座"
+    },
+    {
+      "ja": "card",
+      "ne": "カード"
+    },
+    {
+      "ja": "change",
+      "ne": "おつり、両替"
+    },
+    {
+      "ja": "income",
+      "ne": "収入"
+    },
+    {
+      "ja": "salary",
+      "ne": "給料"
+    },
+    {
+      "ja": "wage",
+      "ne": "賃金"
+    },
+    {
+      "ja": "tax",
+      "ne": "税金"
+    },
+    {
+      "ja": "price tag",
+      "ne": "値札"
+    },
+    {
+      "ja": "discount",
+      "ne": "割引"
+    },
+    {
+      "ja": "sale",
+      "ne": "安売り、販売"
+    },
+    {
+      "ja": "budget",
+      "ne": "予算"
+    },
+    {
+      "ja": "loan",
+      "ne": "融資、ローン"
+    },
+    {
+      "ja": "debt",
+      "ne": "借金"
+    },
+    {
+      "ja": "credit",
+      "ne": "信用、クレジット"
+    },
+    {
+      "ja": "interest",
+      "ne": "利子、利息"
+    },
+    {
+      "ja": "profit",
+      "ne": "利益"
+    },
+    {
+      "ja": "loss",
+      "ne": "損失"
+    },
+    {
+      "ja": "fee",
+      "ne": "料金、手数料"
+    },
+    {
+      "ja": "rent",
+      "ne": "家賃、賃借する"
+    },
+    {
+      "ja": "wealth",
+      "ne": "富"
+    },
+    {
+      "ja": "value",
+      "ne": "価値"
+    },
+    {
+      "ja": "currency",
+      "ne": "通貨"
+    },
+    {
+      "ja": "exchange",
+      "ne": "両替、交換"
+    },
+    {
+      "ja": "invest",
+      "ne": "投資する"
+    },
+    {
+      "ja": "economy",
+      "ne": "経済"
+    },
+    {
+      "ja": "market",
+      "ne": "市場"
+    },
+    {
+      "ja": "trade",
+      "ne": "貿易、取引"
+    },
+    {
+      "ja": "inflation",
+      "ne": "インフレ、物価上昇"
+    }
+  ],
+  "27": [
+    {
+      "ja": "hobby",
+      "ne": "趣味"
+    },
+    {
+      "ja": "game",
+      "ne": "ゲーム"
+    },
+    {
+      "ja": "music",
+      "ne": "音楽"
+    },
+    {
+      "ja": "movie",
+      "ne": "映画"
+    },
+    {
+      "ja": "book",
+      "ne": "本"
+    },
+    {
+      "ja": "read",
+      "ne": "読む"
+    },
+    {
+      "ja": "sing",
+      "ne": "歌う"
+    },
+    {
+      "ja": "song",
+      "ne": "歌"
+    },
+    {
+      "ja": "dance",
+      "ne": "踊る、ダンス"
+    },
+    {
+      "ja": "draw",
+      "ne": "絵を描く"
+    },
+    {
+      "ja": "paint",
+      "ne": "絵の具で描く"
+    },
+    {
+      "ja": "photo",
+      "ne": "写真"
+    },
+    {
+      "ja": "camera",
+      "ne": "カメラ"
+    },
+    {
+      "ja": "travel",
+      "ne": "旅行する"
+    },
+    {
+      "ja": "trip",
+      "ne": "旅行"
+    },
+    {
+      "ja": "cook",
+      "ne": "料理する"
+    },
+    {
+      "ja": "swim",
+      "ne": "泳ぐ"
+    },
+    {
+      "ja": "run",
+      "ne": "走る"
+    },
+    {
+      "ja": "fish",
+      "ne": "釣りをする、魚"
+    },
+    {
+      "ja": "camp",
+      "ne": "キャンプ"
+    },
+    {
+      "ja": "hike",
+      "ne": "ハイキングする"
+    },
+    {
+      "ja": "sport",
+      "ne": "スポーツ"
+    },
+    {
+      "ja": "ball",
+      "ne": "ボール"
+    },
+    {
+      "ja": "team",
+      "ne": "チーム"
+    },
+    {
+      "ja": "player",
+      "ne": "選手"
+    },
+    {
+      "ja": "win",
+      "ne": "勝つ"
+    },
+    {
+      "ja": "play",
+      "ne": "遊ぶ、演奏する"
+    },
+    {
+      "ja": "guitar",
+      "ne": "ギター"
+    },
+    {
+      "ja": "piano",
+      "ne": "ピアノ"
+    },
+    {
+      "ja": "concert",
+      "ne": "コンサート"
+    },
+    {
+      "ja": "art",
+      "ne": "芸術"
+    },
+    {
+      "ja": "draw",
+      "ne": "くじ引き、引き分け"
+    },
+    {
+      "ja": "garden",
+      "ne": "庭、ガーデニング"
+    },
+    {
+      "ja": "collect",
+      "ne": "集める"
+    },
+    {
+      "ja": "puzzle",
+      "ne": "パズル"
+    },
+    {
+      "ja": "card",
+      "ne": "カード"
+    },
+    {
+      "ja": "festival",
+      "ne": "祭り"
+    },
+    {
+      "ja": "theater",
+      "ne": "劇場"
+    },
+    {
+      "ja": "comic",
+      "ne": "漫画"
+    },
+    {
+      "ja": "shopping",
+      "ne": "買い物"
+    }
+  ],
+  "28": [
+    {
+      "ja": "god",
+      "ne": "神"
+    },
+    {
+      "ja": "church",
+      "ne": "教会"
+    },
+    {
+      "ja": "temple",
+      "ne": "寺院"
+    },
+    {
+      "ja": "shrine",
+      "ne": "神社"
+    },
+    {
+      "ja": "pray",
+      "ne": "祈る"
+    },
+    {
+      "ja": "prayer",
+      "ne": "祈り"
+    },
+    {
+      "ja": "holy",
+      "ne": "神聖な"
+    },
+    {
+      "ja": "faith",
+      "ne": "信仰"
+    },
+    {
+      "ja": "believe",
+      "ne": "信じる"
+    },
+    {
+      "ja": "belief",
+      "ne": "信念・信仰"
+    },
+    {
+      "ja": "religion",
+      "ne": "宗教"
+    },
+    {
+      "ja": "spirit",
+      "ne": "霊・精神"
+    },
+    {
+      "ja": "soul",
+      "ne": "魂"
+    },
+    {
+      "ja": "heaven",
+      "ne": "天国"
+    },
+    {
+      "ja": "hell",
+      "ne": "地獄"
+    },
+    {
+      "ja": "angel",
+      "ne": "天使"
+    },
+    {
+      "ja": "priest",
+      "ne": "聖職者・神父"
+    },
+    {
+      "ja": "monk",
+      "ne": "僧侶"
+    },
+    {
+      "ja": "bible",
+      "ne": "聖書"
+    },
+    {
+      "ja": "worship",
+      "ne": "礼拝する"
+    },
+    {
+      "ja": "bless",
+      "ne": "祝福する"
+    },
+    {
+      "ja": "sin",
+      "ne": "罪"
+    },
+    {
+      "ja": "sacred",
+      "ne": "神聖な"
+    },
+    {
+      "ja": "festival",
+      "ne": "祭り"
+    },
+    {
+      "ja": "ceremony",
+      "ne": "儀式・式典"
+    },
+    {
+      "ja": "ritual",
+      "ne": "儀礼"
+    },
+    {
+      "ja": "tradition",
+      "ne": "伝統"
+    },
+    {
+      "ja": "custom",
+      "ne": "習慣・慣習"
+    },
+    {
+      "ja": "celebrate",
+      "ne": "祝う"
+    },
+    {
+      "ja": "celebration",
+      "ne": "祝賀"
+    },
+    {
+      "ja": "holiday",
+      "ne": "祝日・休日"
+    },
+    {
+      "ja": "anniversary",
+      "ne": "記念日"
+    },
+    {
+      "ja": "wedding",
+      "ne": "結婚式"
+    },
+    {
+      "ja": "funeral",
+      "ne": "葬式"
+    },
+    {
+      "ja": "gift",
+      "ne": "贈り物"
+    },
+    {
+      "ja": "candle",
+      "ne": "ろうそく"
+    },
+    {
+      "ja": "parade",
+      "ne": "パレード"
+    },
+    {
+      "ja": "fireworks",
+      "ne": "花火"
+    },
+    {
+      "ja": "miracle",
+      "ne": "奇跡"
+    },
+    {
+      "ja": "blessing",
+      "ne": "恵み・祝福"
+    }
+  ],
+  "29": [
+    {
+      "ja": "trip",
+      "ne": "旅行"
+    },
+    {
+      "ja": "travel",
+      "ne": "旅行する"
+    },
+    {
+      "ja": "tour",
+      "ne": "観光・ツアー"
+    },
+    {
+      "ja": "map",
+      "ne": "地図"
+    },
+    {
+      "ja": "hotel",
+      "ne": "ホテル"
+    },
+    {
+      "ja": "airport",
+      "ne": "空港"
+    },
+    {
+      "ja": "flight",
+      "ne": "飛行機の便"
+    },
+    {
+      "ja": "plane",
+      "ne": "飛行機"
+    },
+    {
+      "ja": "train",
+      "ne": "電車"
+    },
+    {
+      "ja": "bus",
+      "ne": "バス"
+    },
+    {
+      "ja": "taxi",
+      "ne": "タクシー"
+    },
+    {
+      "ja": "ticket",
+      "ne": "切符・チケット"
+    },
+    {
+      "ja": "passport",
+      "ne": "パスポート"
+    },
+    {
+      "ja": "luggage",
+      "ne": "手荷物"
+    },
+    {
+      "ja": "suitcase",
+      "ne": "スーツケース"
+    },
+    {
+      "ja": "bag",
+      "ne": "かばん"
+    },
+    {
+      "ja": "station",
+      "ne": "駅"
+    },
+    {
+      "ja": "camera",
+      "ne": "カメラ"
+    },
+    {
+      "ja": "guide",
+      "ne": "案内・ガイド"
+    },
+    {
+      "ja": "beach",
+      "ne": "浜辺"
+    },
+    {
+      "ja": "sea",
+      "ne": "海"
+    },
+    {
+      "ja": "mountain",
+      "ne": "山"
+    },
+    {
+      "ja": "city",
+      "ne": "都市"
+    },
+    {
+      "ja": "country",
+      "ne": "国"
+    },
+    {
+      "ja": "abroad",
+      "ne": "海外へ"
+    },
+    {
+      "ja": "restaurant",
+      "ne": "レストラン"
+    },
+    {
+      "ja": "food",
+      "ne": "食べ物"
+    },
+    {
+      "ja": "money",
+      "ne": "お金"
+    },
+    {
+      "ja": "souvenir",
+      "ne": "お土産"
+    },
+    {
+      "ja": "reservation",
+      "ne": "予約"
+    },
+    {
+      "ja": "room",
+      "ne": "部屋"
+    },
+    {
+      "ja": "baggage",
+      "ne": "荷物"
+    },
+    {
+      "ja": "airline",
+      "ne": "航空会社"
+    },
+    {
+      "ja": "departure",
+      "ne": "出発"
+    },
+    {
+      "ja": "arrival",
+      "ne": "到着"
+    },
+    {
+      "ja": "delay",
+      "ne": "遅延"
+    },
+    {
+      "ja": "sightseeing",
+      "ne": "観光"
+    },
+    {
+      "ja": "destination",
+      "ne": "目的地"
+    },
+    {
+      "ja": "journey",
+      "ne": "旅程・旅"
+    },
+    {
+      "ja": "visa",
+      "ne": "査証・ビザ"
+    }
+  ],
+  "30": [
+    {
+      "ja": "help",
+      "ne": "助け、助ける"
+    },
+    {
+      "ja": "pain",
+      "ne": "痛み"
+    },
+    {
+      "ja": "sick",
+      "ne": "病気の"
+    },
+    {
+      "ja": "hurt",
+      "ne": "傷つける、痛む"
+    },
+    {
+      "ja": "doctor",
+      "ne": "医者"
+    },
+    {
+      "ja": "nurse",
+      "ne": "看護師"
+    },
+    {
+      "ja": "hospital",
+      "ne": "病院"
+    },
+    {
+      "ja": "medicine",
+      "ne": "薬"
+    },
+    {
+      "ja": "fever",
+      "ne": "熱"
+    },
+    {
+      "ja": "cough",
+      "ne": "咳"
+    },
+    {
+      "ja": "cold",
+      "ne": "風邪"
+    },
+    {
+      "ja": "headache",
+      "ne": "頭痛"
+    },
+    {
+      "ja": "blood",
+      "ne": "血"
+    },
+    {
+      "ja": "wound",
+      "ne": "傷"
+    },
+    {
+      "ja": "injury",
+      "ne": "けが"
+    },
+    {
+      "ja": "burn",
+      "ne": "やけど"
+    },
+    {
+      "ja": "fall",
+      "ne": "転倒、落ちる"
+    },
+    {
+      "ja": "fire",
+      "ne": "火事、火"
+    },
+    {
+      "ja": "accident",
+      "ne": "事故"
+    },
+    {
+      "ja": "danger",
+      "ne": "危険"
+    },
+    {
+      "ja": "emergency",
+      "ne": "緊急事態"
+    },
+    {
+      "ja": "ambulance",
+      "ne": "救急車"
+    },
+    {
+      "ja": "police",
+      "ne": "警察"
+    },
+    {
+      "ja": "safe",
+      "ne": "安全な"
+    },
+    {
+      "ja": "breathe",
+      "ne": "呼吸する"
+    },
+    {
+      "ja": "faint",
+      "ne": "気を失う"
+    },
+    {
+      "ja": "dizzy",
+      "ne": "めまいがする"
+    },
+    {
+      "ja": "allergy",
+      "ne": "アレルギー"
+    },
+    {
+      "ja": "poison",
+      "ne": "毒"
+    },
+    {
+      "ja": "choke",
+      "ne": "窒息する"
+    },
+    {
+      "ja": "bleed",
+      "ne": "出血する"
+    },
+    {
+      "ja": "swell",
+      "ne": "腫れる"
+    },
+    {
+      "ja": "vomit",
+      "ne": "吐く"
+    },
+    {
+      "ja": "infection",
+      "ne": "感染"
+    },
+    {
+      "ja": "symptom",
+      "ne": "症状"
+    },
+    {
+      "ja": "treatment",
+      "ne": "治療"
+    },
+    {
+      "ja": "rescue",
+      "ne": "救助する"
+    },
+    {
+      "ja": "escape",
+      "ne": "逃げる"
+    },
+    {
+      "ja": "warning",
+      "ne": "警告"
+    },
+    {
+      "ja": "survive",
+      "ne": "生き延びる"
+    }
+  ]
+}
