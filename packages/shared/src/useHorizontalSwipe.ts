@@ -16,9 +16,10 @@ export function useHorizontalSwipe(onLeft: () => void, onRight: () => void) {
   left.current = onLeft;
   right.current = onRight;
 
-  // 横移動が縦より明確に大きい時だけ true（縦スクロール・タップは邪魔しない）
+  // 横移動が縦より大きい時だけ true（縦スクロール・タップは邪魔しない）。
+  // 閾値を下げて軽い操作でも横スワイプとして拾う。
   const isHorizontal = (_e: unknown, g: { dx: number; dy: number }) =>
-    Math.abs(g.dx) > 18 && Math.abs(g.dx) > Math.abs(g.dy) * 1.3;
+    Math.abs(g.dx) > 10 && Math.abs(g.dx) > Math.abs(g.dy) * 1.2;
 
   const responder = useRef(
     PanResponder.create({
@@ -26,8 +27,11 @@ export function useHorizontalSwipe(onLeft: () => void, onRight: () => void) {
       onMoveShouldSetPanResponderCapture: isHorizontal,
       onMoveShouldSetPanResponder: isHorizontal,
       onPanResponderRelease: (_e, g) => {
-        if (g.dx <= -40) left.current();
-        else if (g.dx >= 40) right.current();
+        // 距離が十分 or 速い「フリック」でも発火（反応を軽く）
+        const DIST = 28;
+        const VEL = 0.25;
+        if (g.dx <= -DIST || (g.vx <= -VEL && g.dx < 0)) left.current();
+        else if (g.dx >= DIST || (g.vx >= VEL && g.dx > 0)) right.current();
       },
       // 一度横スワイプと判定したら ScrollView に責務を渡さない
       onPanResponderTerminationRequest: () => false,
