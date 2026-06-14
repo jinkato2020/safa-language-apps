@@ -126,7 +126,8 @@ export default function FlashcardScreen() {
   );
 
   return (
-    <ScrollView contentContainerStyle={styles.container} {...swipe}>
+    <View style={styles.swipeWrap} {...swipe}>
+    <ScrollView style={styles.flex} contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
         <Text style={styles.metaText}>
           <Text style={styles.metaCur}>{currentCategoryId}.</Text> {catName} · {direction === 'ne2ja' ? t('directions.neToJa') : t('directions.jaToNe')} · <Text style={styles.metaCur}>{cursor + 1}</Text> / {order.length}
@@ -175,10 +176,13 @@ export default function FlashcardScreen() {
         </View>
       </Pressable>
     </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  swipeWrap: { flex: 1 },
+  flex: { flex: 1 },
   container: { padding: spacing.lg, paddingBottom: spacing.xxl, maxWidth: 760, width: '100%', alignSelf: 'center' },
   metaRow: { paddingBottom: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.line, marginBottom: spacing.xl },
   metaText: { fontFamily: 'Courier', fontSize: 12, color: colors.inkMute },

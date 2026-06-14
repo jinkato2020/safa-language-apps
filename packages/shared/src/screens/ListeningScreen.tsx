@@ -159,7 +159,8 @@ export default function ListeningScreen() {
   );
 
   return (
-    <ScrollView contentContainerStyle={styles.container} {...swipe}>
+    <View style={styles.swipeWrap} {...swipe}>
+    <ScrollView style={styles.flex} contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
         <Text style={[styles.metaText, ss(12)]}>
           <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · {t('listening.exampleCounter')} <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
@@ -206,10 +207,13 @@ export default function ListeningScreen() {
         </Pressable>
       </View>
     </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  swipeWrap: { flex: 1 },
+  flex: { flex: 1 },
   container: { padding: spacing.lg, paddingBottom: spacing.xxl, maxWidth: 760, width: '100%', alignSelf: 'center' },
   metaRow: { paddingBottom: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.line, marginBottom: spacing.xl },
   metaText: { fontFamily: 'Courier', fontSize: 12, color: colors.inkMute },
