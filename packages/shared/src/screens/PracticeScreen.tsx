@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from '../Text';
 import { useNavigation, useRoute, type RouteProp } from '@react-navigation/native';
@@ -192,9 +192,12 @@ export default function PracticeScreen() {
   })();
 
   // 横スワイプで移動（左=次へ / 右=前へ）。端では無効。
+  // カード上で開始したジェスチャーはスワイプ無効（タップのみ）にするための ref。
+  const cardSwipeBlock = useRef(false);
   const swipe = useHorizontalSwipe(
     () => { if (!atLast) go(1); },
     () => { if (!atFirst) go(-1); },
+    cardSwipeBlock,
   );
 
   if (!ex) return null;
@@ -219,8 +222,12 @@ export default function PracticeScreen() {
         </Text>
       </View>
 
-      {/* センテンスカード（タップで言語切り替え・フリップアニメ付き） */}
-      <Pressable onPress={() => flip(() => setRevealed(r => !r))}>
+      {/* センテンスカード（タップで言語切り替え・フリップアニメ付き／スワイプ移動はしない=タップのみ） */}
+      <Pressable
+        onPress={() => flip(() => setRevealed(r => !r))}
+        onPressIn={() => { cardSwipeBlock.current = true; }}
+        onPressOut={() => { cardSwipeBlock.current = false; }}
+      >
         {({ pressed }) => (
           <Animated.View style={[styles.sentenceCard, pressed && styles.sentenceCardPressed, animatedStyle]}>
             <Text style={[styles.cardHint, ss(10)]}>{t('practice.cardHint', { state: revealed ? t('practice.answer') : t('practice.question') })}</Text>

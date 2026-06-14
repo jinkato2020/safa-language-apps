@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from '../Text';
 import { useRoute, type RouteProp } from '@react-navigation/native';
@@ -120,9 +120,12 @@ export default function FlashcardScreen() {
   const atLast = cursor >= order.length - 1 && currentCategoryId >= WORD_CATEGORIES.length;
 
   // 横スワイプで移動（左=次へ / 右=前へ）。端では無効。
+  // カード上で開始したジェスチャーはスワイプ無効（タップのみ）にするための ref。
+  const cardSwipeBlock = useRef(false);
   const swipe = useHorizontalSwipe(
     () => { if (!atLast) go(1); },
     () => { if (!atFirst) go(-1); },
+    cardSwipeBlock,
   );
 
   return (
@@ -134,7 +137,11 @@ export default function FlashcardScreen() {
         </Text>
       </View>
 
-      <Pressable onPress={() => flip(() => setFlipped(f => !f))}>
+      <Pressable
+        onPress={() => flip(() => setFlipped(f => !f))}
+        onPressIn={() => { cardSwipeBlock.current = true; }}
+        onPressOut={() => { cardSwipeBlock.current = false; }}
+      >
         {({ pressed }) => (
           <Animated.View style={[styles.card, pressed && styles.cardPressed, animatedStyle]}>
             <Text style={styles.label}>{flipped ? backTag : frontTag}</Text>
