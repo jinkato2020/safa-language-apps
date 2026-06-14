@@ -1,4 +1,5 @@
 name: Build iOS and Android (Japanese)
+run-name: "App B・日本語 (com.safa.japanese) — ${{ github.event.head_commit.message || github.ref_name }}"
 
 # =============================================================================
 # App B: 聞いて話せる日本語 (com.safa.japanese)
@@ -106,6 +107,9 @@ jobs:
           BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD)))
           echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_ENV
           echo "::notice::Build number: $BUILD_NUMBER"
+          APP_VERSION=$(node -p "require('./$APP_DIR/app.json').expo.version" 2>/dev/null || echo "?")
+          echo "::notice title=iOS build::$APP_DIR  v$APP_VERSION  (build $BUILD_NUMBER)"
+          echo "## 📦 $APP_DIR — v$APP_VERSION (iOS build $BUILD_NUMBER)" >> $GITHUB_STEP_SUMMARY
 
       - name: Expo prebuild
         working-directory: ${{ env.APP_DIR }}
@@ -320,6 +324,9 @@ jobs:
           VERSION_CODE=$((1000 + $(git rev-list --count HEAD)))
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
           echo "::notice::Android versionCode: $VERSION_CODE"
+          APP_VERSION=$(node -p "require('./$APP_DIR/app.json').expo.version" 2>/dev/null || echo "?")
+          echo "::notice title=Android build::$APP_DIR  v$APP_VERSION  (versionCode $VERSION_CODE)"
+          echo "## 🤖 $APP_DIR — v$APP_VERSION (Android versionCode $VERSION_CODE)" >> $GITHUB_STEP_SUMMARY
 
       - name: Expo prebuild
         working-directory: ${{ env.APP_DIR }}
