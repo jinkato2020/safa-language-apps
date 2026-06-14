@@ -7,6 +7,7 @@
   "common": {
     "prev": "← Prev",
     "next": "Next →",
+    "swipeHint": "← Swipe to move →",
     "back": "Back",
     "save": "Save",
     "cancel": "Cancel",
@@ -26,8 +27,8 @@
     "vocabulary": "Vocabulary"
   },
   "directions": {
-    "ja2ne": "🇬🇧 → 🇳🇵",
-    "ne2ja": "🇳🇵 → 🇬🇧",
+    "ja2ne": "English → Nepali",
+    "ne2ja": "Nepali → English",
     "neToJa": "NE→EN",
     "jaToNe": "EN→NE"
   },
@@ -194,8 +195,8 @@
     "themeSelectDesc": "Choose a theme and build up your Nepali vocabulary.",
     "directionTitle": "Choose quiz direction",
     "directionDesc": "Which direction do you want to study the \"{{category}}\" cards?",
-    "neLang": "🇳🇵 Nepali",
-    "jaLang": "🇬🇧 English",
+    "neLang": "Nepali",
+    "jaLang": "English",
     "neToJaDesc": "Nepali is shown; tap to see the English meaning. Builds reading skills.",
     "jaToNeDesc": "English is shown; tap to see the Nepali. Builds quick recall.",
     "modeFlashcard": "Shuffle cards",

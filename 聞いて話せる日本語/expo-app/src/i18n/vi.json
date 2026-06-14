@@ -7,6 +7,7 @@
   "common": {
     "prev": "← Trước",
     "next": "Tiếp →",
+    "swipeHint": "← Vuốt để chuyển →",
     "back": "Quay lại",
     "save": "Lưu",
     "cancel": "Hủy",
@@ -26,8 +27,8 @@
     "vocabulary": "Từ vựng"
   },
   "directions": {
-    "ja2ne": "🇯🇵 → 🇳🇵",
-    "ne2ja": "🇳🇵 → 🇯🇵",
+    "ja2ne": "Tiếng Nhật → Tiếng Việt",
+    "ne2ja": "Tiếng Việt → Tiếng Nhật",
     "neToJa": "NE→JP",
     "jaToNe": "JP→NE"
   },
@@ -194,8 +195,8 @@
     "themeSelectDesc": "Chọn chủ đề và mở rộng vốn từ vựng tiếng Nhật của bạn.",
     "directionTitle": "Chọn hướng kiểm tra",
     "directionDesc": "Bạn muốn học thẻ {{category}} theo hướng nào?",
-    "neLang": "🇬🇧 Tiếng Anh",
-    "jaLang": "🇯🇵 Tiếng Nhật",
+    "neLang": "Tiếng Anh",
+    "jaLang": "Tiếng Nhật",
     "neToJaDesc": "Hiển thị tiếng Anh; chạm để hiện tiếng Nhật. Giúp ghi nhớ nhanh.",
     "jaToNeDesc": "Hiển thị tiếng Nhật; chạm để hiện tiếng Anh. Rèn kỹ năng đọc.",
     "modeFlashcard": "Thẻ xáo trộn",

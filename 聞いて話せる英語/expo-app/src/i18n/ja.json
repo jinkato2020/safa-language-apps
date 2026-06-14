@@ -1,12 +1,13 @@
 {
   "app": {
-    "name": "聞いて話せる日本語",
-    "shareMessage": "聞いて話せる日本語 — ネパール語話者のための日本語瞬間作文トレーニングアプリ",
-    "headerTitle": "聞いて話せるネパール語"
+    "name": "聞いて話せる英語",
+    "shareMessage": "聞いて話せる英語 — 日本語話者のための英語瞬間作文トレーニングアプリ",
+    "headerTitle": "聞いて話せる英語"
   },
   "common": {
     "prev": "← 前へ",
     "next": "次へ →",
+    "swipeHint": "← スワイプで移動 →",
     "back": "戻る",
     "save": "保存",
     "cancel": "キャンセル",
@@ -26,10 +27,10 @@
     "vocabulary": "単語"
   },
   "directions": {
-    "ja2ne": "🇯🇵 → 🇳🇵",
-    "ne2ja": "🇳🇵 → 🇯🇵",
-    "neToJa": "ネ→日",
-    "jaToNe": "日→ネ"
+    "ja2ne": "英語 → 日本語",
+    "ne2ja": "日本語 → 英語",
+    "neToJa": "日→英",
+    "jaToNe": "英→日"
   },
   "levels": {
     "1": "初級",
@@ -148,7 +149,7 @@
     "title": "レベルを選択",
     "desc": "{{theme}} のテーマで、難易度を選んでください。",
     "playOrder": "🔊 再生の順序:",
-    "nepaliRepeat": "🔁 ネパール語の再生回数:",
+    "nepaliRepeat": "🔁 英語の再生回数:",
     "repeat": "{{n}}回"
   },
   "listenSource": {
@@ -175,14 +176,14 @@
   },
   "listening": {
     "exampleCounter": "例題",
-    "tagJa": "JA · 日本語",
-    "tagNe": "NE · ネパール語",
+    "tagJa": "EN · 英語",
+    "tagNe": "JA · 日本語",
     "nonstop": "ノンストップ",
     "speed": "速度 ×{{speed}}"
   },
   "flashcard": {
-    "tagNe": "NE · ネパール語",
-    "tagJa": "JA · 日本語",
+    "tagNe": "JA · 日本語",
+    "tagJa": "EN · 英語",
     "tapToFlip": "タップで{{action}}",
     "flip": "反転",
     "unflip": "戻す",
@@ -191,13 +192,13 @@
   },
   "vocab": {
     "modeTitle": "単語モード",
-    "themeSelectDesc": "テーマを選んで、ネパール語の語彙を増やしましょう。",
+    "themeSelectDesc": "テーマを選んで、英語の語彙を増やしましょう。",
     "directionTitle": "出題方向を選択",
     "directionDesc": "{{category}} のカードをどちら向きで学習しますか？",
-    "neLang": "🇳🇵 ネパール語",
-    "jaLang": "🇯🇵 日本語",
-    "neToJaDesc": "ネパール語が表示され、タップで日本語訳を確認。読解力を鍛えます。",
-    "jaToNeDesc": "日本語が表示され、タップでネパール語を確認。瞬発力を鍛えます。",
+    "neLang": "日本語",
+    "jaLang": "英語",
+    "neToJaDesc": "日本語が表示され、タップで英語を確認。瞬発力を鍛えます。",
+    "jaToNeDesc": "英語が表示され、タップで日本語訳を確認。読解力を鍛えます。",
     "modeFlashcard": "シャッフルカード",
     "modeFlashcardDesc": "カードをめくって単語を覚える",
     "modePoster": "音声朗読(ポスター)",
@@ -213,11 +214,11 @@
     "sectionData": "データ管理",
     "sectionAbout": "アプリについて",
     "language": "アプリの表示言語",
-    "languageDesc": "日本語 / नेपाली",
+    "languageDesc": "日本語",
     "playbackSpeed": "音声再生スピード",
     "playbackSpeedDesc": "全モード共通の再生速度",
-    "nepaliRepeat": "ネパール語の繰り返し回数",
-    "nepaliRepeatDesc": "聞き流し時にネパール語を何回再生するか",
+    "nepaliRepeat": "英語の繰り返し回数",
+    "nepaliRepeatDesc": "聞き流し時に英語を何回再生するか",
     "convDirection": "会話の出題方向",
     "convDirectionDesc": "会話モードのデフォルト翻訳方向",
     "listenOrder": "聞き流しの再生順序",
@@ -230,7 +231,7 @@
     "gapNormal": "標準",
     "gapLong": "長め",
     "romaji": "ローマ字表記の表示",
-    "romajiDesc": "ネパール語の発音をローマ字で表示",
+    "romajiDesc": "発音補助のローマ字を表示",
     "darkMode": "ダークモード",
     "darkModeDesc": "画面の配色",
     "themeLight": "ライト",
@@ -258,7 +259,7 @@
     "privacyUrl": "https://safa-lang.com/ja/privacy/",
     "termsUrl": "https://safa-lang.com/ja/terms/",
     "contact": "お問い合わせ",
-    "mailSubject": "聞いて話せる日本語 お問い合わせ",
+    "mailSubject": "聞いて話せる英語 お問い合わせ",
     "privacyError": "プライバシーポリシーを開けませんでした。",
     "mailError": "メールアプリを開けませんでした。"
   }

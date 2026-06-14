@@ -7,6 +7,7 @@
   "common": {
     "prev": "← 前へ",
     "next": "次へ →",
+    "swipeHint": "← スワイプで移動 →",
     "back": "戻る",
     "save": "保存",
     "cancel": "キャンセル",
@@ -26,8 +27,8 @@
     "vocabulary": "単語"
   },
   "directions": {
-    "ja2ne": "🇯🇵 → 🇳🇵",
-    "ne2ja": "🇳🇵 → 🇯🇵",
+    "ja2ne": "日本語 → ネパール語",
+    "ne2ja": "ネパール語 → 日本語",
     "neToJa": "ネ→日",
     "jaToNe": "日→ネ"
   },
@@ -194,8 +195,8 @@
     "themeSelectDesc": "テーマを選んで、ネパール語の語彙を増やしましょう。",
     "directionTitle": "出題方向を選択",
     "directionDesc": "{{category}} のカードをどちら向きで学習しますか？",
-    "neLang": "🇳🇵 ネパール語",
-    "jaLang": "🇯🇵 日本語",
+    "neLang": "ネパール語",
+    "jaLang": "日本語",
     "neToJaDesc": "ネパール語が表示され、タップで日本語訳を確認。読解力を鍛えます。",
     "jaToNeDesc": "日本語が表示され、タップでネパール語を確認。瞬発力を鍛えます。",
     "modeFlashcard": "シャッフルカード",

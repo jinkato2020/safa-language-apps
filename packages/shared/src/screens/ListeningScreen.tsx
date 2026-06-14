@@ -10,6 +10,7 @@ import { useI18n } from '../i18n';
 import { useAppData } from '../AppDataContext';
 import { getL1 } from '../l1';
 import { useListeningAudio } from '../ListeningAudioContext';
+import { useHorizontalSwipe } from '../useHorizontalSwipe';
 
 type R = RouteProp<RootStackParamList, 'Listening'>;
 
@@ -129,6 +130,9 @@ export default function ListeningScreen() {
     setListenSpeed(SPEEDS[(cur + 1) % SPEEDS.length]);
   };
 
+  // 横スワイプで移動（左=次へ / 右=前へ）。再生ボタンとは別に追加。
+  const swipe = useHorizontalSwipe(() => go(1), () => go(-1));
+
   if (!ex) return null;
 
   // 日本語の読み補助 (かな+ローマ字)。言語=ネパール語のとき日本語カードに表示。
@@ -155,7 +159,7 @@ export default function ListeningScreen() {
   );
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} {...swipe}>
       <View style={styles.metaRow}>
         <Text style={[styles.metaText, ss(12)]}>
           <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · {t('listening.exampleCounter')} <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}

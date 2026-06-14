@@ -12,6 +12,7 @@ import { useI18n } from '../i18n';
 import { useAppData } from '../AppDataContext';
 import { getL1 } from '../l1';
 import { useCardFlip } from '../useCardFlip';
+import { useHorizontalSwipe } from '../useHorizontalSwipe';
 
 function tokenize(text: string): string[] {
   return text
@@ -190,6 +191,12 @@ export default function PracticeScreen() {
     return levelId >= LEVELS.length;
   })();
 
+  // 横スワイプで移動（左=次へ / 右=前へ）。端では無効。
+  const swipe = useHorizontalSwipe(
+    () => { if (!atLast) go(1); },
+    () => { if (!atFirst) go(-1); },
+  );
+
   if (!ex) return null;
 
   const questionText = isJa2Ne ? ex.jp : ex.ne;
@@ -204,7 +211,7 @@ export default function PracticeScreen() {
   const jpReading = JP_READING?.[ex.jp];
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} {...swipe}>
       <View style={styles.metaRow}>
         <Text style={[styles.metaText, ss(12)]}>
           <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · {t('practice.exampleCounter')} <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
@@ -250,22 +257,9 @@ export default function PracticeScreen() {
         </Pressable>
       </View>
 
-      {/* 前へ / 次へ（位置固定、テーマ跨ぎ可能） */}
-      <View style={styles.navRow}>
-        <Pressable
-          style={({ pressed }) => [styles.navBtn, atFirst && styles.navDisabled, pressed && styles.navPressed]}
-          disabled={atFirst}
-          onPress={() => go(-1)}
-        >
-          <Text style={[styles.navText, atFirst && styles.navTextDisabled]}>{t('common.prev')}</Text>
-        </Pressable>
-        <Pressable
-          style={({ pressed }) => [styles.navBtn, atLast && styles.navDisabled, pressed && styles.navPressed]}
-          disabled={atLast}
-          onPress={() => go(1)}
-        >
-          <Text style={[styles.navText, atLast && styles.navTextDisabled]}>{t('common.next')}</Text>
-        </Pressable>
+      {/* スワイプで移動（左=次へ / 右=前へ） */}
+      <View style={styles.swipeHintRow}>
+        <Text style={[styles.swipeHint, ss(11)]}>{t('common.swipeHint')}</Text>
       </View>
 
       {/* 単語と意味 (全単語を表示)
@@ -386,6 +380,15 @@ const styles = StyleSheet.create({
   },
   actionBtnPressed: { backgroundColor: colors.bgSoft, borderColor: colors.ink },
   actionBtnText: { fontSize: 13, color: colors.inkMute, fontWeight: '500' },
+
+  // スワイプ案内
+  swipeHintRow: {
+    paddingTop: spacing.md,
+    borderTopWidth: 1,
+    borderTopColor: colors.line,
+    alignItems: 'center',
+  },
+  swipeHint: { fontFamily: 'Courier', fontSize: 11, color: colors.inkFaint, letterSpacing: 1 },
 
   // 前へ/番号/次へ
   navRow: {

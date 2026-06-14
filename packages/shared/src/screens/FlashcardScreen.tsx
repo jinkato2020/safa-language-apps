@@ -10,6 +10,7 @@ import { useI18n } from '../i18n';
 import { useAppData } from '../AppDataContext';
 import { getL1 } from '../l1';
 import { useCardFlip } from '../useCardFlip';
+import { useHorizontalSwipe } from '../useHorizontalSwipe';
 
 type R = RouteProp<RootStackParamList, 'Flashcard'>;
 
@@ -118,8 +119,14 @@ export default function FlashcardScreen() {
   const atFirst = cursor === 0 && currentCategoryId === 1;
   const atLast = cursor >= order.length - 1 && currentCategoryId >= WORD_CATEGORIES.length;
 
+  // 横スワイプで移動（左=次へ / 右=前へ）。端では無効。
+  const swipe = useHorizontalSwipe(
+    () => { if (!atLast) go(1); },
+    () => { if (!atFirst) go(-1); },
+  );
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} {...swipe}>
       <View style={styles.metaRow}>
         <Text style={styles.metaText}>
           <Text style={styles.metaCur}>{currentCategoryId}.</Text> {catName} · {direction === 'ne2ja' ? t('directions.neToJa') : t('directions.jaToNe')} · <Text style={styles.metaCur}>{cursor + 1}</Text> / {order.length}
@@ -155,14 +162,9 @@ export default function FlashcardScreen() {
         )}
       </Pressable>
 
-      {/* 前へ / 次へ（位置固定、カテゴリ跨ぎ可能） */}
-      <View style={styles.navRow}>
-        <Pressable style={({ pressed }) => [styles.navBtn, atFirst && styles.navDisabled, pressed && styles.navPressed]} disabled={atFirst} onPress={() => go(-1)}>
-          <Text style={[styles.navText, atFirst && styles.navTextDisabled]}>{t('common.prev')}</Text>
-        </Pressable>
-        <Pressable style={({ pressed }) => [styles.navBtn, atLast && styles.navDisabled, pressed && styles.navPressed]} disabled={atLast} onPress={() => go(1)}>
-          <Text style={[styles.navText, atLast && styles.navTextDisabled]}>{t('common.next')}</Text>
-        </Pressable>
+      {/* スワイプで移動（左=次へ / 右=前へ） */}
+      <View style={styles.swipeHintRow}>
+        <Text style={[styles.swipeHint, ss(11)]}>{t('common.swipeHint')}</Text>
       </View>
 
       {/* シャッフルボタンのみ（反転ボタンは削除） */}
@@ -189,6 +191,8 @@ const styles = StyleSheet.create({
   furigana: { fontSize: 15, color: colors.inkMute, textAlign: 'center', marginBottom: 2, letterSpacing: 1 },
   hint: { fontFamily: 'Courier', fontSize: 10, color: colors.inkFaint, letterSpacing: 1.5, marginTop: spacing.md },
   cardRom: { fontFamily: 'Courier', fontSize: 15, color: colors.inkQuiet, fontStyle: 'italic', marginTop: spacing.md, textAlign: 'center' },
+  swipeHintRow: { alignItems: 'center', marginBottom: spacing.lg },
+  swipeHint: { fontFamily: 'Courier', fontSize: 11, color: colors.inkFaint, letterSpacing: 1 },
   navRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, marginBottom: spacing.lg },
   navBtn: { flex: 1, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: radius.md, alignItems: 'center' },
   navPressed: { backgroundColor: colors.ink },

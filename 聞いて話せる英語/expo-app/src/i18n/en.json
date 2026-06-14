@@ -7,6 +7,7 @@
   "common": {
     "prev": "← Previous",
     "next": "Next →",
+    "swipeHint": "← Swipe to move →",
     "back": "Back",
     "save": "Save",
     "cancel": "Cancel",
@@ -26,8 +27,8 @@
     "vocabulary": "Vocabulary"
   },
   "directions": {
-    "ja2ne": "🇯🇵 → 🇳🇵",
-    "ne2ja": "🇳🇵 → 🇯🇵",
+    "ja2ne": "English → Japanese",
+    "ne2ja": "Japanese → English",
     "neToJa": "NE→JP",
     "jaToNe": "JP→NE"
   },
@@ -194,8 +195,8 @@
     "themeSelectDesc": "Choose a theme and grow your Japanese vocabulary.",
     "directionTitle": "Select quiz direction",
     "directionDesc": "Which direction do you want to study the {{category}} cards?",
-    "neLang": "🇬🇧 English",
-    "jaLang": "🇯🇵 Japanese",
+    "neLang": "English",
+    "jaLang": "Japanese",
     "neToJaDesc": "English is shown; tap to reveal the Japanese. Builds quick recall.",
     "jaToNeDesc": "Japanese is shown; tap to reveal the English. Builds reading skills.",
     "modeFlashcard": "Shuffle cards",
