@@ -21,9 +21,9 @@
       "access": "free",
       "sizeBytes": 2994715,
       "url": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs-nepali/overlay-ja-v3.json",
-      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs-nepali/audio-ja-v3.zip",
-      "audioVersion": 3,
-      "audioZipBytes": 40779910
+      "audioZip": "https://raw.githubusercontent.com/JinKato2020/safa-language-apps/refs/heads/experiment/bangla/packs-nepali/audio-ja-v4.zip",
+      "audioVersion": 4,
+      "audioZipBytes": 40788682
     }
   ]
 }
