@@ -1,0 +1,61 @@
+name: App Store Connect 状態取得 (手動)
+run-name: "ASC: ${{ inputs.operation }} / app=${{ inputs.app }}"
+
+# App Store Connect API(JWT認証)で版・審査状態・ビルド処理状態を取得する管理用ワークフロー。
+# 鍵はローカルに置かず、ここ(CI)で Secret から復元して使う。
+# Secrets: APP_STORE_CONNECT_KEY_ID / APP_STORE_CONNECT_ISSUER_ID / APP_STORE_CONNECT_API_KEY_BASE64
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: 実行する操作
+        type: choice
+        required: true
+        default: status
+        options:
+          - status   # 版(審査状態) + 最新ビルド(処理状態)
+          - builds   # 最新ビルド一覧(処理状態/期限)
+      app:
+        description: 対象アプリ (A=ネパール語 / B=日本語 / C=英語 / ALL)
+        type: choice
+        required: true
+        default: ALL
+        options: [A, B, C, ALL]
+
+jobs:
+  asc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install --quiet "pyjwt[crypto]" requests
+
+      - name: Decode ASC API key
+        env:
+          KEY_ID_RAW: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+        run: |
+          KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
+          mkdir -p /tmp/asc
+          printf '%s' "$KEY_B64" | base64 --decode > "/tmp/asc/AuthKey_${KEY_ID}.p8"
+          if [ ! -s "/tmp/asc/AuthKey_${KEY_ID}.p8" ]; then echo "::error::ASC鍵が空です"; exit 1; fi
+          echo "ASC_KEY_PATH=/tmp/asc/AuthKey_${KEY_ID}.p8" >> $GITHUB_ENV
+          echo "ASC_KEY_ID=$KEY_ID" >> $GITHUB_ENV
+
+      - name: Run asc_status.py
+        env:
+          ASC_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          OP: ${{ inputs.operation }}
+          APP: ${{ inputs.app }}
+        run: |
+          python scripts/asc_status.py "$OP" --app "$APP" | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Cleanup
+        if: always()
+        run: rm -rf /tmp/asc
