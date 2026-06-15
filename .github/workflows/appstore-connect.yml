@@ -14,8 +14,10 @@ on:
         required: true
         default: status
         options:
-          - status   # 版(審査状態) + 最新ビルド(処理状態)
-          - builds   # 最新ビルド一覧(処理状態/期限)
+          - status            # 版(審査状態) + 最新ビルド(処理状態)
+          - builds            # 最新ビルド一覧(処理状態/期限)
+          - metadata-inspect  # App B のバージョン/ローカライズ現状を表示(読取専用)
+          - metadata-apply    # App B のメタデータ(名前/サブ/説明/KW/プロモ)をen/ja/zh/viに投入
       app:
         description: 対象アプリ (A=ネパール語 / B=日本語 / C=英語 / ALL)
         type: choice
@@ -48,13 +50,18 @@ jobs:
           echo "ASC_KEY_PATH=/tmp/asc/AuthKey_${KEY_ID}.p8" >> $GITHUB_ENV
           echo "ASC_KEY_ID=$KEY_ID" >> $GITHUB_ENV
 
-      - name: Run asc_status.py
+      - name: Run
         env:
           ASC_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           OP: ${{ inputs.operation }}
           APP: ${{ inputs.app }}
         run: |
-          python scripts/asc_status.py "$OP" --app "$APP" | tee -a "$GITHUB_STEP_SUMMARY"
+          case "$OP" in
+            status|builds)    python scripts/asc_status.py "$OP" --app "$APP" | tee -a "$GITHUB_STEP_SUMMARY" ;;
+            metadata-inspect) python scripts/asc_metadata.py inspect | tee -a "$GITHUB_STEP_SUMMARY" ;;
+            metadata-apply)   python scripts/asc_metadata.py apply 1.3.0 | tee -a "$GITHUB_STEP_SUMMARY" ;;
+            *) echo "::error::unknown op $OP"; exit 1 ;;
+          esac
 
       - name: Cleanup
         if: always()

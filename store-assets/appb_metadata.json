@@ -1,0 +1,39 @@
+{
+  "_note": "App B(聞いて話せる日本語/com.safa.japanese) ストア掲載文。App Store(ASC)とGoogle Play両用。対象locale=en/ja/zh/vi。bn/neはconsole手動。",
+  "appstore_locales": { "en": "en-US", "ja": "ja", "zh": "zh-Hans", "vi": "vi" },
+  "play_locales": { "en": "en-US", "ja": "ja-JP", "zh": "zh-CN", "vi": "vi" },
+  "locales": {
+    "en": {
+      "name": "Listen & Speak Japanese",
+      "subtitle": "Learn real Japanese by ear",
+      "promotionalText": "Train your ear, then speak. Real conversations, grammar, and vocabulary with natural native audio — studied in your own language.",
+      "keywords": "japanese,learn japanese,nihongo,JLPT,conversation,listening,speaking,vocabulary,grammar,phrases",
+      "shortDescription": "Learn real spoken Japanese by ear: conversation, grammar, listening & words.",
+      "description": "Listen & Speak Japanese helps you learn real, spoken Japanese — by ear.\n\nInstead of memorizing from textbooks, you train your listening first, then speak naturally. Every sentence is recorded with natural, native-quality audio so you absorb real rhythm and pronunciation.\n\n■ Four ways to learn\n• Conversation — practical phrases for daily life, work, and travel\n• Grammar — clear example sentences, easy to hard\n• Listening — passive listening to train your ear anytime\n• Words — vocabulary flashcards by theme\n\n■ Understand every word\nEvery example sentence comes with a word-by-word breakdown, showing each word's meaning in the context of that sentence — so you never get lost.\n\n■ Study in your own language\nThe interface and translations are available in your native language.\n\n■ Designed for real use\n• Natural native audio for every sentence\n• Adjustable playback speed and repeat\n• Furigana + romaji reading aids for Japanese\n• Works offline after a one-time download\n\nStart listening, and start speaking."
+    },
+    "ja": {
+      "name": "聞いて話せる日本語",
+      "subtitle": "耳から学ぶ、本物の日本語会話",
+      "promotionalText": "聞いて耳を慣らし、自然に話す。会話・文法・単語をネイティブ音声で、あなたの母語で学べる日本語学習アプリ。",
+      "keywords": "japanese,nihongo,JLPT,日本語,日本語会話,聞き流し,リスニング,語学,日本語学習,外国人",
+      "shortDescription": "耳から学ぶ本物の日本語。会話・文法・聞き流し・単語をネイティブ音声で。",
+      "description": "「聞いて話せる日本語」は、本物の話し言葉の日本語を“耳から”学ぶアプリです。\n\n教科書の暗記ではなく、まず聞いて耳を慣らし、自然に話せるようになります。すべての例文にネイティブ品質の音声付き。\n\n■ 4つの学習モード\n・会話 — 日常・仕事・旅行で使える実践フレーズ\n・文法 — 易しいものから難しいものまで例文で\n・聞き流し — いつでも耳を鍛える\n・単語 — テーマ別の単語カード\n\n■ すべての単語を理解\n各例文の下に、単語ごとの意味（その文での意味）を一覧表示。迷いません。\n\n■ あなたの母語で学べる\nUIと訳はあなたの母語で表示。\n\n■ 実用設計\n・全文ネイティブ音声\n・再生速度・リピート調整\n・ふりがな＋ローマ字\n・一度のダウンロードでオフライン利用\n\n聞いて、話せる日本語へ。"
+    },
+    "zh": {
+      "name": "听说日语",
+      "subtitle": "用耳朵学会真正的日语",
+      "promotionalText": "先练听力，再开口说。通过母语学习真实会话、语法和单词，全部配地道母语级真人发音。",
+      "keywords": "japanese,nihongo,JLPT,日语,学日语,日语听力,日语口语,日语会话,日语单词,日本语",
+      "shortDescription": "用耳朵学真正的日语：会话、语法、泛听、单词，配母语级真人发音。",
+      "description": "「听说日语」帮你用耳朵学会真正的、口语化的日语。\n\n不靠死记硬背，而是先练听力、再自然开口。每个例句都配有地道的母语级真人发音，让你掌握真实的语调和发音。\n\n■ 四种学习模式\n· 会话 — 日常、工作、旅行的实用短句\n· 语法 — 由易到难的例句\n· 泛听 — 随时磨耳朵\n· 单词 — 按主题的单词卡片\n\n■ 读懂每个词\n每个例句下方都会列出每个单词在该句中的意思，让你不再迷茫。\n\n■ 用你的母语学习\n界面和翻译均以你的母语显示。\n\n■ 为实用而设计\n· 每句真人发音\n· 可调播放速度与重复\n· 日语假名+罗马音\n· 一次下载后可离线使用\n\n边听，边说，学会日语。"
+    },
+    "vi": {
+      "name": "Nghe & Nói Tiếng Nhật",
+      "subtitle": "Học tiếng Nhật bằng đôi tai",
+      "promotionalText": "Luyện nghe trước, rồi nói tự nhiên. Hội thoại, ngữ pháp và từ vựng với giọng đọc bản xứ — học bằng tiếng mẹ đẻ của bạn.",
+      "keywords": "japanese,nihongo,JLPT,tieng nhat,hoc tieng nhat,nghe,noi,giao tiep,tu vung,nhat ban",
+      "shortDescription": "Học tiếng Nhật thực tế bằng đôi tai: hội thoại, ngữ pháp, nghe, từ vựng.",
+      "description": "Nghe & Nói Tiếng Nhật giúp bạn học tiếng Nhật thực tế, đời thường — bằng đôi tai.\n\nThay vì học thuộc lòng, bạn luyện nghe trước rồi nói tự nhiên. Mỗi câu đều có giọng đọc chất lượng bản xứ.\n\n■ Bốn cách học\n· Hội thoại — câu thực dụng cho đời sống, công việc, du lịch\n· Ngữ pháp — câu ví dụ từ dễ đến khó\n· Nghe thụ động — luyện tai mọi lúc\n· Từ vựng — thẻ từ theo chủ đề\n\n■ Hiểu từng từ\nDưới mỗi câu có danh sách nghĩa của từng từ trong ngữ cảnh câu đó.\n\n■ Học bằng tiếng mẹ đẻ\nGiao diện và bản dịch hiển thị bằng ngôn ngữ của bạn.\n\n■ Thiết kế thực dụng\n· Giọng bản xứ cho mọi câu\n· Chỉnh tốc độ & lặp lại\n· Furigana + romaji\n· Dùng offline sau khi tải\n\nNghe, rồi nói tiếng Nhật."
+    }
+  }
+}
