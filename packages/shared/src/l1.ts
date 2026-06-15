@@ -47,6 +47,11 @@ export const L1_REGISTRY: Record<string, L1Config> = {
     code: 'vi',
     name: 'Tiếng Việt',
   },
+  // 中国語(簡体字): ローマ字補助なし(漢字)。自称表示は "中文"。App B のL1パック。
+  zh: {
+    code: 'zh',
+    name: '中文',
+  },
 };
 
 /** code に対応する L1 設定を返す。未知/未指定なら ne にフォールバック。 */

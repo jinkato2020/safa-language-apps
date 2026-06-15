@@ -25,6 +25,7 @@ export default function VocabCategoryScreen() {
 
   const Header = (
     <View style={styles.head}>
+      <Text style={[styles.modeTitle, ss(20)]}>{t('vocab.modeTitle')}</Text>
       {hasPoster && (
         <View style={styles.seg}>
           <Pressable onPress={() => setMode('flash')} style={[styles.segBtn, mode === 'flash' && styles.segOn]}>
@@ -89,6 +90,7 @@ export default function VocabCategoryScreen() {
 const styles = StyleSheet.create({
   container: { padding: spacing.lg, paddingBottom: spacing.xxl, maxWidth: 760, width: '100%', alignSelf: 'center' },
   head: { marginBottom: spacing.lg },
+  modeTitle: { fontSize: 20, fontWeight: '700', color: colors.accentJa, letterSpacing: 0.2, marginBottom: spacing.sm, textAlign: 'center' },
   desc: { fontSize: 14, color: colors.inkMute, lineHeight: 21, textAlign: 'center' },
   seg: { flexDirection: 'row', gap: spacing.sm, marginBottom: spacing.md },
   segBtn: { flex: 1, alignItems: 'center', gap: 2, paddingVertical: spacing.sm, borderWidth: 1.5, borderColor: colors.line, borderRadius: radius.md, backgroundColor: colors.surface },

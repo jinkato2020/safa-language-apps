@@ -18,6 +18,7 @@ export {
 
 // ── UI ヘルパー ──
 export { Text } from './Text';
+export { ModalDropdown, type DropdownItem } from './ModalDropdown';
 export { colors, spacing, radius } from './theme';
 export { toRomaji, sentenceToRomaji } from './transliterate';
 export { getL1, L1_REGISTRY, type L1Config, type L1Code } from './l1';

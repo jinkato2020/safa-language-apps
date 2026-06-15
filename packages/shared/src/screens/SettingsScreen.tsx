@@ -1,6 +1,7 @@
 import { Alert, Linking, Platform, Pressable, ScrollView, Share, StyleSheet, Switch, View } from 'react-native';
 import Svg, { Circle, Ellipse, Line, Path, Polygon } from 'react-native-svg';
 import { Text } from '../Text';
+import { ModalDropdown } from '../ModalDropdown';
 import { colors, spacing, radius } from '../theme';
 import {
   useSettings, useScaleStyle,
@@ -81,6 +82,8 @@ export default function SettingsScreen() {
   const { version: APP_VERSION, review } = useAppData();
   const buildNumber = Application.nativeBuildVersion;
   const versionDisplay = buildNumber ? `${APP_VERSION} (${buildNumber})` : APP_VERSION;
+  // 言語選択UI: App B(聞いて話せる日本語)のみドロップダウン。他アプリは従来のピル。
+  const useLangDropdown = review?.androidPackage === 'com.safa.japanese';
   const isJaUI = lang === 'ja';
 
   // 利用可能な言語から動的にピルを生成 (ja=日本語 / その他は L1 レジストリの自称表示)
@@ -166,12 +169,20 @@ export default function SettingsScreen() {
 
       <Section title={t('settings.sectionLang')} icon={<LangIcon />} ss={ss}>
         <Row label={t('settings.language')} desc={langDescText} ss={ss}>
-          <PillGroup<Lang>
-            items={langItems}
-            value={lang}
-            onChange={setLang}
-            ss={ss}
-          />
+          {useLangDropdown ? (
+            <ModalDropdown<Lang>
+              items={langItems}
+              value={lang}
+              onChange={setLang}
+            />
+          ) : (
+            <PillGroup<Lang>
+              items={langItems}
+              value={lang}
+              onChange={setLang}
+              ss={ss}
+            />
+          )}
         </Row>
       </Section>
 
