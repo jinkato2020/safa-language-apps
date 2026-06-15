@@ -65,7 +65,7 @@ def cmd_status(s, args):
             print(f"  取得失敗: {e}")
             continue
         try:
-            tracks = s.edits().tracks().list(packageName=pkg, editId=eid).execute().get("track", [])
+            tracks = s.edits().tracks().list(packageName=pkg, editId=eid).execute().get("tracks", [])
             if not tracks:
                 print("  トラックなし")
             for t in tracks:
