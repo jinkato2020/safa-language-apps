@@ -1,0 +1,96 @@
+name: Play Console 操作 (手動)
+run-name: "Play Console: ${{ inputs.operation }} / app=${{ inputs.app }} / track=${{ inputs.track }}"
+
+# Play Developer API v3 を既存の SA Secret で叩く管理用ワークフロー。
+# 鍵はローカルに置かず、ここ(CI)で Secret から復元して使う。
+# Secret: GOOGLE_PLAY_SERVICE_ACCOUNT_JSON_BASE64 (App A/B/C 共有、各アプリにアクセス権付与済)
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: 実行する操作
+        type: choice
+        required: true
+        default: status
+        options:
+          - status         # 各アプリ/トラックのリリース状態を取得(読み取り専用)
+          - rollout        # 段階ロールアウト割合の変更 / 100%公開
+          - halt           # 進行中リリースを停止
+          - listing-get    # 掲載情報の取得
+          - listing-set    # 掲載情報の更新(store-listing/<pkg>/<lang>.json)
+          - testers-get    # トラックの Google グループ割当を取得
+          - testers-set    # トラックの Google グループ割当を設定
+      app:
+        description: 対象アプリ (A=ネパール語 / B=日本語 / C=英語 / ALL)
+        type: choice
+        required: true
+        default: ALL
+        options: [A, B, C, ALL]
+      track:
+        description: トラック名 (production / alpha(クローズド) / internal など)
+        type: string
+        required: false
+        default: production
+      fraction:
+        description: rollout用 割合 (0.0〜1.0。1.0で100%公開)
+        type: string
+        required: false
+        default: "1.0"
+      lang:
+        description: listing用 言語コード (ja-JP / en-US など)
+        type: string
+        required: false
+        default: ""
+      groups:
+        description: testers-set用 Googleグループ(カンマ区切り)
+        type: string
+        required: false
+        default: ""
+
+jobs:
+  play:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install --quiet google-api-python-client google-auth
+
+      - name: Decode service account
+        env:
+          SA_JSON_B64: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON_BASE64 }}
+        run: |
+          printf '%s' "$SA_JSON_B64" | base64 --decode > /tmp/sa-raw.json
+          if [ ! -s /tmp/sa-raw.json ]; then echo "::error::SA secret が空です"; exit 1; fi
+          node -e "const fs=require('fs');let c=fs.readFileSync('/tmp/sa-raw.json','utf8');if(c.charCodeAt(0)===0xFEFF)c=c.slice(1);fs.writeFileSync('/tmp/service-account.json',JSON.stringify(JSON.parse(c)));"
+          echo "SA_JSON_PATH=/tmp/service-account.json" >> $GITHUB_ENV
+
+      - name: Run play_console.py
+        env:
+          OP: ${{ inputs.operation }}
+          APP: ${{ inputs.app }}
+          TRACK: ${{ inputs.track }}
+          FRACTION: ${{ inputs.fraction }}
+          LANG: ${{ inputs.lang }}
+          GROUPS: ${{ inputs.groups }}
+        run: |
+          set -e
+          case "$OP" in
+            status)      python scripts/play_console.py status --app "$APP" ;;
+            rollout)     python scripts/play_console.py rollout --app "$APP" --track "$TRACK" --fraction "$FRACTION" ;;
+            halt)        python scripts/play_console.py halt --app "$APP" --track "$TRACK" ;;
+            listing-get) python scripts/play_console.py listing-get --app "$APP" --lang "$LANG" ;;
+            listing-set) python scripts/play_console.py listing-set --app "$APP" --lang "$LANG" ;;
+            testers-get) python scripts/play_console.py testers-get --app "$APP" --track "$TRACK" ;;
+            testers-set) python scripts/play_console.py testers-set --app "$APP" --track "$TRACK" --groups "$GROUPS" ;;
+            *) echo "::error::unknown operation $OP"; exit 1 ;;
+          esac | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Cleanup
+        if: always()
+        run: rm -f /tmp/sa-raw.json /tmp/service-account.json
