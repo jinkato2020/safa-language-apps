@@ -23,6 +23,9 @@ import sys
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from googleapiclient.http import MediaFileUpload
+
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SCOPES = ["https://www.googleapis.com/auth/androidpublisher"]
 PKGS = {
@@ -171,6 +174,32 @@ def cmd_listing_set(s, args):
     print(f"{APP_LABEL[key]} [{args.lang}] 掲載情報を更新しました(commit済)")
 
 
+def cmd_appb_apply(s, args):
+    """App B(com.safa.japanese): appb_metadata.json の掲載文(title/short/full)と、
+    store-assets/play-screenshots/<locale>/{phone,ten} のスクショを各言語に一括投入。"""
+    pkg = "com.safa.japanese"
+    meta = json.load(open(os.path.join(REPO, "store-assets", "appb_metadata.json"), encoding="utf-8"))
+    PLAY = meta["play_locales"]   # en->en-US, ja->ja-JP, zh->zh-CN, vi->vi
+    SCR = os.path.join(REPO, "store-assets", "play-screenshots")
+    eid = new_edit(s, pkg)
+    for short, loc in PLAY.items():
+        m = meta["locales"][short]
+        s.edits().listings().update(packageName=pkg, editId=eid, language=loc, body={
+            "language": loc, "title": m["name"], "shortDescription": m["shortDescription"], "fullDescription": m["description"],
+        }).execute()
+        for imgtype, sub in [("phoneScreenshots", "phone"), ("tenInchScreenshots", "ten")]:
+            d = os.path.join(SCR, loc, sub)
+            if not os.path.isdir(d):
+                continue
+            s.edits().images().deleteall(packageName=pkg, editId=eid, language=loc, imageType=imgtype).execute()
+            for f in sorted(os.listdir(d)):
+                media = MediaFileUpload(os.path.join(d, f), mimetype="image/png")
+                s.edits().images().upload(packageName=pkg, editId=eid, language=loc, imageType=imgtype, media_body=media).execute()
+        print(f"  [{loc}] 掲載文+スクショ(phone/ten) 投入 ok")
+    s.edits().commit(packageName=pkg, editId=eid).execute()
+    print("App B Play 掲載情報 投入完了(commit済)")
+
+
 def cmd_testers_get(s, args):
     for key in resolve_apps(args.app):
         pkg = PKGS[key]
@@ -211,6 +240,7 @@ def main():
     sp = sub.add_parser("listing-set"); sp.add_argument("--app", required=True); sp.add_argument("--lang", required=True); sp.set_defaults(fn=cmd_listing_set)
     sp = sub.add_parser("testers-get"); sp.add_argument("--app", default="ALL"); sp.add_argument("--track", default="alpha"); sp.set_defaults(fn=cmd_testers_get)
     sp = sub.add_parser("testers-set"); sp.add_argument("--app", required=True); sp.add_argument("--track", default="alpha"); sp.add_argument("--groups", required=True); sp.set_defaults(fn=cmd_testers_set)
+    sp = sub.add_parser("appb-apply"); sp.set_defaults(fn=cmd_appb_apply)  # App B 掲載文+スクショ一括投入
 
     args = p.parse_args()
     s = svc()

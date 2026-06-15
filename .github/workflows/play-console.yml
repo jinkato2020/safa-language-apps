@@ -21,6 +21,7 @@ on:
           - listing-set    # 掲載情報の更新(store-listing/<pkg>/<lang>.json)
           - testers-get    # トラックの Google グループ割当を取得
           - testers-set    # トラックの Google グループ割当を設定
+          - appb-apply     # App B 掲載文+スクショ(en/ja/zh/vi)を一括投入
       app:
         description: 対象アプリ (A=ネパール語 / B=日本語 / C=英語 / ALL)
         type: choice
@@ -88,6 +89,7 @@ jobs:
             listing-set) python scripts/play_console.py listing-set --app "$APP" --lang "$LANG" ;;
             testers-get) python scripts/play_console.py testers-get --app "$APP" --track "$TRACK" ;;
             testers-set) python scripts/play_console.py testers-set --app "$APP" --track "$TRACK" --groups "$GROUPS" ;;
+            appb-apply)  python scripts/play_console.py appb-apply ;;
             *) echo "::error::unknown operation $OP"; exit 1 ;;
           esac | tee -a "$GITHUB_STEP_SUMMARY"
 
