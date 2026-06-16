@@ -113,6 +113,10 @@ jobs:
           node -e "const fs=require('fs');const key=fs.readFileSync('/tmp/AuthKey.p8','utf8');fs.writeFileSync('/tmp/asc.json',JSON.stringify({key_id:'$KEY_ID',issuer_id:'$ISSUER_ID',key,in_house:false}));"
 
           # ビルド処理待ち: 紐付け/提出できるまで最大6回 (約30分) リトライ
+          # deliver は設定が無いと「setup する?」と対話プロンプトを出しCIで落ちる。
+          # 最小 Deliverfile を置いて回避(メタデータ/スクショは skip 指定で触らない)。
+          mkdir -p fastlane
+          [ -f fastlane/Deliverfile ] || printf '# CI minimal Deliverfile (metadata/screenshots skipped)\n' > fastlane/Deliverfile
           n=0
           until fastlane deliver \
               --api_key_path /tmp/asc.json \
@@ -192,6 +196,10 @@ jobs:
           printf '%s' "$KEY_B64" | base64 --decode > /tmp/AuthKey.p8
           node -e "const fs=require('fs');const key=fs.readFileSync('/tmp/AuthKey.p8','utf8');fs.writeFileSync('/tmp/asc.json',JSON.stringify({key_id:'$KEY_ID',issuer_id:'$ISSUER_ID',key,in_house:false}));"
 
+          # deliver は設定が無いと「setup する?」と対話プロンプトを出しCIで落ちる。
+          # 最小 Deliverfile を置いて回避(メタデータ/スクショは skip 指定で触らない)。
+          mkdir -p fastlane
+          [ -f fastlane/Deliverfile ] || printf '# CI minimal Deliverfile (metadata/screenshots skipped)\n' > fastlane/Deliverfile
           n=0
           until fastlane deliver \
               --api_key_path /tmp/asc.json \
@@ -270,6 +278,10 @@ jobs:
           printf '%s' "$KEY_B64" | base64 --decode > /tmp/AuthKey.p8
           node -e "const fs=require('fs');const key=fs.readFileSync('/tmp/AuthKey.p8','utf8');fs.writeFileSync('/tmp/asc.json',JSON.stringify({key_id:'$KEY_ID',issuer_id:'$ISSUER_ID',key,in_house:false}));"
 
+          # deliver は設定が無いと「setup する?」と対話プロンプトを出しCIで落ちる。
+          # 最小 Deliverfile を置いて回避(メタデータ/スクショは skip 指定で触らない)。
+          mkdir -p fastlane
+          [ -f fastlane/Deliverfile ] || printf '# CI minimal Deliverfile (metadata/screenshots skipped)\n' > fastlane/Deliverfile
           n=0
           until fastlane deliver \
               --api_key_path /tmp/asc.json \
