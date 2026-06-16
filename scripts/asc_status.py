@@ -57,6 +57,14 @@ def api_patch(tok, path, body):
     return r.json()
 
 
+def api_post(tok, path, body):
+    r = requests.post(f"{BASE}{path}", headers={"Authorization": f"Bearer {tok}", "Content-Type": "application/json"},
+                      json=body, timeout=30)
+    if r.status_code >= 400:
+        raise RuntimeError(f"{r.status_code} {path}: {r.text[:300]}")
+    return r.json()
+
+
 # リリース方法を変更できる(まだ公開前の)状態
 EDITABLE_STATES = {
     "PREPARE_FOR_SUBMISSION", "WAITING_FOR_REVIEW", "IN_REVIEW",
@@ -147,6 +155,28 @@ def cmd_set_release_type(tok, args):
             print(f"  版 {vs} [{st}] releaseType {cur} → {target} に変更しました")
 
 
+def cmd_release(tok, args):
+    """承認済み(PENDING_DEVELOPER_RELEASE)の版を手動リリースする(公開リクエスト発行)。"""
+    for key in resolve_apps(args.app):
+        bundle, label = BUNDLES[key]
+        print(f"\n=== {label} ({bundle}) ===")
+        app = find_app(tok, bundle)
+        if not app:
+            print("  アプリ未検出"); continue
+        vers = api(tok, f"/apps/{app['id']}/appStoreVersions",
+                   {"limit": 10, "fields[appStoreVersions]": "versionString,appStoreState,releaseType"}).get("data", [])
+        target = next((v for v in vers if v["attributes"].get("appStoreState") == "PENDING_DEVELOPER_RELEASE"), None)
+        if not target:
+            states = ", ".join(f"{v['attributes'].get('versionString')}={v['attributes'].get('appStoreState')}" for v in vers[:5])
+            print(f"  リリース待ち(PENDING_DEVELOPER_RELEASE)の版なし。現状: {states}")
+            continue
+        vs = target["attributes"].get("versionString")
+        api_post(tok, "/appStoreVersionReleaseRequests",
+                 {"data": {"type": "appStoreVersionReleaseRequests",
+                           "relationships": {"appStoreVersion": {"data": {"type": "appStoreVersions", "id": target["id"]}}}}})
+        print(f"  版 {vs} をリリースしました(公開処理開始 → まもなく READY_FOR_SALE)")
+
+
 def main():
     p = argparse.ArgumentParser(description="App Store Connect 状態取得 CLI")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -156,6 +186,7 @@ def main():
     sp.add_argument("--app", default="ALL")
     sp.add_argument("--release-type", default="MANUAL", choices=["MANUAL", "AFTER_APPROVAL"])
     sp.set_defaults(fn=cmd_set_release_type)
+    sp = sub.add_parser("release"); sp.add_argument("--app", default="ALL"); sp.set_defaults(fn=cmd_release)
     args = p.parse_args()
     tok = token()
     args.fn(tok, args)
