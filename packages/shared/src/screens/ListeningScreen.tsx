@@ -90,7 +90,7 @@ function PauseIcon({ size = 30 }: { size?: number }) {
 }
 
 export default function ListeningScreen() {
-  const { getExamples, getGrammarExamples, JP_READING, nativeLang } = useAppData();
+  const { getExamples, getGrammarExamples, THEMES, GRAMMAR_THEMES, JP_READING, nativeLang } = useAppData();
   const l1 = getL1(nativeLang);
   const route = useRoute<R>();
   const { t, lang } = useI18n();
@@ -123,6 +123,8 @@ export default function ListeningScreen() {
   const themeName = isGrammarSrc
     ? t(`grammarThemes.${themeId}`)
     : t(`themes.${themeId}`);
+  // 表示番号はテーマ選択画面と同じ「リスト位置」に揃える。
+  const themeNo = ((isGrammarSrc ? GRAMMAR_THEMES : THEMES).findIndex(x => x.id === themeId) + 1) || themeId;
   const levelName = isGrammarSrc ? t('practice.grammarLabel') : t(`levels.${levelId}`);
 
   const cycleSpeed = () => {
@@ -163,7 +165,7 @@ export default function ListeningScreen() {
     <ScrollView style={styles.flex} contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
         <Text style={[styles.metaText, ss(12)]}>
-          <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · {t('listening.exampleCounter')} <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
+          <Text style={styles.metaCur}>{themeNo}.</Text> {themeName} · {levelName} · {t('listening.exampleCounter')} <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
         </Text>
       </View>
 

@@ -65,6 +65,8 @@ export default function PracticeScreen() {
   const themeName = isGrammar
     ? t(`grammarThemes.${themeId}`)
     : t(`themes.${themeId}`);
+  // 表示番号はテーマ選択画面と同じ「リスト位置」に揃える(themeId=データキーは並び替えでidとズレるため)。
+  const themeNo = ((isGrammar ? GRAMMAR_THEMES : THEMES).findIndex(x => x.id === themeId) + 1) || themeId;
   const levelName = isGrammar ? t('practice.grammarLabel') : t(`levels.${levelId}`);
 
   const { practiceDirection, romaji } = useSettings();
@@ -218,7 +220,7 @@ export default function PracticeScreen() {
     <ScrollView style={styles.flex} contentContainerStyle={styles.container}>
       <View style={styles.metaRow}>
         <Text style={[styles.metaText, ss(12)]}>
-          <Text style={styles.metaCur}>{themeId}.</Text> {themeName} · {levelName} · {t('practice.exampleCounter')} <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
+          <Text style={styles.metaCur}>{themeNo}.</Text> {themeName} · {levelName} · {t('practice.exampleCounter')} <Text style={styles.metaCur}>{index + 1}</Text> / {examples.length}
         </Text>
       </View>
 
