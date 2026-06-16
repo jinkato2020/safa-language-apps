@@ -61,6 +61,14 @@ on:
         required: false
         default: ''
         type: string
+      set_release_notes:
+        description: 'true=現行メタデータを取得し「このバージョンの新機能」を全言語に投入してから提出(他フィールドは不変)。whatsNew未入力で提出が弾かれる場合に使用。'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 jobs:
   # ─────────────────────────────────────────────────────────────────────────
@@ -98,6 +106,7 @@ jobs:
           BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID }}
           MODE: ${{ github.event.inputs.mode }}
           BUILD_NUMBER_OVERRIDE: ${{ github.event.inputs.build_number }}
+          SET_RN: ${{ github.event.inputs.set_release_notes }}
         run: |
           set -e
           KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
@@ -117,6 +126,25 @@ jobs:
           # 最小 Deliverfile を置いて回避(メタデータ/スクショは skip 指定で触らない)。
           mkdir -p fastlane
           [ -f fastlane/Deliverfile ] || printf '# CI minimal Deliverfile (metadata/screenshots skipped)\n' > fastlane/Deliverfile
+
+          # 「このバージョンの新機能」(whatsNew) 投入。未入力だと submit が弾かれるため。
+          # 現行メタデータを取得→release_notesだけ差し替え→uploadで他フィールドは現状維持。
+          SKIP_META=true
+          if [ "$SET_RN" = "true" ]; then
+            SKIP_META=false
+            fastlane deliver download_metadata --api_key_path /tmp/asc.json --app_identifier "$BUNDLE_ID" --skip_screenshots true --force true || true
+            RN_JA="ダウンロードの最適化と容量削減を行いました。軽微な改善と不具合修正。"
+            RN_EN="Optimized downloads and reduced storage size. Minor improvements and bug fixes."
+            for d in fastlane/metadata/*/; do
+              [ -d "$d" ] || continue
+              loc=$(basename "$d")
+              case "$loc" in
+                ja*) printf '%s\n' "$RN_JA" > "${d}release_notes.txt" ;;
+                *)   printf '%s\n' "$RN_EN" > "${d}release_notes.txt" ;;
+              esac
+            done
+            echo "::notice::release_notes set for locales: $(ls fastlane/metadata 2>/dev/null | tr '\n' ' ')"
+          fi
           n=0
           until fastlane deliver \
               --api_key_path /tmp/asc.json \
@@ -127,7 +155,7 @@ jobs:
               --automatic_release $SUBMIT \
               --force true \
               --skip_binary_upload true \
-              --skip_metadata true \
+              --skip_metadata "$SKIP_META" \
               --skip_screenshots true \
               --run_precheck_before_submit false \
               --precheck_include_in_app_purchases false ; do
@@ -183,6 +211,7 @@ jobs:
           BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID_JAPANESE }}
           MODE: ${{ github.event.inputs.mode }}
           BUILD_NUMBER_OVERRIDE: ${{ github.event.inputs.build_number }}
+          SET_RN: ${{ github.event.inputs.set_release_notes }}
         run: |
           set -e
           KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
@@ -200,6 +229,25 @@ jobs:
           # 最小 Deliverfile を置いて回避(メタデータ/スクショは skip 指定で触らない)。
           mkdir -p fastlane
           [ -f fastlane/Deliverfile ] || printf '# CI minimal Deliverfile (metadata/screenshots skipped)\n' > fastlane/Deliverfile
+
+          # 「このバージョンの新機能」(whatsNew) 投入。未入力だと submit が弾かれるため。
+          # 現行メタデータを取得→release_notesだけ差し替え→uploadで他フィールドは現状維持。
+          SKIP_META=true
+          if [ "$SET_RN" = "true" ]; then
+            SKIP_META=false
+            fastlane deliver download_metadata --api_key_path /tmp/asc.json --app_identifier "$BUNDLE_ID" --skip_screenshots true --force true || true
+            RN_JA="ダウンロードの最適化と容量削減を行いました。軽微な改善と不具合修正。"
+            RN_EN="Optimized downloads and reduced storage size. Minor improvements and bug fixes."
+            for d in fastlane/metadata/*/; do
+              [ -d "$d" ] || continue
+              loc=$(basename "$d")
+              case "$loc" in
+                ja*) printf '%s\n' "$RN_JA" > "${d}release_notes.txt" ;;
+                *)   printf '%s\n' "$RN_EN" > "${d}release_notes.txt" ;;
+              esac
+            done
+            echo "::notice::release_notes set for locales: $(ls fastlane/metadata 2>/dev/null | tr '\n' ' ')"
+          fi
           n=0
           until fastlane deliver \
               --api_key_path /tmp/asc.json \
@@ -210,7 +258,7 @@ jobs:
               --automatic_release $SUBMIT \
               --force true \
               --skip_binary_upload true \
-              --skip_metadata true \
+              --skip_metadata "$SKIP_META" \
               --skip_screenshots true \
               --run_precheck_before_submit false \
               --precheck_include_in_app_purchases false ; do
@@ -265,6 +313,7 @@ jobs:
           KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
           MODE: ${{ github.event.inputs.mode }}
           BUILD_NUMBER_OVERRIDE: ${{ github.event.inputs.build_number }}
+          SET_RN: ${{ github.event.inputs.set_release_notes }}
         run: |
           set -e
           KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
@@ -282,6 +331,25 @@ jobs:
           # 最小 Deliverfile を置いて回避(メタデータ/スクショは skip 指定で触らない)。
           mkdir -p fastlane
           [ -f fastlane/Deliverfile ] || printf '# CI minimal Deliverfile (metadata/screenshots skipped)\n' > fastlane/Deliverfile
+
+          # 「このバージョンの新機能」(whatsNew) 投入。未入力だと submit が弾かれるため。
+          # 現行メタデータを取得→release_notesだけ差し替え→uploadで他フィールドは現状維持。
+          SKIP_META=true
+          if [ "$SET_RN" = "true" ]; then
+            SKIP_META=false
+            fastlane deliver download_metadata --api_key_path /tmp/asc.json --app_identifier "$BUNDLE_ID" --skip_screenshots true --force true || true
+            RN_JA="ダウンロードの最適化と容量削減を行いました。軽微な改善と不具合修正。"
+            RN_EN="Optimized downloads and reduced storage size. Minor improvements and bug fixes."
+            for d in fastlane/metadata/*/; do
+              [ -d "$d" ] || continue
+              loc=$(basename "$d")
+              case "$loc" in
+                ja*) printf '%s\n' "$RN_JA" > "${d}release_notes.txt" ;;
+                *)   printf '%s\n' "$RN_EN" > "${d}release_notes.txt" ;;
+              esac
+            done
+            echo "::notice::release_notes set for locales: $(ls fastlane/metadata 2>/dev/null | tr '\n' ' ')"
+          fi
           n=0
           until fastlane deliver \
               --api_key_path /tmp/asc.json \
@@ -292,7 +360,7 @@ jobs:
               --automatic_release $SUBMIT \
               --force true \
               --skip_binary_upload true \
-              --skip_metadata true \
+              --skip_metadata "$SKIP_META" \
               --skip_screenshots true \
               --run_precheck_before_submit false \
               --precheck_include_in_app_purchases false ; do
