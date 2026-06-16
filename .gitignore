@@ -26,6 +26,7 @@ Thumbs.db
 .tmp-*/
 # パック再生成スクリプトの出力(配信物はRelease。zipはビルド成果物)
 聞いて話せるネパール語/dist-packs/
+聞いて話せる英語/dist-packs/
 
 # 環境変数（秘密鍵を含む）
 .env
