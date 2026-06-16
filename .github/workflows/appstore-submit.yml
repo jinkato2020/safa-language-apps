@@ -45,7 +45,9 @@ on:
         options:
           - 'nepali'
           - 'japanese'
+          - 'english'
           - 'both'
+          - 'all'
       mode:
         description: 'prepare = 紐付けのみ(手動提出) / submit = 提出+自動公開まで'
         required: true
@@ -54,11 +56,16 @@ on:
         options:
           - 'prepare'
           - 'submit'
+      build_number:
+        description: 'ビルド番号の明示指定(空ならコミット数から自動計算)。ビルドWF後にコミットした場合はずれるので明示推奨。'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   # ─────────────────────────────────────────────────────────────────────────
   submit-nepali:
-    if: ${{ github.event.inputs.app == 'nepali' || github.event.inputs.app == 'both' }}
+    if: ${{ github.event.inputs.app == 'nepali' || github.event.inputs.app == 'both' || github.event.inputs.app == 'all' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
@@ -90,13 +97,14 @@ jobs:
           KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
           BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID }}
           MODE: ${{ github.event.inputs.mode }}
+          BUILD_NUMBER_OVERRIDE: ${{ github.event.inputs.build_number }}
         run: |
           set -e
           KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
           ISSUER_ID=$(printf '%s' "$ISSUER_ID_RAW" | tr -d '\r\n[:space:]')
           BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
           APP_VERSION=$(node -p "require('./app.json').expo.version")
-          BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD)))
+          if [ -n "$BUILD_NUMBER_OVERRIDE" ]; then BUILD_NUMBER="$BUILD_NUMBER_OVERRIDE"; else BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD))); fi
           if [ "$MODE" = "submit" ]; then SUBMIT=true; else SUBMIT=false; fi
           echo "::notice::App Store $MODE: $BUNDLE_ID v$APP_VERSION build $BUILD_NUMBER (submit_for_review=$SUBMIT)"
 
@@ -138,7 +146,7 @@ jobs:
 
   # ─────────────────────────────────────────────────────────────────────────
   submit-japanese:
-    if: ${{ github.event.inputs.app == 'japanese' || github.event.inputs.app == 'both' }}
+    if: ${{ github.event.inputs.app == 'japanese' || github.event.inputs.app == 'both' || github.event.inputs.app == 'all' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
@@ -170,13 +178,92 @@ jobs:
           KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
           BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID_JAPANESE }}
           MODE: ${{ github.event.inputs.mode }}
+          BUILD_NUMBER_OVERRIDE: ${{ github.event.inputs.build_number }}
         run: |
           set -e
           KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
           ISSUER_ID=$(printf '%s' "$ISSUER_ID_RAW" | tr -d '\r\n[:space:]')
           BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
           APP_VERSION=$(node -p "require('./app.json').expo.version")
-          BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD)))
+          if [ -n "$BUILD_NUMBER_OVERRIDE" ]; then BUILD_NUMBER="$BUILD_NUMBER_OVERRIDE"; else BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD))); fi
+          if [ "$MODE" = "submit" ]; then SUBMIT=true; else SUBMIT=false; fi
+          echo "::notice::App Store $MODE: $BUNDLE_ID v$APP_VERSION build $BUILD_NUMBER (submit_for_review=$SUBMIT)"
+
+          printf '%s' "$KEY_B64" | base64 --decode > /tmp/AuthKey.p8
+          node -e "const fs=require('fs');const key=fs.readFileSync('/tmp/AuthKey.p8','utf8');fs.writeFileSync('/tmp/asc.json',JSON.stringify({key_id:'$KEY_ID',issuer_id:'$ISSUER_ID',key,in_house:false}));"
+
+          n=0
+          until fastlane deliver \
+              --api_key_path /tmp/asc.json \
+              --app_identifier "$BUNDLE_ID" \
+              --app_version "$APP_VERSION" \
+              --build_number "$BUILD_NUMBER" \
+              --submit_for_review $SUBMIT \
+              --automatic_release $SUBMIT \
+              --force true \
+              --skip_binary_upload true \
+              --skip_metadata true \
+              --skip_screenshots true \
+              --run_precheck_before_submit false \
+              --precheck_include_in_app_purchases false ; do
+            n=$((n+1))
+            if [ "$n" -ge 6 ]; then
+              echo "::error::deliver がリトライ上限に達しました。ビルド未処理 / バージョン重複 / メタデータ不足の可能性。"
+              exit 1
+            fi
+            echo "::notice::ビルド処理待ちか一時エラー。5分後に再試行 ($n/6)..."
+            sleep 300
+          done
+
+          if [ "$SUBMIT" = "true" ]; then
+            echo "::notice::審査に提出しました (通過後 自動公開)。"
+          else
+            echo "::notice::ビルド $BUILD_NUMBER をバージョンに紐付けました。App Store Connect で内容を確認し『審査に提出』を押してください。"
+          fi
+
+          rm -f /tmp/AuthKey.p8 /tmp/asc.json
+
+  # ─────────────────────────────────────────────────────────────────────────
+  submit-english:
+    if: ${{ github.event.inputs.app == 'english' || github.event.inputs.app == 'all' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      APP_DIR: 聞いて話せる英語/expo-app
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Install fastlane
+        run: gem install fastlane --no-document
+
+      - name: Prepare / submit to App Store
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          KEY_ID_RAW: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ISSUER_ID_RAW: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+          MODE: ${{ github.event.inputs.mode }}
+          BUILD_NUMBER_OVERRIDE: ${{ github.event.inputs.build_number }}
+        run: |
+          set -e
+          KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
+          ISSUER_ID=$(printf '%s' "$ISSUER_ID_RAW" | tr -d '\r\n[:space:]')
+          BUNDLE_ID="com.safa.english"
+          APP_VERSION=$(node -p "require('./app.json').expo.version")
+          if [ -n "$BUILD_NUMBER_OVERRIDE" ]; then BUILD_NUMBER="$BUILD_NUMBER_OVERRIDE"; else BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD))); fi
           if [ "$MODE" = "submit" ]; then SUBMIT=true; else SUBMIT=false; fi
           echo "::notice::App Store $MODE: $BUNDLE_ID v$APP_VERSION build $BUILD_NUMBER (submit_for_review=$SUBMIT)"
 
