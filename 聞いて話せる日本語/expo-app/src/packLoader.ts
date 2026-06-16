@@ -113,27 +113,37 @@ async function getOverlay(lang: string, entry: any, diag?: { catalog: any; catal
 }
 
 // 母語音声zipをDL→展開 (版が新しい/未取得のときだけ)。各 <文ID>.mp3 を端末に保存。
+// 差分DL: ローカルが entry.deltaBaseVersion と一致し entry.deltaZip があれば、変わった
+//   ファイルだけの「差分zip」をDLして既存の上に上書き展開する(フル40〜70MB→数百KB)。
+//   差分情報が無い/版が飛んでいる場合は従来どおりフルzip。後方互換(旧catalogはフルのみ)。
 async function ensureAudio(lang: string, entry: any, onProgress?: ProgressFn): Promise<void> {
   if (!entry?.audioZip) return;
   const marker = audioMarkerUri(lang);
+  let localVer: string | null = null;
   const m = await FileSystem.getInfoAsync(marker);
   if (m.exists) {
-    const v = await FileSystem.readAsStringAsync(marker);
-    if (v === String(entry.audioVersion ?? '')) return; // 最新キャッシュ済み
+    localVer = await FileSystem.readAsStringAsync(marker);
+    if (localVer === String(entry.audioVersion ?? '')) return; // 最新キャッシュ済み
   }
   await FileSystem.makeDirectoryAsync(audioDir(lang), { intermediates: true });
+
+  // 差分が使えるか: ローカル音声があり(=localVer非null) かつ それが差分の土台版と一致
+  const useDelta = !!(entry.deltaZip && localVer != null && String(entry.deltaBaseVersion ?? '') === localVer);
+  const srcZip: string = useDelta ? entry.deltaZip : entry.audioZip;
+  const srcBytes: number = (useDelta ? entry.deltaZipBytes : entry.audioZipBytes) || 0;
 
   // DLと展開を「1本の連続バー」に統合する (0〜DL_FRAC=DL, DL_FRAC〜1=展開)。
   // 別々に 0→100 を2回出すとバーが2回満ちて見えるため。
   const SCALE = 1000, DL_FRAC = 0.8;
+  const dlLabel = useDelta ? '更新ダウンロード中' : 'ダウンロード中';
 
-  // 1) zip を1ファイルDL (全体の 0〜80%)
+  // 1) zip を1ファイルDL (全体の 0〜80%)。差分zipは変更分のみ＝小さい。
   const zipUri = `${packDir(lang)}audio.zip`;
-  const total = entry.audioZipBytes || 0;
-  const dl = FileSystem.createDownloadResumable(entry.audioZip, zipUri, {}, (p: any) => {
+  const total = srcBytes;
+  const dl = FileSystem.createDownloadResumable(srcZip, zipUri, {}, (p: any) => {
     const exp = p.totalBytesExpectedToWrite || total || 1;
     const f = Math.min(1, p.totalBytesWritten / exp) * DL_FRAC;
-    onProgress?.(Math.round(f * SCALE), SCALE, 'ダウンロード中');
+    onProgress?.(Math.round(f * SCALE), SCALE, dlLabel);
   });
   await dl.downloadAsync();
 

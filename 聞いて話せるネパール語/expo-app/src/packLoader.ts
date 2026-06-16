@@ -98,23 +98,30 @@ async function getOverlay(lang: string, entry: any, diag?: { catalog: any; catal
   }
 }
 
+// 差分DL: ローカルが entry.deltaBaseVersion と一致し entry.deltaZip があれば、変わった
+//   ファイルだけの差分zipを既存の上に上書き展開(フル→数百KB)。無ければ従来どおりフルzip(後方互換)。
 async function ensureAudio(lang: string, entry: any, onProgress?: ProgressFn): Promise<void> {
   if (!entry?.audioZip) return;
   const marker = audioMarkerUri(lang);
+  let localVer: string | null = null;
   const m = await FileSystem.getInfoAsync(marker);
   if (m.exists) {
-    const v = await FileSystem.readAsStringAsync(marker);
-    if (v === String(entry.audioVersion ?? '')) return;
+    localVer = await FileSystem.readAsStringAsync(marker);
+    if (localVer === String(entry.audioVersion ?? '')) return;
   }
   await FileSystem.makeDirectoryAsync(audioDir(lang), { intermediates: true });
 
+  const useDelta = !!(entry.deltaZip && localVer != null && String(entry.deltaBaseVersion ?? '') === localVer);
+  const srcZip: string = useDelta ? entry.deltaZip : entry.audioZip;
+  const srcBytes: number = (useDelta ? entry.deltaZipBytes : entry.audioZipBytes) || 0;
+
   const SCALE = 1000, DL_FRAC = 0.8;
   const zipUri = `${packDir(lang)}audio.zip`;
-  const total = entry.audioZipBytes || 0;
-  const dl = FileSystem.createDownloadResumable(entry.audioZip, zipUri, {}, (p: any) => {
+  const total = srcBytes;
+  const dl = FileSystem.createDownloadResumable(srcZip, zipUri, {}, (p: any) => {
     const exp = p.totalBytesExpectedToWrite || total || 1;
     const f = Math.min(1, p.totalBytesWritten / exp) * DL_FRAC;
-    onProgress?.(Math.round(f * SCALE), SCALE, 'ダウンロード中');
+    onProgress?.(Math.round(f * SCALE), SCALE, useDelta ? '更新ダウンロード中' : 'ダウンロード中');
   });
   await dl.downloadAsync();
 
