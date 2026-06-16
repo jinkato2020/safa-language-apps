@@ -11,10 +11,10 @@ import appJson from '../app.json';
 import { neCore } from './appData';
 import { composePack, type L1Overlay } from './pack/compose';
 
-// 【テストビルド専用】themeId改番の実機検証用。本番は packs-appa。merge前に必ず packs-appa へ戻すこと。
-// 本番配信: GitHub Release (tag: packs-appa)。publish-packs-appa.yml が experiment/bangla から自動公開。
+// 本番配信(改番版): GitHub Release (tag: packs-appa-v2 = themeId改番後の新キーパック)。
+// 旧 packs-appa は改番前アプリ(1.6.x)用に温存。改番版アプリ(1.7.x新コア)は v2 を参照しキー整合を取る。
 const CATALOG_URL =
-  'https://github.com/JinKato2020/safa-language-apps/releases/download/packs-appa-test/catalog.json';
+  'https://github.com/JinKato2020/safa-language-apps/releases/download/packs-appa-v2/catalog.json';
 
 // 母語(ja/en)はすべて DL パック。ネパール語コアのみ同梱。
 const BUNDLED: Record<string, AppData> = {};
