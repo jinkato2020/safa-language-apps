@@ -1,12 +1,12 @@
 // 聞いて話せる英語 のパックローダ。
-// テキスト(例題/訳/辞書/単語)は同梱。音声(en=学習対象 / ja=母語)は DL パック(packs-appc)。
-//   catalog.audio[] に kind:'en'|'ja' の zip を列挙。初回はフルzip、更新は差分zip(packLoader共通方式)。
-//   DL後に各 <id>.mp3 を端末に保存し、file:// マップを作って composeAppC に渡す。
+// 【全学習データ パック化】本文/辞書/単語/メタも全てDL: core.json(英語コア) + overlay-ja.json
+//   (日本語訳+辞書) + 音声(en/ja zip)。本体は UI+i18n のみ。初回フルzip/更新は差分zip。
+//   DL後に composeAppC(core, overlay, 音声file://) で AppData を作る。
 
 import type { AppData } from '@safa/shared';
 import * as FileSystem from 'expo-file-system/legacy';
 import appJson from '../app.json';
-import { composeAppC, type AudioMaps } from './appData';
+import { composeAppC, type AudioMaps, type EnCoreJson, type JaOverlayJson } from './appData';
 
 // 本番配信: GitHub Release (tag: packs-appc)。
 const CATALOG_URL =
@@ -157,6 +157,26 @@ export async function loadPack(onProgress?: ProgressFn): Promise<AppData> {
   const en = await buildMaps('en');
   const ja = await buildMaps('ja');
   const audio: AudioMaps = { enConv: en.conv, enGram: en.gram, jaConv: ja.conv, jaGram: ja.gram };
-  const data = composeAppC(audio);
+  // 本文(英語コア)と日本語訳+辞書を DL/キャッシュ。
+  const coreJson = await getJson<EnCoreJson>('core', catalog?.coreUrl, catalog?.coreVersion);
+  const overlayJson = await getJson<JaOverlayJson>('overlay-ja', catalog?.overlayJaUrl, catalog?.overlayJaVersion);
+  const data = composeAppC(coreJson, overlayJson, audio);
   return { ...data, review: REVIEW };
+}
+
+// テキストJSON(core.json / overlay-ja.json)をDL/キャッシュ。version で版管理。
+async function getJson<T>(name: string, url?: string, version?: number): Promise<T | undefined> {
+  const uri = `${packDir(name)}data.json`;
+  const mk = `${packDir(name)}data.version`;
+  const info = await FileSystem.getInfoAsync(uri);
+  if (info.exists) {
+    let v: string | null = null;
+    try { if ((await FileSystem.getInfoAsync(mk)).exists) v = await FileSystem.readAsStringAsync(mk); } catch {}
+    if (!url || v === String(version ?? '')) { try { return JSON.parse(await FileSystem.readAsStringAsync(uri)); } catch {} }
+  }
+  if (!url) return undefined;
+  await FileSystem.makeDirectoryAsync(packDir(name), { intermediates: true });
+  await withRetry(async () => { const r = await FileSystem.downloadAsync(url, uri); if (r.status && r.status >= 400) throw new Error(`${name} HTTP ${r.status}`); });
+  await FileSystem.writeAsStringAsync(mk, String(version ?? ''));
+  return JSON.parse(await FileSystem.readAsStringAsync(uri));
 }

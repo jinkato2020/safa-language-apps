@@ -1,85 +1,64 @@
-// 聞いて話せる英語 のデータ束ね。
-// en=学習対象(コア) / ja=母語(L1)。母語は1つ(ja)。
-// 【パック化 2026-06-16】テキスト(例題/訳/辞書/単語)は同梱、音声(en+ja)はDLパック(packs-appc)。
-//   音声はDL後に file:// マップとして compose に渡す(差分DL対応 → packLoader.ts)。
-//   composePack の audio マップは number(require)でも string(file://)でも可。
+// 聞いて話せる英語 のコア組み立て。en=学習対象(コア) / ja=母語(L1)。
+// 【全学習データ パック化 2026-06-16】本文/文法/単語/辞書/メタは全てDLパック:
+//   core.json(英語コア) + overlay-ja.json(日本語訳+辞書) + 音声(en/ja)。本体は UI+i18n のみ。
+//   packLoader が core.json / overlay-ja.json / 音声 を取得し composeAppC で結合する。
 
-import themesJson from '../data/themes.json';
-import levelsJson from '../data/levels.json';
-import examplesJson from '../data/examples.json';
-import grammarThemesJson from '../data/grammarThemes.json';
-import grammarExamplesJson from '../data/grammarExamples.json';
-import dictJson from '../data/dict.json';
-import wordCategoriesJson from '../data/wordCategories.json';
-import wordsJson from '../data/words.json';
-import appJson from '../app.json';
-import type { ThemeMeta, LevelMeta, GrammarThemeMeta, WordCategoryMeta, Word, AppData } from '@safa/shared';
+import type { AppData } from '@safa/shared';
 import { composePack, type JaCore, type L1Overlay } from './pack/compose';
+import appJson from '../app.json';
 
-type Pair = { en: string; ja: string };
-const THEMES = themesJson as ThemeMeta[];
-const LEVELS = levelsJson as LevelMeta[];
-const GRAMMAR_THEMES = grammarThemesJson as GrammarThemeMeta[];
-const EXAMPLES = examplesJson as Record<string, Pair[]>;
-const GRAMMAR = grammarExamplesJson as Record<string, Pair[]>;
-const WORD_CATEGORIES = wordCategoriesJson as WordCategoryMeta[];
-const WORDS = wordsJson as Record<string, Word[]>;
-
-const pick = (m: Record<string, Pair[]>, key: 'en' | 'ja'): Record<string, string[]> =>
-  Object.fromEntries(Object.entries(m).map(([k, arr]) => [k, arr.map(e => e[key] ?? '')]));
-const pickWordJa = (m: Record<string, Word[]>): Record<string, string[]> =>
-  Object.fromEntries(Object.entries(m).map(([k, arr]) => [k, arr.map(w => w.ja)]));
-const pickWordNe = (m: Record<string, Word[]>): Record<string, string[]> =>
-  Object.fromEntries(Object.entries(m).map(([k, arr]) => [k, arr.map(w => w.ne)]));
-
-// 音声マップ(DLで file:// が入る。未DL時は空)。
 export type AudioMaps = {
-  enConv: Record<string, string | number>;
-  enGram: Record<string, string | number>;
-  jaConv: Record<string, string | number>;
-  jaGram: Record<string, string | number>;
+  enConv: Record<string, number | string>;
+  enGram: Record<string, number | string>;
+  jaConv: Record<string, number | string>;
+  jaGram: Record<string, number | string>;
 };
 const EMPTY_AUDIO: AudioMaps = { enConv: {}, enGram: {}, jaConv: {}, jaGram: {} };
 
-// ── 英語=共通コア(学習対象。compose上は「Jp」スロット) テキストのみ ──
-function makeEnCore(audio: AudioMaps): JaCore {
-  return {
-    themes: THEMES,
-    levels: LEVELS,
-    wordCategories: WORD_CATEGORIES,
-    grammarThemes: GRAMMAR_THEMES,
-    examplesJp: pick(EXAMPLES, 'en'),
-    grammarJp: pick(GRAMMAR, 'en'),
-    wordsJa: pickWordJa(WORDS),
+// core.json (英語コア) の形
+export type EnCoreJson = {
+  themes: any[]; levels: any[]; wordCategories: any[]; grammarThemes: any[];
+  examplesEn: Record<string, string[]>; grammarEn: Record<string, string[]>; wordsEn: Record<string, string[]>;
+};
+// overlay-ja.json (日本語オーバーレイ) の形
+export type JaOverlayJson = {
+  examplesL1: Record<string, string[]>; grammarL1: Record<string, string[]>; wordsL1: Record<string, string[]>;
+  convVocab?: any; grammarVocab?: any; vocab?: any;
+};
+const EMPTY_CORE: EnCoreJson = { themes: [], levels: [], wordCategories: [], grammarThemes: [], examplesEn: {}, grammarEn: {}, wordsEn: {} };
+const EMPTY_OVERLAY: JaOverlayJson = { examplesL1: {}, grammarL1: {}, wordsL1: {} };
+
+export function composeAppC(core: EnCoreJson = EMPTY_CORE, overlay: JaOverlayJson = EMPTY_OVERLAY, audio: AudioMaps = EMPTY_AUDIO): AppData {
+  const enCore: JaCore = {
+    themes: core.themes as any,
+    levels: core.levels as any,
+    wordCategories: core.wordCategories as any,
+    grammarThemes: core.grammarThemes as any,
+    examplesJp: core.examplesEn,
+    grammarJp: core.grammarEn,
+    wordsJa: core.wordsEn,
     jpReading: undefined,
     wordsReading: undefined,
-    japaneseAudio: audio.enConv,            // 英語(学習対象)音声 (DL: file://)
+    japaneseAudio: audio.enConv,
     japaneseGrammarAudio: audio.enGram,
   };
-}
-// ── 日本語=母語オーバーレイ テキストのみ ──
-function makeJaOverlay(audio: AudioMaps): L1Overlay {
-  return {
+  const jaOverlay: L1Overlay = {
     nativeLang: 'ja',
-    examplesL1: pick(EXAMPLES, 'ja'),
-    grammarL1: pick(GRAMMAR, 'ja'),
-    wordsL1: pickWordNe(WORDS),
-    vocab: {},
-    convVocab: (dictJson as any).convVocab,
-    grammarVocab: (dictJson as any).grammarVocab,
-    l1Audio: audio.jaConv,                  // 日本語(母語)音声 (DL: file://)
+    examplesL1: overlay.examplesL1,
+    grammarL1: overlay.grammarL1,
+    wordsL1: overlay.wordsL1,
+    vocab: overlay.vocab ?? {},
+    convVocab: overlay.convVocab,
+    grammarVocab: overlay.grammarVocab,
+    l1Audio: audio.jaConv,
     l1GrammarAudio: audio.jaGram,
     vocabTokenize: 'jp',
   };
-}
-
-// 音声マップを与えて AppData を合成 (packLoader が DL後に呼ぶ)。
-export function composeAppC(audio: AudioMaps = EMPTY_AUDIO): AppData {
-  return composePack(makeEnCore(audio), makeJaOverlay(audio), {
+  return composePack(enCore, jaOverlay, {
     version: appJson.expo.version,
     review: { iosAppId: null, androidPackage: appJson.expo.android.package },
   });
 }
 
-// 音声未DL時の暫定 AppData(テキストのみ)。後方互換のため appData も残す。
+// DL前の空 AppData(フォールバック)。
 export const appData: AppData = composeAppC();

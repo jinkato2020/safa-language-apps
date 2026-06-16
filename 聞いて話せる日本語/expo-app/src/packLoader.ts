@@ -8,10 +8,10 @@
 import type { AppData } from '@safa/shared';
 import * as FileSystem from 'expo-file-system/legacy';
 import appJson from '../app.json';
-import { makeJaCore, type JaAudioMaps } from './appData';
+import { makeJaCore, type JaAudioMaps, type JaCoreJson } from './appData';
 import { composePack, type L1Overlay } from './pack/compose';
 
-// 日本語(ターゲット)音声のコアパックを置く擬似lang。catalog.core からDL。
+// 日本語(ターゲット)コア(本文+音声)パックを置く擬似lang。catalog.core からDL。
 const CORE = '_core';
 
 // 本番配信(改番版): GitHub Release (tag: packs-appb-v2 = themeId改番後の新キーパック)。
@@ -267,14 +267,34 @@ export async function loadPack(lang: string, onProgress?: ProgressFn): Promise<A
   const entry = catalog?.packs?.find((p: any) => p.l1 === lang);
 
   const overlayJson = await getOverlay(lang, entry, { catalog, catalogErr });
-  // ターゲット(日本語)音声のコアパックをDL (全L1共通・キャッシュ済みなら即時)。
+  // ターゲット(日本語)コア本文 core.json + 音声 をDL (全L1共通・キャッシュ済みなら即時)。
+  const coreJson = await getCoreJson(catalog?.core);
   try { if (catalog?.core) await ensureAudio(CORE, catalog.core, onProgress); } catch {}
   const jaAudio = await buildCoreAudioMaps();
   try { await ensureAudio(lang, entry, onProgress); } catch {} // L1音声DL失敗でもテキストは表示
   const { l1Audio, l1GrammarAudio } = await buildAudioMaps(lang, overlayJson);
 
   const overlay: L1Overlay = { ...toOverlay(overlayJson), l1Audio, l1GrammarAudio };
-  return composePack(makeJaCore(jaAudio), overlay, { version: appJson.expo.version, review: REVIEW });
+  return composePack(makeJaCore(coreJson, jaAudio), overlay, { version: appJson.expo.version, review: REVIEW });
+}
+
+// ターゲット(日本語)本文 core.json をDL/キャッシュ。catalog.core.version で版管理。
+async function getCoreJson(coreEntry: any): Promise<JaCoreJson | undefined> {
+  const uri = `${packDir(CORE)}core.json`;
+  const mk = `${packDir(CORE)}core.version`;
+  const info = await FileSystem.getInfoAsync(uri);
+  if (info.exists) {
+    let v: string | null = null;
+    try { if ((await FileSystem.getInfoAsync(mk)).exists) v = await FileSystem.readAsStringAsync(mk); } catch {}
+    if (!coreEntry?.url || v === String(coreEntry.version ?? '')) {
+      try { return JSON.parse(await FileSystem.readAsStringAsync(uri)); } catch {}
+    }
+  }
+  if (!coreEntry?.url) return undefined;
+  await FileSystem.makeDirectoryAsync(packDir(CORE), { intermediates: true });
+  await withRetry(async () => { const r = await FileSystem.downloadAsync(coreEntry.url, uri); if (r.status && r.status >= 400) throw new Error(`core HTTP ${r.status}`); });
+  await FileSystem.writeAsStringAsync(mk, String(coreEntry.version ?? ''));
+  return JSON.parse(await FileSystem.readAsStringAsync(uri));
 }
 
 // コア(日本語)音声dirから conv(T-L-i)/gram(T-i) を分類して file:// マップを作る。

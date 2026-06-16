@@ -1,54 +1,44 @@
-// 聞いて話せるネパール語 の共通コア。
-// 案2(全DL化): ネパール語=共通コア(ここで定義・同梱)。母語(ja/en)はすべて
-// DLパックとして packLoader が composePack で結合する。母語データはここに持たない。
+// 聞いて話せるネパール語 のコア組み立て。
+// 【全学習データ パック化 2026-06-16】ターゲット(ネ語)の本文/文法/単語/読み/メタは
+//   core.json(packs-appa-v2/core.json)としてDL。音声もコアパック。母語(ja/en)はL1パック。
+//   → アプリ本体は UI+i18n のみ同梱。学習データは一切バンドルしない。packLoader が
+//   core.json と音声を取得し makeNeCore で組み、composePack で L1 と結合する。
 
-import themesJson from '../data/themes.json';
-import levelsJson from '../data/levels.json';
-import examplesJson from '../data/examples.json';
-import wordCategoriesJson from '../data/wordCategories.json';
-import wordsJson from '../data/words.json';
-import grammarThemesJson from '../data/grammarThemes.json';
-import grammarExamplesJson from '../data/grammarExamples.json';
-import jpReadingJson from '../data/jp-reading.json';
-import type {
-  ThemeMeta, LevelMeta, Example, WordCategoryMeta, Word, GrammarThemeMeta, JpReading,
-} from '@safa/shared';
 import type { NeCore } from './pack/compose';
 
-const THEMES = themesJson as ThemeMeta[];
-const LEVELS = levelsJson as LevelMeta[];
-const EXAMPLES = examplesJson as Record<string, Example[]>;
-const WORD_CATEGORIES = wordCategoriesJson as WordCategoryMeta[];
-const WORDS = wordsJson as Record<string, Word[]>;
-const GRAMMAR_THEMES = grammarThemesJson as GrammarThemeMeta[];
-const GRAMMAR_EXAMPLES = grammarExamplesJson as Record<string, Example[]>;
-const JP_READING = jpReadingJson as JpReading;
-
-const pickNe = (m: Record<string, Example[]>): Record<string, string[]> =>
-  Object.fromEntries(Object.entries(m).map(([k, arr]) => [k, arr.map(e => e.ne)]));
-const pickWordNe = (m: Record<string, Word[]>): Record<string, string[]> =>
-  Object.fromEntries(Object.entries(m).map(([k, arr]) => [k, arr.map(w => w.ne)]));
-
-// ── ネパール語=共通コア ──
-// 【統一パック化 2026-06-16】テキスト/メタは同梱、ネパール語(ターゲット)音声は
-//   コアパック(packs-appa の core)としてDL→file://マップを runtime で注入。
-//   音声マップが空(未DL)でも text は表示可。
 export type NeAudioMaps = { conv: Record<string, number | string>; gram: Record<string, number | string> };
 
-export function makeNeCore(audio: NeAudioMaps = { conv: {}, gram: {} }): NeCore {
+// core.json の形 (packLoader が取得して渡す)。
+export type NeCoreJson = {
+  themes: any[];
+  levels: any[];
+  wordCategories: any[];
+  grammarThemes: any[];
+  examplesNe: Record<string, string[]>;
+  grammarNe: Record<string, string[]>;
+  wordsNe: Record<string, string[]>;
+  jpReading?: any;
+};
+
+const EMPTY_CORE: NeCoreJson = {
+  themes: [], levels: [], wordCategories: [], grammarThemes: [],
+  examplesNe: {}, grammarNe: {}, wordsNe: {},
+};
+
+export function makeNeCore(core: NeCoreJson = EMPTY_CORE, audio: NeAudioMaps = { conv: {}, gram: {} }): NeCore {
   return {
-    themes: THEMES,
-    levels: LEVELS,
-    wordCategories: WORD_CATEGORIES,
-    grammarThemes: GRAMMAR_THEMES,
-    examplesNe: pickNe(EXAMPLES),
-    grammarNe: pickNe(GRAMMAR_EXAMPLES),
-    wordsNe: pickWordNe(WORDS),
-    jpReading: JP_READING,        // 日本語読み(ja overlay時のみ有効, enでは未使用)
+    themes: core.themes as any,
+    levels: core.levels as any,
+    wordCategories: core.wordCategories as any,
+    grammarThemes: core.grammarThemes as any,
+    examplesNe: core.examplesNe,
+    grammarNe: core.grammarNe,
+    wordsNe: core.wordsNe,
+    jpReading: core.jpReading,
     nepaliAudio: audio.conv,
     nepaliGrammarAudio: audio.gram,
   };
 }
 
-// text のみ(音声空)のコア。DL前のフォールバック。
+// DL前の空コア(フォールバック)。
 export const neCore: NeCore = makeNeCore();
