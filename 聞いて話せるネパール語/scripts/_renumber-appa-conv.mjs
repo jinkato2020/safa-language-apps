@@ -41,6 +41,17 @@ for(const ov of ['en','ja']){ sidCount=0;
   if(o.convVocab) remapContexts(o.convVocab);
   writeJson(`expo-app/data/overlays/${ov}.json`,o); note(`overlay ${ov}: examplesL1キー改番 + convVocab sid改番 ${sidCount}`); }
 
+// ---- i18n テーマ名 (会話 themes のみ; grammarThemes は不変) ----
+// 【重要】テーマ名は t('themes.<id>') で表示するため、themes.json の id 改番に合わせて
+//        全ロケールの i18n themes.* キーも同じ MAP で改番しないと「番号と名前がズレる」。
+for(const loc of ['en','ja','ne']){
+  const p=`expo-app/src/i18n/${loc}.json`; if(!fs.existsSync(D(p))) continue;
+  const j=JSON.parse(fs.readFileSync(D(p),'utf8'));
+  if(j.themes){ const nt={}; for(const k of Object.keys(j.themes)){ const nk=MAP[+k]; if(nk) nt[nk]=j.themes[k]; }
+    const s={}; Object.keys(nt).map(Number).sort((a,b)=>a-b).forEach(k=>s[k]=nt[k]); j.themes=s;
+    writeJson(p,j); note(`i18n ${loc}: themes キー改番`); }
+}
+
 // ---- AUDIO (2段リネーム) ----
 const AUDIO_DIRS=['expo-app/assets/audio/nepali','japanese','audio/ja/conv','audio/en/conv'].map(D);
 function renameDir(dir){ if(!fs.existsSync(dir))return '(無)';
