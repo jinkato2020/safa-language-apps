@@ -11,7 +11,7 @@ import grammarThemesJson from '../data/grammarThemes.json';
 import grammarExamplesJson from '../data/grammarExamples.json';
 import jpReadingJson from '../data/jp-reading.json';
 import wordsReadingJson from '../data/words-reading.json';
-import { japaneseAudio, japaneseGrammarAudio } from '../data/audioMap';
+// 【統一パック化 2026-06-16】日本語(ターゲット)音声はコアパックDL→runtime注入(audioMap不使用)。
 import type {
   ThemeMeta, LevelMeta, Example, WordCategoryMeta, Word, GrammarThemeMeta, JpReading,
 } from '@safa/shared';
@@ -34,16 +34,24 @@ const pickWordJa = (m: Record<string, Word[]>): Record<string, string[]> =>
   Object.fromEntries(Object.entries(m).map(([k, arr]) => [k, arr.map(w => w.ja)]));
 
 // ── 日本語=共通コア (全L1パックがこれを共有) ──
-export const jaCore: JaCore = {
-  themes: THEMES,
-  levels: LEVELS,
-  wordCategories: WORD_CATEGORIES,
-  grammarThemes: GRAMMAR_THEMES,
-  examplesJp: pickJp(EXAMPLES),
-  grammarJp: pickJp(GRAMMAR_EXAMPLES),
-  wordsJa: pickWordJa(WORDS),
-  jpReading: JP_READING,
-  wordsReading: WORDS_READING,
-  japaneseAudio,
-  japaneseGrammarAudio,
-};
+// テキスト/メタは同梱。日本語(ターゲット)音声は core パックDL→file://マップを注入。
+export type JaAudioMaps = { conv: Record<string, number | string>; gram: Record<string, number | string> };
+
+export function makeJaCore(audio: JaAudioMaps = { conv: {}, gram: {} }): JaCore {
+  return {
+    themes: THEMES,
+    levels: LEVELS,
+    wordCategories: WORD_CATEGORIES,
+    grammarThemes: GRAMMAR_THEMES,
+    examplesJp: pickJp(EXAMPLES),
+    grammarJp: pickJp(GRAMMAR_EXAMPLES),
+    wordsJa: pickWordJa(WORDS),
+    jpReading: JP_READING,
+    wordsReading: WORDS_READING,
+    japaneseAudio: audio.conv,
+    japaneseGrammarAudio: audio.gram,
+  };
+}
+
+// text のみ(音声空)のコア。DL前のフォールバック。
+export const jaCore: JaCore = makeJaCore();
