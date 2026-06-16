@@ -19,8 +19,8 @@ export interface JaCore {
   wordsJa: Record<string, string[]>;     // "category" → 日本語語(位置順)
   jpReading?: JpReading;                 // 日本語文 → かな/ローマ字 (jp依存・共通)
   wordsReading?: JpReading;              // 日本語語 → かな/ローマ字 (単語モードのふりがな用)
-  japaneseAudio: Record<string, number>;
-  japaneseGrammarAudio: Record<string, number>;
+  japaneseAudio: Record<string, number | string>;        // DL版は file:// URI(string)
+  japaneseGrammarAudio: Record<string, number | string>;
 }
 
 // 母語オーバーレイ (学習者の母語側)。core と同じキー・同じ位置で対応する訳。
