@@ -49,6 +49,22 @@ def api(tok, path, params=None):
     return r.json()
 
 
+def api_patch(tok, path, body):
+    r = requests.patch(f"{BASE}{path}", headers={"Authorization": f"Bearer {tok}", "Content-Type": "application/json"},
+                       json=body, timeout=30)
+    if r.status_code >= 400:
+        raise RuntimeError(f"{r.status_code} {path}: {r.text[:300]}")
+    return r.json()
+
+
+# リリース方法を変更できる(まだ公開前の)状態
+EDITABLE_STATES = {
+    "PREPARE_FOR_SUBMISSION", "WAITING_FOR_REVIEW", "IN_REVIEW",
+    "PENDING_DEVELOPER_RELEASE", "DEVELOPER_REJECTED", "REJECTED",
+    "METADATA_REJECTED", "INVALID_BINARY", "WAITING_FOR_EXPORT_COMPLIANCE",
+}
+
+
 def resolve_apps(app_arg):
     if app_arg in ("ALL", "all", None, ""):
         return ["A", "B", "C"]
@@ -104,11 +120,42 @@ def cmd_builds(tok, args):
             print(f"  {a.get('version')}  processing={a.get('processingState')}  uploaded={a.get('uploadedDate')}{exp}")
 
 
+def cmd_set_release_type(tok, args):
+    target = args.release_type.upper()  # MANUAL / AFTER_APPROVAL
+    for key in resolve_apps(args.app):
+        bundle, label = BUNDLES[key]
+        print(f"\n=== {label} ({bundle}) ===")
+        app = find_app(tok, bundle)
+        if not app:
+            print("  アプリ未検出"); continue
+        vers = api(tok, f"/apps/{app['id']}/appStoreVersions",
+                   {"limit": 10, "fields[appStoreVersions]": "versionString,appStoreState,releaseType"}).get("data", [])
+        targets = [v for v in vers if v["attributes"].get("appStoreState") in EDITABLE_STATES]
+        if not targets:
+            print("  公開前(編集可能)バージョンが見つかりません。状態:",
+                  ", ".join(f"{v['attributes'].get('versionString')}={v['attributes'].get('appStoreState')}" for v in vers))
+            continue
+        for v in targets:
+            a = v["attributes"]
+            cur = a.get("releaseType")
+            vs, st = a.get("versionString"), a.get("appStoreState")
+            if cur == target:
+                print(f"  版 {vs} [{st}] releaseType={cur} → 既に{target}（変更不要）")
+                continue
+            api_patch(tok, f"/appStoreVersions/{v['id']}",
+                      {"data": {"type": "appStoreVersions", "id": v["id"], "attributes": {"releaseType": target}}})
+            print(f"  版 {vs} [{st}] releaseType {cur} → {target} に変更しました")
+
+
 def main():
     p = argparse.ArgumentParser(description="App Store Connect 状態取得 CLI")
     sub = p.add_subparsers(dest="cmd", required=True)
     sp = sub.add_parser("status"); sp.add_argument("--app", default="ALL"); sp.set_defaults(fn=cmd_status)
     sp = sub.add_parser("builds"); sp.add_argument("--app", default="ALL"); sp.set_defaults(fn=cmd_builds)
+    sp = sub.add_parser("set-release-type")
+    sp.add_argument("--app", default="ALL")
+    sp.add_argument("--release-type", default="MANUAL", choices=["MANUAL", "AFTER_APPROVAL"])
+    sp.set_defaults(fn=cmd_set_release_type)
     args = p.parse_args()
     tok = token()
     args.fn(tok, args)
