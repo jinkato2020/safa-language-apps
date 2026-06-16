@@ -95,6 +95,44 @@ def _get_track(s, pkg, eid, track):
     return s.edits().tracks().get(packageName=pkg, editId=eid, track=track).execute()
 
 
+def _max_vc(track_body):
+    return max([int(v) for r in track_body.get("releases", []) for v in r.get("versionCodes", [])] or [0])
+
+
+def cmd_promote(s, args):
+    """既存ビルドをトラック間で昇格(既定 internal→alpha)。ダウングレードはスキップ。"""
+    for key in resolve_apps(args.app):
+        pkg = PKGS[key]
+        eid = new_edit(s, pkg)
+        try:
+            src = _get_track(s, pkg, eid, args.from_track)
+            # source の最新(最大versionCode)リリースを採用
+            rel = None
+            for r in src.get("releases", []):
+                if r.get("versionCodes") and (rel is None or max(map(int, r["versionCodes"])) > max(map(int, rel["versionCodes"]))):
+                    rel = r
+            if not rel:
+                print(f"{APP_LABEL[key]} [{args.from_track}] にversionCode無し → スキップ")
+                s.edits().delete(packageName=pkg, editId=eid).execute(); continue
+            smax = max(int(v) for v in rel["versionCodes"])
+            tgt = _get_track(s, pkg, eid, args.to_track)
+            tmax = _max_vc(tgt)
+            if smax <= tmax:
+                print(f"{APP_LABEL[key]} [{args.to_track}] は既に {tmax} (>= {smax}) → スキップ(昇格不要/ダウングレード防止)")
+                s.edits().delete(packageName=pkg, editId=eid).execute(); continue
+            new_rel = {"versionCodes": rel["versionCodes"], "status": "completed"}
+            if rel.get("name"): new_rel["name"] = rel["name"]
+            if rel.get("releaseNotes"): new_rel["releaseNotes"] = rel["releaseNotes"]
+            s.edits().tracks().update(packageName=pkg, editId=eid, track=args.to_track,
+                                      body={"track": args.to_track, "releases": [new_rel]}).execute()
+            s.edits().commit(packageName=pkg, editId=eid).execute()
+            print(f"{APP_LABEL[key]} versionCode {rel['versionCodes']} を {args.from_track}→{args.to_track} へ昇格(commit済)")
+        except HttpError as e:
+            print(f"{APP_LABEL[key]} 昇格失敗: {e}")
+            try: s.edits().delete(packageName=pkg, editId=eid).execute()
+            except Exception: pass
+
+
 def cmd_rollout(s, args):
     key = resolve_apps(args.app)[0]
     pkg = PKGS[key]
@@ -241,6 +279,7 @@ def main():
     sp = sub.add_parser("testers-get"); sp.add_argument("--app", default="ALL"); sp.add_argument("--track", default="alpha"); sp.set_defaults(fn=cmd_testers_get)
     sp = sub.add_parser("testers-set"); sp.add_argument("--app", required=True); sp.add_argument("--track", default="alpha"); sp.add_argument("--groups", required=True); sp.set_defaults(fn=cmd_testers_set)
     sp = sub.add_parser("appb-apply"); sp.set_defaults(fn=cmd_appb_apply)  # App B 掲載文+スクショ一括投入
+    sp = sub.add_parser("promote"); sp.add_argument("--app", default="ALL"); sp.add_argument("--from-track", default="internal"); sp.add_argument("--to-track", default="alpha"); sp.set_defaults(fn=cmd_promote)
 
     args = p.parse_args()
     s = svc()

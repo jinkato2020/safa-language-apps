@@ -15,6 +15,7 @@ on:
         default: status
         options:
           - status         # 各アプリ/トラックのリリース状態を取得(読み取り専用)
+          - promote        # 既存ビルドをトラック間で昇格(既定 internal→alpha・ダウングレード防止)
           - rollout        # 段階ロールアウト割合の変更 / 100%公開
           - halt           # 進行中リリースを停止
           - listing-get    # 掲載情報の取得
@@ -83,6 +84,7 @@ jobs:
           set -e
           case "$OP" in
             status)      python scripts/play_console.py status --app "$APP" ;;
+            promote)     python scripts/play_console.py promote --app "$APP" --from-track internal --to-track alpha ;;
             rollout)     python scripts/play_console.py rollout --app "$APP" --track "$TRACK" --fraction "$FRACTION" ;;
             halt)        python scripts/play_console.py halt --app "$APP" --track "$TRACK" ;;
             listing-get) python scripts/play_console.py listing-get --app "$APP" --lang "$LANG" ;;
