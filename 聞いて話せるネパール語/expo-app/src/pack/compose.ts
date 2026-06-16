@@ -18,8 +18,8 @@ export interface NeCore {
   grammarNe: Record<string, string[]>;   // "theme" → ネパール語文(位置順)
   wordsNe: Record<string, string[]>;     // "category" → ネパール語語(位置順)
   jpReading?: JpReading;                 // 日本語読み(jp overlay時のみ有効, enでは未使用)
-  nepaliAudio: Record<string, number>;
-  nepaliGrammarAudio: Record<string, number>;
+  nepaliAudio: Record<string, number | string>;        // DL版は file:// URI(string)
+  nepaliGrammarAudio: Record<string, number | string>;
 }
 
 // 母語オーバーレイ (学習者の母語側=jp/en)。core と同じキー・同じ位置で対応。
