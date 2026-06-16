@@ -19,6 +19,12 @@ Thumbs.db
 *.swp
 *~
 
+# Claude Code 設定・セッション (絶対にコミットしない)
+.claude/
+# 音声再エンコ等の一時作業ディレクトリ
+.reenc/
+.tmp-*/
+
 # 環境変数（秘密鍵を含む）
 .env
 .env.*
