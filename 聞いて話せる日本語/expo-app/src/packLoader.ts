@@ -11,9 +11,10 @@ import appJson from '../app.json';
 import { jaCore } from './appData';
 import { composePack, type L1Overlay } from './pack/compose';
 
-// 本番配信: GitHub Release (tag: packs-appb)。publish-packs-appb.yml が experiment/bangla から自動公開。
+// 本番配信(改番版): GitHub Release (tag: packs-appb-v2 = themeId改番後の新キーパック)。
+// 旧 packs-appb は改番前アプリ(1.2.x以前)用に温存。改番版アプリ(1.3.x新コア)は v2 を参照しキー整合を取る。
 const CATALOG_URL =
-  'https://github.com/JinKato2020/safa-language-apps/releases/download/packs-appb/catalog.json';
+  'https://github.com/JinKato2020/safa-language-apps/releases/download/packs-appb-v2/catalog.json';
 
 // 母語(ne/bn)はすべて DL パック。アプリ同梱の母語データは無し。
 const BUNDLED: Record<string, AppData> = {};
