@@ -74,14 +74,29 @@ export default function PosterAudioScreen({ route }: any) {
     wdRef.current = setTimeout(() => advanceRef.current(my), 9000);
   };
 
+  // タイトル朗読(idx=-1)。母語→日本語の順に再生し、その後カード0へ。
+  const playTitle = (ph: 'ja' | 'l1') => {
+    if (!lesson?.titleAudio) { playCard(0, ph); return; }
+    genRef.current += 1;
+    const my = genRef.current;
+    pendRef.current = { gen: my, started: false };
+    setIdx(-1); setPhase(ph);
+    const src = ph === 'ja' ? lesson.titleAudio.ja : (pickByLang(lesson.titleAudio.l1) ?? lesson.titleAudio.ja);
+    try { player.replace(src); player.play(); } catch {}
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
+    if (wdRef.current) clearTimeout(wdRef.current);
+    wdRef.current = setTimeout(() => advanceRef.current(my), 9000);
+  };
+
   advanceRef.current = (g: number) => {
     if (g !== genRef.current || !ref.current.playing || !lesson) return;
     const { idx: ci, phase: cp } = ref.current;
+    if (ci === -1) { if (cp === 'l1') playTitle('ja'); else playCard(0, 'l1'); return; }  // タイトル中
     if (cp === 'l1') { playCard(ci, 'ja'); }
     else {
       const ni = ci + 1;
       if (ni < lesson.cards.length) playCard(ni, 'l1');
-      else { if (wdRef.current) clearTimeout(wdRef.current); setPlaying(false); }  // 終端: 最後のカードを表示したまま停止
+      else { if (wdRef.current) clearTimeout(wdRef.current); setPlaying(false); }  // 終端: 停止
     }
   };
 
@@ -93,13 +108,14 @@ export default function PosterAudioScreen({ route }: any) {
           try { player.play(); } catch {}
         }
       }
-      if (st?.didJustFinish) advanceRef.current(genRef.current);
+      // 実際に鳴り始めたクリップの完了のみ次へ(前クリップの遅延didJustFinishで途切れるのを防止)
+      if (st?.didJustFinish && pendRef.current.started) advanceRef.current(genRef.current);
     });
     return () => sub.remove();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const start = (from = 0) => { setPlaying(true); playCard(from, 'l1'); };
+  const start = (from = 0) => { setPlaying(true); if (from === 0 && lesson?.titleAudio) playTitle('l1'); else playCard(from, 'l1'); };
   const stop = () => { setPlaying(false); player.pause(); if (wdRef.current) clearTimeout(wdRef.current); };
   const toggle = () => { if (playing) stop(); else start(idx >= 0 ? idx : 0); };
 
@@ -150,11 +166,7 @@ export default function PosterAudioScreen({ route }: any) {
                      left: -cx * zScale, top: -cy * zScale }}
             resizeMode="contain"
           />
-          {playing ? (
-            <View style={[styles.lngtag, styles.lngtagFloat, { backgroundColor: phase === 'ja' ? GOLD : '#2f5d54' }]}>
-              <Text style={styles.lngtagText}>{phase === 'ja' ? '日本語' : l1Label}</Text>
-            </View>
-          ) : (
+          {!playing && (
             <View style={styles.playHint}>
               <Svg width={26} height={26} viewBox="0 0 24 24"><Path d="M8 5v14l11-7z" fill="#fff" /></Svg>
             </View>

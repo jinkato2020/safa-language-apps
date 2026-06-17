@@ -11,6 +11,7 @@ export type PosterCard = {
 export type PosterLesson = {
   id: string; title: string; titleNp?: string;
   image?: number; imageL1?: Record<string, number>;
+  titleAudio?: { ja: number; l1: Record<string, number> };   // タイトル朗読(母語→日本語)
   posterW: number; posterH: number; cards: PosterCard[];
 };
 
