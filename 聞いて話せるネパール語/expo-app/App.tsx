@@ -33,17 +33,17 @@ const LANG_OPTIONS = [
 const L1_CHOSEN_KEY = '@nepali_app/l1_chosen_v1';
 
 // confirmTitle/confirmBody({size})/download({size}) はDL前の同意ダイアログ用 (Apple GL4.2.3)。
-type DlText = { dl: string; prep: string; fail: string; retry: string; confirmTitle: string; confirmBody: string; download: string };
+type DlText = { dl: string; prep: string; fail: string; retry: string; confirmTitle: string; confirmBody: string; download: string; back: string };
 const DL_TEXT: Record<string, DlText> = {
-  en: { dl: 'Downloading', prep: 'Preparing', fail: 'Download failed', retry: 'Retry', confirmTitle: 'Download language content', confirmBody: 'This language needs audio and translations (about {size}) to be downloaded.', download: 'Download ({size})' },
-  ja: { dl: 'ダウンロード中', prep: '準備中', fail: 'ダウンロードに失敗しました', retry: '再試行', confirmTitle: '言語データのダウンロード', confirmBody: 'この言語の音声と翻訳（約{size}）をダウンロードします。', download: 'ダウンロード（{size}）' },
-  ne: { dl: 'डाउनलोड हुँदैछ', prep: 'तयार पारिँदैछ', fail: 'डाउनलोड असफल भयो', retry: 'पुनः प्रयास गर्नुहोस्', confirmTitle: 'भाषा सामग्री डाउनलोड', confirmBody: 'यो भाषाको लागि अडियो र अनुवाद (लगभग {size}) डाउनलोड गर्न आवश्यक छ।', download: 'डाउनलोड गर्नुहोस् ({size})' },
+  en: { dl: 'Downloading', prep: 'Preparing', fail: 'Download failed', retry: 'Retry', confirmTitle: 'Download language content', confirmBody: 'This language needs audio and translations (about {size}) to be downloaded.', download: 'Download ({size})', back: 'Back' },
+  ja: { dl: 'ダウンロード中', prep: '準備中', fail: 'ダウンロードに失敗しました', retry: '再試行', confirmTitle: '言語データのダウンロード', confirmBody: 'この言語の音声と翻訳（約{size}）をダウンロードします。', download: 'ダウンロード（{size}）', back: '戻る' },
+  ne: { dl: 'डाउनलोड हुँदैछ', prep: 'तयार पारिँदैछ', fail: 'डाउनलोड असफल भयो', retry: 'पुनः प्रयास गर्नुहोस्', confirmTitle: 'भाषा सामग्री डाउनलोड', confirmBody: 'यो भाषाको लागि अडियो र अनुवाद (लगभग {size}) डाउनलोड गर्न आवश्यक छ।', download: 'डाउनलोड गर्नुहोस् ({size})', back: 'पछाडि' },
 };
 
 function fmtMB(bytes: number): string { return bytes > 0 ? `${Math.max(1, Math.round(bytes / 1048576))} MB` : '—'; }
 
 // DL前の同意画面 (サイズ開示+ユーザーが選択して開始)。Apple GL4.2.3対応。
-function ConfirmDownloadView({ bytes, lang, onConfirm }: { bytes: number; lang: string; onConfirm: () => void }) {
+function ConfirmDownloadView({ bytes, lang, onConfirm, onCancel }: { bytes: number; lang: string; onConfirm: () => void; onCancel?: () => void }) {
   const t = DL_TEXT[lang] ?? DL_TEXT.ja;
   const size = fmtMB(bytes);
   return (
@@ -53,6 +53,11 @@ function ConfirmDownloadView({ bytes, lang, onConfirm }: { bytes: number; lang: 
       <Pressable onPress={onConfirm} style={{ paddingVertical: 14, paddingHorizontal: 32, borderRadius: 10, backgroundColor: '#2563eb' }}>
         <Text style={{ color: '#fff', fontSize: 16, fontWeight: '700' }}>{t.download.replace('{size}', size)}</Text>
       </Pressable>
+      {onCancel && (
+        <Pressable onPress={onCancel} hitSlop={8} style={{ marginTop: 18, paddingVertical: 8, paddingHorizontal: 20 }}>
+          <Text style={{ color: '#52525b', fontSize: 15, fontWeight: '600' }}>‹ {t.back}</Text>
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -96,10 +101,11 @@ function DownloadView(
 const sessionPackCache: Record<string, AppData> = {};
 
 function PackGate({ children }: { children: ReactNode }) {
-  const { lang } = useI18n();
+  const { lang, setLang } = useI18n();
   const packLang = toPackLang(lang);
   const [data, setData] = useState<AppData | null>(() => bundledPack(packLang));
   const dataLangRef = useRef<string | null>(data ? packLang : null);
+  const shownLangRef = useRef<string>(lang); // 現在表示中データのUI言語(DL拒否時の戻り先)
   const [progress, setProgress] = useState<{ done: number; total: number; label?: string }>({ done: 0, total: 0 });
   const [error, setError] = useState(false);
   const [errMsg, setErrMsg] = useState<string>('');
@@ -110,11 +116,11 @@ function PackGate({ children }: { children: ReactNode }) {
   useEffect(() => {
     let alive = true;
     const bundled = bundledPack(packLang);
-    if (bundled) { setData(bundled); dataLangRef.current = packLang; setLoading(false); setError(false); setConfirm(null); return; }
+    if (bundled) { setData(bundled); dataLangRef.current = packLang; shownLangRef.current = lang; setLoading(false); setError(false); setConfirm(null); return; }
     if (dataLangRef.current === packLang && !error) return;
     // セッション中に一度ロード済みなら即時表示(ネット通信もloadPackも無し)
     const cached = sessionPackCache[packLang];
-    if (cached && !error) { setData(cached); dataLangRef.current = packLang; setLoading(false); setConfirm(null); return; }
+    if (cached && !error) { setData(cached); dataLangRef.current = packLang; shownLangRef.current = lang; setLoading(false); setConfirm(null); return; }
     setError(false); setErrMsg(''); setConfirm(null);
     (async () => {
       // まずDL要否とサイズを確認。DLが必要で未同意の言語なら、サイズ開示+同意画面を出してから。
@@ -124,13 +130,14 @@ function PackGate({ children }: { children: ReactNode }) {
       if (info.needsDownload && confirmedLangRef.current !== packLang) { setConfirm({ bytes: info.bytes }); return; }
       setProgress({ done: 0, total: 0 }); setLoading(true);
       loadPack(packLang, (done, total, label) => { if (alive) setProgress({ done, total, label }); })
-        .then(d => { if (alive) { sessionPackCache[packLang] = d; setData(d); dataLangRef.current = packLang; setLoading(false); } })
+        .then(d => { if (alive) { sessionPackCache[packLang] = d; setData(d); dataLangRef.current = packLang; shownLangRef.current = lang; setLoading(false); } })
         .catch((e: any) => { if (alive) { setErrMsg(String(e?.message ?? e)); setError(true); setLoading(false); } });
     })();
     return () => { alive = false; };
   }, [packLang, attempt]);
 
   const onConfirm = () => { confirmedLangRef.current = packLang; setConfirm(null); setAttempt(a => a + 1); };
+  const onCancel = () => { setConfirm(null); setLang(shownLangRef.current); };  // DL拒否→直前の言語へ戻す
 
   if (!data) {
     if (confirm) return <ConfirmDownloadView bytes={confirm.bytes} lang={lang} onConfirm={onConfirm} />;
@@ -141,7 +148,7 @@ function PackGate({ children }: { children: ReactNode }) {
       {children}
       {confirm && (
         <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#fff' }}>
-          <ConfirmDownloadView bytes={confirm.bytes} lang={lang} onConfirm={onConfirm} />
+          <ConfirmDownloadView bytes={confirm.bytes} lang={lang} onConfirm={onConfirm} onCancel={onCancel} />
         </View>
       )}
       {(loading || error) && !confirm && (
