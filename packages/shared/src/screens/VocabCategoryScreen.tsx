@@ -29,11 +29,9 @@ export default function VocabCategoryScreen() {
       {hasPoster && (
         <View style={styles.seg}>
           <Pressable onPress={() => setMode('flash')} style={[styles.segBtn, mode === 'flash' && styles.segOn]}>
-            <Text style={[styles.segIc]}>🔀</Text>
             <Text style={[styles.segTx, mode === 'flash' && styles.segTxOn]}>{t('vocab.modeFlashcard')}</Text>
           </Pressable>
           <Pressable onPress={() => setMode('poster')} style={[styles.segBtn, mode === 'poster' && styles.segOn]}>
-            <Text style={[styles.segIc]}>🔊</Text>
             <Text style={[styles.segTx, mode === 'poster' && styles.segTxOn]}>{t('vocab.modePoster')}</Text>
           </Pressable>
         </View>
@@ -56,7 +54,6 @@ export default function VocabCategoryScreen() {
           >
             <Text style={styles.posterJa}>{item.title}</Text>
             <Text style={styles.posterNp}>{item.titleNp}</Text>
-            <Text style={styles.badge}>🔊</Text>
             <Text style={styles.count}>{t('common.wordsCount', { count: item.cards.length })}</Text>
           </Pressable>
         )}
