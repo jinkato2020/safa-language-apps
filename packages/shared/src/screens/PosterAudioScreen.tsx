@@ -68,8 +68,6 @@ export default function PosterAudioScreen({ route }: any) {
     setIdx(i); setPhase(ph);
     const src = ph === 'ja' ? card.ja : l1AudioOf(card);
     try { player.replace(src); player.play(); } catch {}   // 楽観再生。実際に鳴ったかは listener で確認
-    const y = card.box.y * scale;
-    scrollRef.current?.scrollTo({ y: Math.max(0, y - dispH * 0.28), animated: true });
     if (wdRef.current) clearTimeout(wdRef.current);
     wdRef.current = setTimeout(() => advanceRef.current(my), 9000);
   };
@@ -83,7 +81,6 @@ export default function PosterAudioScreen({ route }: any) {
     setIdx(-1); setPhase(ph);
     const src = ph === 'ja' ? lesson.titleAudio.ja : (pickByLang(lesson.titleAudio.l1) ?? lesson.titleAudio.ja);
     try { player.replace(src); player.play(); } catch {}
-    scrollRef.current?.scrollTo({ y: 0, animated: true });
     if (wdRef.current) clearTimeout(wdRef.current);
     wdRef.current = setTimeout(() => advanceRef.current(my), 9000);
   };
@@ -186,7 +183,7 @@ const styles = StyleSheet.create({
   themeRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: spacing.sm },
   themeTitle: { fontSize: 20, fontWeight: '700', color: colors.ink },
   themeNav: { fontSize: 12, color: colors.inkFaint, fontFamily: 'Courier' },
-  hl: { position: 'absolute', borderWidth: 2, borderColor: GOLD, borderRadius: 16, backgroundColor: 'rgba(176,135,70,0.10)' },
+  hl: { position: 'absolute', borderWidth: 1.5, borderColor: colors.accentJa, borderRadius: 12, backgroundColor: 'transparent' },
   dock: { position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: colors.surface, borderTopWidth: 1, borderTopColor: colors.line, paddingHorizontal: spacing.md, paddingTop: spacing.sm, paddingBottom: spacing.md },
   zoomWrap: { overflow: 'hidden', backgroundColor: '#fff', alignSelf: 'center' },
   lngtag: { borderRadius: 6, paddingHorizontal: 8, paddingVertical: 2 },
