@@ -14,15 +14,19 @@ APP = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(APP, "expo-app", "assets", "poster")
 TS_OUT = os.path.join(APP, "expo-app", "src", "posterLessons.ts")
 FFMPEG = shutil.which("ffmpeg") or r"C:\ffmpeg\bin\ffmpeg.exe"
-LANGS = ["bn", "en", "ne", "vi"]
+LANGS = ["bn", "en", "ne", "vi", "zh"]
 ALL = ["ja"] + LANGS
-LANGDIR = {"ja": "JA", "bn": "BN", "en": "EN", "ne": "NE", "vi": "VI"}
+LANGDIR = {"ja": "JA", "bn": "BN", "en": "EN", "ne": "NE", "vi": "VI", "zh": "ZH"}
 POSTER_W, POSTER_H = 2480, 3508
 COL = [(56, 1214), (1264, 2422)]   # 実測カード左右端(テンプレ共通) (x, x2)
 THEMES = [("family", "01_家族"), ("numbers", "02_数字"), ("body", "03_体"),
-          ("colors", "04_色と形"), ("food", "05_食べ物")]
+          ("colors", "04_色と形"), ("food", "05_食べ物"), ("emotions", "06_感情"),
+          ("buildings", "07_建物"), ("animals", "08_動物"), ("stationery", "09_文房具"),
+          ("vehicles", "10_乗り物")]
 
 def enc32k(src, dst):
+    if os.path.exists(dst):
+        return
     r = subprocess.run([FFMPEG, "-y", "-loglevel", "error", "-i", src,
                         "-ar", "24000", "-ac", "1", "-b:a", "32k", "-map_metadata", "-1",
                         "-af", "apad=pad_dur=0.25", dst], capture_output=True)
