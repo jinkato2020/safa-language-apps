@@ -234,18 +234,28 @@ export async function getPackDownloadInfo(lang: string): Promise<{ needsDownload
     if (!entry) overlayNeed = false; // キャッシュ有り&catalog取れず → 既存で動く
     else { try { const c = JSON.parse(await FileSystem.readAsStringAsync(overlayUri(lang))); if ((c.version ?? 0) >= (entry.version ?? 0)) overlayNeed = false; } catch {} }
   }
-  // audio 要DL?
+  // audio 要DL? + 差分判定用にローカル版を保持
   let audioNeed = !!entry?.audioZip;
+  let audioLocalVer: string | null = null;
   const mInfo = await FileSystem.getInfoAsync(audioMarkerUri(lang));
-  if (mInfo.exists && entry) { try { const v = await FileSystem.readAsStringAsync(audioMarkerUri(lang)); if (v === String(entry.audioVersion ?? '')) audioNeed = false; } catch {} }
+  if (mInfo.exists && entry) { try { audioLocalVer = await FileSystem.readAsStringAsync(audioMarkerUri(lang)); if (audioLocalVer === String(entry.audioVersion ?? '')) audioNeed = false; } catch {} }
   // core(日本語音声)要DL? 全L1共通・初回のみ。
   let coreNeed = !!catalog?.core?.audioZip;
+  let coreLocalVer: string | null = null;
   const cm = await FileSystem.getInfoAsync(audioMarkerUri(CORE));
-  if (cm.exists && catalog?.core) { try { const v = await FileSystem.readAsStringAsync(audioMarkerUri(CORE)); if (v === String(catalog.core.audioVersion ?? '')) coreNeed = false; } catch {} }
+  if (cm.exists && catalog?.core) { try { coreLocalVer = await FileSystem.readAsStringAsync(audioMarkerUri(CORE)); if (coreLocalVer === String(catalog.core.audioVersion ?? '')) coreNeed = false; } catch {} }
   let bytes = 0;
   if (overlayNeed) bytes += entry?.sizeBytes ?? 0;
-  if (audioNeed) bytes += entry?.audioZipBytes ?? 0;
-  if (coreNeed) bytes += catalog?.core?.audioZipBytes ?? 0;
+  // 差分DLが適用される場合は差分サイズで見積もる(ensureAudioと同条件)。フル表示の誤りを防ぐ。
+  if (audioNeed) {
+    const useDelta = !!(entry?.deltaZip && audioLocalVer != null && String(entry.deltaBaseVersion ?? '') === audioLocalVer);
+    bytes += (useDelta ? entry?.deltaZipBytes : entry?.audioZipBytes) ?? 0;
+  }
+  if (coreNeed) {
+    const c = catalog.core;
+    const useDelta = !!(c?.deltaZip && coreLocalVer != null && String(c.deltaBaseVersion ?? '') === coreLocalVer);
+    bytes += (useDelta ? c?.deltaZipBytes : c?.audioZipBytes) ?? 0;
+  }
   return { needsDownload: overlayNeed || audioNeed || coreNeed, bytes };
 }
 
