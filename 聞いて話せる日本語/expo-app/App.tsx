@@ -242,9 +242,8 @@ export default function App() {
       >
         <FirstRunGate>
           <PackGate>
-            {/* ポスター音声学習は開発途中のため、ストア申請に向け一時非表示([]を渡すと単語モードの🔀/🔊セグメントが消え、分ける前の素の単語モードに戻る)。
-                完成したら posterLessons={POSTER_LESSONS} に戻す。POSTER_LESSONS(./src/posterLessons) は将来再有効化用に温存。 */}
-            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={[]} />
+            {/* ポスター音声学習: テーマ1〜5(家族/数字/体/色と形/食べ物)を多言語(bn/en/ne/vi)対応で再有効化。実機検証用。 */}
+            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={POSTER_LESSONS} />
           </PackGate>
         </FirstRunGate>
       </SettingsProvider>

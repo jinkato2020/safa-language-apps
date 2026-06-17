@@ -6,14 +6,23 @@ import { useAudioPlayer } from 'expo-audio';
 import Svg, { Path, Rect } from 'react-native-svg';
 import { colors, spacing, radius } from '../theme';
 import { usePosterLessons } from '../PosterContext';
+import { useI18n } from '../i18n';
 
 const GOLD = '#b08746';
+const LANG_LABEL: Record<string, string> = { ja: '日本語', bn: 'বাংলা', en: 'English', ne: 'नेपाली', vi: 'Tiếng Việt', zh: '中文' };
 
 export default function PosterAudioScreen({ route }: any) {
   const { lessonId } = route.params || {};
   const lessons = usePosterLessons();
   const lesson = lessons.find(l => l.id === lessonId) || lessons[0];
+  const { lang } = useI18n();
   const { width } = useWindowDimensions();
+
+  // 母語別の画像/音声を現在の言語で解決(無ければ en→先頭にフォールバック)
+  const pickByLang = (m?: Record<string, number>) => (m ? (m[lang] ?? m.en ?? Object.values(m)[0]) : undefined);
+  const lessonImage = pickByLang(lesson?.imageL1) ?? lesson?.image;
+  const l1AudioOf = (c: any) => pickByLang(c?.l1) ?? c?.ne;
+  const l1Label = LANG_LABEL[lang] || lang;
 
   const player = useAudioPlayer();
   const scrollRef = useRef<ScrollView>(null);
@@ -41,7 +50,7 @@ export default function PosterAudioScreen({ route }: any) {
     genRef.current += 1;
     const my = genRef.current;
     setIdx(i); setPhase(ph);
-    try { player.replace(ph === 'ja' ? card.ja : card.ne); player.seekTo(0); player.play(); } catch {}
+    try { player.replace(ph === 'ja' ? card.ja : l1AudioOf(card)); player.seekTo(0); player.play(); } catch {}
     const y = card.box.y * scale;
     scrollRef.current?.scrollTo({ y: Math.max(0, y - dispW * 0.5), animated: true });
     // 保険: ended が来なくても約6秒で次へ(音声は通常1〜2秒)
@@ -81,7 +90,7 @@ export default function PosterAudioScreen({ route }: any) {
     <View style={styles.container}>
       <ScrollView ref={scrollRef} contentContainerStyle={{ padding: PAD, paddingBottom: 240 }}>
         <View style={{ width: dispW, height: dispH }}>
-          <Image source={lesson.image} style={{ width: dispW, height: dispH, borderRadius: radius.md }} resizeMode="contain" />
+          <Image source={lessonImage} style={{ width: dispW, height: dispH, borderRadius: radius.md }} resizeMode="contain" />
           {hl && (
             <View pointerEvents="none" style={[styles.hl, {
               left: hl.box.x * scale, top: hl.box.y * scale,
@@ -98,19 +107,25 @@ export default function PosterAudioScreen({ route }: any) {
 
       {/* 下部ドック: 大きいカード + 操作 */}
       <View style={styles.dock}>
-        {hl ? (
+        {hl && hl.word ? (
           <View style={styles.bigcard}>
-            <Image source={hl.ill} style={styles.ill} resizeMode="cover" />
+            {hl.ill != null && <Image source={hl.ill} style={styles.ill} resizeMode="cover" />}
             <View style={styles.txt}>
               <Text style={styles.kana}>{hl.kana}</Text>
               <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
                 <Text style={styles.kanji}>{hl.word}</Text>
                 <View style={[styles.lngtag, { backgroundColor: phase === 'ja' ? GOLD : '#2f5d54' }]}>
-                  <Text style={styles.lngtagText}>{phase === 'ja' ? '日本語' : 'नेपाली'}</Text>
+                  <Text style={styles.lngtagText}>{phase === 'ja' ? '日本語' : l1Label}</Text>
                 </View>
               </View>
               <Text style={styles.rom}>{hl.romaji}</Text>
               <Text style={styles.np}>{hl.np}</Text>
+            </View>
+          </View>
+        ) : hl ? (
+          <View style={styles.bigcardEmpty}>
+            <View style={[styles.lngtag, { backgroundColor: phase === 'ja' ? GOLD : '#2f5d54' }]}>
+              <Text style={styles.lngtagText}>{phase === 'ja' ? '日本語' : l1Label}</Text>
             </View>
           </View>
         ) : (
