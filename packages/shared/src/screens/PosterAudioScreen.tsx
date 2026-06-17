@@ -41,6 +41,7 @@ export default function PosterAudioScreen({ route }: any) {
   ref.current = { idx, phase, playing };
   const genRef = useRef(0);
   const pendRef = useRef({ gen: 0, started: true });
+  const clipStartRef = useRef(0);           // 現クリップ再生開始時刻(遅延didJustFinish除去用)
   const wdRef = useRef<any>(null);
   const advanceRef = useRef<(g: number) => void>(() => {});
 
@@ -65,11 +66,12 @@ export default function PosterAudioScreen({ route }: any) {
     genRef.current += 1;
     const my = genRef.current;
     pendRef.current = { gen: my, started: false };
+    clipStartRef.current = Date.now();
     setIdx(i); setPhase(ph);
     const src = ph === 'ja' ? card.ja : l1AudioOf(card);
     try { player.replace(src); player.play(); } catch {}   // 楽観再生。実際に鳴ったかは listener で確認
     if (wdRef.current) clearTimeout(wdRef.current);
-    wdRef.current = setTimeout(() => advanceRef.current(my), 9000);
+    wdRef.current = setTimeout(() => advanceRef.current(my), 8000);
   };
 
   // タイトル朗読(idx=-1)。母語→日本語の順に再生し、その後カード0へ。
@@ -79,10 +81,11 @@ export default function PosterAudioScreen({ route }: any) {
     const my = genRef.current;
     pendRef.current = { gen: my, started: false };
     setIdx(-1); setPhase(ph);
+    clipStartRef.current = Date.now();
     const src = ph === 'ja' ? lesson.titleAudio.ja : (pickByLang(lesson.titleAudio.l1) ?? lesson.titleAudio.ja);
     try { player.replace(src); player.play(); } catch {}
     if (wdRef.current) clearTimeout(wdRef.current);
-    wdRef.current = setTimeout(() => advanceRef.current(my), 9000);
+    wdRef.current = setTimeout(() => advanceRef.current(my), 8000);
   };
 
   advanceRef.current = (g: number) => {
@@ -99,16 +102,14 @@ export default function PosterAudioScreen({ route }: any) {
 
   useEffect(() => {
     const sub = player.addListener('playbackStatusUpdate', (st: any) => {
-      if (st?.isLoaded && pendRef.current.gen === genRef.current) {
-        if (st.playing) pendRef.current.started = true;                 // 実際に鳴ったと確認
-        else if (!pendRef.current.started && ref.current.playing) {     // ロード済なのに無音→再試行
-          try { player.play(); } catch {}
-        }
+      // 無音スタート回復: ロード済なのに開始直後に鳴っていなければ再試行(クリップ途中では触らない)
+      if (st?.isLoaded && !st.playing && ref.current.playing
+          && pendRef.current.gen === genRef.current && Date.now() - clipStartRef.current < 1500) {
+        try { player.play(); } catch {}
       }
-      // 再生位置で終端を正確に検知(末尾0.25s padの手前)→ 9s待ちやpad間延びを排除。
-      // didJustFinish も保険に。いずれも「実際に鳴った(started)」クリップにのみ適用。
-      const nearEnd = st?.isLoaded && st?.duration > 0.3 && st?.currentTime >= st.duration - 0.18;
-      if ((st?.didJustFinish || nearEnd) && pendRef.current.started) advanceRef.current(genRef.current);
+      // クリップを自然終了まで鳴らしてから次へ(途中replaceしないので変な切れ/グリッチが出ない)。
+      // 開始250ms以内のdidJustFinishは前クリップの遅延通知とみなし無視。
+      if (st?.didJustFinish && Date.now() - clipStartRef.current > 250) advanceRef.current(genRef.current);
     });
     return () => sub.remove();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -136,11 +137,7 @@ export default function PosterAudioScreen({ route }: any) {
 
   return (
     <View style={styles.container} {...swipe}>
-      <ScrollView ref={scrollRef} contentContainerStyle={{ padding: PAD, paddingBottom: 230 }}>
-        <View style={styles.themeRow}>
-          <Text style={styles.themeTitle}>{lesson.title}</Text>
-          <Text style={styles.themeNav}>{li + 1} / {lessons.length}　← →</Text>
-        </View>
+      <ScrollView ref={scrollRef} contentContainerStyle={{ paddingHorizontal: PAD, paddingTop: spacing.sm, paddingBottom: 248 }}>
         <View style={{ width: dispW, height: dispH }}>
           <Image source={lessonImage} style={{ width: dispW, height: dispH, borderRadius: radius.md }} resizeMode="contain" />
           {hl && (
