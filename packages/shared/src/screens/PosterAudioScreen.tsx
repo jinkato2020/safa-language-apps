@@ -105,8 +105,10 @@ export default function PosterAudioScreen({ route }: any) {
           try { player.play(); } catch {}
         }
       }
-      // 実際に鳴り始めたクリップの完了のみ次へ(前クリップの遅延didJustFinishで途切れるのを防止)
-      if (st?.didJustFinish && pendRef.current.started) advanceRef.current(genRef.current);
+      // 再生位置で終端を正確に検知(末尾0.25s padの手前)→ 9s待ちやpad間延びを排除。
+      // didJustFinish も保険に。いずれも「実際に鳴った(started)」クリップにのみ適用。
+      const nearEnd = st?.isLoaded && st?.duration > 0.3 && st?.currentTime >= st.duration - 0.18;
+      if ((st?.didJustFinish || nearEnd) && pendRef.current.started) advanceRef.current(genRef.current);
     });
     return () => sub.remove();
   // eslint-disable-next-line react-hooks/exhaustive-deps
