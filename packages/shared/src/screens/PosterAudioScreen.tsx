@@ -67,11 +67,11 @@ export default function PosterAudioScreen({ route }: any) {
     pendRef.current = { gen: my, started: false };
     setIdx(i); setPhase(ph);
     const src = ph === 'ja' ? card.ja : l1AudioOf(card);
-    try { player.replace(src); player.play(); pendRef.current.started = true; } catch {}
+    try { player.replace(src); player.play(); } catch {}   // 楽観再生。実際に鳴ったかは listener で確認
     const y = card.box.y * scale;
     scrollRef.current?.scrollTo({ y: Math.max(0, y - dispH * 0.28), animated: true });
     if (wdRef.current) clearTimeout(wdRef.current);
-    wdRef.current = setTimeout(() => advanceRef.current(my), 7000);
+    wdRef.current = setTimeout(() => advanceRef.current(my), 9000);
   };
 
   advanceRef.current = (g: number) => {
@@ -87,9 +87,11 @@ export default function PosterAudioScreen({ route }: any) {
 
   useEffect(() => {
     const sub = player.addListener('playbackStatusUpdate', (st: any) => {
-      if (st?.isLoaded && pendRef.current.gen === genRef.current && !pendRef.current.started) {
-        pendRef.current.started = true;
-        try { player.play(); } catch {}
+      if (st?.isLoaded && pendRef.current.gen === genRef.current) {
+        if (st.playing) pendRef.current.started = true;                 // 実際に鳴ったと確認
+        else if (!pendRef.current.started && ref.current.playing) {     // ロード済なのに無音→再試行
+          try { player.play(); } catch {}
+        }
       }
       if (st?.didJustFinish) advanceRef.current(genRef.current);
     });
@@ -111,15 +113,11 @@ export default function PosterAudioScreen({ route }: any) {
   if (!lesson) return <View style={styles.center}><Text>レッスンがありません</Text></View>;
   const hl = lesson.cards[idx >= 0 ? idx : 0] || lesson.cards[0];
 
-  // 拡大: セル周囲に余白(番号バッジ等の見切れ防止)を足して切り抜き、ほぼ全幅へ拡大
-  const MX = 88, MY = 26;
-  const cx = Math.max(0, hl.box.x - MX);
-  const cx2 = Math.min(lesson.posterW, hl.box.x + hl.box.w + MX);
-  const cy = Math.max(0, hl.box.y - MY);
-  const cy2 = Math.min(lesson.posterH, hl.box.y + hl.box.h + MY);
+  // 拡大: ポスターのセル枠ぴったりに切り抜き(余白ゼロ=「枠の中に枠」を回避)、ほぼ全幅へ拡大
+  const cx = hl.box.x, cy = hl.box.y;
   const ZOOM_W = width - spacing.md * 2;
-  const zScale = ZOOM_W / (cx2 - cx);
-  const zoomH = Math.round((cy2 - cy) * zScale);
+  const zScale = ZOOM_W / hl.box.w;
+  const zoomH = Math.round(hl.box.h * zScale);
 
   return (
     <View style={styles.container} {...swipe}>
@@ -163,8 +161,7 @@ export default function PosterAudioScreen({ route }: any) {
           )}
         </Pressable>
         <View style={styles.bar}>
-          <Text style={styles.prog}>{`${(idx >= 0 ? idx : 0) + 1} / ${lesson.cards.length}`}</Text>
-          <Text style={styles.swipeHint}>タップで再生/停止 ・ ← スワイプでテーマ →</Text>
+          <Text style={styles.hint}>タップで再生/停止　・　← スワイプでテーマ →</Text>
         </View>
       </View>
     </View>
@@ -179,12 +176,11 @@ const styles = StyleSheet.create({
   themeNav: { fontSize: 12, color: colors.inkFaint, fontFamily: 'Courier' },
   hl: { position: 'absolute', borderWidth: 2, borderColor: GOLD, borderRadius: 16, backgroundColor: 'rgba(176,135,70,0.10)' },
   dock: { position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: colors.surface, borderTopWidth: 1, borderTopColor: colors.line, paddingHorizontal: spacing.md, paddingTop: spacing.sm, paddingBottom: spacing.md },
-  zoomWrap: { overflow: 'hidden', borderRadius: radius.md, borderWidth: 1, borderColor: colors.line, backgroundColor: '#fff', alignSelf: 'center' },
+  zoomWrap: { overflow: 'hidden', backgroundColor: '#fff', alignSelf: 'center' },
   lngtag: { borderRadius: 6, paddingHorizontal: 8, paddingVertical: 2 },
   lngtagFloat: { position: 'absolute', right: 8, top: 8 },
   lngtagText: { color: '#fff', fontWeight: '700', fontSize: 12 },
   playHint: { position: 'absolute', top: '50%', left: '50%', marginLeft: -24, marginTop: -24, width: 48, height: 48, borderRadius: 24, backgroundColor: 'rgba(40,48,74,0.78)', alignItems: 'center', justifyContent: 'center' },
-  bar: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, marginTop: spacing.sm },
-  prog: { fontSize: 14, fontWeight: '700', color: colors.ink },
-  swipeHint: { flex: 1, textAlign: 'right', fontSize: 11, color: colors.inkFaint, letterSpacing: 0.3 },
+  bar: { alignItems: 'center', justifyContent: 'center', marginTop: spacing.sm },
+  hint: { fontSize: 12, color: colors.inkFaint, letterSpacing: 0.3, textAlign: 'center' },
 });
