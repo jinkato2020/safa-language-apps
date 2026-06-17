@@ -1072,7 +1072,7 @@
       "I'll call you back.",
       "Can you talk right now?",
       "What's your phone number?",
-      "I'll send it on LINE.",
+      "I'll send it by email.",
       "I had a missed call.",
       "The phone's ringing.",
       "My battery's dead.",
@@ -106874,13 +106874,7 @@
       "kata": "ライン",
       "base_form": "ライン",
       "base_meaning": "LINE (app)",
-      "contexts": [
-        {
-          "sentence_id": "17-1-14",
-          "ja": "LINE (app)",
-          "pos": "noun"
-        }
-      ]
+      "contexts": []
     },
     "着信": {
       "rom": "chakushin",
@@ -106974,6 +106968,11 @@
         },
         {
           "sentence_id": "15-3-13",
+          "ja": "email",
+          "pos": "noun"
+        },
+        {
+          "sentence_id": "17-1-14",
           "ja": "email",
           "pos": "noun"
         }
