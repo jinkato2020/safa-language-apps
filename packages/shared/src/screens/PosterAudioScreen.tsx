@@ -20,7 +20,7 @@ export default function PosterAudioScreen({ route }: any) {
   const { lessonId } = route.params || {};
   const lessons = usePosterLessons();
   const navigation = useNavigation<any>();
-  const { lang } = useI18n();
+  const { lang, t } = useI18n();
   const { width } = useWindowDimensions();
 
   const li = Math.max(0, lessons.findIndex(l => l.id === lessonId));
@@ -169,7 +169,8 @@ export default function PosterAudioScreen({ route }: any) {
           )}
         </Pressable>
         <View style={styles.bar}>
-          <Text style={styles.hint}>タップで再生/停止　・　← スワイプでテーマ →</Text>
+          <Text style={styles.count}>{li + 1} / {lessons.length}</Text>
+          <Text style={styles.hint}>{t('poster.hint')}</Text>
         </View>
       </View>
     </View>
@@ -189,6 +190,7 @@ const styles = StyleSheet.create({
   lngtagFloat: { position: 'absolute', right: 8, top: 8 },
   lngtagText: { color: '#fff', fontWeight: '700', fontSize: 12 },
   playHint: { position: 'absolute', top: '50%', left: '50%', marginLeft: -24, marginTop: -24, width: 48, height: 48, borderRadius: 24, backgroundColor: 'rgba(40,48,74,0.78)', alignItems: 'center', justifyContent: 'center' },
-  bar: { alignItems: 'center', justifyContent: 'center', marginTop: spacing.sm },
-  hint: { fontSize: 12, color: colors.inkFaint, letterSpacing: 0.3, textAlign: 'center' },
+  bar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, marginTop: spacing.sm },
+  count: { fontSize: 14, fontWeight: '700', color: colors.ink },
+  hint: { fontSize: 12, color: colors.inkFaint, letterSpacing: 0.3 },
 });

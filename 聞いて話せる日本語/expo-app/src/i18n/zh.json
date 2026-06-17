@@ -262,5 +262,8 @@
     "modeFlashcardDesc": "翻动卡片记单词",
     "modePoster": "语音朗读（海报）",
     "modePosterDesc": "看着海报听语音"
+  },
+  "poster": {
+    "hint": "点按：播放/暂停 · 滑动：切换主题"
   }
 }

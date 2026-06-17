@@ -262,5 +262,8 @@
     "mailSubject": "Nghe & Nói Tiếng Nhật — Liên hệ",
     "privacyError": "Không thể mở Chính sách bảo mật.",
     "mailError": "Không thể mở ứng dụng email."
+  },
+  "poster": {
+    "hint": "Chạm: phát/dừng · Vuốt: đổi chủ đề"
   }
 }

@@ -262,5 +262,8 @@
     "mailSubject": "Listen and Speak Japanese — Contact",
     "privacyError": "Couldn't open the Privacy Policy.",
     "mailError": "Couldn't open the mail app."
+  },
+  "poster": {
+    "hint": "Tap to play/pause · Swipe to switch themes"
   }
 }
