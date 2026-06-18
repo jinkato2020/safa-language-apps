@@ -3,7 +3,7 @@
 //  - 画像/音声は現在の母語(useI18n)で自動切替(imageL1 / card.l1)
 //  - 下部ドックに「現在カードの拡大(ポスターを余白付きで切り抜き拡大)」を表示
 //  - 拡大カードをタップで再生/停止。横スワイプで前/次テーマへ移動
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, Image, ScrollView, Pressable, useWindowDimensions, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAudioPlayer } from 'expo-audio';
@@ -32,7 +32,11 @@ export default function PosterAudioScreen({ route }: any) {
   const l1AudioOf = (c: any) => pickByLang(c?.l1) ?? c?.ne;
   const l1Label = LANG_LABEL[lang] || lang;
 
-  const player = useAudioPlayer(undefined, { updateInterval: 100 }); // 100ms間隔で機敏に状態検知
+  // ダブルバッファ: プレイヤーを2つ持ち、再生中に「次クリップ」をもう一方へ読み込み済みにしておく。
+  //  終了瞬間に読み込み済みの方を即 play → ロード/デコード遅延が critical path から消え、間が一定・最短に。
+  const pA = useAudioPlayer(undefined, { updateInterval: 50 });
+  const pB = useAudioPlayer(undefined, { updateInterval: 50 });
+  const players = [pA, pB];
   const scrollRef = useRef<ScrollView>(null);
   const [idx, setIdx] = useState(0);       // 表示中カード(初期=最初のカード)
   const [phase, setPhase] = useState<'ja' | 'l1'>('l1');  // 母語→日本語の順
@@ -42,21 +46,23 @@ export default function PosterAudioScreen({ route }: any) {
   const onContLayout = (e: any) => { const h = Math.round(e.nativeEvent.layout.height); setLay(l => Math.abs(l.cont - h) > 1 ? { ...l, cont: h } : l); };
   const onDockLayout = (e: any) => { const h = Math.round(e.nativeEvent.layout.height); setLay(l => Math.abs(l.dock - h) > 1 ? { ...l, dock: h } : l); };
 
-  const ref = useRef({ idx, phase, playing });
-  ref.current = { idx, phase, playing };
-  const genRef = useRef(0);
-  const pendRef = useRef({ gen: 0, started: false });  // started: 当該クリップが実際に鳴り始めたか
+  const activeRef = useRef(0);          // 現在アクティブなプレイヤー番号(0/1)
+  const qiRef = useRef(0);              // 再生中のキュー位置
+  const tokRef = useRef(0);             // セグメントトークン(stale な watchdog/advance を無効化)
+  const startedRef = useRef(false);     // 当該クリップが実際に鳴り始めたか
+  const playingRef = useRef(false);     // playing の ref ミラー(コールバック用)
   const wdRef = useRef<any>(null);
-  const advanceRef = useRef<(g: number) => void>(() => {});
+  const advanceRef = useRef<() => void>(() => {});
 
   const PAD = spacing.lg;
   const dispW = width - PAD * 2;   // 横の最大予算(これと「縦に収める」両方を満たす縮尺を採用)
 
   // テーマ移動でリセット(最初のカードを表示・停止)
   useEffect(() => {
+    tokRef.current++; playingRef.current = false;
     setPlaying(false); setIdx(0); setPhase('l1');
     if (wdRef.current) clearTimeout(wdRef.current);
-    try { player.pause(); } catch {}
+    try { pA.pause(); pB.pause(); } catch {}
     scrollRef.current?.scrollTo({ y: 0, animated: false });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonId]);
@@ -75,65 +81,81 @@ export default function PosterAudioScreen({ route }: any) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonId, lang]);
 
-  const playCard = (i: number, ph: 'ja' | 'l1') => {
-    if (!lesson) return;
-    const card = lesson.cards[i];
-    if (!card) return;
-    genRef.current += 1;
-    const my = genRef.current;
-    pendRef.current = { gen: my, started: false };
-    setIdx(i); setPhase(ph);
-    const src = ph === 'ja' ? card.ja : l1AudioOf(card);
-    try { player.replace(src); player.play(); } catch {}
-    if (wdRef.current) clearTimeout(wdRef.current);
-    wdRef.current = setTimeout(() => advanceRef.current(my), 12000); // 念のための保険(通常は使われない)
-  };
-
-  // タイトル朗読(idx=-1)。母語→日本語の順に再生し、その後カード0へ。
-  const playTitle = (ph: 'ja' | 'l1') => {
-    if (!lesson?.titleAudio) { playCard(0, ph); return; }
-    genRef.current += 1;
-    const my = genRef.current;
-    pendRef.current = { gen: my, started: false };
-    setIdx(-1); setPhase(ph);
-    const src = ph === 'ja' ? lesson.titleAudio.ja : (pickByLang(lesson.titleAudio.l1) ?? lesson.titleAudio.ja);
-    try { player.replace(src); player.play(); } catch {}
-    if (wdRef.current) clearTimeout(wdRef.current);
-    wdRef.current = setTimeout(() => advanceRef.current(my), 12000);
-  };
-
-  advanceRef.current = (g: number) => {
-    if (g !== genRef.current || !ref.current.playing || !lesson) return;
-    const { idx: ci, phase: cp } = ref.current;
-    if (ci === -1) { if (cp === 'l1') playTitle('ja'); else playCard(0, 'l1'); return; }  // タイトル中
-    if (cp === 'l1') { playCard(ci, 'ja'); }
-    else {
-      const ni = ci + 1;
-      if (ni < lesson.cards.length) playCard(ni, 'l1');
-      else { if (wdRef.current) clearTimeout(wdRef.current); setPlaying(false); }  // 終端: 停止
+  // 再生キュー(このテーマ・母語の全クリップを再生順に平坦化): タイトル母語→タイトル日→
+  //  カード0母語→カード0日→カード1母語→… 各要素は表示カード idx / phase / 音源 src。
+  const queue = useMemo(() => {
+    const q: { idx: number; phase: 'ja' | 'l1'; src: number }[] = [];
+    if (!lesson) return q;
+    if (lesson.titleAudio) {
+      q.push({ idx: -1, phase: 'l1', src: (pickByLang(lesson.titleAudio.l1) ?? lesson.titleAudio.ja) });
+      q.push({ idx: -1, phase: 'ja', src: lesson.titleAudio.ja });
     }
+    lesson.cards.forEach((c, i) => {
+      q.push({ idx: i, phase: 'l1', src: (l1AudioOf(c) ?? c.ja) });
+      q.push({ idx: i, phase: 'ja', src: c.ja });
+    });
+    return q;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lessonId, lang]);
+  const queueRef = useRef(queue); queueRef.current = queue;
+
+  // 指定プレイヤーへ次クリップを「読み込みだけ」しておく(再生はしない=ダブルバッファの先読み)
+  const preloadInto = (pIdx: number, qi: number) => {
+    const item = queueRef.current[qi];
+    try { players[pIdx].replace(item ? item.src : (undefined as any)); } catch {}
   };
 
+  // セグメント開始: アクティブを activate に切替→そのプレイヤーを play(先読み済みなら即時)→
+  //  もう一方へ「次の次」を先読み。トークンで stale を無効化。
+  const goSegment = (qi: number, activate: number) => {
+    const q = queueRef.current;
+    if (qi < 0 || qi >= q.length) { stop(); return; }
+    const tok = ++tokRef.current;
+    qiRef.current = qi; activeRef.current = activate; startedRef.current = false;
+    setIdx(q[qi].idx); setPhase(q[qi].phase);
+    try { players[activate].play(); } catch {}
+    preloadInto(1 - activate, qi + 1);
+    if (wdRef.current) clearTimeout(wdRef.current);
+    wdRef.current = setTimeout(() => { if (tok === tokRef.current && playingRef.current) advanceRef.current(); }, 12000);
+  };
+
+  const startSeq = (fromQi: number) => {
+    const q = queueRef.current;
+    if (!q.length) return;
+    const qi = Math.max(0, Math.min(fromQi, q.length - 1));
+    playingRef.current = true; setPlaying(true);
+    try { players[0].replace(q[qi].src); } catch {}   // 最初の1本だけは読み込み発生(以降は先読み済み)
+    goSegment(qi, 0);
+  };
+
+  advanceRef.current = () => {
+    if (!playingRef.current) return;
+    const q = queueRef.current;
+    const next = qiRef.current + 1;
+    if (next >= q.length) { stop(); return; }       // 終端
+    goSegment(next, 1 - activeRef.current);          // 先読み済みの逆プレイヤーへ即切替
+  };
+
+  // 両プレイヤーの状態監視。アクティブな方だけが進行(advance)を駆動する。
   useEffect(() => {
-    const sub = player.addListener('playbackStatusUpdate', (st: any) => {
-      if (!st?.isLoaded || pendRef.current.gen !== genRef.current) return;
-      if (st.playing) {
-        pendRef.current.started = true;                 // 実際に鳴り始めた
-      } else if (!pendRef.current.started) {
-        // ロード済なのにまだ鳴っていない → 鳴るまで毎回 play を試す(時間制限なし)。
-        // 同梱音源の初回展開待ちでも、展開完了後の最初の更新で確実に再生開始する。
-        if (ref.current.playing) { try { player.play(); } catch {} }
-      } else if (st.didJustFinish || (st.duration > 0 && st.currentTime >= st.duration - 0.05)) {
-        // 鳴り始めたクリップが鳴り終わった → 次へ(再生は既に停止=途中replaceにならずグリッチしない)
-        advanceRef.current(genRef.current);
-      }
-    });
-    return () => sub.remove();
+    const subs = players.map((p, pIdx) => p.addListener('playbackStatusUpdate', (st: any) => {
+      if (!st?.isLoaded || pIdx !== activeRef.current || !playingRef.current) return;
+      if (st.playing) { startedRef.current = true; return; }
+      if (!startedRef.current) { try { players[pIdx].play(); } catch {} return; }  // 念のため(主に最初の1本)
+      if (st.didJustFinish || (st.duration > 0 && st.currentTime >= st.duration - 0.05)) advanceRef.current();
+    }));
+    return () => subs.forEach(s => s.remove());
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const start = (from = 0) => { setPlaying(true); if (from === 0 && lesson?.titleAudio) playTitle('l1'); else playCard(from, 'l1'); };
-  const stop = () => { setPlaying(false); player.pause(); if (wdRef.current) clearTimeout(wdRef.current); };
+  // カード index → キュー位置(タイトル分2件を考慮)
+  const cardToQi = (cardIdx: number) => (lesson?.titleAudio ? 2 : 0) + cardIdx * 2;
+  const start = (from = 0) => { startSeq(from === 0 && lesson?.titleAudio ? 0 : cardToQi(from)); };
+  const stop = () => {
+    tokRef.current++; playingRef.current = false; setPlaying(false);
+    try { pA.pause(); pB.pause(); } catch {}
+    if (wdRef.current) clearTimeout(wdRef.current);
+  };
   const toggle = () => { if (playing) stop(); else start(idx >= 0 ? idx : 0); };
 
   const goTheme = (d: number) => {
