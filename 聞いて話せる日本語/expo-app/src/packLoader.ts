@@ -84,7 +84,7 @@ function b64ToU8(b64: string): Uint8Array {
   return u8;
 }
 // オーバーレイJSON取得 (オフライン=キャッシュ / 新版あれば再DL)。
-async function getOverlay(lang: string, entry: any, diag?: { catalog: any; catalogErr: string }): Promise<any> {
+async function getOverlay(lang: string, entry: any, diag?: { catalog: any; catalogErr: string }, skipUpdate?: boolean): Promise<any> {
   const uri = overlayUri(lang);
   const info = await FileSystem.getInfoAsync(uri);
   if (info.exists) {
@@ -92,7 +92,7 @@ async function getOverlay(lang: string, entry: any, diag?: { catalog: any; catal
     // 壊れていたら削除して再DLに回す(=毎回同じ壊れたキャッシュで失敗し続けるのを防ぐ)。
     try {
       const cached = JSON.parse(await FileSystem.readAsStringAsync(uri));
-      if (!entry || (cached.version ?? 0) >= (entry.version ?? 0)) return cached;
+      if (skipUpdate || !entry || (cached.version ?? 0) >= (entry.version ?? 0)) return cached;
     } catch {
       await FileSystem.deleteAsync(uri, { idempotent: true });
     }
@@ -119,7 +119,7 @@ async function getOverlay(lang: string, entry: any, diag?: { catalog: any; catal
 // 差分DL: ローカルが entry.deltaBaseVersion と一致し entry.deltaZip があれば、変わった
 //   ファイルだけの「差分zip」をDLして既存の上に上書き展開する(フル40〜70MB→数百KB)。
 //   差分情報が無い/版が飛んでいる場合は従来どおりフルzip。後方互換(旧catalogはフルのみ)。
-async function ensureAudio(lang: string, entry: any, onProgress?: ProgressFn): Promise<void> {
+async function ensureAudio(lang: string, entry: any, onProgress?: ProgressFn, skipUpdate?: boolean): Promise<void> {
   if (!entry?.audioZip) return;
   const marker = audioMarkerUri(lang);
   let localVer: string | null = null;
@@ -128,6 +128,8 @@ async function ensureAudio(lang: string, entry: any, onProgress?: ProgressFn): P
     localVer = await FileSystem.readAsStringAsync(marker);
     if (localVer === String(entry.audioVersion ?? '')) return; // 最新キャッシュ済み
   }
+  // 更新を見送り(ユーザーが「いいえ」)= 既存音声があるならDLせず現状のまま起動。
+  if (skipUpdate && localVer != null) return;
   await FileSystem.makeDirectoryAsync(audioDir(lang), { intermediates: true });
 
   // 差分が使えるか: ローカル音声があり(=localVer非null) かつ それが差分の土台版と一致
@@ -222,8 +224,8 @@ async function buildAudioMaps(lang: string, overlayJson: any) {
 
 /** ダウンロード要否と必要バイト数を返す(DL前の確認ダイアログ用)。
  *  同梱/キャッシュ済み(版が最新)なら needsDownload=false。Apple GL4.2.3対応: 事前にサイズ開示+同意を取るため。 */
-export async function getPackDownloadInfo(lang: string): Promise<{ needsDownload: boolean; bytes: number }> {
-  if (BUNDLED[lang]) return { needsDownload: false, bytes: 0 };
+export async function getPackDownloadInfo(lang: string): Promise<{ needsDownload: boolean; bytes: number; canSkip: boolean }> {
+  if (BUNDLED[lang]) return { needsDownload: false, bytes: 0, canSkip: false };
   let catalog: any = null;
   try { catalog = await withRetry(() => fetchJson(CATALOG_URL, 8000)); } catch {}
   const entry = catalog?.packs?.find((p: any) => p.l1 === lang);
@@ -256,11 +258,14 @@ export async function getPackDownloadInfo(lang: string): Promise<{ needsDownload
     const useDelta = !!(c?.deltaZip && coreLocalVer != null && String(c.deltaBaseVersion ?? '') === coreLocalVer);
     bytes += (useDelta ? c?.deltaZipBytes : c?.audioZipBytes) ?? 0;
   }
-  return { needsDownload: overlayNeed || audioNeed || coreNeed, bytes };
+  // 更新スキップ可否: 既にこの言語で「動かせるだけのデータ」が端末にある(overlay+L1音声+コア音声)。
+  //  初回(どれか欠落)はスキップ不可=DL必須。更新のみなら「いいえ」で現状のまま起動できる。
+  const canSkip = oInfo.exists && mInfo.exists && cm.exists;
+  return { needsDownload: overlayNeed || audioNeed || coreNeed, bytes, canSkip };
 }
 
 /** L1パックを解決。ne=同梱。その他=オーバーレイ+音声zipをFS/DLし結合。onProgressで進捗通知。 */
-export async function loadPack(lang: string, onProgress?: ProgressFn): Promise<AppData> {
+export async function loadPack(lang: string, onProgress?: ProgressFn, skipUpdate?: boolean): Promise<AppData> {
   const bundled = BUNDLED[lang];
   if (bundled) return bundled;
 
@@ -276,12 +281,12 @@ export async function loadPack(lang: string, onProgress?: ProgressFn): Promise<A
   } catch (e: any) { catalogErr = String(e?.message ?? e); }
   const entry = catalog?.packs?.find((p: any) => p.l1 === lang);
 
-  const overlayJson = await getOverlay(lang, entry, { catalog, catalogErr });
+  const overlayJson = await getOverlay(lang, entry, { catalog, catalogErr }, skipUpdate);
   // ターゲット(日本語)コア本文 core.json + 音声 をDL (全L1共通・キャッシュ済みなら即時)。
-  const coreJson = await getCoreJson(catalog?.core);
-  try { if (catalog?.core) await ensureAudio(CORE, catalog.core, onProgress); } catch {}
+  const coreJson = await getCoreJson(catalog?.core, skipUpdate);
+  try { if (catalog?.core) await ensureAudio(CORE, catalog.core, onProgress, skipUpdate); } catch {}
   const jaAudio = await buildCoreAudioMaps();
-  try { await ensureAudio(lang, entry, onProgress); } catch {} // L1音声DL失敗でもテキストは表示
+  try { await ensureAudio(lang, entry, onProgress, skipUpdate); } catch {} // L1音声DL失敗でもテキストは表示
   const { l1Audio, l1GrammarAudio } = await buildAudioMaps(lang, overlayJson);
 
   const overlay: L1Overlay = { ...toOverlay(overlayJson), l1Audio, l1GrammarAudio };
@@ -289,14 +294,14 @@ export async function loadPack(lang: string, onProgress?: ProgressFn): Promise<A
 }
 
 // ターゲット(日本語)本文 core.json をDL/キャッシュ。catalog.core.version で版管理。
-async function getCoreJson(coreEntry: any): Promise<JaCoreJson | undefined> {
+async function getCoreJson(coreEntry: any, skipUpdate?: boolean): Promise<JaCoreJson | undefined> {
   const uri = `${packDir(CORE)}core.json`;
   const mk = `${packDir(CORE)}core.version`;
   const info = await FileSystem.getInfoAsync(uri);
   if (info.exists) {
     let v: string | null = null;
     try { if ((await FileSystem.getInfoAsync(mk)).exists) v = await FileSystem.readAsStringAsync(mk); } catch {}
-    if (!coreEntry?.url || v === String(coreEntry.version ?? '')) {
+    if (skipUpdate || !coreEntry?.url || v === String(coreEntry.version ?? '')) {
       try { return JSON.parse(await FileSystem.readAsStringAsync(uri)); } catch {}
     }
   }

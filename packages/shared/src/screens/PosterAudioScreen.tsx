@@ -7,6 +7,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Image, ScrollView, Pressable, useWindowDimensions, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAudioPlayer } from 'expo-audio';
+import { Asset } from 'expo-asset';
 import Svg, { Path } from 'react-native-svg';
 import { colors, spacing, radius } from '../theme';
 import { usePosterLessons } from '../PosterContext';
@@ -31,7 +32,7 @@ export default function PosterAudioScreen({ route }: any) {
   const l1AudioOf = (c: any) => pickByLang(c?.l1) ?? c?.ne;
   const l1Label = LANG_LABEL[lang] || lang;
 
-  const player = useAudioPlayer();
+  const player = useAudioPlayer(undefined, { updateInterval: 100 }); // 100ms間隔で機敏に状態検知
   const scrollRef = useRef<ScrollView>(null);
   const [idx, setIdx] = useState(0);       // 表示中カード(初期=最初のカード)
   const [phase, setPhase] = useState<'ja' | 'l1'>('l1');  // 母語→日本語の順
@@ -40,8 +41,7 @@ export default function PosterAudioScreen({ route }: any) {
   const ref = useRef({ idx, phase, playing });
   ref.current = { idx, phase, playing };
   const genRef = useRef(0);
-  const pendRef = useRef({ gen: 0, started: true });
-  const clipStartRef = useRef(0);           // 現クリップ再生開始時刻(遅延didJustFinish除去用)
+  const pendRef = useRef({ gen: 0, started: false });  // started: 当該クリップが実際に鳴り始めたか
   const wdRef = useRef<any>(null);
   const advanceRef = useRef<(g: number) => void>(() => {});
 
@@ -59,6 +59,20 @@ export default function PosterAudioScreen({ route }: any) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonId]);
 
+  // プリロード: このテーマ・現在の母語の全音源をキャッシュへ先行展開。
+  //  同梱(APK内)音源はAndroidで初回アクセス時に展開が要るため、再生前に済ませて
+  //  「初回だけ鳴り出しが遅れる/間が空く」を解消する。失敗は無視(本番再生のリトライが拾う)。
+  useEffect(() => {
+    if (!lesson) return;
+    const mods: number[] = [];
+    if (lesson.titleAudio) { mods.push(lesson.titleAudio.ja); const t = pickByLang(lesson.titleAudio.l1); if (t) mods.push(t); }
+    for (const c of lesson.cards) { mods.push(c.ja); const a = l1AudioOf(c); if (a) mods.push(a); }
+    let alive = true;
+    (async () => { for (const m of mods) { if (!alive) break; try { await Asset.fromModule(m).downloadAsync(); } catch {} } })();
+    return () => { alive = false; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lessonId, lang]);
+
   const playCard = (i: number, ph: 'ja' | 'l1') => {
     if (!lesson) return;
     const card = lesson.cards[i];
@@ -66,12 +80,11 @@ export default function PosterAudioScreen({ route }: any) {
     genRef.current += 1;
     const my = genRef.current;
     pendRef.current = { gen: my, started: false };
-    clipStartRef.current = Date.now();
     setIdx(i); setPhase(ph);
     const src = ph === 'ja' ? card.ja : l1AudioOf(card);
-    try { player.replace(src); player.play(); } catch {}   // 楽観再生。実際に鳴ったかは listener で確認
+    try { player.replace(src); player.play(); } catch {}
     if (wdRef.current) clearTimeout(wdRef.current);
-    wdRef.current = setTimeout(() => advanceRef.current(my), 8000);
+    wdRef.current = setTimeout(() => advanceRef.current(my), 12000); // 念のための保険(通常は使われない)
   };
 
   // タイトル朗読(idx=-1)。母語→日本語の順に再生し、その後カード0へ。
@@ -81,11 +94,10 @@ export default function PosterAudioScreen({ route }: any) {
     const my = genRef.current;
     pendRef.current = { gen: my, started: false };
     setIdx(-1); setPhase(ph);
-    clipStartRef.current = Date.now();
     const src = ph === 'ja' ? lesson.titleAudio.ja : (pickByLang(lesson.titleAudio.l1) ?? lesson.titleAudio.ja);
     try { player.replace(src); player.play(); } catch {}
     if (wdRef.current) clearTimeout(wdRef.current);
-    wdRef.current = setTimeout(() => advanceRef.current(my), 8000);
+    wdRef.current = setTimeout(() => advanceRef.current(my), 12000);
   };
 
   advanceRef.current = (g: number) => {
@@ -102,14 +114,17 @@ export default function PosterAudioScreen({ route }: any) {
 
   useEffect(() => {
     const sub = player.addListener('playbackStatusUpdate', (st: any) => {
-      // 無音スタート回復: ロード済なのに開始直後に鳴っていなければ再試行(クリップ途中では触らない)
-      if (st?.isLoaded && !st.playing && ref.current.playing
-          && pendRef.current.gen === genRef.current && Date.now() - clipStartRef.current < 1500) {
-        try { player.play(); } catch {}
+      if (!st?.isLoaded || pendRef.current.gen !== genRef.current) return;
+      if (st.playing) {
+        pendRef.current.started = true;                 // 実際に鳴り始めた
+      } else if (!pendRef.current.started) {
+        // ロード済なのにまだ鳴っていない → 鳴るまで毎回 play を試す(時間制限なし)。
+        // 同梱音源の初回展開待ちでも、展開完了後の最初の更新で確実に再生開始する。
+        if (ref.current.playing) { try { player.play(); } catch {} }
+      } else if (st.didJustFinish || (st.duration > 0 && st.currentTime >= st.duration - 0.05)) {
+        // 鳴り始めたクリップが鳴り終わった → 次へ(再生は既に停止=途中replaceにならずグリッチしない)
+        advanceRef.current(genRef.current);
       }
-      // クリップを自然終了まで鳴らしてから次へ(途中replaceしないので変な切れ/グリッチが出ない)。
-      // 開始250ms以内のdidJustFinishは前クリップの遅延通知とみなし無視。
-      if (st?.didJustFinish && Date.now() - clipStartRef.current > 250) advanceRef.current(genRef.current);
     });
     return () => sub.remove();
   // eslint-disable-next-line react-hooks/exhaustive-deps
