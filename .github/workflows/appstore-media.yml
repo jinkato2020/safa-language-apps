@@ -53,6 +53,22 @@ on:
         options:
           - 'false'
           - 'true'
+      set_promo_text:
+        description: 'true=「プロモーション用テキスト」を全ロケールに投入(審査不要フィールド)。他メタは不変。'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      skip_screenshots:
+        description: 'true=スクショは触らずメタデータ(リリースノート/プロモ)のみ更新。'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 jobs:
   media-japanese:
@@ -91,6 +107,8 @@ jobs:
           LOCALES: ${{ github.event.inputs.locales }}
           REJECT_FIRST: ${{ github.event.inputs.reject_first }}
           SET_RN: ${{ github.event.inputs.set_release_notes }}
+          SET_PROMO: ${{ github.event.inputs.set_promo_text }}
+          SKIP_SS: ${{ github.event.inputs.skip_screenshots }}
         run: |
           set -e
           KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
@@ -159,56 +177,67 @@ jobs:
             esac
           }
 
-          ASSET_ROOT="../store/appstore"
-          VIDEO=$(ls "$ASSET_ROOT"/_video/*.mp4 2>/dev/null | head -n1 || true)
-          rm -rf fastlane/screenshots && mkdir -p fastlane/screenshots
-
-          IFS=',' read -ra LOCS <<< "$LOCALES"
-          for raw in "${LOCS[@]}"; do
-            loc=$(printf '%s' "$raw" | tr -d '[:space:]')
-            [ -n "$loc" ] || continue
-            lang=$(src_lang "$loc")
-            if [ -z "$lang" ] || [ ! -d "$ASSET_ROOT/$lang" ]; then
-              echo "::warning::locale $loc にアセットが無い(lang=$lang)。スキップ。"
-              continue
-            fi
-            dest="fastlane/screenshots/$loc"
-            mkdir -p "$dest"
-            # device サブフォルダごとに、解像度判別のためファイル名にデバイス名を前置して flat 配置
-            for dev in "$ASSET_ROOT/$lang"/*/; do
-              devname=$(basename "$dev")
-              for f in "$dev"*.png; do
-                [ -e "$f" ] || continue
-                cp "$f" "$dest/${devname}_$(basename "$f")"
+          # スクショ配置(SKIP_SS=true ならメタデータのみ更新でスキップ)
+          if [ "$SKIP_SS" != "true" ]; then
+            ASSET_ROOT="../store/appstore"
+            VIDEO=$(ls "$ASSET_ROOT"/_video/*.mp4 2>/dev/null | head -n1 || true)
+            rm -rf fastlane/screenshots && mkdir -p fastlane/screenshots
+            IFS=',' read -ra LOCS <<< "$LOCALES"
+            for raw in "${LOCS[@]}"; do
+              loc=$(printf '%s' "$raw" | tr -d '[:space:]')
+              [ -n "$loc" ] || continue
+              lang=$(src_lang "$loc")
+              if [ -z "$lang" ] || [ ! -d "$ASSET_ROOT/$lang" ]; then
+                echo "::warning::locale $loc にアセットが無い(lang=$lang)。スキップ。"
+                continue
+              fi
+              dest="fastlane/screenshots/$loc"
+              mkdir -p "$dest"
+              # device サブフォルダごとに、解像度判別のためファイル名にデバイス名を前置して flat 配置
+              for dev in "$ASSET_ROOT/$lang"/*/; do
+                devname=$(basename "$dev")
+                for f in "$dev"*.png; do
+                  [ -e "$f" ] || continue
+                  cp "$f" "$dest/${devname}_$(basename "$f")"
+                done
               done
+              # App Preview 動画(言語非依存)を各ロケールへ
+              [ -n "$VIDEO" ] && cp "$VIDEO" "$dest/"
+              echo "::notice::$loc: $(ls "$dest" | wc -l) files staged (lang=$lang)"
             done
-            # App Preview 動画(言語非依存)を各ロケールへ
-            [ -n "$VIDEO" ] && cp "$VIDEO" "$dest/"
-            echo "::notice::$loc: $(ls "$dest" | wc -l) files staged (lang=$lang)"
-          done
-
-          if [ -z "$(ls -A fastlane/screenshots 2>/dev/null)" ]; then
-            echo "::error::アップ対象のロケールが1つも整いませんでした。"
-            exit 1
+            if [ -z "$(ls -A fastlane/screenshots 2>/dev/null)" ]; then
+              echo "::error::アップ対象のロケールが1つも整いませんでした。"
+              exit 1
+            fi
           fi
 
-          # 「このバージョンの新機能」(release notes)を全ロケールに投入。現行メタデータを
-          #  取得→release_notesだけ差し替え→skip_metadata=false で他フィールドは現状維持。
+          # メタデータ更新(release_notes / promotional_text)。現行メタデータを取得→該当ファイル
+          #  だけ差し替え→skip_metadata=false で他フィールドは現状維持。どちらも審査不要で反映可。
           SKIP_META=true
-          if [ "$SET_RN" = "true" ]; then
+          if [ "$SET_RN" = "true" ] || [ "$SET_PROMO" = "true" ]; then
             SKIP_META=false
             fastlane deliver download_metadata --api_key_path /tmp/asc.json --app_identifier "$BUNDLE_ID" --skip_screenshots true --force true || true
             for d in fastlane/metadata/*/; do
               [ -d "$d" ] || continue
               loc=$(basename "$d")
-              case "$loc" in
-                ja*)      printf '%s\n%s\n%s\n' "聞き流し(ポスター)モードのテーマ名を母語で表示するようにしました。" "ポスターの拡大枠の位置を修正しました。" "その他の軽微な改善と不具合修正。" > "${d}release_notes.txt" ;;
-                vi*)      printf '%s\n%s\n%s\n' "Chế độ Poster (nghe) giờ hiển thị tên chủ đề bằng ngôn ngữ của bạn." "Đã sửa vị trí khung phóng to của poster." "Cải thiện nhỏ và sửa lỗi." > "${d}release_notes.txt" ;;
-                zh-Hans*) printf '%s\n%s\n%s\n' "海报(磨耳朵)模式现在以您的母语显示主题名称。" "修正了海报放大框的位置。" "其他细微改进和问题修复。" > "${d}release_notes.txt" ;;
-                *)        printf '%s\n%s\n%s\n' "Poster (listening) mode now shows theme titles in your language." "Fixed the position of the poster zoom frame." "Other minor improvements and bug fixes." > "${d}release_notes.txt" ;;
-              esac
+              if [ "$SET_RN" = "true" ]; then
+                case "$loc" in
+                  ja*)      printf '%s\n%s\n%s\n' "聞き流し(ポスター)モードのテーマ名を母語で表示するようにしました。" "ポスターの拡大枠の位置を修正しました。" "その他の軽微な改善と不具合修正。" > "${d}release_notes.txt" ;;
+                  vi*)      printf '%s\n%s\n%s\n' "Chế độ Poster (nghe) giờ hiển thị tên chủ đề bằng ngôn ngữ của bạn." "Đã sửa vị trí khung phóng to của poster." "Cải thiện nhỏ và sửa lỗi." > "${d}release_notes.txt" ;;
+                  zh-Hans*) printf '%s\n%s\n%s\n' "海报(磨耳朵)模式现在以您的母语显示主题名称。" "修正了海报放大框的位置。" "其他细微改进和问题修复。" > "${d}release_notes.txt" ;;
+                  *)        printf '%s\n%s\n%s\n' "Poster (listening) mode now shows theme titles in your language." "Fixed the position of the poster zoom frame." "Other minor improvements and bug fixes." > "${d}release_notes.txt" ;;
+                esac
+              fi
+              if [ "$SET_PROMO" = "true" ]; then
+                case "$loc" in
+                  ja*)      printf '%s\n%s\n' "毎日少しずつ聞いて表現を感覚で身につける。文章作文で話す力も鍛えましょう。" "英語・中国語・ベトナム語・ネパール語・ベンガル語に対応。" > "${d}promotional_text.txt" ;;
+                  vi*)      printf '%s\n%s\n' "Mỗi ngày nghe một chút để cảm nhận và ghi nhớ cách diễn đạt một cách tự nhiên; rèn khả năng nói qua việc đặt câu." "Hỗ trợ tiếng Anh, tiếng Trung, tiếng Việt, tiếng Nepal và tiếng Bengal." > "${d}promotional_text.txt" ;;
+                  zh-Hans*) printf '%s\n%s\n' "每天听一点，凭语感自然掌握表达；通过造句练习，同时锻炼口语表达能力。" "支持英语、汉语、越南语、尼泊尔语、孟加拉语。" > "${d}promotional_text.txt" ;;
+                  *)        printf '%s\n%s\n' "Listen a little each day to absorb expressions naturally, and build your speaking skills by composing your own sentences." "Available in English, Chinese, Vietnamese, Nepali and Bengali." > "${d}promotional_text.txt" ;;
+                esac
+              fi
             done
-            echo "::notice::release_notes set for: $(ls fastlane/metadata 2>/dev/null | tr '\n' ' ')"
+            echo "::notice::metadata set (RN=$SET_RN PROMO=$SET_PROMO) for: $(ls fastlane/metadata 2>/dev/null | tr '\n' ' ')"
           fi
 
           fastlane deliver \
@@ -218,11 +247,11 @@ jobs:
             --screenshots_path fastlane/screenshots \
             --skip_binary_upload true \
             --skip_metadata "$SKIP_META" \
-            --skip_screenshots false \
+            --skip_screenshots "$SKIP_SS" \
             --overwrite_screenshots true \
             --sync_screenshots false \
             --run_precheck_before_submit false \
             --force true
 
-          echo "::notice::スクショ/App Preview/リリースノートを更新しました(審査提出はしていません)。App Store Connect で確認してください。"
+          echo "::notice::更新しました(SS=$([ "$SKIP_SS" = "true" ] && echo skip || echo yes) RN=$SET_RN PROMO=$SET_PROMO・審査提出なし)。App Store Connect で確認してください。"
           rm -f /tmp/AuthKey.p8 /tmp/asc.json
