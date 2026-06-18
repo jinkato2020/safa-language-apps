@@ -29,8 +29,9 @@ export function bundledPack(lang: string): AppData | null {
   return BUNDLED[lang] ?? null;
 }
 
-// 進捗通知 (done, total, label)。label は表示用 ("ダウンロード中"/"展開中")。
-export type ProgressFn = (done: number, total: number, label?: string) => void;
+// 進捗通知 (done, total, label, step, steps)。label は表示用。step/steps は
+//  「何個目/全何個のDL」(初回はコア音声+L1音声で2本走る等)。UIで "1/2" を併記する。
+export type ProgressFn = (done: number, total: number, label?: string, step?: number, steps?: number) => void;
 
 const packDir = (lang: string) => `${FileSystem.documentDirectory}packs/${lang}/`;
 const audioDir = (lang: string) => `${packDir(lang)}audio/`;
@@ -119,6 +120,20 @@ async function getOverlay(lang: string, entry: any, diag?: { catalog: any; catal
 // 差分DL: ローカルが entry.deltaBaseVersion と一致し entry.deltaZip があれば、変わった
 //   ファイルだけの「差分zip」をDLして既存の上に上書き展開する(フル40〜70MB→数百KB)。
 //   差分情報が無い/版が飛んでいる場合は従来どおりフルzip。後方互換(旧catalogはフルのみ)。
+// この音声zipが今回DLされるか(ensureAudioの早期returnと同条件)。DLステップ数を数えるのに使う。
+async function audioWillDownload(markerUri: string, version: any, hasZip: boolean, skipUpdate?: boolean): Promise<boolean> {
+  if (!hasZip) return false;
+  const m = await FileSystem.getInfoAsync(markerUri);
+  if (m.exists) {
+    try {
+      const v = await FileSystem.readAsStringAsync(markerUri);
+      if (v === String(version ?? '')) return false;   // 最新キャッシュ済み
+      if (skipUpdate) return false;                     // 「後で」=更新見送り
+    } catch {}
+  }
+  return true;
+}
+
 async function ensureAudio(lang: string, entry: any, onProgress?: ProgressFn, skipUpdate?: boolean): Promise<void> {
   if (!entry?.audioZip) return;
   const marker = audioMarkerUri(lang);
@@ -284,9 +299,15 @@ export async function loadPack(lang: string, onProgress?: ProgressFn, skipUpdate
   const overlayJson = await getOverlay(lang, entry, { catalog, catalogErr }, skipUpdate);
   // ターゲット(日本語)コア本文 core.json + 音声 をDL (全L1共通・キャッシュ済みなら即時)。
   const coreJson = await getCoreJson(catalog?.core, skipUpdate);
-  try { if (catalog?.core) await ensureAudio(CORE, catalog.core, onProgress, skipUpdate); } catch {}
+  // この起動で実際にDLされる音声zip数を数え、各DLに「何個目/全何個」を付けて通知する(UIで 1/2 表示)。
+  const coreWillDl = await audioWillDownload(audioMarkerUri(CORE), catalog?.core?.audioVersion, !!catalog?.core?.audioZip, skipUpdate);
+  const l1WillDl = await audioWillDownload(audioMarkerUri(lang), entry?.audioVersion, !!entry?.audioZip, skipUpdate);
+  const steps = (coreWillDl ? 1 : 0) + (l1WillDl ? 1 : 0);
+  let stepN = 0;
+  const stepProg = (): ProgressFn => { const s = ++stepN; return (d, t, l) => onProgress?.(d, t, l, s, steps); };
+  try { if (catalog?.core) await ensureAudio(CORE, catalog.core, coreWillDl ? stepProg() : onProgress, skipUpdate); } catch {}
   const jaAudio = await buildCoreAudioMaps();
-  try { await ensureAudio(lang, entry, onProgress, skipUpdate); } catch {} // L1音声DL失敗でもテキストは表示
+  try { await ensureAudio(lang, entry, l1WillDl ? stepProg() : onProgress, skipUpdate); } catch {} // L1音声DL失敗でもテキストは表示
   const { l1Audio, l1GrammarAudio } = await buildAudioMaps(lang, overlayJson);
 
   const overlay: L1Overlay = { ...toOverlay(overlayJson), l1Audio, l1GrammarAudio };

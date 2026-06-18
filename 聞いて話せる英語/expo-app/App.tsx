@@ -21,7 +21,9 @@ const headerIconSource = require('./assets/icon.png');
 function fmtMB(bytes: number): string { return bytes > 0 ? `${Math.max(1, Math.round(bytes / 1048576))} MB` : '—'; }
 
 // DL前の同意画面 (サイズ開示。Apple GL4.2.3)。
-function ConfirmDownloadView({ bytes, onConfirm }: { bytes: number; onConfirm: () => void }) {
+//  App C は母語=日本語単一でUI言語切替が無いため、戻る先が無い→「戻る」は出さない。
+//  既存データで動かせる(=音声が既にある更新時)なら「後で(現在のまま使う)」でDLせず起動。
+function ConfirmDownloadView({ bytes, onConfirm, canSkip, onSkipUpdate }: { bytes: number; onConfirm: () => void; canSkip?: boolean; onSkipUpdate?: () => void }) {
   const size = fmtMB(bytes);
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32, backgroundColor: '#fff' }}>
@@ -32,16 +34,22 @@ function ConfirmDownloadView({ bytes, onConfirm }: { bytes: number; onConfirm: (
       <Pressable onPress={onConfirm} style={{ paddingVertical: 14, paddingHorizontal: 32, borderRadius: 10, backgroundColor: '#2563eb' }}>
         <Text style={{ color: '#fff', fontSize: 16, fontWeight: '700' }}>{`ダウンロード（${size}）`}</Text>
       </Pressable>
+      {canSkip && onSkipUpdate ? (
+        <Pressable onPress={onSkipUpdate} hitSlop={8} style={{ marginTop: 18, paddingVertical: 8, paddingHorizontal: 20 }}>
+          <Text style={{ color: '#52525b', fontSize: 15, fontWeight: '600' }}>後で（現在のまま使う）</Text>
+        </Pressable>
+      ) : null}
     </View>
   );
 }
 
 // DL進捗 / 失敗時は再試行。
 function DownloadView(
-  { done, total, label, error, errMsg, onRetry }:
-  { done: number; total: number; label?: string; error?: boolean; errMsg?: string; onRetry?: () => void },
+  { done, total, label, error, errMsg, onRetry, step, steps }:
+  { done: number; total: number; label?: string; error?: boolean; errMsg?: string; onRetry?: () => void; step?: number; steps?: number },
 ) {
   const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  const counter = steps && steps > 1 && step ? ` (${step}/${steps})` : '';
   if (error) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
@@ -56,7 +64,7 @@ function DownloadView(
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
       <ActivityIndicator />
-      <Text style={{ marginTop: 16, fontSize: 13, color: '#52525b' }}>{`${label === '展開中' ? '準備中' : 'ダウンロード中'}… ${pct}%`}</Text>
+      <Text style={{ marginTop: 16, fontSize: 13, color: '#52525b' }}>{`${label === '展開中' ? '準備中' : 'ダウンロード中'}… ${pct}%${counter}`}</Text>
       <View style={{ marginTop: 12, width: 220, height: 6, borderRadius: 3, backgroundColor: '#e4e4e7', overflow: 'hidden' }}>
         <View style={{ width: `${pct}%`, height: '100%', backgroundColor: '#2563eb' }} />
       </View>
@@ -69,24 +77,25 @@ let sessionData: AppData | null = null;
 
 function PackGate({ children }: { children: ReactNode }) {
   const [data, setData] = useState<AppData | null>(sessionData);
-  const [progress, setProgress] = useState<{ done: number; total: number; label?: string }>({ done: 0, total: 0 });
+  const [progress, setProgress] = useState<{ done: number; total: number; label?: string; step?: number; steps?: number }>({ done: 0, total: 0 });
   const [error, setError] = useState(false);
   const [errMsg, setErrMsg] = useState('');
   const [attempt, setAttempt] = useState(0);
-  const [confirm, setConfirm] = useState<{ bytes: number } | null>(null);
+  const [confirm, setConfirm] = useState<{ bytes: number; canSkip: boolean } | null>(null);
   const confirmedRef = useRef(false);
+  const skipUpdateRef = useRef(false); // 「後で」で更新を見送ったか(単一言語なのでboolで足りる)
 
   useEffect(() => {
     if (sessionData) { setData(sessionData); return; }
     let alive = true;
     setError(false); setErrMsg(''); setConfirm(null);
     (async () => {
-      let info: { needsDownload: boolean; bytes: number };
-      try { info = await getPackDownloadInfo(); } catch { info = { needsDownload: true, bytes: 0 }; }
+      let info: { needsDownload: boolean; bytes: number; canSkip: boolean };
+      try { info = await getPackDownloadInfo(); } catch { info = { needsDownload: true, bytes: 0, canSkip: false }; }
       if (!alive) return;
-      if (info.needsDownload && !confirmedRef.current) { setConfirm({ bytes: info.bytes }); return; }
+      if (info.needsDownload && !confirmedRef.current) { setConfirm({ bytes: info.bytes, canSkip: info.canSkip }); return; }
       setProgress({ done: 0, total: 0 });
-      loadPack((done, total, label) => { if (alive) setProgress({ done, total, label }); })
+      loadPack((done, total, label, step, steps) => { if (alive) setProgress({ done, total, label, step, steps }); }, skipUpdateRef.current)
         .then(d => { if (alive) { sessionData = d; setData(d); } })
         .catch((e: any) => { if (alive) { setErrMsg(String(e?.message ?? e)); setError(true); } });
     })();
@@ -94,10 +103,12 @@ function PackGate({ children }: { children: ReactNode }) {
   }, [attempt]);
 
   const onConfirm = () => { confirmedRef.current = true; setConfirm(null); setAttempt(a => a + 1); };
+  // 更新を「後で」 → DLせず既存音声のまま起動(skipUpdate=trueで再実行)。戻る先が無いので「戻る」は無し。
+  const onSkipUpdate = () => { confirmedRef.current = true; skipUpdateRef.current = true; setConfirm(null); setAttempt(a => a + 1); };
 
   if (!data) {
-    if (confirm) return <ConfirmDownloadView bytes={confirm.bytes} onConfirm={onConfirm} />;
-    return <DownloadView done={progress.done} total={progress.total} label={progress.label} error={error} errMsg={errMsg} onRetry={() => setAttempt(a => a + 1)} />;
+    if (confirm) return <ConfirmDownloadView bytes={confirm.bytes} onConfirm={onConfirm} canSkip={confirm.canSkip} onSkipUpdate={onSkipUpdate} />;
+    return <DownloadView done={progress.done} total={progress.total} label={progress.label} step={progress.step} steps={progress.steps} error={error} errMsg={errMsg} onRetry={() => setAttempt(a => a + 1)} />;
   }
   return <AppDataProvider data={data}>{children}</AppDataProvider>;
 }

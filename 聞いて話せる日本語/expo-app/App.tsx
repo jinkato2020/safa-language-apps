@@ -83,11 +83,12 @@ function ConfirmDownloadView({ bytes, lang, onConfirm, onCancel, canSkip, onSkip
 
 // DLローディング画面 (進捗バー付き / 失敗時は再試行)。
 function DownloadView(
-  { done, total, label, lang, error, errMsg, onRetry }:
-  { done: number; total: number; label?: string; lang: string; error?: boolean; errMsg?: string; onRetry?: () => void },
+  { done, total, label, lang, error, errMsg, onRetry, step, steps }:
+  { done: number; total: number; label?: string; lang: string; error?: boolean; errMsg?: string; onRetry?: () => void; step?: number; steps?: number },
 ) {
   const t = DL_TEXT[lang] ?? DL_TEXT.ne;
   const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  const counter = steps && steps > 1 && step ? ` (${step}/${steps})` : '';
   if (error) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
@@ -105,7 +106,7 @@ function DownloadView(
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
       <ActivityIndicator />
       <Text style={{ marginTop: 16, fontSize: 13, color: '#52525b' }}>
-        {`${label === '展開中' ? t.prep : t.dl}… ${pct}%`}
+        {`${label === '展開中' ? t.prep : t.dl}… ${pct}%${counter}`}
       </Text>
       <View style={{ marginTop: 12, width: 220, height: 6, borderRadius: 3, backgroundColor: '#e4e4e7', overflow: 'hidden' }}>
         <View style={{ width: `${pct}%`, height: '100%', backgroundColor: '#2563eb' }} />
@@ -130,7 +131,7 @@ function PackGate({ children }: { children: ReactNode }) {
   const [data, setData] = useState<AppData | null>(() => bundledPack(packLang));
   const dataLangRef = useRef<string | null>(data ? packLang : null); // dataがどの言語のものか
   const shownLangRef = useRef<string>(lang); // 現在表示中データのUI言語(DL拒否時の戻り先)
-  const [progress, setProgress] = useState<{ done: number; total: number; label?: string }>({ done: 0, total: 0 });
+  const [progress, setProgress] = useState<{ done: number; total: number; label?: string; step?: number; steps?: number }>({ done: 0, total: 0 });
   const [error, setError] = useState(false);
   const [errMsg, setErrMsg] = useState<string>('');
   const [attempt, setAttempt] = useState(0);
@@ -155,7 +156,7 @@ function PackGate({ children }: { children: ReactNode }) {
       if (!alive) return;
       if (info.needsDownload && confirmedLangRef.current !== packLang) { setConfirm({ bytes: info.bytes, canSkip: info.canSkip }); return; }
       setProgress({ done: 0, total: 0 }); setLoading(true);
-      loadPack(packLang, (done, total, label) => { if (alive) setProgress({ done, total, label }); }, skipUpdateLangRef.current === packLang)
+      loadPack(packLang, (done, total, label, step, steps) => { if (alive) setProgress({ done, total, label, step, steps }); }, skipUpdateLangRef.current === packLang)
         .then(d => { if (alive) { sessionPackCache[packLang] = d; setData(d); dataLangRef.current = packLang; shownLangRef.current = lang; setLoading(false); } })
         .catch((e: any) => { if (alive) { setErrMsg(String(e?.message ?? e)); setError(true); setLoading(false); } });
     })();
@@ -172,7 +173,7 @@ function PackGate({ children }: { children: ReactNode }) {
   // 初回(まだ一度もデータが無い)
   if (!data) {
     if (confirm) return <ConfirmDownloadView bytes={confirm.bytes} lang={lang} onConfirm={onConfirm} canSkip={confirm.canSkip} onSkipUpdate={onSkipUpdate} />;
-    return <DownloadView done={progress.done} total={progress.total} label={progress.label} lang={lang} error={error} errMsg={errMsg} onRetry={() => setAttempt(a => a + 1)} />;
+    return <DownloadView done={progress.done} total={progress.total} label={progress.label} step={progress.step} steps={progress.steps} lang={lang} error={error} errMsg={errMsg} onRetry={() => setAttempt(a => a + 1)} />;
   }
   // データあり → AppShell は維持し、確認/読み込み/失敗のみ上にオーバーレイ(再マウントしない)
   return (

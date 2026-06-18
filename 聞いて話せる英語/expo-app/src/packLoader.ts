@@ -13,7 +13,9 @@ const CATALOG_URL =
   'https://github.com/JinKato2020/safa-language-apps/releases/download/packs-appc/catalog.json';
 
 const REVIEW = { iosAppId: null as string | null, androidPackage: appJson.expo.android.package };
-export type ProgressFn = (done: number, total: number, label?: string) => void;
+// 進捗通知 (done, total, label, step, steps)。step/steps は「何個目/全何個のDL」
+//  (en音声+ja音声で最大2本)。UIで "1/2" を併記する。
+export type ProgressFn = (done: number, total: number, label?: string, step?: number, steps?: number) => void;
 
 const packDir = (kind: string) => `${FileSystem.documentDirectory}packs-c/${kind}/`;
 const audioDir = (kind: string) => `${packDir(kind)}audio/`;
@@ -41,7 +43,7 @@ function b64ToU8(b64: string): Uint8Array {
 }
 
 // 音声zipをDL→ストリーミング展開 (OOM安全)。差分DL対応 (App A/B と同方式)。
-async function ensureAudio(kind: string, entry: any, onProgress?: ProgressFn, span?: { base: number; frac: number }): Promise<void> {
+async function ensureAudio(kind: string, entry: any, onProgress?: ProgressFn, span?: { base: number; frac: number }, skipUpdate?: boolean, step?: number, steps?: number): Promise<void> {
   if (!entry?.audioZip) return;
   const marker = audioMarkerUri(kind);
   let localVer: string | null = null;
@@ -50,6 +52,8 @@ async function ensureAudio(kind: string, entry: any, onProgress?: ProgressFn, sp
     localVer = await FileSystem.readAsStringAsync(marker);
     if (localVer === String(entry.audioVersion ?? '')) return;
   }
+  // 更新を見送り(「後で」)= 既存音声があるならDLせず現状のまま起動。
+  if (skipUpdate && localVer != null) return;
   await FileSystem.makeDirectoryAsync(audioDir(kind), { intermediates: true });
 
   const useDelta = !!(entry.deltaZip && localVer != null && String(entry.deltaBaseVersion ?? '') === localVer);
@@ -59,7 +63,7 @@ async function ensureAudio(kind: string, entry: any, onProgress?: ProgressFn, sp
   const SCALE = 1000;
   const base = span?.base ?? 0, frac = span?.frac ?? 1; // 進捗をen/ja2分割で配分
   const DL_FRAC = 0.8;
-  const report = (f01: number, label: string) => onProgress?.(Math.round((base + Math.min(1, f01) * frac) * SCALE), SCALE, label);
+  const report = (f01: number, label: string) => onProgress?.(Math.round((base + Math.min(1, f01) * frac) * SCALE), SCALE, label, step, steps);
 
   const zipUri = `${packDir(kind)}audio.zip`;
   const total = srcBytes;
@@ -124,8 +128,10 @@ async function buildMaps(kind: string): Promise<{ conv: Record<string, string>; 
 
 const KINDS = ['en', 'ja'];
 
-/** DL要否と必要バイト数(DL前の同意ダイアログ用 / Apple GL4.2.3)。 */
-export async function getPackDownloadInfo(): Promise<{ needsDownload: boolean; bytes: number }> {
+/** DL要否と必要バイト数(DL前の同意ダイアログ用 / Apple GL4.2.3)。
+ *  canSkip = 「既存データで動かせる」= 両KINDS(en/ja)の音声マーカーが既に存在。
+ *  初回(どちらか欠落)はスキップ不可=DL必須。更新のみなら「後で」で現状のまま起動できる。 */
+export async function getPackDownloadInfo(): Promise<{ needsDownload: boolean; bytes: number; canSkip: boolean }> {
   let catalog: any = null;
   try { catalog = await withRetry(() => fetchJson(CATALOG_URL)); } catch {}
   let bytes = 0, need = false;
@@ -141,38 +147,72 @@ export async function getPackDownloadInfo(): Promise<{ needsDownload: boolean; b
       bytes += (useDelta ? entry.deltaZipBytes : entry.audioZipBytes) || 0;
     }
   }
-  return { needsDownload: need, bytes };
+  const canSkip = (await FileSystem.getInfoAsync(audioMarkerUri('en'))).exists && (await FileSystem.getInfoAsync(audioMarkerUri('ja'))).exists;
+  return { needsDownload: need, bytes, canSkip };
+}
+
+// この音声zipが今回DLされるか(ensureAudioの早期returnと同条件)。DLステップ数を数えるのに使う。
+async function audioWillDownload(kind: string, entry: any, skipUpdate?: boolean): Promise<boolean> {
+  if (!entry?.audioZip) return false;
+  const m = await FileSystem.getInfoAsync(audioMarkerUri(kind));
+  if (m.exists) {
+    try {
+      const v = await FileSystem.readAsStringAsync(audioMarkerUri(kind));
+      if (v === String(entry.audioVersion ?? '')) return false; // 最新キャッシュ済み
+      if (skipUpdate) return false;                              // 「後で」=更新見送り
+    } catch {}
+  }
+  return true;
 }
 
 /** 音声(en+ja)をDL(必要分)→ file://マップを作り composeAppC で AppData を返す。 */
-export async function loadPack(onProgress?: ProgressFn): Promise<AppData> {
+export async function loadPack(onProgress?: ProgressFn, skipUpdate?: boolean): Promise<AppData> {
   let catalog: any = null;
   try { catalog = await withRetry(() => fetchJson(CATALOG_URL)); } catch {}
-  // en→前半50% / ja→後半50% に進捗を配分
-  const spans: Record<string, { base: number; frac: number }> = { en: { base: 0, frac: 0.5 }, ja: { base: 0.5, frac: 0.5 } };
+  const entries: Record<string, any> = {};
+  for (const kind of KINDS) entries[kind] = catalog?.audio?.find((a: any) => a.kind === kind);
+
+  // この起動で実際にDLされる kind を判定し、進捗バーの配分(span)とステップ番号を動的に決める。
+  //  ・steps==2: en=前半50% / ja=後半50% で「1本の連続バー」(従来挙動)。
+  //  ・steps==1: そのkindにフルバー({base:0,frac:1}) → 片方更新でも半分で止まらない。
+  const willDl: Record<string, boolean> = {};
+  for (const kind of KINDS) willDl[kind] = await audioWillDownload(kind, entries[kind], skipUpdate);
+  const steps = KINDS.reduce((n, k) => n + (willDl[k] ? 1 : 0), 0);
+  const spans: Record<string, { base: number; frac: number }> = {};
+  let cursor = 0, stepN = 0;
+  const stepNo: Record<string, number> = {};
   for (const kind of KINDS) {
-    const entry = catalog?.audio?.find((a: any) => a.kind === kind);
-    if (entry) { try { await ensureAudio(kind, entry, onProgress, spans[kind]); } catch {} } // 失敗してもテキストは表示
+    if (!willDl[kind]) continue;
+    const frac = 1 / steps;
+    spans[kind] = { base: cursor, frac };
+    cursor += frac;
+    stepNo[kind] = ++stepN; // 実際にDLされる kind にだけ連番(1,2…)
+  }
+
+  for (const kind of KINDS) {
+    const entry = entries[kind];
+    // DLされない kind は ensureAudio が早期returnするので step は進めない。
+    if (entry) { try { await ensureAudio(kind, entry, onProgress, spans[kind], skipUpdate, stepNo[kind], steps); } catch {} } // 失敗してもテキストは表示
   }
   const en = await buildMaps('en');
   const ja = await buildMaps('ja');
   const audio: AudioMaps = { enConv: en.conv, enGram: en.gram, jaConv: ja.conv, jaGram: ja.gram };
   // 本文(英語コア)と日本語訳+辞書を DL/キャッシュ。
-  const coreJson = await getJson<EnCoreJson>('core', catalog?.coreUrl, catalog?.coreVersion);
-  const overlayJson = await getJson<JaOverlayJson>('overlay-ja', catalog?.overlayJaUrl, catalog?.overlayJaVersion);
+  const coreJson = await getJson<EnCoreJson>('core', catalog?.coreUrl, catalog?.coreVersion, skipUpdate);
+  const overlayJson = await getJson<JaOverlayJson>('overlay-ja', catalog?.overlayJaUrl, catalog?.overlayJaVersion, skipUpdate);
   const data = composeAppC(coreJson, overlayJson, audio);
   return { ...data, review: REVIEW };
 }
 
 // テキストJSON(core.json / overlay-ja.json)をDL/キャッシュ。version で版管理。
-async function getJson<T>(name: string, url?: string, version?: number): Promise<T | undefined> {
+async function getJson<T>(name: string, url?: string, version?: number, skipUpdate?: boolean): Promise<T | undefined> {
   const uri = `${packDir(name)}data.json`;
   const mk = `${packDir(name)}data.version`;
   const info = await FileSystem.getInfoAsync(uri);
   if (info.exists) {
     let v: string | null = null;
     try { if ((await FileSystem.getInfoAsync(mk)).exists) v = await FileSystem.readAsStringAsync(mk); } catch {}
-    if (!url || v === String(version ?? '')) { try { return JSON.parse(await FileSystem.readAsStringAsync(uri)); } catch {} }
+    if (skipUpdate || !url || v === String(version ?? '')) { try { return JSON.parse(await FileSystem.readAsStringAsync(uri)); } catch {} }
   }
   if (!url) return undefined;
   await FileSystem.makeDirectoryAsync(packDir(name), { intermediates: true });

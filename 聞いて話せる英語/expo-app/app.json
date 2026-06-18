@@ -2,7 +2,7 @@
   "expo": {
     "name": "聞いて話せる英語",
     "slug": "ListenSpeakEnglish",
-    "version": "1.1.5",
+    "version": "1.1.6",
     "runtimeVersion": {
       "policy": "appVersion"
     },
