@@ -22,7 +22,7 @@ export default function PosterAudioScreen({ route }: any) {
   const lessons = usePosterLessons();
   const navigation = useNavigation<any>();
   const { lang, t } = useI18n();
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
 
   const li = Math.max(0, lessons.findIndex(l => l.id === lessonId));
   const lesson = lessons[li] || lessons[0];
@@ -46,9 +46,7 @@ export default function PosterAudioScreen({ route }: any) {
   const advanceRef = useRef<(g: number) => void>(() => {});
 
   const PAD = spacing.lg;
-  const dispW = width - PAD * 2;
-  const scale = lesson ? dispW / lesson.posterW : 1;
-  const dispH = lesson ? lesson.posterH * scale : 0;
+  const dispW = width - PAD * 2;   // 横の最大予算(これと「縦に収める」両方を満たす縮尺を採用)
 
   // テーマ移動でリセット(最初のカードを表示・停止)
   useEffect(() => {
@@ -146,15 +144,24 @@ export default function PosterAudioScreen({ route }: any) {
 
   // 拡大: ポスターのセル枠ぴったりに切り抜き(余白ゼロ=「枠の中に枠」を回避)、ほぼ全幅へ拡大
   const cx = hl.box.x, cy = hl.box.y;
-  const ZOOM_W = width - spacing.md * 2;
+  const ZOOM_W = Math.min(width - spacing.md * 2, 460);  // iPad等で拡大ドックが過大にならないよう上限
   const zScale = ZOOM_W / hl.box.w;
   const zoomH = Math.round(hl.box.h * zScale);
 
+  // ポスター表示縮尺: 「横の予算」と「ドック等を除いた縦の余白に収める」の両方を満たす contain。
+  //  iPad は縦横比がスマホと違い、幅合わせだと縦が収まらず下端が見切れるため、縦に合わせて
+  //  横は左右に余白を振り分け中央寄せする(枠は一様なので縮尺はカード間で変わらない)。
+  const dockH = zoomH + spacing.sm * 2 + spacing.md + 24;        // ドックのおおよその高さ
+  const availH = Math.max(120, height - dockH - spacing.sm - 6); // ポスターに使える縦領域
+  const scale = Math.min(dispW / lesson.posterW, availH / lesson.posterH);
+  const pw = Math.round(lesson.posterW * scale);
+  const ph = Math.round(lesson.posterH * scale);
+
   return (
     <View style={styles.container} {...swipe}>
-      <ScrollView ref={scrollRef} contentContainerStyle={{ paddingHorizontal: PAD, paddingTop: spacing.sm, paddingBottom: 248 }}>
-        <View style={{ width: dispW, height: dispH }}>
-          <Image source={lessonImage} style={{ width: dispW, height: dispH, borderRadius: radius.md }} resizeMode="contain" />
+      <ScrollView ref={scrollRef} contentContainerStyle={{ alignItems: 'center', paddingTop: spacing.sm, paddingBottom: dockH + spacing.sm }}>
+        <View style={{ width: pw, height: ph }}>
+          <Image source={lessonImage} style={{ width: pw, height: ph, borderRadius: radius.md }} resizeMode="contain" />
           {hl && (
             <View pointerEvents="none" style={[styles.hl, {
               left: hl.box.x * scale, top: hl.box.y * scale,
