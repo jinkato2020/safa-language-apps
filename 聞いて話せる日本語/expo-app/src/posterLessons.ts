@@ -1,10 +1,10 @@
 // 自動生成 (scripts/_gen_poster.py)。素材: 02日本語教材/{2_ポスター,3_音声/_正規化}
 // box=ポスター画像から実カード枠を検出。imageL1/card.l1/ja/titleAudio。音声は末尾0.25s pad付。
 export type PosterCard = { i: number; box: { x: number; y: number; w: number; h: number }; ja: number; l1: Record<string, number> };
-export type PosterLesson = { id: string; title: string; titleNp?: string; imageL1: Record<string, number>; titleAudio?: { ja: number; l1: Record<string, number> }; posterW: number; posterH: number; cards: PosterCard[] };
+export type PosterLesson = { id: string; title: string; titleL1: Record<string, string>; titleNp?: string; imageL1: Record<string, number>; titleAudio?: { ja: number; l1: Record<string, number> }; posterW: number; posterH: number; cards: PosterCard[] };
 
 export const POSTER_LESSONS: PosterLesson[] = [
- { id:'family', title:'家族', posterW:2480, posterH:3508,
+ { id:'family', title:'家族', titleL1:{ ja:'家族', bn:'পরিবার', en:'Family', ne:'परिवार', vi:'Gia đình', zh:'家庭' }, posterW:2480, posterH:3508,
    imageL1:{ bn:require('../assets/poster/family/poster_bn.png'), en:require('../assets/poster/family/poster_en.png'), ne:require('../assets/poster/family/poster_ne.png'), vi:require('../assets/poster/family/poster_vi.png'), zh:require('../assets/poster/family/poster_zh.png') },
    titleAudio:{ ja:require('../assets/poster/family/audio/title_ja.mp3'), l1:{ bn:require('../assets/poster/family/audio/title_bn.mp3'), en:require('../assets/poster/family/audio/title_en.mp3'), ne:require('../assets/poster/family/audio/title_ne.mp3'), vi:require('../assets/poster/family/audio/title_vi.mp3'), zh:require('../assets/poster/family/audio/title_zh.mp3') } },
    cards:[
@@ -29,7 +29,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:1264,y:2816,w:1158,h:278}, ja:require('../assets/poster/family/audio/19_ja.mp3'), l1:{ bn:require('../assets/poster/family/audio/19_bn.mp3'), en:require('../assets/poster/family/audio/19_en.mp3'), ne:require('../assets/poster/family/audio/19_ne.mp3'), vi:require('../assets/poster/family/audio/19_vi.mp3'), zh:require('../assets/poster/family/audio/19_zh.mp3') } },
    { i:19, box:{x:1264,y:3116,w:1158,h:278}, ja:require('../assets/poster/family/audio/20_ja.mp3'), l1:{ bn:require('../assets/poster/family/audio/20_bn.mp3'), en:require('../assets/poster/family/audio/20_en.mp3'), ne:require('../assets/poster/family/audio/20_ne.mp3'), vi:require('../assets/poster/family/audio/20_vi.mp3'), zh:require('../assets/poster/family/audio/20_zh.mp3') } },
    ] },
- { id:'numbers', title:'数字', posterW:2480, posterH:3508,
+ { id:'numbers', title:'数字', titleL1:{ ja:'数字', bn:'সংখ্যা', en:'Numbers', ne:'अङ्क', vi:'Con số', zh:'数字' }, posterW:2480, posterH:3508,
    imageL1:{ bn:require('../assets/poster/numbers/poster_bn.png'), en:require('../assets/poster/numbers/poster_en.png'), ne:require('../assets/poster/numbers/poster_ne.png'), vi:require('../assets/poster/numbers/poster_vi.png'), zh:require('../assets/poster/numbers/poster_zh.png') },
    titleAudio:{ ja:require('../assets/poster/numbers/audio/title_ja.mp3'), l1:{ bn:require('../assets/poster/numbers/audio/title_bn.mp3'), en:require('../assets/poster/numbers/audio/title_en.mp3'), ne:require('../assets/poster/numbers/audio/title_ne.mp3'), vi:require('../assets/poster/numbers/audio/title_vi.mp3'), zh:require('../assets/poster/numbers/audio/title_zh.mp3') } },
    cards:[
@@ -54,7 +54,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:1264,y:2772,w:1158,h:274}, ja:require('../assets/poster/numbers/audio/19_ja.mp3'), l1:{ bn:require('../assets/poster/numbers/audio/19_bn.mp3'), en:require('../assets/poster/numbers/audio/19_en.mp3'), ne:require('../assets/poster/numbers/audio/19_ne.mp3'), vi:require('../assets/poster/numbers/audio/19_vi.mp3'), zh:require('../assets/poster/numbers/audio/19_zh.mp3') } },
    { i:19, box:{x:1264,y:3066,w:1158,h:274}, ja:require('../assets/poster/numbers/audio/20_ja.mp3'), l1:{ bn:require('../assets/poster/numbers/audio/20_bn.mp3'), en:require('../assets/poster/numbers/audio/20_en.mp3'), ne:require('../assets/poster/numbers/audio/20_ne.mp3'), vi:require('../assets/poster/numbers/audio/20_vi.mp3'), zh:require('../assets/poster/numbers/audio/20_zh.mp3') } },
    ] },
- { id:'body', title:'体', posterW:2480, posterH:3508,
+ { id:'body', title:'体', titleL1:{ ja:'体', bn:'শরীর', en:'Body', ne:'शरीर', vi:'Cơ thể', zh:'身体' }, posterW:2480, posterH:3508,
    imageL1:{ bn:require('../assets/poster/body/poster_bn.png'), en:require('../assets/poster/body/poster_en.png'), ne:require('../assets/poster/body/poster_ne.png'), vi:require('../assets/poster/body/poster_vi.png'), zh:require('../assets/poster/body/poster_zh.png') },
    titleAudio:{ ja:require('../assets/poster/body/audio/title_ja.mp3'), l1:{ bn:require('../assets/poster/body/audio/title_bn.mp3'), en:require('../assets/poster/body/audio/title_en.mp3'), ne:require('../assets/poster/body/audio/title_ne.mp3'), vi:require('../assets/poster/body/audio/title_vi.mp3'), zh:require('../assets/poster/body/audio/title_zh.mp3') } },
    cards:[
@@ -83,7 +83,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:22, box:{x:1264,y:2816,w:1158,h:222}, ja:require('../assets/poster/body/audio/23_ja.mp3'), l1:{ bn:require('../assets/poster/body/audio/23_bn.mp3'), en:require('../assets/poster/body/audio/23_en.mp3'), ne:require('../assets/poster/body/audio/23_ne.mp3'), vi:require('../assets/poster/body/audio/23_vi.mp3'), zh:require('../assets/poster/body/audio/23_zh.mp3') } },
    { i:23, box:{x:1264,y:3056,w:1158,h:222}, ja:require('../assets/poster/body/audio/24_ja.mp3'), l1:{ bn:require('../assets/poster/body/audio/24_bn.mp3'), en:require('../assets/poster/body/audio/24_en.mp3'), ne:require('../assets/poster/body/audio/24_ne.mp3'), vi:require('../assets/poster/body/audio/24_vi.mp3'), zh:require('../assets/poster/body/audio/24_zh.mp3') } },
    ] },
- { id:'colors', title:'色と形', posterW:2480, posterH:3508,
+ { id:'colors', title:'色と形', titleL1:{ ja:'色と形', bn:'রং ও আকৃতি', en:'Colors & Shapes', ne:'रङ र आकार', vi:'Màu sắc & Hình dạng', zh:'颜色与形状' }, posterW:2480, posterH:3508,
    imageL1:{ bn:require('../assets/poster/colors/poster_bn.png'), en:require('../assets/poster/colors/poster_en.png'), ne:require('../assets/poster/colors/poster_ne.png'), vi:require('../assets/poster/colors/poster_vi.png'), zh:require('../assets/poster/colors/poster_zh.png') },
    titleAudio:{ ja:require('../assets/poster/colors/audio/title_ja.mp3'), l1:{ bn:require('../assets/poster/colors/audio/title_bn.mp3'), en:require('../assets/poster/colors/audio/title_en.mp3'), ne:require('../assets/poster/colors/audio/title_ne.mp3'), vi:require('../assets/poster/colors/audio/title_vi.mp3'), zh:require('../assets/poster/colors/audio/title_zh.mp3') } },
    cards:[
@@ -108,7 +108,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:1264,y:2792,w:1158,h:274}, ja:require('../assets/poster/colors/audio/19_ja.mp3'), l1:{ bn:require('../assets/poster/colors/audio/19_bn.mp3'), en:require('../assets/poster/colors/audio/19_en.mp3'), ne:require('../assets/poster/colors/audio/19_ne.mp3'), vi:require('../assets/poster/colors/audio/19_vi.mp3'), zh:require('../assets/poster/colors/audio/19_zh.mp3') } },
    { i:19, box:{x:1264,y:3086,w:1158,h:274}, ja:require('../assets/poster/colors/audio/20_ja.mp3'), l1:{ bn:require('../assets/poster/colors/audio/20_bn.mp3'), en:require('../assets/poster/colors/audio/20_en.mp3'), ne:require('../assets/poster/colors/audio/20_ne.mp3'), vi:require('../assets/poster/colors/audio/20_vi.mp3'), zh:require('../assets/poster/colors/audio/20_zh.mp3') } },
    ] },
- { id:'food', title:'食べ物', posterW:2480, posterH:3508,
+ { id:'food', title:'食べ物', titleL1:{ ja:'食べ物', bn:'খাবার', en:'Food', ne:'खाना', vi:'Thức ăn', zh:'食物' }, posterW:2480, posterH:3508,
    imageL1:{ bn:require('../assets/poster/food/poster_bn.png'), en:require('../assets/poster/food/poster_en.png'), ne:require('../assets/poster/food/poster_ne.png'), vi:require('../assets/poster/food/poster_vi.png'), zh:require('../assets/poster/food/poster_zh.png') },
    titleAudio:{ ja:require('../assets/poster/food/audio/title_ja.mp3'), l1:{ bn:require('../assets/poster/food/audio/title_bn.mp3'), en:require('../assets/poster/food/audio/title_en.mp3'), ne:require('../assets/poster/food/audio/title_ne.mp3'), vi:require('../assets/poster/food/audio/title_vi.mp3'), zh:require('../assets/poster/food/audio/title_zh.mp3') } },
    cards:[
@@ -133,7 +133,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:1264,y:2816,w:1158,h:278}, ja:require('../assets/poster/food/audio/19_ja.mp3'), l1:{ bn:require('../assets/poster/food/audio/19_bn.mp3'), en:require('../assets/poster/food/audio/19_en.mp3'), ne:require('../assets/poster/food/audio/19_ne.mp3'), vi:require('../assets/poster/food/audio/19_vi.mp3'), zh:require('../assets/poster/food/audio/19_zh.mp3') } },
    { i:19, box:{x:1264,y:3116,w:1158,h:278}, ja:require('../assets/poster/food/audio/20_ja.mp3'), l1:{ bn:require('../assets/poster/food/audio/20_bn.mp3'), en:require('../assets/poster/food/audio/20_en.mp3'), ne:require('../assets/poster/food/audio/20_ne.mp3'), vi:require('../assets/poster/food/audio/20_vi.mp3'), zh:require('../assets/poster/food/audio/20_zh.mp3') } },
    ] },
- { id:'emotions', title:'感情', posterW:2480, posterH:3508,
+ { id:'emotions', title:'感情', titleL1:{ ja:'感情', bn:'আবেগ', en:'Emotions', ne:'भावना', vi:'Cảm xúc', zh:'情感' }, posterW:2480, posterH:3508,
    imageL1:{ bn:require('../assets/poster/emotions/poster_bn.png'), en:require('../assets/poster/emotions/poster_en.png'), ne:require('../assets/poster/emotions/poster_ne.png'), vi:require('../assets/poster/emotions/poster_vi.png'), zh:require('../assets/poster/emotions/poster_zh.png') },
    titleAudio:{ ja:require('../assets/poster/emotions/audio/title_ja.mp3'), l1:{ bn:require('../assets/poster/emotions/audio/title_bn.mp3'), en:require('../assets/poster/emotions/audio/title_en.mp3'), ne:require('../assets/poster/emotions/audio/title_ne.mp3'), vi:require('../assets/poster/emotions/audio/title_vi.mp3'), zh:require('../assets/poster/emotions/audio/title_zh.mp3') } },
    cards:[
@@ -162,7 +162,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:22, box:{x:1264,y:2816,w:1158,h:222}, ja:require('../assets/poster/emotions/audio/23_ja.mp3'), l1:{ bn:require('../assets/poster/emotions/audio/23_bn.mp3'), en:require('../assets/poster/emotions/audio/23_en.mp3'), ne:require('../assets/poster/emotions/audio/23_ne.mp3'), vi:require('../assets/poster/emotions/audio/23_vi.mp3'), zh:require('../assets/poster/emotions/audio/23_zh.mp3') } },
    { i:23, box:{x:1264,y:3056,w:1158,h:222}, ja:require('../assets/poster/emotions/audio/24_ja.mp3'), l1:{ bn:require('../assets/poster/emotions/audio/24_bn.mp3'), en:require('../assets/poster/emotions/audio/24_en.mp3'), ne:require('../assets/poster/emotions/audio/24_ne.mp3'), vi:require('../assets/poster/emotions/audio/24_vi.mp3'), zh:require('../assets/poster/emotions/audio/24_zh.mp3') } },
    ] },
- { id:'buildings', title:'建物', posterW:2480, posterH:3508,
+ { id:'buildings', title:'建物', titleL1:{ ja:'建物', bn:'ভবন', en:'Buildings', ne:'भवन', vi:'Tòa nhà', zh:'建筑' }, posterW:2480, posterH:3508,
    imageL1:{ bn:require('../assets/poster/buildings/poster_bn.png'), en:require('../assets/poster/buildings/poster_en.png'), ne:require('../assets/poster/buildings/poster_ne.png'), vi:require('../assets/poster/buildings/poster_vi.png'), zh:require('../assets/poster/buildings/poster_zh.png') },
    titleAudio:{ ja:require('../assets/poster/buildings/audio/title_ja.mp3'), l1:{ bn:require('../assets/poster/buildings/audio/title_bn.mp3'), en:require('../assets/poster/buildings/audio/title_en.mp3'), ne:require('../assets/poster/buildings/audio/title_ne.mp3'), vi:require('../assets/poster/buildings/audio/title_vi.mp3'), zh:require('../assets/poster/buildings/audio/title_zh.mp3') } },
    cards:[
@@ -191,7 +191,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:22, box:{x:1264,y:2816,w:1158,h:109}, ja:require('../assets/poster/buildings/audio/23_ja.mp3'), l1:{ bn:require('../assets/poster/buildings/audio/23_bn.mp3'), en:require('../assets/poster/buildings/audio/23_en.mp3'), ne:require('../assets/poster/buildings/audio/23_ne.mp3'), vi:require('../assets/poster/buildings/audio/23_vi.mp3'), zh:require('../assets/poster/buildings/audio/23_zh.mp3') } },
    { i:23, box:{x:1264,y:3038,w:1158,h:18}, ja:require('../assets/poster/buildings/audio/24_ja.mp3'), l1:{ bn:require('../assets/poster/buildings/audio/24_bn.mp3'), en:require('../assets/poster/buildings/audio/24_en.mp3'), ne:require('../assets/poster/buildings/audio/24_ne.mp3'), vi:require('../assets/poster/buildings/audio/24_vi.mp3'), zh:require('../assets/poster/buildings/audio/24_zh.mp3') } },
    ] },
- { id:'animals', title:'動物', posterW:2480, posterH:3508,
+ { id:'animals', title:'動物', titleL1:{ ja:'動物', bn:'প্রাণী', en:'Animals', ne:'जनावर', vi:'Động vật', zh:'动物' }, posterW:2480, posterH:3508,
    imageL1:{ bn:require('../assets/poster/animals/poster_bn.png'), en:require('../assets/poster/animals/poster_en.png'), ne:require('../assets/poster/animals/poster_ne.png'), vi:require('../assets/poster/animals/poster_vi.png'), zh:require('../assets/poster/animals/poster_zh.png') },
    titleAudio:{ ja:require('../assets/poster/animals/audio/title_ja.mp3'), l1:{ bn:require('../assets/poster/animals/audio/title_bn.mp3'), en:require('../assets/poster/animals/audio/title_en.mp3'), ne:require('../assets/poster/animals/audio/title_ne.mp3'), vi:require('../assets/poster/animals/audio/title_vi.mp3'), zh:require('../assets/poster/animals/audio/title_zh.mp3') } },
    cards:[
@@ -216,7 +216,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:1264,y:2816,w:1158,h:278}, ja:require('../assets/poster/animals/audio/19_ja.mp3'), l1:{ bn:require('../assets/poster/animals/audio/19_bn.mp3'), en:require('../assets/poster/animals/audio/19_en.mp3'), ne:require('../assets/poster/animals/audio/19_ne.mp3'), vi:require('../assets/poster/animals/audio/19_vi.mp3'), zh:require('../assets/poster/animals/audio/19_zh.mp3') } },
    { i:19, box:{x:1264,y:3116,w:1158,h:278}, ja:require('../assets/poster/animals/audio/20_ja.mp3'), l1:{ bn:require('../assets/poster/animals/audio/20_bn.mp3'), en:require('../assets/poster/animals/audio/20_en.mp3'), ne:require('../assets/poster/animals/audio/20_ne.mp3'), vi:require('../assets/poster/animals/audio/20_vi.mp3'), zh:require('../assets/poster/animals/audio/20_zh.mp3') } },
    ] },
- { id:'stationery', title:'文房具', posterW:2480, posterH:3508,
+ { id:'stationery', title:'文房具', titleL1:{ ja:'文房具', bn:'লেখার সামগ্রী', en:'Stationery', ne:'लेखन सामग्री', vi:'Văn phòng phẩm', zh:'文具' }, posterW:2480, posterH:3508,
    imageL1:{ bn:require('../assets/poster/stationery/poster_bn.png'), en:require('../assets/poster/stationery/poster_en.png'), ne:require('../assets/poster/stationery/poster_ne.png'), vi:require('../assets/poster/stationery/poster_vi.png'), zh:require('../assets/poster/stationery/poster_zh.png') },
    titleAudio:{ ja:require('../assets/poster/stationery/audio/title_ja.mp3'), l1:{ bn:require('../assets/poster/stationery/audio/title_bn.mp3'), en:require('../assets/poster/stationery/audio/title_en.mp3'), ne:require('../assets/poster/stationery/audio/title_ne.mp3'), vi:require('../assets/poster/stationery/audio/title_vi.mp3'), zh:require('../assets/poster/stationery/audio/title_zh.mp3') } },
    cards:[
@@ -241,7 +241,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:1264,y:2816,w:1158,h:278}, ja:require('../assets/poster/stationery/audio/19_ja.mp3'), l1:{ bn:require('../assets/poster/stationery/audio/19_bn.mp3'), en:require('../assets/poster/stationery/audio/19_en.mp3'), ne:require('../assets/poster/stationery/audio/19_ne.mp3'), vi:require('../assets/poster/stationery/audio/19_vi.mp3'), zh:require('../assets/poster/stationery/audio/19_zh.mp3') } },
    { i:19, box:{x:1264,y:3116,w:1158,h:278}, ja:require('../assets/poster/stationery/audio/20_ja.mp3'), l1:{ bn:require('../assets/poster/stationery/audio/20_bn.mp3'), en:require('../assets/poster/stationery/audio/20_en.mp3'), ne:require('../assets/poster/stationery/audio/20_ne.mp3'), vi:require('../assets/poster/stationery/audio/20_vi.mp3'), zh:require('../assets/poster/stationery/audio/20_zh.mp3') } },
    ] },
- { id:'vehicles', title:'乗り物', posterW:2480, posterH:3508,
+ { id:'vehicles', title:'乗り物', titleL1:{ ja:'乗り物', bn:'যানবাহন', en:'Vehicles', ne:'सवारी साधन', vi:'Phương tiện', zh:'交通工具' }, posterW:2480, posterH:3508,
    imageL1:{ bn:require('../assets/poster/vehicles/poster_bn.png'), en:require('../assets/poster/vehicles/poster_en.png'), ne:require('../assets/poster/vehicles/poster_ne.png'), vi:require('../assets/poster/vehicles/poster_vi.png'), zh:require('../assets/poster/vehicles/poster_zh.png') },
    titleAudio:{ ja:require('../assets/poster/vehicles/audio/title_ja.mp3'), l1:{ bn:require('../assets/poster/vehicles/audio/title_bn.mp3'), en:require('../assets/poster/vehicles/audio/title_en.mp3'), ne:require('../assets/poster/vehicles/audio/title_ne.mp3'), vi:require('../assets/poster/vehicles/audio/title_vi.mp3'), zh:require('../assets/poster/vehicles/audio/title_zh.mp3') } },
    cards:[

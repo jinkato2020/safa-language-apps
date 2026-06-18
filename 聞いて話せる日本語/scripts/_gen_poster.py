@@ -24,6 +24,20 @@ THEMES = [("family", "01_家族"), ("numbers", "02_数字"), ("body", "03_体"),
           ("buildings", "07_建物"), ("animals", "08_動物"), ("stationery", "09_文房具"),
           ("vehicles", "10_乗り物")]
 
+# テーマタイトルの母語訳(一覧は母語のみ表示)。順序 ja,bn,en,ne,vi,zh
+TITLE_L1 = {
+ "family":   {"ja":"家族","bn":"পরিবার","en":"Family","ne":"परिवार","vi":"Gia đình","zh":"家庭"},
+ "numbers":  {"ja":"数字","bn":"সংখ্যা","en":"Numbers","ne":"अङ्क","vi":"Con số","zh":"数字"},
+ "body":     {"ja":"体","bn":"শরীর","en":"Body","ne":"शरीर","vi":"Cơ thể","zh":"身体"},
+ "colors":   {"ja":"色と形","bn":"রং ও আকৃতি","en":"Colors & Shapes","ne":"रङ र आकार","vi":"Màu sắc & Hình dạng","zh":"颜色与形状"},
+ "food":     {"ja":"食べ物","bn":"খাবার","en":"Food","ne":"खाना","vi":"Thức ăn","zh":"食物"},
+ "emotions": {"ja":"感情","bn":"আবেগ","en":"Emotions","ne":"भावना","vi":"Cảm xúc","zh":"情感"},
+ "buildings":{"ja":"建物","bn":"ভবন","en":"Buildings","ne":"भवन","vi":"Tòa nhà","zh":"建筑"},
+ "animals":  {"ja":"動物","bn":"প্রাণী","en":"Animals","ne":"जनावर","vi":"Động vật","zh":"动物"},
+ "stationery":{"ja":"文房具","bn":"লেখার সামগ্রী","en":"Stationery","ne":"लेखन सामग्री","vi":"Văn phòng phẩm","zh":"文具"},
+ "vehicles": {"ja":"乗り物","bn":"যানবাহন","en":"Vehicles","ne":"सवारी साधन","vi":"Phương tiện","zh":"交通工具"},
+}
+
 def enc32k(src, dst):
     if os.path.exists(dst):
         return
@@ -92,13 +106,15 @@ def main():
     L = ["// 自動生成 (scripts/_gen_poster.py)。素材: 02日本語教材/{2_ポスター,3_音声/_正規化}",
          "// box=ポスター画像から実カード枠を検出。imageL1/card.l1/ja/titleAudio。音声は末尾0.25s pad付。",
          "export type PosterCard = { i: number; box: { x: number; y: number; w: number; h: number }; ja: number; l1: Record<string, number> };",
-         "export type PosterLesson = { id: string; title: string; titleNp?: string; imageL1: Record<string, number>; titleAudio?: { ja: number; l1: Record<string, number> }; posterW: number; posterH: number; cards: PosterCard[] };",
+         "export type PosterLesson = { id: string; title: string; titleL1: Record<string, string>; titleNp?: string; imageL1: Record<string, number>; titleAudio?: { ja: number; l1: Record<string, number> }; posterW: number; posterH: number; cards: PosterCard[] };",
          "", "export const POSTER_LESSONS: PosterLesson[] = ["]
     for ls in lessons:
         lid = ls["id"]
         img = ", ".join([f"{l}:require('{rel}/{lid}/poster_{l}.png')" for l in LANGS])
         tl1 = ", ".join([f"{l}:require('{rel}/{lid}/audio/title_{l}.mp3')" for l in LANGS])
-        L.append(f" {{ id:'{lid}', title:'{ls['title']}', posterW:{POSTER_W}, posterH:{POSTER_H},")
+        tl = TITLE_L1[lid]
+        tlstr = ", ".join([f"{k}:'{tl[k]}'" for k in ['ja','bn','en','ne','vi','zh']])
+        L.append(f" {{ id:'{lid}', title:'{ls['title']}', titleL1:{{ {tlstr} }}, posterW:{POSTER_W}, posterH:{POSTER_H},")
         L.append(f"   imageL1:{{ {img} }},")
         L.append(f"   titleAudio:{{ ja:require('{rel}/{lid}/audio/title_ja.mp3'), l1:{{ {tl1} }} }},")
         L.append("   cards:[")

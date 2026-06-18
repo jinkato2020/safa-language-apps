@@ -17,7 +17,8 @@ export default function VocabCategoryScreen() {
   const { WORD_CATEGORIES } = useAppData();
   const lessons = usePosterLessons();
   const navigation = useNavigation<Nav>();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
+  const titleOf = (l: any) => (l?.titleL1 ? (l.titleL1[lang] ?? l.titleL1.en ?? l.title) : l?.title);
   const ss = useScaleStyle();
   const [mode, setMode] = useState<'flash' | 'poster'>('flash');
   const hasPoster = lessons.length > 0;
@@ -52,8 +53,7 @@ export default function VocabCategoryScreen() {
             style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
             onPress={() => (navigation as any).navigate('PosterAudio', { lessonId: item.id })}
           >
-            <Text style={styles.posterJa}>{item.title}</Text>
-            <Text style={styles.posterNp}>{item.titleNp}</Text>
+            <Text style={[styles.posterJa, { flex: 1 }]}>{titleOf(item)}</Text>
             <Text style={styles.count}>{t('common.wordsCount', { count: item.cards.length })}</Text>
           </Pressable>
         )}
