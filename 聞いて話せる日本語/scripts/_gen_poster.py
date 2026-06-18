@@ -51,20 +51,33 @@ def cell_count(folder):
     d = os.path.join(AUDIO_SRC, "JA", folder)
     return len([f for f in os.listdir(d) if re.match(r"^\d+_ja\.mp3$", f)])
 
+def _group_lines(frac, H, th):
+    lines = [y for y in range(400, H - 80) if frac[y] > th]
+    g = []
+    for v in lines:
+        if g and v - g[-1][-1] <= 5: g[-1].append(v)
+        else: g.append([v])
+    return [sum(x) // len(x) for x in g]
+
 def detect_rows(folder, R):
     png = os.path.join(POSTER_SRC, "ne", f"{folder}_広告なし_ne.png")
     a = np.asarray(Image.open(png).convert("RGB")).astype(int)
     nonwhite = (a.min(axis=2) < 248)
     frac = nonwhite[:, COL[0][0]:COL[0][1]].mean(axis=1)   # 左カード幅での横罫線検出
-    lines = [y for y in range(400, a.shape[0] - 80) if frac[y] > 0.6]
-    g = []
-    for v in lines:
-        if g and v - g[-1][-1] <= 5: g[-1].append(v)
-        else: g.append([v])
-    c = [sum(x) // len(x) for x in g]
-    if len(c) < 2 * R:
-        raise RuntimeError(f"{folder}: 横罫線 {len(c)} < {2*R}")
-    c = c[:2 * R]
+    H = a.shape[0]
+    # 適応しきい値: ちょうど 2*R 本の横罫線になる最小しきい値を採用。
+    #  0.6 固定だと一部テーマ(buildings/vehicles)で card内イラスト(幅60-70%)を
+    #  誤検出し余分な線が混入→下段のペアリングがズレる。0.6→1.0 を走査して
+    #  きっかり 2*R 本になる値を選ぶ。
+    chosen = None
+    for i in range(21):
+        th = round(0.60 + 0.02 * i, 2)
+        c = _group_lines(frac, H, th)
+        if len(c) == 2 * R: chosen = c; break
+        if chosen is None and len(c) >= 2 * R: chosen = c[:2 * R]  # 保険(最初に多すぎた場合)
+    if chosen is None:
+        raise RuntimeError(f"{folder}: 横罫線を 2R={2*R} 本にできず")
+    c = chosen
     return [(c[2 * k], c[2 * k + 1]) for k in range(R)]   # (top, bottom) × R
 
 def boxes(n, folder):
