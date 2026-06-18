@@ -45,6 +45,14 @@ on:
         options:
           - 'false'
           - 'true'
+      set_release_notes:
+        description: 'true=「このバージョンの新機能」を全ロケールに投入(ポスター母語表示/枠位置修正)。他メタは不変。'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 jobs:
   media-japanese:
@@ -82,6 +90,7 @@ jobs:
           BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID_JAPANESE }}
           LOCALES: ${{ github.event.inputs.locales }}
           REJECT_FIRST: ${{ github.event.inputs.reject_first }}
+          SET_RN: ${{ github.event.inputs.set_release_notes }}
         run: |
           set -e
           KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
@@ -183,18 +192,37 @@ jobs:
             exit 1
           fi
 
+          # 「このバージョンの新機能」(release notes)を全ロケールに投入。現行メタデータを
+          #  取得→release_notesだけ差し替え→skip_metadata=false で他フィールドは現状維持。
+          SKIP_META=true
+          if [ "$SET_RN" = "true" ]; then
+            SKIP_META=false
+            fastlane deliver download_metadata --api_key_path /tmp/asc.json --app_identifier "$BUNDLE_ID" --skip_screenshots true --force true || true
+            for d in fastlane/metadata/*/; do
+              [ -d "$d" ] || continue
+              loc=$(basename "$d")
+              case "$loc" in
+                ja*)      printf '%s\n%s\n%s\n' "聞き流し(ポスター)モードのテーマ名を母語で表示するようにしました。" "ポスターの拡大枠の位置を修正しました。" "その他の軽微な改善と不具合修正。" > "${d}release_notes.txt" ;;
+                vi*)      printf '%s\n%s\n%s\n' "Chế độ Poster (nghe) giờ hiển thị tên chủ đề bằng ngôn ngữ của bạn." "Đã sửa vị trí khung phóng to của poster." "Cải thiện nhỏ và sửa lỗi." > "${d}release_notes.txt" ;;
+                zh-Hans*) printf '%s\n%s\n%s\n' "海报(磨耳朵)模式现在以您的母语显示主题名称。" "修正了海报放大框的位置。" "其他细微改进和问题修复。" > "${d}release_notes.txt" ;;
+                *)        printf '%s\n%s\n%s\n' "Poster (listening) mode now shows theme titles in your language." "Fixed the position of the poster zoom frame." "Other minor improvements and bug fixes." > "${d}release_notes.txt" ;;
+              esac
+            done
+            echo "::notice::release_notes set for: $(ls fastlane/metadata 2>/dev/null | tr '\n' ' ')"
+          fi
+
           fastlane deliver \
             --api_key_path /tmp/asc.json \
             --app_identifier "$BUNDLE_ID" \
             --app_version "$APP_VERSION" \
             --screenshots_path fastlane/screenshots \
             --skip_binary_upload true \
-            --skip_metadata true \
+            --skip_metadata "$SKIP_META" \
             --skip_screenshots false \
             --overwrite_screenshots true \
             --sync_screenshots false \
             --run_precheck_before_submit false \
             --force true
 
-          echo "::notice::スクショ/App Preview を更新しました。App Store Connect で反映を確認してください。"
+          echo "::notice::スクショ/App Preview/リリースノートを更新しました(審査提出はしていません)。App Store Connect で確認してください。"
           rm -f /tmp/AuthKey.p8 /tmp/asc.json
