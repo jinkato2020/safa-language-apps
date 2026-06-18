@@ -21,6 +21,7 @@ import bn from './src/i18n/bn.json';
 import en from './src/i18n/en.json';
 import vi from './src/i18n/vi.json';
 import zh from './src/i18n/zh.json';
+import ko from './src/i18n/ko.json';
 import { bundledPack, loadPack, getPackDownloadInfo } from './src/packLoader';
 import { POSTER_LESSONS } from './src/posterLessons';
 
@@ -29,7 +30,7 @@ const headerIconSource = require('./assets/icon.png');
 
 // L1(母語=パック)になり得る言語。ja は学習対象=共通コアなのでパックは無い。
 // UI言語が ja 等の場合はパックを ne にフォールバック。
-const PACK_LANGS = ['bn', 'en', 'vi', 'ne', 'zh'];
+const PACK_LANGS = ['bn', 'en', 'vi', 'ne', 'zh', 'ko'];
 const toPackLang = (lang: string) => (PACK_LANGS.includes(lang) ? lang : 'en');
 
 // 初回起動の母語選択。各L1の自言語表記で提示する。
@@ -39,6 +40,7 @@ const LANG_OPTIONS = [
   { code: 'vi', native: 'Tiếng Việt', sub: 'Vietnamese' },
   { code: 'ne', native: 'नेपाली', sub: 'Nepali' },
   { code: 'zh', native: '中文', sub: 'Chinese' },
+  { code: 'ko', native: '한국어', sub: 'Korean' },
 ];
 // 母語を一度でも選んだかのフラグ (i18n の lang とは別管理)。
 const L1_CHOSEN_KEY = '@japanese_app/l1_chosen_v1';
@@ -52,6 +54,7 @@ const DL_TEXT: Record<string, DlText> = {
   vi: { dl: 'Đang tải xuống', prep: 'Đang chuẩn bị', fail: 'Tải xuống thất bại', retry: 'Thử lại', confirmTitle: 'Tải nội dung ngôn ngữ', confirmBody: 'Ngôn ngữ này cần tải âm thanh và bản dịch (khoảng {size}).', download: 'Tải xuống ({size})', back: 'Quay lại', later: 'Để sau (giữ hiện tại)' },
   ja: { dl: 'ダウンロード中', prep: '準備中', fail: 'ダウンロードに失敗しました', retry: '再試行', confirmTitle: '言語データのダウンロード', confirmBody: 'この言語の音声と翻訳（約{size}）をダウンロードします。', download: 'ダウンロード（{size}）', back: '戻る', later: '後で（現在のまま使う）' },
   zh: { dl: '下载中', prep: '准备中', fail: '下载失败', retry: '重试', confirmTitle: '下载语言内容', confirmBody: '该语言需要下载音频和翻译（约{size}）。', download: '下载（{size}）', back: '返回', later: '稍后（保持现状）' },
+  ko: { dl: '다운로드 중', prep: '준비 중', fail: '다운로드에 실패했습니다', retry: '다시 시도', confirmTitle: '언어 데이터 다운로드', confirmBody: '이 언어의 음성과 번역(약 {size})을 다운로드합니다.', download: '다운로드 ({size})', back: '뒤로', later: '나중에 (현재 상태로 사용)' },
 };
 function fmtMB(bytes: number): string { return bytes > 0 ? `${Math.max(1, Math.round(bytes / 1048576))} MB` : '—'; }
 
@@ -249,9 +252,9 @@ function FirstRunGate({ children }: { children: ReactNode }) {
 export default function App() {
   return (
     <I18nProvider
-      translations={{ ja, ne, bn, en, vi, zh }}
+      translations={{ ja, ne, bn, en, vi, zh, ko }}
       fallbackLang="en"
-      selectableLangs={['bn', 'en', 'vi', 'ne', 'zh']}
+      selectableLangs={['bn', 'en', 'vi', 'ne', 'zh', 'ko']}
       storageKey="@japanese_app/lang_v1"
     >
       <SettingsProvider
