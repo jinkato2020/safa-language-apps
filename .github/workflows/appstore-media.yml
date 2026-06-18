@@ -231,9 +231,9 @@ jobs:
               if [ "$SET_PROMO" = "true" ]; then
                 case "$loc" in
                   ja*)      printf '%s\n%s\n' "毎日少しずつ聞いて表現を感覚で身につける。文章作文で話す力も鍛えましょう。" "英語・中国語・ベトナム語・ネパール語・ベンガル語に対応。" > "${d}promotional_text.txt" ;;
-                  vi*)      printf '%s\n%s\n' "Mỗi ngày nghe một chút để cảm nhận và ghi nhớ cách diễn đạt một cách tự nhiên; rèn khả năng nói qua việc đặt câu." "Hỗ trợ tiếng Anh, tiếng Trung, tiếng Việt, tiếng Nepal và tiếng Bengal." > "${d}promotional_text.txt" ;;
+                  vi*)      printf '%s\n%s\n' "Nghe mỗi ngày để cảm nhận cách diễn đạt tự nhiên; rèn khả năng nói qua việc đặt câu." "Hỗ trợ tiếng Anh, Trung, Việt, Nepal và Bengal." > "${d}promotional_text.txt" ;;
                   zh-Hans*) printf '%s\n%s\n' "每天听一点，凭语感自然掌握表达；通过造句练习，同时锻炼口语表达能力。" "支持英语、汉语、越南语、尼泊尔语、孟加拉语。" > "${d}promotional_text.txt" ;;
-                  *)        printf '%s\n%s\n' "Listen a little each day to absorb expressions naturally, and build your speaking skills by composing your own sentences." "Available in English, Chinese, Vietnamese, Nepali and Bengali." > "${d}promotional_text.txt" ;;
+                  *)        printf '%s\n%s\n' "Listen daily to absorb expressions naturally, and build speaking skills by composing sentences." "Available in English, Chinese, Vietnamese, Nepali and Bengali." > "${d}promotional_text.txt" ;;
                 esac
               fi
             done
