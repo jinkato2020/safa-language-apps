@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   num: { fontFamily: 'Courier', fontSize: 11, color: colors.inkFaint, width: 24 },
   name: { flex: 1, fontSize: 14, fontWeight: '500', color: colors.ink },
   count: { fontFamily: 'Courier', fontSize: 11, color: colors.inkFaint, paddingHorizontal: spacing.sm, paddingVertical: 3, borderWidth: 1, borderColor: colors.line, borderRadius: 99 },
-  posterJa: { fontSize: 18, fontWeight: '700', color: colors.ink },
+  posterJa: { fontSize: 18, fontWeight: '400', color: colors.ink },
   posterNp: { flex: 1, fontSize: 16, color: '#2f5d54', marginLeft: spacing.sm },
   badge: { fontSize: 14, color: GOLD, marginRight: spacing.sm },
 });
