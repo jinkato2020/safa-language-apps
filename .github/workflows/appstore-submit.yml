@@ -49,12 +49,13 @@ on:
           - 'both'
           - 'all'
       mode:
-        description: 'prepare = 紐付けのみ(手動提出) / submit = 提出+自動公開まで'
+        description: 'prepare=紐付けのみ(手動提出) / submit_manual=審査提出するが公開は手動 / submit=提出+自動公開まで'
         required: true
         default: 'prepare'
         type: choice
         options:
           - 'prepare'
+          - 'submit_manual'
           - 'submit'
       build_number:
         description: 'ビルド番号の明示指定(空ならコミット数から自動計算)。ビルドWF後にコミットした場合はずれるので明示推奨。'
@@ -114,8 +115,12 @@ jobs:
           BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
           APP_VERSION=$(node -p "require('./app.json').expo.version")
           if [ -n "$BUILD_NUMBER_OVERRIDE" ]; then BUILD_NUMBER="$BUILD_NUMBER_OVERRIDE"; else BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD))); fi
-          if [ "$MODE" = "submit" ]; then SUBMIT=true; else SUBMIT=false; fi
-          echo "::notice::App Store $MODE: $BUNDLE_ID v$APP_VERSION build $BUILD_NUMBER (submit_for_review=$SUBMIT)"
+          case "$MODE" in
+            submit)        SUBMIT=true;  AUTO=true  ;;  # 提出 + 通過後 自動公開
+            submit_manual) SUBMIT=true;  AUTO=false ;;  # 提出するが公開は手動
+            *)             SUBMIT=false; AUTO=false ;;  # prepare: 紐付けのみ
+          esac
+          echo "::notice::App Store $MODE: $BUNDLE_ID v$APP_VERSION build $BUILD_NUMBER (submit_for_review=$SUBMIT automatic_release=$AUTO)"
 
           # App Store Connect API キー JSON を生成 (fastlane deliver 用)
           printf '%s' "$KEY_B64" | base64 --decode > /tmp/AuthKey.p8
@@ -152,7 +157,7 @@ jobs:
               --app_version "$APP_VERSION" \
               --build_number "$BUILD_NUMBER" \
               --submit_for_review $SUBMIT \
-              --automatic_release $SUBMIT \
+              --automatic_release $AUTO \
               --force true \
               --skip_binary_upload true \
               --skip_metadata "$SKIP_META" \
@@ -168,8 +173,10 @@ jobs:
             sleep 300
           done
 
-          if [ "$SUBMIT" = "true" ]; then
+          if [ "$SUBMIT" = "true" ] && [ "$AUTO" = "true" ]; then
             echo "::notice::審査に提出しました (通過後 自動公開)。"
+          elif [ "$SUBMIT" = "true" ]; then
+            echo "::notice::審査に提出しました。通過後は自動公開しません — App Store Connect で『このバージョンをリリース』を手動で押してください。"
           else
             echo "::notice::ビルド $BUILD_NUMBER をバージョンに紐付けました。App Store Connect で内容を確認し『審査に提出』を押してください。"
           fi
@@ -219,8 +226,12 @@ jobs:
           BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
           APP_VERSION=$(node -p "require('./app.json').expo.version")
           if [ -n "$BUILD_NUMBER_OVERRIDE" ]; then BUILD_NUMBER="$BUILD_NUMBER_OVERRIDE"; else BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD))); fi
-          if [ "$MODE" = "submit" ]; then SUBMIT=true; else SUBMIT=false; fi
-          echo "::notice::App Store $MODE: $BUNDLE_ID v$APP_VERSION build $BUILD_NUMBER (submit_for_review=$SUBMIT)"
+          case "$MODE" in
+            submit)        SUBMIT=true;  AUTO=true  ;;  # 提出 + 通過後 自動公開
+            submit_manual) SUBMIT=true;  AUTO=false ;;  # 提出するが公開は手動
+            *)             SUBMIT=false; AUTO=false ;;  # prepare: 紐付けのみ
+          esac
+          echo "::notice::App Store $MODE: $BUNDLE_ID v$APP_VERSION build $BUILD_NUMBER (submit_for_review=$SUBMIT automatic_release=$AUTO)"
 
           printf '%s' "$KEY_B64" | base64 --decode > /tmp/AuthKey.p8
           node -e "const fs=require('fs');const key=fs.readFileSync('/tmp/AuthKey.p8','utf8');fs.writeFileSync('/tmp/asc.json',JSON.stringify({key_id:'$KEY_ID',issuer_id:'$ISSUER_ID',key,in_house:false}));"
@@ -255,7 +266,7 @@ jobs:
               --app_version "$APP_VERSION" \
               --build_number "$BUILD_NUMBER" \
               --submit_for_review $SUBMIT \
-              --automatic_release $SUBMIT \
+              --automatic_release $AUTO \
               --force true \
               --skip_binary_upload true \
               --skip_metadata "$SKIP_META" \
@@ -271,8 +282,10 @@ jobs:
             sleep 300
           done
 
-          if [ "$SUBMIT" = "true" ]; then
+          if [ "$SUBMIT" = "true" ] && [ "$AUTO" = "true" ]; then
             echo "::notice::審査に提出しました (通過後 自動公開)。"
+          elif [ "$SUBMIT" = "true" ]; then
+            echo "::notice::審査に提出しました。通過後は自動公開しません — App Store Connect で『このバージョンをリリース』を手動で押してください。"
           else
             echo "::notice::ビルド $BUILD_NUMBER をバージョンに紐付けました。App Store Connect で内容を確認し『審査に提出』を押してください。"
           fi
@@ -321,8 +334,12 @@ jobs:
           BUNDLE_ID="com.safa.english"
           APP_VERSION=$(node -p "require('./app.json').expo.version")
           if [ -n "$BUILD_NUMBER_OVERRIDE" ]; then BUILD_NUMBER="$BUILD_NUMBER_OVERRIDE"; else BUILD_NUMBER=$((1000 + $(git rev-list --count HEAD))); fi
-          if [ "$MODE" = "submit" ]; then SUBMIT=true; else SUBMIT=false; fi
-          echo "::notice::App Store $MODE: $BUNDLE_ID v$APP_VERSION build $BUILD_NUMBER (submit_for_review=$SUBMIT)"
+          case "$MODE" in
+            submit)        SUBMIT=true;  AUTO=true  ;;  # 提出 + 通過後 自動公開
+            submit_manual) SUBMIT=true;  AUTO=false ;;  # 提出するが公開は手動
+            *)             SUBMIT=false; AUTO=false ;;  # prepare: 紐付けのみ
+          esac
+          echo "::notice::App Store $MODE: $BUNDLE_ID v$APP_VERSION build $BUILD_NUMBER (submit_for_review=$SUBMIT automatic_release=$AUTO)"
 
           printf '%s' "$KEY_B64" | base64 --decode > /tmp/AuthKey.p8
           node -e "const fs=require('fs');const key=fs.readFileSync('/tmp/AuthKey.p8','utf8');fs.writeFileSync('/tmp/asc.json',JSON.stringify({key_id:'$KEY_ID',issuer_id:'$ISSUER_ID',key,in_house:false}));"
@@ -357,7 +374,7 @@ jobs:
               --app_version "$APP_VERSION" \
               --build_number "$BUILD_NUMBER" \
               --submit_for_review $SUBMIT \
-              --automatic_release $SUBMIT \
+              --automatic_release $AUTO \
               --force true \
               --skip_binary_upload true \
               --skip_metadata "$SKIP_META" \
@@ -373,8 +390,10 @@ jobs:
             sleep 300
           done
 
-          if [ "$SUBMIT" = "true" ]; then
+          if [ "$SUBMIT" = "true" ] && [ "$AUTO" = "true" ]; then
             echo "::notice::審査に提出しました (通過後 自動公開)。"
+          elif [ "$SUBMIT" = "true" ]; then
+            echo "::notice::審査に提出しました。通過後は自動公開しません — App Store Connect で『このバージョンをリリース』を手動で押してください。"
           else
             echo "::notice::ビルド $BUILD_NUMBER をバージョンに紐付けました。App Store Connect で内容を確認し『審査に提出』を押してください。"
           fi
