@@ -37,6 +37,14 @@ on:
         required: true
         default: 'ja,en-US'
         type: string
+      reject_first:
+        description: 'true=対象バージョンが審査中なら先に審査を取り下げて編集可能にしてからアップ(提出後ロック対策)。アップ後は別途 submit が必要。'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 jobs:
   media-japanese:
@@ -73,16 +81,59 @@ jobs:
           KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
           BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID_JAPANESE }}
           LOCALES: ${{ github.event.inputs.locales }}
+          REJECT_FIRST: ${{ github.event.inputs.reject_first }}
         run: |
           set -e
           KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
           ISSUER_ID=$(printf '%s' "$ISSUER_ID_RAW" | tr -d '\r\n[:space:]')
           BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
+          export BUNDLE_ID
           APP_VERSION=$(node -p "require('./app.json').expo.version")
-          echo "::notice::App Store media: $BUNDLE_ID v$APP_VERSION locales=[$LOCALES]"
+          export APP_VERSION
+          echo "::notice::App Store media: $BUNDLE_ID v$APP_VERSION locales=[$LOCALES] reject_first=$REJECT_FIRST"
 
           printf '%s' "$KEY_B64" | base64 --decode > /tmp/AuthKey.p8
           node -e "const fs=require('fs');const key=fs.readFileSync('/tmp/AuthKey.p8','utf8');fs.writeFileSync('/tmp/asc.json',JSON.stringify({key_id:'$KEY_ID',issuer_id:'$ISSUER_ID',key,in_house:false}));"
+
+          # 審査中バージョンの取り下げ(編集ロック解除)。提出後はスクショ削除/差し替えができないため。
+          if [ "$REJECT_FIRST" = "true" ]; then
+            echo "::notice::reject_first: $APP_VERSION が審査中なら取り下げます…"
+            ruby -e '
+              require "spaceship"
+              Spaceship::ConnectAPI.token = Spaceship::ConnectAPI::Token.from_json_file("/tmp/asc.json")
+              app = Spaceship::ConnectAPI::App.find(ENV["BUNDLE_ID"])
+              abort("app not found: #{ENV["BUNDLE_ID"]}") unless app
+              plat = Spaceship::ConnectAPI::Platform::IOS
+              cands = []
+              cands << (app.get_edit_app_store_version(platform: plat) rescue nil)
+              cands << (app.get_in_review_app_store_version(platform: plat) rescue nil)
+              begin
+                cands.concat(app.get_app_store_versions(filter: { platform: "IOS", versionString: ENV["APP_VERSION"] }, includes: "appStoreVersionSubmission"))
+              rescue => e
+                puts "list versions failed: #{e.message}"
+              end
+              seen = {}; done = false
+              cands.compact.each do |v|
+                next if seen[v.id]; seen[v.id] = true
+                puts "version #{v.version_string} state=#{v.app_store_state} id=#{v.id}"
+                begin
+                  sub = (v.app_store_version_submission rescue nil)
+                  sub ||= (v.fetch_app_store_version_submission rescue nil)
+                  if sub
+                    sub.delete!
+                    puts "=> removed from review: #{v.version_string}"
+                    done = true
+                  else
+                    puts "   no active submission"
+                  end
+                rescue => e
+                  puts "   submission delete failed: #{e.class} #{e.message}"
+                end
+              end
+              puts(done ? "REJECT_OK" : "REJECT_NONE")
+            '
+            echo "::notice::取り下げ反映待ち 30s…"; sleep 30
+          fi
 
           # deliver の対話プロンプト回避(メタデータ/バイナリは skip 指定で触らない)
           mkdir -p fastlane
