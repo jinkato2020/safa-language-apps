@@ -37,6 +37,10 @@ export default function PosterAudioScreen({ route }: any) {
   const [idx, setIdx] = useState(0);       // 表示中カード(初期=最初のカード)
   const [phase, setPhase] = useState<'ja' | 'l1'>('l1');  // 母語→日本語の順
   const [playing, setPlaying] = useState(false);
+  // 実測レイアウト: コンテナ(画面本体)とドックの実高さ。推定をやめ onLayout で正確に取得。
+  const [lay, setLay] = useState({ cont: 0, dock: 0 });
+  const onContLayout = (e: any) => { const h = Math.round(e.nativeEvent.layout.height); setLay(l => Math.abs(l.cont - h) > 1 ? { ...l, cont: h } : l); };
+  const onDockLayout = (e: any) => { const h = Math.round(e.nativeEvent.layout.height); setLay(l => Math.abs(l.dock - h) > 1 ? { ...l, dock: h } : l); };
 
   const ref = useRef({ idx, phase, playing });
   ref.current = { idx, phase, playing };
@@ -148,18 +152,21 @@ export default function PosterAudioScreen({ route }: any) {
   const zScale = ZOOM_W / hl.box.w;
   const zoomH = Math.round(hl.box.h * zScale);
 
-  // ポスター表示縮尺: 「横の予算」と「ドック等を除いた縦の余白に収める」の両方を満たす contain。
-  //  iPad は縦横比がスマホと違い、幅合わせだと縦が収まらず下端が見切れるため、縦に合わせて
-  //  横は左右に余白を振り分け中央寄せする(枠は一様なので縮尺はカード間で変わらない)。
-  const dockH = zoomH + spacing.sm * 2 + spacing.md + 24;        // ドックのおおよその高さ
-  const availH = Math.max(120, height - dockH - spacing.sm - 6); // ポスターに使える縦領域
+  // ポスター表示縮尺: 「横の予算」と「ドックを除いた縦の余白に収める」の両方を満たす contain。
+  //  iPad は縦横比がスマホと違い、幅合わせだと縦が収まらず下端が見切れる。縦に合わせ、横は
+  //  左右に余白を振り分け中央寄せ。ドック/コンテナ高さは onLayout の【実測値】を使う(推定しない)。
+  //  実測前(初回1フレーム)のみ window 高さからの暫定値で描画し、測定後に正確値で再描画する。
+  const measured = lay.cont > 0 && lay.dock > 0;
+  const availH = measured
+    ? Math.max(120, lay.cont - lay.dock - spacing.sm * 2)
+    : Math.max(120, height - (zoomH + 180));   // 暫定(測定までの1フレーム)
   const scale = Math.min(dispW / lesson.posterW, availH / lesson.posterH);
   const pw = Math.round(lesson.posterW * scale);
   const ph = Math.round(lesson.posterH * scale);
 
   return (
-    <View style={styles.container} {...swipe}>
-      <ScrollView ref={scrollRef} contentContainerStyle={{ alignItems: 'center', paddingTop: spacing.sm, paddingBottom: dockH + spacing.sm }}>
+    <View style={styles.container} {...swipe} onLayout={onContLayout}>
+      <ScrollView ref={scrollRef} contentContainerStyle={{ alignItems: 'center', paddingTop: spacing.sm, paddingBottom: (lay.dock || zoomH + 180) + spacing.sm }}>
         <View style={{ width: pw, height: ph }}>
           <Image source={lessonImage} style={{ width: pw, height: ph, borderRadius: radius.md }} resizeMode="contain" />
           {hl && (
@@ -176,7 +183,7 @@ export default function PosterAudioScreen({ route }: any) {
       </ScrollView>
 
       {/* 下部ドック: 拡大カード(タップで再生/停止) + 進捗 */}
-      <View style={styles.dock}>
+      <View style={styles.dock} onLayout={onDockLayout}>
         <Pressable onPress={toggle} style={[styles.zoomWrap, { width: ZOOM_W, height: zoomH }]}>
           <Image
             source={lessonImage}
