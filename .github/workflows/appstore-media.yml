@@ -1,0 +1,149 @@
+name: App Store media upload (screenshots / App Preview)
+
+# =============================================================================
+# 手動専用。App Store のスクショ + App Preview 動画だけを差し替える。
+# バイナリ(--skip_binary_upload)とメタデータ(--skip_metadata)には一切触れない。
+#
+# ■ アセット
+#   聞いて話せる日本語/store/appstore/<lang>/<device>/*.png  (スクショ)
+#   聞いて話せる日本語/store/appstore/_video/*.mp4           (App Preview, 886x1920)
+#   デバイスは画像解像度で deliver が自動判別(1242x2688=iPhone6.5 / 2064x2752=iPad13)。
+#   動画 886x1920 は iPhone 6.5" の App Preview として自動認識。
+#
+# ■ ロケール
+#   入力 locales(カンマ区切り, 既定 "ja,en-US")。
+#   App Store のストア言語にしか上げられない(ベンガル語 bn / ネパール語 ne は非対応)。
+#   対応: ja->ja / en-US->en / vi->vi / zh-Hans->zh。
+#   ※指定ロケールが App Store Connect 側に未作成だと deliver が失敗する。
+#     既定の ja,en-US は通常存在。vi,zh-Hans は存在を確認してから足すこと。
+#
+# ■ 注意
+#   --overwrite_screenshots true なので、対象ロケールの既存スクショは
+#   ここで指定した一式に「置き換わる」。用意済みの完全な一式を上げる前提。
+# =============================================================================
+
+on:
+  workflow_dispatch:
+    inputs:
+      app:
+        description: 'Which app? (現状 japanese のみ対応)'
+        required: true
+        default: 'japanese'
+        type: choice
+        options:
+          - 'japanese'
+      locales:
+        description: 'アップ対象ロケール(カンマ区切り)。既定 ja,en-US。vi,zh-Hans は存在確認後に追加。'
+        required: true
+        default: 'ja,en-US'
+        type: string
+
+jobs:
+  media-japanese:
+    if: ${{ github.event.inputs.app == 'japanese' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      APP_DIR: 聞いて話せる日本語/expo-app
+      ASSET_DIR: 聞いて話せる日本語/store/appstore
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Install fastlane
+        run: gem install fastlane --no-document
+
+      - name: Upload screenshots / App Preview
+        working-directory: ${{ env.APP_DIR }}
+        env:
+          KEY_ID_RAW: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ISSUER_ID_RAW: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+          BUNDLE_ID_RAW: ${{ secrets.IOS_BUNDLE_ID_JAPANESE }}
+          LOCALES: ${{ github.event.inputs.locales }}
+        run: |
+          set -e
+          KEY_ID=$(printf '%s' "$KEY_ID_RAW" | tr -d '\r\n[:space:]')
+          ISSUER_ID=$(printf '%s' "$ISSUER_ID_RAW" | tr -d '\r\n[:space:]')
+          BUNDLE_ID=$(printf '%s' "$BUNDLE_ID_RAW" | tr -d '\r\n[:space:]')
+          APP_VERSION=$(node -p "require('./app.json').expo.version")
+          echo "::notice::App Store media: $BUNDLE_ID v$APP_VERSION locales=[$LOCALES]"
+
+          printf '%s' "$KEY_B64" | base64 --decode > /tmp/AuthKey.p8
+          node -e "const fs=require('fs');const key=fs.readFileSync('/tmp/AuthKey.p8','utf8');fs.writeFileSync('/tmp/asc.json',JSON.stringify({key_id:'$KEY_ID',issuer_id:'$ISSUER_ID',key,in_house:false}));"
+
+          # deliver の対話プロンプト回避(メタデータ/バイナリは skip 指定で触らない)
+          mkdir -p fastlane
+          [ -f fastlane/Deliverfile ] || printf '# CI minimal Deliverfile\n' > fastlane/Deliverfile
+
+          # ロケール -> アセット言語フォルダ の対応
+          src_lang() {
+            case "$1" in
+              ja)      echo ja ;;
+              en-US)   echo en ;;
+              vi)      echo vi ;;
+              zh-Hans) echo zh ;;
+              *)       echo "" ;;
+            esac
+          }
+
+          ASSET_ROOT="../store/appstore"
+          VIDEO=$(ls "$ASSET_ROOT"/_video/*.mp4 2>/dev/null | head -n1 || true)
+          rm -rf fastlane/screenshots && mkdir -p fastlane/screenshots
+
+          IFS=',' read -ra LOCS <<< "$LOCALES"
+          for raw in "${LOCS[@]}"; do
+            loc=$(printf '%s' "$raw" | tr -d '[:space:]')
+            [ -n "$loc" ] || continue
+            lang=$(src_lang "$loc")
+            if [ -z "$lang" ] || [ ! -d "$ASSET_ROOT/$lang" ]; then
+              echo "::warning::locale $loc にアセットが無い(lang=$lang)。スキップ。"
+              continue
+            fi
+            dest="fastlane/screenshots/$loc"
+            mkdir -p "$dest"
+            # device サブフォルダごとに、解像度判別のためファイル名にデバイス名を前置して flat 配置
+            for dev in "$ASSET_ROOT/$lang"/*/; do
+              devname=$(basename "$dev")
+              for f in "$dev"*.png; do
+                [ -e "$f" ] || continue
+                cp "$f" "$dest/${devname}_$(basename "$f")"
+              done
+            done
+            # App Preview 動画(言語非依存)を各ロケールへ
+            [ -n "$VIDEO" ] && cp "$VIDEO" "$dest/"
+            echo "::notice::$loc: $(ls "$dest" | wc -l) files staged (lang=$lang)"
+          done
+
+          if [ -z "$(ls -A fastlane/screenshots 2>/dev/null)" ]; then
+            echo "::error::アップ対象のロケールが1つも整いませんでした。"
+            exit 1
+          fi
+
+          fastlane deliver \
+            --api_key_path /tmp/asc.json \
+            --app_identifier "$BUNDLE_ID" \
+            --app_version "$APP_VERSION" \
+            --screenshots_path fastlane/screenshots \
+            --skip_binary_upload true \
+            --skip_metadata true \
+            --skip_screenshots false \
+            --overwrite_screenshots true \
+            --sync_screenshots false \
+            --run_precheck_before_submit false \
+            --force true
+
+          echo "::notice::スクショ/App Preview を更新しました。App Store Connect で反映を確認してください。"
+          rm -f /tmp/AuthKey.p8 /tmp/asc.json
