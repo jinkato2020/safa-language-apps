@@ -264,6 +264,7 @@
     "mailError": "Couldn't open the mail app."
   },
   "poster": {
-    "hint": "Tap to play/pause · Swipe to switch themes"
+    "hint": "Tap to play/pause · Swipe to switch themes",
+    "preparing": "Preparing…"
   }
 }

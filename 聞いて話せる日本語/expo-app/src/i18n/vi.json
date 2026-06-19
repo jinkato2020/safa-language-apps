@@ -264,6 +264,7 @@
     "mailError": "Không thể mở ứng dụng email."
   },
   "poster": {
-    "hint": "Chạm: phát/dừng · Vuốt: đổi chủ đề"
+    "hint": "Chạm: phát/dừng · Vuốt: đổi chủ đề",
+    "preparing": "Đang chuẩn bị…"
   }
 }

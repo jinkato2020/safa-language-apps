@@ -24,6 +24,7 @@ import zh from './src/i18n/zh.json';
 import ko from './src/i18n/ko.json';
 import { bundledPack, loadPack, getPackDownloadInfo } from './src/packLoader';
 import { POSTER_LESSONS } from './src/posterLessons';
+import { posterUri, ensurePosterPack } from './src/posterPackLoader';
 
 const splashSource = require('./assets/safa-splash.mp4');
 const headerIconSource = require('./assets/icon.png');
@@ -263,8 +264,9 @@ export default function App() {
       >
         <FirstRunGate>
           <PackGate>
-            {/* ポスター音声学習: テーマ1〜5(家族/数字/体/色と形/食べ物)を多言語(bn/en/ne/vi)対応で再有効化。実機検証用。 */}
-            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={POSTER_LESSONS} />
+            {/* ポスター音声学習: テーマ1〜5(家族/数字/体/色と形/食べ物)を多言語(bn/en/ne/vi)対応で再有効化。実機検証用。
+                資源(音声/画像)は packs-poster からDL: posterUri(file://解決)/ensurePosterPack(DL)を注入。 */}
+            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={POSTER_LESSONS} posterResolveUri={posterUri} posterEnsure={ensurePosterPack} />
           </PackGate>
         </FirstRunGate>
       </SettingsProvider>

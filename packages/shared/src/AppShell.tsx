@@ -25,7 +25,7 @@ import VocabDirectionScreen from './screens/VocabDirectionScreen';
 import FlashcardScreen from './screens/FlashcardScreen';
 import PosterAudioScreen from './screens/PosterAudioScreen';
 import SettingsScreen from './screens/SettingsScreen';
-import { PosterProvider, usePosterLessons, type PosterLesson } from './PosterContext';
+import { PosterProvider, usePosterLessons, type PosterLesson, type PosterResolver } from './PosterContext';
 import { colors } from './theme';
 import { useGlobalScaleStyle } from './SettingsContext';
 import { useI18n } from './i18n';
@@ -251,6 +251,10 @@ export type AppShellProps = {
   headerIconSource?: number;
   /** ポスター音声学習レッスン (供給時のみ単語モードに「音声朗読」分岐を表示) */
   posterLessons?: PosterLesson[];
+  /** ポスター資源(音声/画像)はDLパック。zip内キー→file:// uri 解決関数(アプリ固有ローダの posterUri を注入)。 */
+  posterResolveUri?: PosterResolver['resolveUri'];
+  /** ポスターパック(ja+母語)をDL/展開する関数(アプリ固有ローダの ensurePosterPack を注入)。 */
+  posterEnsure?: PosterResolver['ensure'];
 };
 
 // スプラッシュは「アプリ起動時の1回だけ」。言語切替で PackGate が data=null にして
@@ -258,7 +262,7 @@ export type AppShellProps = {
 // (毎回スプラッシュ動画が再生されて白画面で固まって見えるのを防ぐ)。
 let splashShownOnce = false;
 
-export function AppShell({ splashSource, posterLessons }: AppShellProps) {
+export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure }: AppShellProps) {
   const [splashDone, setSplashDone] = useState(splashShownOnce);
   const defaultStackOptions = useRef(makeDefaultStackOptions(HeaderTitle)).current;
 
@@ -289,7 +293,7 @@ export function AppShell({ splashSource, posterLessons }: AppShellProps) {
     <SafeAreaProvider>
       <NavigationContainer>
         <StatusBar style="dark" />
-        <PosterProvider lessons={posterLessons || []}>
+        <PosterProvider lessons={posterLessons || []} resolveUri={posterResolveUri} ensure={posterEnsure}>
           <ListeningAudioProvider>
             <MainTabs defaultStackOptions={defaultStackOptions} />
           </ListeningAudioProvider>
