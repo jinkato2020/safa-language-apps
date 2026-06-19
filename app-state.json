@@ -1,0 +1,103 @@
+{
+  "_about": "App家族(聞いて話せるシリーズ)の横断状態ファイル。セッション分離の調整レイヤ。各セッションは開始時に読み、節目で更新する。安定仕様(不変)は『ポスター成果物契約.md』、本ファイルは動的状態。",
+  "updated": "2026-06-19",
+  "coordinationModel": {
+    "mode": "session-separation + app-state.json",
+    "rule": "App固有作業はApp別セッションで並行可。共有コードは sharedLock を取得した1セッションだけが編集する。司令塔(全集約)モデルは廃止(=1セッションにコンテキストが肥大して上限に達する原因だった)。真に横断的な一括処理が要る時だけ workflow で一時的に起動する。",
+    "writeRule": "【必須】各セッションは節目(成果物生成/方針変更/ビルド・公開)ごとに本ファイルを自分で更新する。指示待ち不可。受動的な掲示板では誰も書かず無意味になる。両CLAUDE.md(聞いて話せるシリーズ/多言語教材)に常設ルールとして記載済(2026-06-19)。",
+    "sharedPaths": ["packages/shared", "多言語教材/00_共通/tools (render_pair.mjs 等)"]
+  },
+  "sharedLock": {
+    "path": "多言語教材/00_共通/tools/render_pair.mjs",
+    "owner": "多言語教材セッション(新レイアウト全展開: フッター削除/ヘッダー詰め/広告4行/fitNat/枠グレー化 + 全母語CTA + App A/B用 全L1再生成)",
+    "since": "2026-06-19",
+    "_note": "共有コードを編集する前にここを確認/取得し、終わったら解放する。実績: 並行セッションが render_pair.mjs を編集中に競合が発生した(ファイルが読み込み後に変化)。共有編集は必ず一度に1セッション。⚠️現在この多言語教材セッションが render_pair.mjs/render_endcard_pair.mjs/render_opening_pair.mjs を新レイアウト一括展開中。他セッションは編集を控える(完了時に解放する)。"
+  },
+  "currentPlan_多言語教材": {
+    "updated": "2026-06-19",
+    "owner": "多言語教材セッション",
+    "updated2": "2026-06-19 (図形イラスト完了)",
+    "doneSoFar": [
+      "render_pair新レイアウト確定(全target/全母語共通): フッター削除 / ヘッダー高134px・上詰め(padding-top12) / 広告4行・同フォント20px・等間隔gap9 / 日本語タイトル52px / 母語helper列 fitNat(空白優先折返し) / カード枠グレー#e6e8ec / .row.hl=縁に重なる3px枠+柔らか影(外側リング撤去・拡大なし) / .col min-width:0(列が右余白を突き破る不具合修正)",
+      "英語等の複合語は意味境界で改行(words.json en に\\n: smartphone→smart/phone 等)",
+      "CTA(母語言語): ja_en/ja_ne/ja_bn/ja_vi/ja_zh/ne_en 追加(ne_ja/ja_ko既存)",
+      "★標準28テーマ ポスター(広告あり/なし) 完了: App B(01_日本語教材, target=ja)=ne/en/bn/vi/zh/ko 全6母語 / App A(02_ネパール語教材, target=ne)=ja/en。全て新レイアウト・グレー枠",
+      "★図形3テーマ 完了(共通イラスト方式): 04色と形=つや球(色12)+立体図形(8) AI生成 / 13時曜日=時間帯AI風景(5)+相対日カレンダー+矢印(コード5)+週/曜日7セル週帯(コード11)+年12か月グリッド(コード3) / 02数字=アラビア数字そのもの(イラスト不要)。App A(ja/en)+App B(6母語)に組込済",
+      "共通イラスト=00_共通/イラスト/{04_色と形,13_時曜日}/NN_romaji.png(384px)。両App・両母語で再利用。生成器: 04/13の _imgspec.json(nano-banana, ref=12_天気季節/19_taiyo.png) + 13_時曜日/gen_weekstrip.mjs(7セル週帯・曜日/週/毎日/週末) + gen_datecal.mjs(相対日カレンダー+矢印・年12か月グリッド)。⚠️AIは7セルや矢印付きカレンダーを正確に描けない→カレンダー系はコード描画が必須",
+      "図形ジェネレータ: App A=00_共通/語彙/<t>/gen_poster.mjs(→02_ネパール語教材/02_ポスター/{ja,en}, buildHtml第3引数nat) / App B=同/genB_poster.mjs(→01_日本語教材/02_ポスター/<L1>, 全6母語)。データ: gen_words.mjs(App A)/genB_words.mjs(App B)。bn/vi/zh図形語彙=旧App Bポスターから回収・ko=新規(要確認)",
+      "★用語訂正: 04色と形・13時曜日 は標準テーマ化(語彙データ+共通イラスト+同レイアウト)。特殊構造は02数字のみ=【標準30テーマ＋数字1】(01-31)。旧称『標準28』は廃止",
+      "★音声 全完備: 標準30テーマ+02数字 とも全7言語(JA/NE/EN/BN/VI/ZH/KO)音声あり(_正規化/<LANG>/<theme>/{NN,title}_<l>.mp3)。ko図形音声(02数字/04色と形/13時曜日)を 2026-06-19 生成(gen_tts_ko_figure.py, Google ko-KR-Chirp3-HD-Aoede)→これでkoの未生成ゼロ。App A(ne/ja/en)・App B(全6母語)とも音声面の欠落なし"
+    ],
+    "planNext": [
+      "1) 動画ビルド: App B(_build_new_ja{ne,en,bn,vi,zh,ko}.sh ※bn/vi/zh/ko用は未作成) + App A(02教材用ビルド)。標準28テーマ。図形動画は別途(gen_frames要整備)",
+      "2) App A/B 消費側パック化: _gen_poster.py の枠検出色 #d9cfb6→#e6e8ec(必須) → posterLessons.ts 再生成 → パック再構築。※新レイアウトで全カード枠Y座標が変化=画像+座標を必ずセットで再生成。App Bは図形3テーマも新たにポスター有(11-31拡張時にwire)",
+      "3) 公開/ビルドはユーザー合図後(厳守)"
+    ],
+    "notesForOtherSessions": "★ポスターは標準28+図形3とも新レイアウト(グレー枠#e6e8ec)で全面再生成済(App B 6母語/App A ja,en)。消費側は _gen_poster.py の box検出色を #e6e8ec に更新してから取込(枠位置も変化=要box再検出+pack再構築, 画像と必ずセット)。図形イラストは共通資源(00_共通/イラスト)。公開/ビルドはユーザー合図後。"
+  },
+  "contracts": ["聞いて話せるシリーズ/ポスター成果物契約.md"],
+  "apps": {
+    "A_nepali": {
+      "name": "聞いて話せるネパール語",
+      "target": "ne",
+      "l1": ["ja", "en(整備中)"],
+      "prodVersion": "iOS 1.7.6 公開済",
+      "poster": {
+        "status": "【2026-06-19 消費側実装完了(アプリ側セッション)】ポスターモードは テーマ1〜10のみ(ユーザー指示。他モードは全テーマ別系統)。box検出を新レイアウト+グレー#e6e8ecに再調整済(色#d9cfb6→#e6e8ec / 最下罫線切れ対策で bot=30→12 / top=110。実測で family20/body24/numbers各ページOK)。posterLessons.ts 再生成(10テーマ, numbers=5p/104カード, targetOnly)。tsc green。パックはローカル構築のみ(未公開)=poster-ne.zip 1.8MB / poster-ja.zip 7.5MB(dist-poster/)。ハイライト枠は既にsafa青#2563eb(colors.accentJa)=変更不要。",
+        "themes": "ポスター=10(他モードは全テーマ)",
+        "figureBoxes": "図形(numbers/colors)も同じグレー枠検出で2R本一致(実測)。numbers=5pはtargetOnly(neのみ)。time(13)はポスター10超のため今回対象外",
+        "numbers": "5ページ(1-100=104カード)・targetOnly(ネパール語neのみ朗読・母語helper音声なし=元設計)",
+        "files": [
+          "expo-app/src/posterLessons.ts(30テーマ生成済・string-key)",
+          "expo-app/src/posterPackLoader.ts(packs-poster-appa, target=ne)",
+          "scripts/_gen_poster.py(App A生成器・クリーム枠検出)",
+          "scripts/build-poster-pack.py(再帰・LANGS=ne,ja・packs-poster-appa)",
+          "App.tsx に posterLessons/posterUri/ensurePosterPack 注入済"
+        ],
+        "packLocalOnly": "【更新】poster-ne.zip 1.8MB(312f) / poster-ja.zip 7.5MB(326f)。新レイアウト+10テーマで大幅減。dist-poster/。未公開",
+        "enPosters": "全30描画済(02_ネパール語教材/02_ポスター/en, 1240x1754)。固有9のen訳もwords.jsonに追加済。※en母語のアプリ統合は別途(L1S=jaのまま=今回はja単独)",
+        "READY_2026-06-19": "★App Aポスター 新レイアウト(フッター削除/ヘッダー詰め/広告4行/グレー枠#e6e8ec)で全面再生成済。ja=02_ネパール語教材/02_ポスター/ja・en=同/en とも【標準28＋図形3(02数字5p/04色と形/13時曜日)】完備(広告あり/なし)。図形ジェネレータ(00_共通/語彙/{02_数字,04_色と形,13_時曜日}/gen_poster.mjs)を ja/en 両helper対応に拡張済(buildHtmlに第3引数nat)。en CTA=ne_en。広告なしがアプリ取込対象。→App Aセッションは _gen_poster.py の box検出色を #d9cfb6→#e6e8ec に更新してから取込/再パック(新レイアウトで枠Y座標が変化。図形枠も同色グレーに統一済)。",
+        "pending": ["パック公開(--publish, ユーザー合図後)", "App Aビルド(版+1, ユーザー合図後)", "en母語のアプリ統合(別途・固有9のen音声未生成)", "ポスター11-30の解放は将来判断"]
+      }
+    },
+    "B_japanese": {
+      "name": "聞いて話せる日本語",
+      "target": "ja",
+      "l1": ["bn", "en", "ne", "vi", "zh", "ko"],
+      "prodVersion": "iOS 1.3.3 公開済(同梱2480ポスター)。未公開: 1.3.22(ポスターパック化)",
+      "poster": {
+        "status": "【2026-06-19 消費側実装完了(アプリ側セッション)】ポスターモード=テーマ1〜10、母語=bn/en/ne/vi/zh(ko除外=ユーザー指示)。box検出を旧nonwhite→グレー#e6e8ec枠検出に刷新+新レイアウト対応(top=110/bot=12。旧top=200では詰めヘッダーで先頭行が隠れる不具合を解消)。posterLessons.ts 再生成(10テーマ・全box OK)。tsc green。パックはローカル構築のみ(未公開)=ja1.2MB/bn6.3/en6.1/ne6.2/vi6.1/zh6.3MB(dist-poster/)。ハイライト枠は既にsafa青#2563eb=変更不要。",
+        "themes": "ポスター=10(他モードは全テーマ)",
+        "READY_2026-06-19": "★App Bポスター 全6母語(bn/en/ne/vi/zh/ko)の標準28テーマを新レイアウト(フッター削除/ヘッダー詰め/広告4行/グレー枠#e6e8ec/母語helper fitNat/英語複合語2段/各母語CTA)で全面再生成済。場所=01_日本語教材/02_ポスター/<L1>/<NN>_<和名>_広告{あり,なし}_<L1>.png。広告なしがアプリ取込対象。★図形3テーマも完成(共通イラスト方式): 04色と形/13時曜日=共通イラスト(00_共通/イラスト, つや球・立体図形・AI風景・コードカレンダー/週帯)組込・全6母語 / 02数字=アラビア数字(1ページ20項目, 漢数字+ローマ字+母語)。場所=01_日本語教材/02_ポスター/<L1>/(04色と形・13時曜日・02数字_広告{あり,なし}_<L1>.png)。生成器=genB_poster.mjs。→App Bセッションは _gen_poster.py の box検出色を #d9cfb6→#e6e8ec に更新してから取込/再パック(新レイアウトで枠Y座標が変化。全L1同一レイアウトなので1枚検出で整合)。図形を取り込むなら numbers/colors/time に加え time(13時曜日)の英語キー確定が必要。",
+        "pending": ["パック公開(--publish, ビルドと同時・版coordination厳守, ユーザー合図後)", "App Bビルド(版+1, ユーザー合図後)", "ポスター11-31の解放は将来判断(その際 time=13時曜日の英語キー確定+THEMES追記)", "ko母語をポスターに復帰する場合は LANGS に ko追加+ko画像/音声(揃済)取込"]
+      },
+      "koLabel": "packages/shared/src/l1.ts の L1_REGISTRY に ko='한국어' 追加済(修正完了)",
+      "enNumbers": "00_共通/音声/EN から pack化・six修正済(末尾/s/を63→185ms復活)。Neural2-F上書き(旧 build-poster-numbers-en.mjs)は契約違反として廃止済"
+    },
+    "C_english": {
+      "name": "聞いて話せる英語",
+      "target": "en",
+      "l1": ["ja"],
+      "prodVersion": "iOS 1.1.5 公開済",
+      "poster": "未着手"
+    }
+  },
+  "inFlight": {
+    "posterCardBorderColor_DONE": {
+      "decision": "#e6e8ec 薄グレーに統一。ユーザー確定(2026-06-19)。",
+      "status": "【完了 2026-06-19】render_pair側=多言語教材が実装(.row #e6e8ec)。消費側=アプリ側セッションが App A/B とも _gen_poster.py の box検出をグレー#e6e8ec枠検出へ刷新+新レイアウト(top=110/bot=12)対応→posterLessons再生成→パックlocal構築。tsc green。残=公開/ビルド(ユーザー合図後)のみ。アプリ内ハイライト枠は元から safa青#2563eb(colors.accentJa)。"
+    }
+  },
+  "pending": [
+    "en母語統合(App A): L1S+en, en音声=共通EN(固有9は未生成), enポスター取込→再生成・pack",
+    "②en広告ありポスター → ③en動画(教材サブエージェント順次)+ 多言語教材へ引き継ぎ",
+    "App B テーマ11-31拡張",
+    "まとめビルド(全変更)→ パック公開(packs-poster更新 / packs-poster-appa新規)→ A/Bビルド(ユーザー合図で)"
+  ],
+  "keyFacts": {
+    "教材EN声": "en-US-Chirp3-HD-Aoede(動画/教材系)。アプリ確定enはNeural2-F(別系統)",
+    "posterAudioFormat": "32k mono 24kHz + 末尾0.25s pad。posterLessons: card.ja=ターゲット音声 / card.l1=母語音声マップ / imageL1=母語別画像。targetOnly=母語スキップ",
+    "boxDetection": "ポスター画像のカード枠色を行検出。現=クリーム#d9cfb6。グレー化に伴い#e6e8ecへ要更新",
+    "build": "BUILD_NUMBER=1000+commit数。版は毎ビルド末尾+1。審査提出はユーザー実機チェック後(厳守)"
+  }
+}

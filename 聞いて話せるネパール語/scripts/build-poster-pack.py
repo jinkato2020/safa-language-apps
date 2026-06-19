@@ -1,46 +1,38 @@
 #!/usr/bin/env python3
-"""ポスター(音声+画像)を言語別 DLパック化。同梱(assets/poster)→ Release packs-poster へ。
-
-  各言語 L: poster-<L>.zip = その言語の音声(<theme>/audio/*_L.mp3, title含む) + 画像(<theme>/poster_L.png)
-            zip内パスは "<theme>/audio/<file>" / "<theme>/poster_<L>.png"(構造保持=ローダがthemeで対応付け)
-  catalog.json: { version, langs: { L: {zip(URL), bytes, version} } }
-  ※ STORED(無圧縮)zip = ローダのストリーミング展開前提。音声は既に32k、画像pngは圧縮済。
-
+"""App A ポスター(音声+画像)を母語別DLパック化 → Release packs-poster-appa。
+  ne = ターゲット音声(母語横断で共有・画像なし) / ja・en = 母語の音声 + ポスター画像。
+  zip内パスは多階層保持: "<theme>[/pageN]/audio/<NN>_<L>.mp3"(title含む) / "<theme>[/pageN]/poster_<L>.png"。
+  catalog.json: { version, langs: { L: {url, bytes, version} } }。STORED(無圧縮)=ローダのストリーミング展開前提。
 使い方:
   python scripts/build-poster-pack.py            # dist-poster/ にビルドのみ
-  python scripts/build-poster-pack.py --publish  # + Release packs-poster へ upload
-要件: (publish) gh CLI + Release権限。
+  python scripts/build-poster-pack.py --publish  # + Release packs-poster-appa へ upload
 """
 import argparse, json, os, zipfile
 
 REPO = "JinKato2020/safa-language-apps"
-TAG = "packs-poster"
-APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # 聞いて話せる日本語/
+TAG = "packs-poster-appa"
+APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # 聞いて話せるネパール語/
 POSTER = os.path.join(APP_DIR, "expo-app", "assets", "poster")
 DIST = os.path.join(APP_DIR, "dist-poster")
 REL = f"https://github.com/{REPO}/releases/download/{TAG}"
-LANGS = ["ja", "bn", "en", "ne", "vi", "zh"]
-VERSION = 2   # 2026-06-19: 新レイアウト(グレー枠)+テーマ1-10で全面再生成。版上げで端末側の再DLを強制(既存packs-posterはv1)。
+LANGS = ["ne", "ja"]   # ne=ターゲット(画像なし) / ja=母語(音声+画像)。en は生成後に追加。
+VERSION = 2   # 2026-06-19: 新レイアウト(グレー枠)+テーマ1-10で全面再生成。版上げで端末側の再DLを強制。
 
 
 def build_lang(L):
-    themes = sorted(d for d in os.listdir(POSTER) if os.path.isdir(os.path.join(POSTER, d)))
-    entries = []  # (abs_path, arcname)
-    for t in themes:
-        ad = os.path.join(POSTER, t, "audio")
-        if os.path.isdir(ad):
-            for f in sorted(os.listdir(ad)):
-                if f.endswith(f"_{L}.mp3"):
-                    entries.append((os.path.join(ad, f), f"{t}/audio/{f}"))
-        img = os.path.join(POSTER, t, f"poster_{L}.png")
-        if os.path.exists(img):  # ja は画像なし(母語のみ)
-            entries.append((img, f"{t}/poster_{L}.png"))
+    # POSTER 配下を再帰探索(numbers の page1..5/audio 等の多階層に対応)。
+    entries = []  # (abs_path, arcname=POSTER相対)
+    for root, _dirs, files in os.walk(POSTER):
+        for f in files:
+            if f.endswith(f"_{L}.mp3") or f == f"poster_{L}.png":
+                rel = os.path.relpath(os.path.join(root, f), POSTER).replace("\\", "/")
+                entries.append((os.path.join(root, f), rel))
     if not entries:
         return None
     os.makedirs(DIST, exist_ok=True)
     z = os.path.join(DIST, f"poster-{L}.zip")
     with zipfile.ZipFile(z, "w", zipfile.ZIP_STORED) as zf:
-        for src, arc in entries:
+        for src, arc in sorted(entries, key=lambda e: e[1]):
             zf.write(src, arc)
     print(f"  poster-{L}.zip: {len(entries)}files {os.path.getsize(z)/1e6:.1f}MB", flush=True)
     return z
@@ -48,7 +40,7 @@ def build_lang(L):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--publish", action="store_true"); args = ap.parse_args()
-    print("== build poster packs ==")
+    print("== build App A poster packs (packs-poster-appa) ==")
     cat = {"version": VERSION, "langs": {}}
     zips = []
     for L in LANGS:
@@ -64,10 +56,9 @@ def main():
         print(f"\nビルド完了(未公開): {DIST}/。公開は --publish。"); return
     import shutil, subprocess
     gh = shutil.which("gh") or r"C:\Users\jwpsa\AppData\Local\Programs\gh\bin\gh.exe"
-    # Release が無ければ作成
     r = subprocess.run([gh, "release", "view", TAG, "--repo", REPO], capture_output=True)
     if r.returncode != 0:
-        subprocess.run([gh, "release", "create", TAG, "--repo", REPO, "--title", "Poster packs", "--notes", "poster audio+image packs"], check=True)
+        subprocess.run([gh, "release", "create", TAG, "--repo", REPO, "--title", "App A poster packs", "--notes", "App A (ne) poster audio+image packs"], check=True)
     subprocess.run([gh, "release", "upload", TAG, *zips, cat_path, "--repo", REPO, "--clobber"], check=True)
     print("\n公開完了: Release", TAG)
 

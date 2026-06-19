@@ -14,7 +14,7 @@ import { useI18n } from '../i18n';
 import { useHorizontalSwipe } from '../useHorizontalSwipe';
 
 const GOLD = '#b08746';
-const LANG_LABEL: Record<string, string> = { ja: '日本語', bn: 'বাংলা', en: 'English', ne: 'नेपाली', vi: 'Tiếng Việt', zh: '中文' };
+const LANG_LABEL: Record<string, string> = { ja: '日本語', bn: 'বাংলা', en: 'English', ne: 'नेपाली', vi: 'Tiếng Việt', zh: '中文', ko: '한국어' };
 
 export default function PosterAudioScreen({ route }: any) {
   const { lessonId } = route.params || {};
@@ -27,11 +27,23 @@ export default function PosterAudioScreen({ route }: any) {
   const li = Math.max(0, lessons.findIndex(l => l.id === lessonId));
   const lesson = lessons[li] || lessons[0];
 
+  // 多ページ対応: lesson.pages があれば各ページを切替表示(例 App A 数字=1-100の5枚をスワイプ)。
+  //  無ければ従来の単一ページ(トップレベル imageL1/posterW/posterH/cards/titleAudio を1ページ扱い)。
+  const pages = useMemo<any[]>(() => (
+    lesson?.pages?.length
+      ? lesson.pages
+      : (lesson ? [{ image: lesson.image, imageL1: lesson.imageL1, posterW: lesson.posterW, posterH: lesson.posterH, cards: lesson.cards, titleAudio: lesson.titleAudio }] : [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  ), [lessonId, lessons]);
+  const [pageIdx, setPageIdx] = useState(0);
+  const page = pages[Math.min(pageIdx, Math.max(0, pages.length - 1))];
+  const targetOnly = !!lesson?.targetOnly;  // 数字等: ターゲット言語の音声のみ再生(母語ヘルパー無し)
+
   // 資源(音声/画像)はDLパック: 値はzip内エントリのキー文字列。posterUri(resolveUri)で
   //  端末上の file:// uri に解決して使う。resolver 未注入(App A/C 等)なら素通り(=undefined)。
   const toUri = (key?: string): string | undefined => (resolveUri ? resolveUri(key) : key);
   const pickByLang = (m?: Record<string, string>) => (m ? (m[lang] ?? m.en ?? Object.values(m)[0]) : undefined);
-  const lessonImageKey = pickByLang(lesson?.imageL1) ?? lesson?.image;
+  const lessonImageKey = pickByLang(page?.imageL1) ?? page?.image;
   const lessonImageUri = toUri(lessonImageKey);
   const l1AudioOf = (c: any) => pickByLang(c?.l1) ?? c?.ne;
   const l1Label = LANG_LABEL[lang] || lang;
@@ -64,7 +76,10 @@ export default function PosterAudioScreen({ route }: any) {
   const PAD = spacing.lg;
   const dispW = width - PAD * 2;   // 横の最大予算(これと「縦に収める」両方を満たす縮尺を採用)
 
-  // テーマ移動でリセット(最初のカードを表示・停止)
+  // テーマが変わったらページを先頭へ戻す。
+  useEffect(() => { setPageIdx(0); }, [lessonId]);
+
+  // テーマ/ページ移動でリセット(最初のカードを表示・停止)
   useEffect(() => {
     tokRef.current++; playingRef.current = false;
     setPlaying(false); setIdx(0); setPhase('l1');
@@ -72,7 +87,7 @@ export default function PosterAudioScreen({ route }: any) {
     try { pA.pause(); pB.pause(); } catch {}
     scrollRef.current?.scrollTo({ y: 0, animated: false });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lessonId]);
+  }, [lessonId, pageIdx]);
 
   // ポスターパック(ja + 現在の母語)をDL/展開してから再生可能にする。
   //  資源は同梱でなくDLパックなので、端末に音声/画像が無ければ再生・表示できない。
@@ -95,18 +110,18 @@ export default function PosterAudioScreen({ route }: any) {
   //  ready 後に資源が端末に在る→キーを uri へ解決して保持。ready 前は src 未解決(空)で再生不可。
   const queue = useMemo(() => {
     const q: { idx: number; phase: 'ja' | 'l1'; src?: string }[] = [];
-    if (!lesson) return q;
-    if (lesson.titleAudio) {
-      q.push({ idx: -1, phase: 'l1', src: toUri(pickByLang(lesson.titleAudio.l1) ?? lesson.titleAudio.ja) });
-      q.push({ idx: -1, phase: 'ja', src: toUri(lesson.titleAudio.ja) });
+    if (!page) return q;
+    if (page.titleAudio) {
+      if (!targetOnly) q.push({ idx: -1, phase: 'l1', src: toUri(pickByLang(page.titleAudio.l1) ?? page.titleAudio.ja) });
+      q.push({ idx: -1, phase: 'ja', src: toUri(page.titleAudio.ja) });
     }
-    lesson.cards.forEach((c, i) => {
-      q.push({ idx: i, phase: 'l1', src: toUri(l1AudioOf(c) ?? c.ja) });
+    page.cards.forEach((c: any, i: number) => {
+      if (!targetOnly) q.push({ idx: i, phase: 'l1', src: toUri(l1AudioOf(c) ?? c.ja) });
       q.push({ idx: i, phase: 'ja', src: toUri(c.ja) });
     });
     return q;
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lessonId, lang, ready]);
+  }, [lessonId, lang, ready, pageIdx]);
   const queueRef = useRef(queue); queueRef.current = queue;
 
   // 指定プレイヤーへ次クリップを「読み込みだけ」しておく(再生はしない=ダブルバッファの先読み)。
@@ -160,9 +175,10 @@ export default function PosterAudioScreen({ route }: any) {
   }, []);
 
   // カード index → キュー位置(タイトル分2件を考慮)
-  const cardToQi = (cardIdx: number) => (lesson?.titleAudio ? 2 : 0) + cardIdx * 2;
+  const per = targetOnly ? 1 : 2;  // targetOnly はカード/タイトルとも1クリップ(ターゲットのみ)
+  const cardToQi = (cardIdx: number) => (page?.titleAudio ? per : 0) + cardIdx * per;
   // 未ready(パックDL未完)の間は再生開始しない(資源が端末に無いため)。
-  const start = (from = 0) => { if (!ready) return; startSeq(from === 0 && lesson?.titleAudio ? 0 : cardToQi(from)); };
+  const start = (from = 0) => { if (!ready) return; startSeq(from === 0 && page?.titleAudio ? 0 : cardToQi(from)); };
   const stop = () => {
     tokRef.current++; playingRef.current = false; setPlaying(false);
     try { pA.pause(); pB.pause(); } catch {}
@@ -175,10 +191,16 @@ export default function PosterAudioScreen({ route }: any) {
     const ni = (li + d + lessons.length) % lessons.length;
     navigation.setParams({ lessonId: lessons[ni].id });
   };
-  const swipe = useHorizontalSwipe(() => goTheme(1), () => goTheme(-1));
+  // 多ページテーマ内はページ送り。端(先頭で戻る/末尾で進む)を越えたら隣のテーマへ。
+  const goPageOrTheme = (d: number) => {
+    const np = pageIdx + d;
+    if (np >= 0 && np < pages.length) setPageIdx(np);
+    else goTheme(d);
+  };
+  const swipe = useHorizontalSwipe(() => goPageOrTheme(1), () => goPageOrTheme(-1));
 
   if (!lesson) return <View style={styles.center}><Text>レッスンがありません</Text></View>;
-  const hl = lesson.cards[idx >= 0 ? idx : 0] || lesson.cards[0];
+  const hl = page.cards[idx >= 0 ? idx : 0] || page.cards[0];
 
   // 拡大: ポスターのセル枠ぴったりに切り抜き(余白ゼロ=「枠の中に枠」を回避)、ほぼ全幅へ拡大
   const cx = hl.box.x, cy = hl.box.y;
@@ -194,9 +216,9 @@ export default function PosterAudioScreen({ route }: any) {
   const availH = measured
     ? Math.max(120, lay.cont - lay.dock - spacing.sm * 2)
     : Math.max(120, height - (zoomH + 180));   // 暫定(測定までの1フレーム)
-  const scale = Math.min(dispW / lesson.posterW, availH / lesson.posterH);
-  const pw = Math.round(lesson.posterW * scale);
-  const ph = Math.round(lesson.posterH * scale);
+  const scale = Math.min(dispW / page.posterW, availH / page.posterH);
+  const pw = Math.round(page.posterW * scale);
+  const ph = Math.round(page.posterH * scale);
 
   return (
     <View style={styles.container} {...swipe} onLayout={onContLayout}>
@@ -212,7 +234,7 @@ export default function PosterAudioScreen({ route }: any) {
               width: hl.box.w * scale, height: hl.box.h * scale,
             }]} />
           )}
-          {lesson.cards.map(c => (
+          {page.cards.map((c: any) => (
             <Pressable key={c.i} onPress={() => start(c.i)}
               style={{ position: 'absolute', left: c.box.x * scale, top: c.box.y * scale, width: c.box.w * scale, height: c.box.h * scale }} />
           ))}
@@ -225,7 +247,7 @@ export default function PosterAudioScreen({ route }: any) {
           {lessonImageUri && (
             <Image
               source={{ uri: lessonImageUri }}
-              style={{ position: 'absolute', width: lesson.posterW * zScale, height: lesson.posterH * zScale,
+              style={{ position: 'absolute', width: page.posterW * zScale, height: page.posterH * zScale,
                        left: -cx * zScale, top: -cy * zScale }}
               resizeMode="contain"
             />
@@ -242,7 +264,7 @@ export default function PosterAudioScreen({ route }: any) {
           )}
         </Pressable>
         <View style={styles.bar}>
-          <Text style={styles.count}>{li + 1} / {lessons.length}</Text>
+          <Text style={styles.count}>{li + 1} / {lessons.length}{pages.length > 1 ? `  ·  ${pageIdx + 1}/${pages.length}` : ''}</Text>
           <Text style={styles.hint}>{ready ? t('poster.hint') : t('poster.preparing')}</Text>
         </View>
       </View>

@@ -10,11 +10,23 @@ export type PosterCard = {
   ja: string; l1?: Record<string, string>; ne?: string;
   ill?: string; word?: string; kana?: string; romaji?: string; np?: string;
 };
+// 1ページぶんの描画単位(ポスター画像+カード枠+任意のタイトル朗読)。
+//  複数ページ(例 App A 数字=1-100の5枚)を1テーマに束ねるときに使う。
+export type PosterPage = {
+  image?: string; imageL1?: Record<string, string>;
+  titleAudio?: { ja: string; l1: Record<string, string> };
+  posterW: number; posterH: number; cards: PosterCard[];
+};
 export type PosterLesson = {
   id: string; title: string; titleNp?: string;
   image?: string; imageL1?: Record<string, string>;
   titleAudio?: { ja: string; l1: Record<string, string> };   // タイトル朗読(母語→日本語)
-  posterW: number; posterH: number; cards: PosterCard[];
+  posterW?: number; posterH?: number; cards?: PosterCard[];   // 単一ページ時。多ページは pages を使う
+  // 多ページ(例 App A 数字 1-100=5枚)。あれば各ページをスワイプで切替表示する。
+  //  無ければ上記トップレベル(image/poster/cards/titleAudio)を単一ページとして扱う(従来互換)。
+  pages?: PosterPage[];
+  // ターゲット言語の音声だけ再生(母語ヘルパーを流さない)。例: 数字テーマ=ネパール語のみ朗読。
+  targetOnly?: boolean;
 };
 
 // アプリ固有ローダの注入用。資源(音声/画像)はDLパックなので、

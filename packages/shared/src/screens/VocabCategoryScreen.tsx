@@ -54,7 +54,7 @@ export default function VocabCategoryScreen() {
             onPress={() => (navigation as any).navigate('PosterAudio', { lessonId: item.id })}
           >
             <Text style={[styles.posterJa, { flex: 1 }]}>{titleOf(item)}</Text>
-            <Text style={styles.count}>{t('common.wordsCount', { count: item.cards.length })}</Text>
+            <Text style={styles.count}>{t('common.wordsCount', { count: item.cards?.length ?? (item.pages?.reduce((s: number, p: any) => s + (p.cards?.length ?? 0), 0) ?? 0) })}</Text>
           </Pressable>
         )}
       />

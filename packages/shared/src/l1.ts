@@ -52,6 +52,11 @@ export const L1_REGISTRY: Record<string, L1Config> = {
     code: 'zh',
     name: '中文',
   },
+  // 韓国語: ハングル。ローマ字補助なし。自称表示は "한국어"。App B のL1パック。
+  ko: {
+    code: 'ko',
+    name: '한국어',
+  },
 };
 
 /** code に対応する L1 設定を返す。未知/未指定なら ne にフォールバック。 */
