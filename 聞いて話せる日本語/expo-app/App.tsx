@@ -35,13 +35,14 @@ const PACK_LANGS = ['bn', 'en', 'vi', 'ne', 'zh', 'ko'];
 const toPackLang = (lang: string) => (PACK_LANGS.includes(lang) ? lang : 'en');
 
 // 初回起動の母語選択。各L1の自言語表記で提示する。
+// 並び順は全アプリ共通(LANG_ORDER): English→中国語→韓国語→ベトナム語→ネパール語→ベンガル語。
 const LANG_OPTIONS = [
-  { code: 'bn', native: 'বাংলা', sub: 'Bangla' },
   { code: 'en', native: 'English', sub: 'English' },
-  { code: 'vi', native: 'Tiếng Việt', sub: 'Vietnamese' },
-  { code: 'ne', native: 'नेपाली', sub: 'Nepali' },
   { code: 'zh', native: '中文', sub: 'Chinese' },
   { code: 'ko', native: '한국어', sub: 'Korean' },
+  { code: 'vi', native: 'Tiếng Việt', sub: 'Vietnamese' },
+  { code: 'ne', native: 'नेपाली', sub: 'Nepali' },
+  { code: 'bn', native: 'বাংলা', sub: 'Bangla' },
 ];
 // 母語を一度でも選んだかのフラグ (i18n の lang とは別管理)。
 const L1_CHOSEN_KEY = '@japanese_app/l1_chosen_v1';
@@ -203,15 +204,12 @@ function LanguageSelect({ onSelect }: { onSelect: (l: string) => void }) {
   const items = LANG_OPTIONS.map(o => ({ value: o.code, label: o.native, sub: o.sub }));
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
-      <Text style={{ fontSize: 19, fontWeight: '700', color: '#18181b', marginBottom: 6 }}>Select your language</Text>
-      <Text style={{ fontSize: 13, color: '#71717a', marginBottom: 32, textAlign: 'center' }}>
-        भाषा छान्नुहोस् · ভাষা নির্বাচন করুন
-      </Text>
+      <Text style={{ fontSize: 19, fontWeight: '700', color: '#18181b', marginBottom: 32 }}>Select your language</Text>
       <ModalDropdown
         items={items}
         value={sel}
         onChange={setSel}
-        placeholder="Select / 选择"
+        placeholder="Select"
         size="large"
       />
       <Pressable
@@ -255,7 +253,7 @@ export default function App() {
     <I18nProvider
       translations={{ ja, ne, bn, en, vi, zh, ko }}
       fallbackLang="en"
-      selectableLangs={['bn', 'en', 'vi', 'ne', 'zh', 'ko']}
+      selectableLangs={['en', 'zh', 'ko', 'vi', 'ne', 'bn']}
       storageKey="@japanese_app/lang_v1"
     >
       <SettingsProvider

@@ -9,7 +9,7 @@ import {
   type GapMode, type FontMode,
 } from '../SettingsContext';
 import { useI18n, type Lang } from '../i18n';
-import { L1_REGISTRY } from '../l1';
+import { L1_REGISTRY, langOrderRank } from '../l1';
 import { useAppData } from '../AppDataContext';
 import * as Application from 'expo-application';
 
@@ -82,16 +82,15 @@ export default function SettingsScreen() {
   const { version: APP_VERSION, review } = useAppData();
   const buildNumber = Application.nativeBuildVersion;
   const versionDisplay = buildNumber ? `${APP_VERSION} (${buildNumber})` : APP_VERSION;
-  // 言語選択UI: App B(聞いて話せる日本語)のみドロップダウン。他アプリは従来のピル。
-  const useLangDropdown = review?.androidPackage === 'com.safa.japanese';
+  // 言語選択UI: 全アプリ共通でドロップダウン(ユーザー確定 2026-06-19。言語が多いため/UI統一)。
+  const useLangDropdown = true;
   const isJaUI = lang === 'ja';
 
   // 利用可能な言語から動的にピルを生成 (ja=日本語 / その他は L1 レジストリの自称表示)
   const langLabel = (code: Lang): string =>
     code === 'ja' ? '日本語' : (L1_REGISTRY[code]?.name ?? code);
-  // 並び順: 現在の言語(=起動時に選んだ母語)を一番左、ネパール語(ne)を一番右、他はその間。
-  const langRank = (code: Lang): number => (code === lang ? 0 : code === 'ne' ? 2 : 1);
-  const sortedLangs: Lang[] = [...langs].sort((a, b) => langRank(a) - langRank(b));
+  // 並び順: 全アプリ共通の固定順(LANG_ORDER: en→zh→ko→vi→ne→bn→ja)。各アプリは持つ言語だけ表示。
+  const sortedLangs: Lang[] = [...langs].sort((a, b) => langOrderRank(a) - langOrderRank(b));
   const langItems: { value: Lang; label: string }[] = sortedLangs.map(code => ({ value: code, label: langLabel(code) }));
   // 説明文もピル(ボタン)と同じ言語順で動的生成して一致させる。
   const langDescText = sortedLangs.map(langLabel).join(' / ');

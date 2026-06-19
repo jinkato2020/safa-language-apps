@@ -27,10 +27,10 @@ const headerIconSource = require('./assets/icon.png');
 // DLパックになり得る言語は en のみ。ja/ne は同梱(ja内容)を使う。
 const toPackLang = (lang: string) => (lang === 'en' ? 'en' : 'ja');
 
-// 初回の母語選択。
+// 初回の母語選択。並び順は全アプリ共通(English優先)。App A の母語は ja / en の2つ。
 const LANG_OPTIONS = [
-  { code: 'ja', native: '日本語', sub: 'Japanese' },
   { code: 'en', native: 'English', sub: 'English' },
+  { code: 'ja', native: '日本語', sub: 'Japanese' },
 ];
 const L1_CHOSEN_KEY = '@nepali_app/l1_chosen_v1';
 
@@ -176,8 +176,7 @@ function PackGate({ children }: { children: ReactNode }) {
 function LanguageSelect({ onSelect }: { onSelect: (l: string) => void }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 }}>
-      <Text style={{ fontSize: 19, fontWeight: '700', color: '#18181b', marginBottom: 6 }}>言語を選択</Text>
-      <Text style={{ fontSize: 13, color: '#71717a', marginBottom: 32, textAlign: 'center' }}>Select your language</Text>
+      <Text style={{ fontSize: 19, fontWeight: '700', color: '#18181b', marginBottom: 32 }}>Select your language</Text>
       {LANG_OPTIONS.map(o => (
         <Pressable
           key={o.code}
@@ -222,6 +221,7 @@ export default function App() {
     <I18nProvider
       translations={{ ja, ne, en }}
       fallbackLang="ja"
+      selectableLangs={['en', 'ja']}
       storageKey="@nepali_app/lang_v1"
     >
       <SettingsProvider
