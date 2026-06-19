@@ -73,7 +73,7 @@ export default function PosterAudioScreen({ route }: any) {
   const wdRef = useRef<any>(null);
   const advanceRef = useRef<() => void>(() => {});
 
-  const PAD = spacing.lg;
+  const PAD = spacing.sm;  // 横余白を詰めてポスターを最大化=縦の隙間も縮む(ユーザー要望 2026-06-20)
   const dispW = width - PAD * 2;   // 横の最大予算(これと「縦に収める」両方を満たす縮尺を採用)
 
   // テーマが変わったらページを先頭へ戻す。
@@ -139,10 +139,18 @@ export default function PosterAudioScreen({ route }: any) {
     const tok = ++tokRef.current;
     qiRef.current = qi; activeRef.current = activate; startedRef.current = false;
     setIdx(q[qi].idx); setPhase(q[qi].phase);
+    if (wdRef.current) clearTimeout(wdRef.current);
+    // ① 音源が未解決(欠落/DL漏れ)なら無音で詰まる→ほぼ即座に次へ(沈黙を作らない)。
+    if (!q[qi].src) {
+      preloadInto(1 - activate, qi + 1);
+      wdRef.current = setTimeout(() => { if (tok === tokRef.current && playingRef.current) advanceRef.current(); }, 40);
+      return;
+    }
     try { players[activate].play(); } catch {}
     preloadInto(1 - activate, qi + 1);
-    if (wdRef.current) clearTimeout(wdRef.current);
-    wdRef.current = setTimeout(() => { if (tok === tokRef.current && playingRef.current) advanceRef.current(); }, 12000);
+    // ② 緩い初期フォールバック(6s)。実再生が始まったら status リスナが「長さ+1.5s」へ詰め直す
+    //    =完了イベント取りこぼし時も最大1.5sで復帰(従来は固定12sで10秒沈黙の原因だった)。
+    wdRef.current = setTimeout(() => { if (tok === tokRef.current && playingRef.current) advanceRef.current(); }, 6000);
   };
 
   const startSeq = (fromQi: number) => {
@@ -166,7 +174,18 @@ export default function PosterAudioScreen({ route }: any) {
   useEffect(() => {
     const subs = players.map((p, pIdx) => p.addListener('playbackStatusUpdate', (st: any) => {
       if (!st?.isLoaded || pIdx !== activeRef.current || !playingRef.current) return;
-      if (st.playing) { startedRef.current = true; return; }
+      if (st.playing) {
+        if (!startedRef.current) {
+          startedRef.current = true;
+          // 実再生開始を検知→ウォッチドッグを「クリップ長+1.5s」へ詰め直す(完了イベント取りこぼしの保険)。
+          if (st.duration > 0) {
+            const tok = tokRef.current;
+            if (wdRef.current) clearTimeout(wdRef.current);
+            wdRef.current = setTimeout(() => { if (tok === tokRef.current && playingRef.current) advanceRef.current(); }, st.duration * 1000 + 1500);
+          }
+        }
+        return;
+      }
       if (!startedRef.current) { try { players[pIdx].play(); } catch {} return; }  // 念のため(主に最初の1本)
       if (st.didJustFinish || (st.duration > 0 && st.currentTime >= st.duration - 0.05)) advanceRef.current();
     }));
@@ -205,8 +224,9 @@ export default function PosterAudioScreen({ route }: any) {
   // 拡大: ポスターのセル枠ぴったりに切り抜き(余白ゼロ=「枠の中に枠」を回避)、ほぼ全幅へ拡大
   const cx = hl.box.x, cy = hl.box.y;
   const ZOOM_W = Math.min(width - spacing.md * 2, 460);  // iPad等で拡大ドックが過大にならないよう上限
-  const zScale = ZOOM_W / hl.box.w;
-  const zoomH = Math.round(hl.box.h * zScale);
+  // 不正box(幅0等)で zScale が NaN/Infinity になり拡大窓が消える経路をガード。最小高さも確保。
+  const zScale = hl.box.w > 0 ? ZOOM_W / hl.box.w : 1;
+  const zoomH = Math.max(48, Math.round((hl.box.h || 0) * zScale));
 
   // ポスター表示縮尺: 「横の予算」と「ドックを除いた縦の余白に収める」の両方を満たす contain。
   //  iPad は縦横比がスマホと違い、幅合わせだと縦が収まらず下端が見切れる。縦に合わせ、横は
