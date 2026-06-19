@@ -24,7 +24,7 @@ TS_OUT = os.path.join(APP, "expo-app", "src", "posterLessons.ts")
 FFMPEG = shutil.which("ffmpeg") or r"C:\ffmpeg\bin\ffmpeg.exe"
 
 TARGET = "ne"                 # 学習対象(大)
-L1S = ["ja"]                  # 母語(現状 ja のみ。en 生成後に "en" を追加)
+L1S = ["ja", "en"]            # 母語(ja=日本語話者 / en=英語話者)。en素材=共通EN+固有EN+enポスター(2026-06-20整備)
 LANGDIR = {"ja": "JA", "ne": "NE", "en": "EN", "bn": "BN", "vi": "VI", "zh": "ZH"}
 DETECT_L1 = "ja"              # box検出に使う代表母語ポスター(レイアウトは母語共通)
 COLF = [(56 / 2480, 1214 / 2480), (1264 / 2480, 2422 / 2480)]  # カード左右2列(画像幅比・解像度非依存)
@@ -42,6 +42,13 @@ THEMES = [
 GUYU = {"05_食べ物", "07_建物", "08_動物", "15_生活用品", "16_植物", "17_飲み物", "18_楽器", "20_肉・魚", "30_副詞"}
 MULTIPAGE = {"02_数字": 5}    # 複数ページテーマ: 和名→ページ数
 TARGET_ONLY = {"02_数字"}     # ターゲット言語音声のみ再生(母語ヘルパー無し)。数字=ネパール語のみ朗読(元設計)。
+
+# 母語別テーマ名。ja=和名(jp_title)、en=英語名。一覧/タイトル音声の表示に使う。
+EN_TITLE = {"family": "Family", "numbers": "Numbers", "body": "Body", "colors": "Colors & Shapes",
+            "food": "Food", "emotions": "Emotions", "buildings": "Buildings", "animals": "Animals",
+            "stationery": "Stationery", "vehicles": "Vehicles"}
+def title_for(L1, key, jp):   # ja=和名 / en=英語名(無ければ和名)
+    return EN_TITLE.get(key, jp) if L1 == "en" else jp
 
 def audio_base(folder):       # 固有9は固有、他は共通
     return GU if folder in GUYU else KYO
@@ -108,20 +115,25 @@ def jp_title(folder):
 def build_page(key, folder, sub, png, dst_dir, tasks):
     """1ページ分を構築。sub='' は単一ページ、'page1' 等は数字。戻り: page dict。"""
     abase = audio_base(folder)
-    aud_src_ne = os.path.join(abase, "NE", folder, sub) if sub else os.path.join(abase, "NE", folder)
-    aud_src_ja = os.path.join(abase, "JA", folder, sub) if sub else os.path.join(abase, "JA", folder)
+    def _adir(LD): return os.path.join(abase, LD, folder, sub) if sub else os.path.join(abase, LD, folder)
+    aud_src_ne = _adir("NE")
     n = cell_count(aud_src_ne, "ne")
-    if n == 0 or cell_count(aud_src_ja, "ja") != n:
-        raise RuntimeError(f"{key}/{folder}/{sub}: ne/ja 音声数不一致 (ne={n}, ja={cell_count(aud_src_ja,'ja')})")
+    if n == 0:
+        raise RuntimeError(f"{key}/{folder}/{sub}: ne 音声なし")
+    # 母語ヘルパー音声: targetOnly(数字)はヘルパー無し(neのみ朗読)。それ以外は L1S 各言語=件数が ne と一致必須。
+    helpers = [] if folder in TARGET_ONLY else list(L1S)
+    for L1 in helpers:
+        c = cell_count(_adir(LANGDIR[L1]), L1)
+        if c != n:
+            raise RuntimeError(f"{key}/{folder}/{sub}: {L1} 音声数不一致 (ne={n}, {L1}={c})")
     aud_dir = os.path.join(dst_dir, "audio")
     os.makedirs(aud_dir, exist_ok=True)
-    # 音声: ne(target) + ja(母語)。zip内キーは <key>[/sub]/audio/<MM>_<l>.mp3 にせず、ページは別keyフォルダにする。
     pref = f"{key}/{sub}" if sub else key
-    for L in (TARGET, "ja"):
+    # 音声: ne(target) + 各ヘルパー(ja/en)。ページは別keyフォルダ。
+    for L, src in [(TARGET, aud_src_ne)] + [(L1, _adir(LANGDIR[L1])) for L1 in helpers]:
         for k in range(1, n + 1):
-            tasks.append((os.path.join(aud_src_ne if L == "ne" else aud_src_ja, f"{k:02d}_{L}.mp3"),
-                          os.path.join(aud_dir, f"{k:02d}_{L}.mp3")))
-        ts = os.path.join(aud_src_ne if L == "ne" else aud_src_ja, f"title_{L}.mp3")
+            tasks.append((os.path.join(src, f"{k:02d}_{L}.mp3"), os.path.join(aud_dir, f"{k:02d}_{L}.mp3")))
+        ts = os.path.join(src, f"title_{L}.mp3")
         if os.path.exists(ts):
             tasks.append((ts, os.path.join(aud_dir, f"title_{L}.mp3")))
     bx, W, H = boxes_for(png, n)
@@ -186,8 +198,7 @@ def main():
          "", "export const POSTER_LESSONS: PosterLesson[] = ["]
     for ls in lessons:
         key = ls["key"]; title = ls["title"]
-        tl1 = ", ".join([f"{L1}:{title!r}" for L1 in L1S])  # 母語タイトル(現状jaのみ=和名)
-        tl1 = tl1.replace("'", '"') if False else ", ".join([f"{L1}:'{title}'" for L1 in L1S])
+        tl1 = ", ".join([f"{L1}:'{title_for(L1, key, title)}'" for L1 in L1S])  # ja=和名 / en=英語名
         if ls["multi"]:
             pages_str = ",\n  ".join(page_obj(pg) for pg in ls["pages"])
             L.append(f" {{ id:'{key}', title:'{title}', titleL1:{{ {tl1} }},{' targetOnly:true,' if ls.get('target_only') else ''} pages:[\n  {pages_str}\n ] }},")

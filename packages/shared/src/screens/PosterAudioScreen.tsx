@@ -245,8 +245,11 @@ export default function PosterAudioScreen({ route }: any) {
       <ScrollView ref={scrollRef} contentContainerStyle={{ alignItems: 'center', paddingTop: spacing.sm, paddingBottom: (lay.dock || zoomH + 180) + spacing.sm }}>
         <View style={{ width: pw, height: ph }}>
           {/* 画像はDLパック: uri 未解決(ready前)ならプレースホルダ(空の枠)を出す */}
-          {lessonImageUri
-            ? <Image source={{ uri: lessonImageUri }} style={{ width: pw, height: ph, borderRadius: radius.md }} resizeMode="contain" />
+          {/* ready(パックDL/展開完了)までは画像をマウントしない。早すぎるマウントは file:// 未存在で
+              読込失敗し、以後同一uriでは再読込されず「真っ白」のまま残るため(スワイプでだけ直る不具合の根本)。
+              key=uri で uri 変化時も確実に再マウント。 */}
+          {ready && lessonImageUri
+            ? <Image key={lessonImageUri} source={{ uri: lessonImageUri }} style={{ width: pw, height: ph, borderRadius: radius.md }} resizeMode="contain" />
             : <View style={{ width: pw, height: ph, borderRadius: radius.md, backgroundColor: '#fff' }} />}
           {hl && (
             <View pointerEvents="none" style={[styles.hl, {
@@ -264,8 +267,9 @@ export default function PosterAudioScreen({ route }: any) {
       {/* 下部ドック: 拡大カード(タップで再生/停止) + 進捗 */}
       <View style={styles.dock} onLayout={onDockLayout}>
         <Pressable onPress={toggle} style={[styles.zoomWrap, { width: ZOOM_W, height: zoomH }]}>
-          {lessonImageUri && (
+          {ready && lessonImageUri && (
             <Image
+              key={lessonImageUri}
               source={{ uri: lessonImageUri }}
               style={{ position: 'absolute', width: page.posterW * zScale, height: page.posterH * zScale,
                        left: -cx * zScale, top: -cy * zScale }}
