@@ -6,7 +6,7 @@ export type PosterPage = { image?: string; imageL1?: Record<string, string>; tit
 export type PosterLesson = { id: string; title: string; titleL1: Record<string, string>; titleNp?: string; imageL1?: Record<string, string>; titleAudio?: { ja: string; l1: Record<string, string> }; posterW?: number; posterH?: number; cards?: PosterCard[]; pages?: PosterPage[]; targetOnly?: boolean };
 
 export const POSTER_LESSONS: PosterLesson[] = [
- { id:'family', title:'家族', titleL1:{ ja:'家族', en:'Family' }, imageL1:{ ja:'family/poster_ja.png', en:'family/poster_en.png' }, posterW:1240, posterH:1754,
+ { id:'family', title:'家族', titleL1:{ ja:'家族', en:'Family' }, imageL1:{ ja:'family/poster_ja.png', en:'family/poster_en.png' }, titleAudio:{ ja:'family/audio/title_ne.mp3', l1:{ ja:'family/audio/title_ja.mp3', en:'family/audio/title_en.mp3' } }, posterW:1240, posterH:1754,
    cards:[
    { i:0, box:{x:28,y:156,w:579,h:138}, ja:'family/audio/01_ne.mp3', l1:{ ja:'family/audio/01_ja.mp3', en:'family/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:316,w:579,h:138}, ja:'family/audio/02_ne.mp3', l1:{ ja:'family/audio/02_ja.mp3', en:'family/audio/02_en.mp3' } },
@@ -30,7 +30,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:19, box:{x:632,y:1598,w:579,h:138}, ja:'family/audio/20_ne.mp3', l1:{ ja:'family/audio/20_ja.mp3', en:'family/audio/20_en.mp3' } },
    ] },
  { id:'numbers', title:'数字', titleL1:{ ja:'数字', en:'Numbers' }, targetOnly:true, pages:[
-  { imageL1:{ ja:'numbers/page1/poster_ja.png', en:'numbers/page1/poster_en.png' }, posterW:1240, posterH:1754, cards:[
+  { imageL1:{ ja:'numbers/page1/poster_ja.png', en:'numbers/page1/poster_en.png' }, titleAudio:{ ja:'numbers/page1/audio/title_ne.mp3', l1:{ ja:'numbers/page1/audio/title_ja.mp3', en:'numbers/page1/audio/title_en.mp3' } }, posterW:1240, posterH:1754, cards:[
    { i:0, box:{x:28,y:156,w:579,h:136}, ja:'numbers/page1/audio/01_ne.mp3', l1:{ ja:'numbers/page1/audio/01_ja.mp3', en:'numbers/page1/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:316,w:579,h:136}, ja:'numbers/page1/audio/02_ne.mp3', l1:{ ja:'numbers/page1/audio/02_ja.mp3', en:'numbers/page1/audio/02_en.mp3' } },
    { i:2, box:{x:28,y:477,w:579,h:136}, ja:'numbers/page1/audio/03_ne.mp3', l1:{ ja:'numbers/page1/audio/03_ja.mp3', en:'numbers/page1/audio/03_en.mp3' } },
@@ -52,7 +52,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:632,y:1440,w:579,h:136}, ja:'numbers/page1/audio/19_ne.mp3', l1:{ ja:'numbers/page1/audio/19_ja.mp3', en:'numbers/page1/audio/19_en.mp3' } },
    { i:19, box:{x:632,y:1600,w:579,h:136}, ja:'numbers/page1/audio/20_ne.mp3', l1:{ ja:'numbers/page1/audio/20_ja.mp3', en:'numbers/page1/audio/20_en.mp3' } },
    ] },
-  { imageL1:{ ja:'numbers/page2/poster_ja.png', en:'numbers/page2/poster_en.png' }, posterW:1240, posterH:1754, cards:[
+  { imageL1:{ ja:'numbers/page2/poster_ja.png', en:'numbers/page2/poster_en.png' }, titleAudio:{ ja:'numbers/page2/audio/title_ne.mp3', l1:{ ja:'numbers/page2/audio/title_ja.mp3', en:'numbers/page2/audio/title_en.mp3' } }, posterW:1240, posterH:1754, cards:[
    { i:0, box:{x:28,y:156,w:579,h:136}, ja:'numbers/page2/audio/01_ne.mp3', l1:{ ja:'numbers/page2/audio/01_ja.mp3', en:'numbers/page2/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:316,w:579,h:136}, ja:'numbers/page2/audio/02_ne.mp3', l1:{ ja:'numbers/page2/audio/02_ja.mp3', en:'numbers/page2/audio/02_en.mp3' } },
    { i:2, box:{x:28,y:477,w:579,h:136}, ja:'numbers/page2/audio/03_ne.mp3', l1:{ ja:'numbers/page2/audio/03_ja.mp3', en:'numbers/page2/audio/03_en.mp3' } },
@@ -74,7 +74,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:632,y:1440,w:579,h:136}, ja:'numbers/page2/audio/19_ne.mp3', l1:{ ja:'numbers/page2/audio/19_ja.mp3', en:'numbers/page2/audio/19_en.mp3' } },
    { i:19, box:{x:632,y:1600,w:579,h:136}, ja:'numbers/page2/audio/20_ne.mp3', l1:{ ja:'numbers/page2/audio/20_ja.mp3', en:'numbers/page2/audio/20_en.mp3' } },
    ] },
-  { imageL1:{ ja:'numbers/page3/poster_ja.png', en:'numbers/page3/poster_en.png' }, posterW:1240, posterH:1754, cards:[
+  { imageL1:{ ja:'numbers/page3/poster_ja.png', en:'numbers/page3/poster_en.png' }, titleAudio:{ ja:'numbers/page3/audio/title_ne.mp3', l1:{ ja:'numbers/page3/audio/title_ja.mp3', en:'numbers/page3/audio/title_en.mp3' } }, posterW:1240, posterH:1754, cards:[
    { i:0, box:{x:28,y:156,w:579,h:136}, ja:'numbers/page3/audio/01_ne.mp3', l1:{ ja:'numbers/page3/audio/01_ja.mp3', en:'numbers/page3/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:316,w:579,h:136}, ja:'numbers/page3/audio/02_ne.mp3', l1:{ ja:'numbers/page3/audio/02_ja.mp3', en:'numbers/page3/audio/02_en.mp3' } },
    { i:2, box:{x:28,y:477,w:579,h:136}, ja:'numbers/page3/audio/03_ne.mp3', l1:{ ja:'numbers/page3/audio/03_ja.mp3', en:'numbers/page3/audio/03_en.mp3' } },
@@ -96,7 +96,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:632,y:1440,w:579,h:136}, ja:'numbers/page3/audio/19_ne.mp3', l1:{ ja:'numbers/page3/audio/19_ja.mp3', en:'numbers/page3/audio/19_en.mp3' } },
    { i:19, box:{x:632,y:1600,w:579,h:136}, ja:'numbers/page3/audio/20_ne.mp3', l1:{ ja:'numbers/page3/audio/20_ja.mp3', en:'numbers/page3/audio/20_en.mp3' } },
    ] },
-  { imageL1:{ ja:'numbers/page4/poster_ja.png', en:'numbers/page4/poster_en.png' }, posterW:1240, posterH:1754, cards:[
+  { imageL1:{ ja:'numbers/page4/poster_ja.png', en:'numbers/page4/poster_en.png' }, titleAudio:{ ja:'numbers/page4/audio/title_ne.mp3', l1:{ ja:'numbers/page4/audio/title_ja.mp3', en:'numbers/page4/audio/title_en.mp3' } }, posterW:1240, posterH:1754, cards:[
    { i:0, box:{x:28,y:156,w:579,h:136}, ja:'numbers/page4/audio/01_ne.mp3', l1:{ ja:'numbers/page4/audio/01_ja.mp3', en:'numbers/page4/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:316,w:579,h:136}, ja:'numbers/page4/audio/02_ne.mp3', l1:{ ja:'numbers/page4/audio/02_ja.mp3', en:'numbers/page4/audio/02_en.mp3' } },
    { i:2, box:{x:28,y:477,w:579,h:136}, ja:'numbers/page4/audio/03_ne.mp3', l1:{ ja:'numbers/page4/audio/03_ja.mp3', en:'numbers/page4/audio/03_en.mp3' } },
@@ -118,7 +118,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:632,y:1440,w:579,h:136}, ja:'numbers/page4/audio/19_ne.mp3', l1:{ ja:'numbers/page4/audio/19_ja.mp3', en:'numbers/page4/audio/19_en.mp3' } },
    { i:19, box:{x:632,y:1600,w:579,h:136}, ja:'numbers/page4/audio/20_ne.mp3', l1:{ ja:'numbers/page4/audio/20_ja.mp3', en:'numbers/page4/audio/20_en.mp3' } },
    ] },
-  { imageL1:{ ja:'numbers/page5/poster_ja.png', en:'numbers/page5/poster_en.png' }, posterW:1240, posterH:1754, cards:[
+  { imageL1:{ ja:'numbers/page5/poster_ja.png', en:'numbers/page5/poster_en.png' }, titleAudio:{ ja:'numbers/page5/audio/title_ne.mp3', l1:{ ja:'numbers/page5/audio/title_ja.mp3', en:'numbers/page5/audio/title_en.mp3' } }, posterW:1240, posterH:1754, cards:[
    { i:0, box:{x:28,y:156,w:579,h:108}, ja:'numbers/page5/audio/01_ne.mp3', l1:{ ja:'numbers/page5/audio/01_ja.mp3', en:'numbers/page5/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:290,w:579,h:108}, ja:'numbers/page5/audio/02_ne.mp3', l1:{ ja:'numbers/page5/audio/02_ja.mp3', en:'numbers/page5/audio/02_en.mp3' } },
    { i:2, box:{x:28,y:424,w:579,h:108}, ja:'numbers/page5/audio/03_ne.mp3', l1:{ ja:'numbers/page5/audio/03_ja.mp3', en:'numbers/page5/audio/03_en.mp3' } },
@@ -145,7 +145,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:23, box:{x:632,y:1628,w:579,h:108}, ja:'numbers/page5/audio/24_ne.mp3', l1:{ ja:'numbers/page5/audio/24_ja.mp3', en:'numbers/page5/audio/24_en.mp3' } },
    ] }
  ] },
- { id:'body', title:'体', titleL1:{ ja:'体', en:'Body' }, imageL1:{ ja:'body/poster_ja.png', en:'body/poster_en.png' }, posterW:1240, posterH:1754,
+ { id:'body', title:'体', titleL1:{ ja:'体', en:'Body' }, imageL1:{ ja:'body/poster_ja.png', en:'body/poster_en.png' }, titleAudio:{ ja:'body/audio/title_ne.mp3', l1:{ ja:'body/audio/title_ja.mp3', en:'body/audio/title_en.mp3' } }, posterW:1240, posterH:1754,
    cards:[
    { i:0, box:{x:28,y:156,w:579,h:110}, ja:'body/audio/01_ne.mp3', l1:{ ja:'body/audio/01_ja.mp3', en:'body/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:290,w:579,h:110}, ja:'body/audio/02_ne.mp3', l1:{ ja:'body/audio/02_ja.mp3', en:'body/audio/02_en.mp3' } },
@@ -172,7 +172,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:22, box:{x:632,y:1492,w:579,h:110}, ja:'body/audio/23_ne.mp3', l1:{ ja:'body/audio/23_ja.mp3', en:'body/audio/23_en.mp3' } },
    { i:23, box:{x:632,y:1626,w:579,h:110}, ja:'body/audio/24_ne.mp3', l1:{ ja:'body/audio/24_ja.mp3', en:'body/audio/24_en.mp3' } },
    ] },
- { id:'colors', title:'色と形', titleL1:{ ja:'色と形', en:'Colors & Shapes' }, imageL1:{ ja:'colors/poster_ja.png', en:'colors/poster_en.png' }, posterW:1240, posterH:1754,
+ { id:'colors', title:'色と形', titleL1:{ ja:'色と形', en:'Colors & Shapes' }, imageL1:{ ja:'colors/poster_ja.png', en:'colors/poster_en.png' }, titleAudio:{ ja:'colors/audio/title_ne.mp3', l1:{ ja:'colors/audio/title_ja.mp3', en:'colors/audio/title_en.mp3' } }, posterW:1240, posterH:1754,
    cards:[
    { i:0, box:{x:28,y:156,w:579,h:136}, ja:'colors/audio/01_ne.mp3', l1:{ ja:'colors/audio/01_ja.mp3', en:'colors/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:316,w:579,h:136}, ja:'colors/audio/02_ne.mp3', l1:{ ja:'colors/audio/02_ja.mp3', en:'colors/audio/02_en.mp3' } },
@@ -195,7 +195,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:632,y:1440,w:579,h:136}, ja:'colors/audio/19_ne.mp3', l1:{ ja:'colors/audio/19_ja.mp3', en:'colors/audio/19_en.mp3' } },
    { i:19, box:{x:632,y:1600,w:579,h:136}, ja:'colors/audio/20_ne.mp3', l1:{ ja:'colors/audio/20_ja.mp3', en:'colors/audio/20_en.mp3' } },
    ] },
- { id:'food', title:'食べ物', titleL1:{ ja:'食べ物', en:'Food' }, imageL1:{ ja:'food/poster_ja.png', en:'food/poster_en.png' }, posterW:1240, posterH:1754,
+ { id:'food', title:'食べ物', titleL1:{ ja:'食べ物', en:'Food' }, imageL1:{ ja:'food/poster_ja.png', en:'food/poster_en.png' }, titleAudio:{ ja:'food/audio/title_ne.mp3', l1:{ ja:'food/audio/title_ja.mp3', en:'food/audio/title_en.mp3' } }, posterW:1240, posterH:1754,
    cards:[
    { i:0, box:{x:28,y:156,w:579,h:110}, ja:'food/audio/01_ne.mp3', l1:{ ja:'food/audio/01_ja.mp3', en:'food/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:303,w:579,h:110}, ja:'food/audio/02_ne.mp3', l1:{ ja:'food/audio/02_ja.mp3', en:'food/audio/02_en.mp3' } },
@@ -220,7 +220,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:20, box:{x:632,y:1479,w:579,h:110}, ja:'food/audio/21_ne.mp3', l1:{ ja:'food/audio/21_ja.mp3', en:'food/audio/21_en.mp3' } },
    { i:21, box:{x:632,y:1626,w:579,h:110}, ja:'food/audio/22_ne.mp3', l1:{ ja:'food/audio/22_ja.mp3', en:'food/audio/22_en.mp3' } },
    ] },
- { id:'emotions', title:'感情', titleL1:{ ja:'感情', en:'Emotions' }, imageL1:{ ja:'emotions/poster_ja.png', en:'emotions/poster_en.png' }, posterW:1240, posterH:1754,
+ { id:'emotions', title:'感情', titleL1:{ ja:'感情', en:'Emotions' }, imageL1:{ ja:'emotions/poster_ja.png', en:'emotions/poster_en.png' }, titleAudio:{ ja:'emotions/audio/title_ne.mp3', l1:{ ja:'emotions/audio/title_ja.mp3', en:'emotions/audio/title_en.mp3' } }, posterW:1240, posterH:1754,
    cards:[
    { i:0, box:{x:28,y:156,w:579,h:110}, ja:'emotions/audio/01_ne.mp3', l1:{ ja:'emotions/audio/01_ja.mp3', en:'emotions/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:290,w:579,h:110}, ja:'emotions/audio/02_ne.mp3', l1:{ ja:'emotions/audio/02_ja.mp3', en:'emotions/audio/02_en.mp3' } },
@@ -247,7 +247,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:22, box:{x:632,y:1492,w:579,h:110}, ja:'emotions/audio/23_ne.mp3', l1:{ ja:'emotions/audio/23_ja.mp3', en:'emotions/audio/23_en.mp3' } },
    { i:23, box:{x:632,y:1626,w:579,h:110}, ja:'emotions/audio/24_ne.mp3', l1:{ ja:'emotions/audio/24_ja.mp3', en:'emotions/audio/24_en.mp3' } },
    ] },
- { id:'buildings', title:'建物', titleL1:{ ja:'建物', en:'Buildings' }, imageL1:{ ja:'buildings/poster_ja.png', en:'buildings/poster_en.png' }, posterW:1240, posterH:1754,
+ { id:'buildings', title:'建物', titleL1:{ ja:'建物', en:'Buildings' }, imageL1:{ ja:'buildings/poster_ja.png', en:'buildings/poster_en.png' }, titleAudio:{ ja:'buildings/audio/title_ne.mp3', l1:{ ja:'buildings/audio/title_ja.mp3', en:'buildings/audio/title_en.mp3' } }, posterW:1240, posterH:1754,
    cards:[
    { i:0, box:{x:28,y:156,w:579,h:110}, ja:'buildings/audio/01_ne.mp3', l1:{ ja:'buildings/audio/01_ja.mp3', en:'buildings/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:290,w:579,h:110}, ja:'buildings/audio/02_ne.mp3', l1:{ ja:'buildings/audio/02_ja.mp3', en:'buildings/audio/02_en.mp3' } },
@@ -274,7 +274,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:22, box:{x:632,y:1492,w:579,h:110}, ja:'buildings/audio/23_ne.mp3', l1:{ ja:'buildings/audio/23_ja.mp3', en:'buildings/audio/23_en.mp3' } },
    { i:23, box:{x:632,y:1626,w:579,h:110}, ja:'buildings/audio/24_ne.mp3', l1:{ ja:'buildings/audio/24_ja.mp3', en:'buildings/audio/24_en.mp3' } },
    ] },
- { id:'animals', title:'動物', titleL1:{ ja:'動物', en:'Animals' }, imageL1:{ ja:'animals/poster_ja.png', en:'animals/poster_en.png' }, posterW:1240, posterH:1754,
+ { id:'animals', title:'動物', titleL1:{ ja:'動物', en:'Animals' }, imageL1:{ ja:'animals/poster_ja.png', en:'animals/poster_en.png' }, titleAudio:{ ja:'animals/audio/title_ne.mp3', l1:{ ja:'animals/audio/title_ja.mp3', en:'animals/audio/title_en.mp3' } }, posterW:1240, posterH:1754,
    cards:[
    { i:0, box:{x:28,y:156,w:579,h:138}, ja:'animals/audio/01_ne.mp3', l1:{ ja:'animals/audio/01_ja.mp3', en:'animals/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:316,w:579,h:138}, ja:'animals/audio/02_ne.mp3', l1:{ ja:'animals/audio/02_ja.mp3', en:'animals/audio/02_en.mp3' } },
@@ -297,7 +297,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:632,y:1438,w:579,h:138}, ja:'animals/audio/19_ne.mp3', l1:{ ja:'animals/audio/19_ja.mp3', en:'animals/audio/19_en.mp3' } },
    { i:19, box:{x:632,y:1598,w:579,h:138}, ja:'animals/audio/20_ne.mp3', l1:{ ja:'animals/audio/20_ja.mp3', en:'animals/audio/20_en.mp3' } },
    ] },
- { id:'stationery', title:'文房具', titleL1:{ ja:'文房具', en:'Stationery' }, imageL1:{ ja:'stationery/poster_ja.png', en:'stationery/poster_en.png' }, posterW:1240, posterH:1754,
+ { id:'stationery', title:'文房具', titleL1:{ ja:'文房具', en:'Stationery' }, imageL1:{ ja:'stationery/poster_ja.png', en:'stationery/poster_en.png' }, titleAudio:{ ja:'stationery/audio/title_ne.mp3', l1:{ ja:'stationery/audio/title_ja.mp3', en:'stationery/audio/title_en.mp3' } }, posterW:1240, posterH:1754,
    cards:[
    { i:0, box:{x:28,y:156,w:579,h:138}, ja:'stationery/audio/01_ne.mp3', l1:{ ja:'stationery/audio/01_ja.mp3', en:'stationery/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:316,w:579,h:138}, ja:'stationery/audio/02_ne.mp3', l1:{ ja:'stationery/audio/02_ja.mp3', en:'stationery/audio/02_en.mp3' } },
@@ -320,7 +320,7 @@ export const POSTER_LESSONS: PosterLesson[] = [
    { i:18, box:{x:632,y:1438,w:579,h:138}, ja:'stationery/audio/19_ne.mp3', l1:{ ja:'stationery/audio/19_ja.mp3', en:'stationery/audio/19_en.mp3' } },
    { i:19, box:{x:632,y:1598,w:579,h:138}, ja:'stationery/audio/20_ne.mp3', l1:{ ja:'stationery/audio/20_ja.mp3', en:'stationery/audio/20_en.mp3' } },
    ] },
- { id:'vehicles', title:'乗り物', titleL1:{ ja:'乗り物', en:'Vehicles' }, imageL1:{ ja:'vehicles/poster_ja.png', en:'vehicles/poster_en.png' }, posterW:1240, posterH:1754,
+ { id:'vehicles', title:'乗り物', titleL1:{ ja:'乗り物', en:'Vehicles' }, imageL1:{ ja:'vehicles/poster_ja.png', en:'vehicles/poster_en.png' }, titleAudio:{ ja:'vehicles/audio/title_ne.mp3', l1:{ ja:'vehicles/audio/title_ja.mp3', en:'vehicles/audio/title_en.mp3' } }, posterW:1240, posterH:1754,
    cards:[
    { i:0, box:{x:28,y:156,w:579,h:138}, ja:'vehicles/audio/01_ne.mp3', l1:{ ja:'vehicles/audio/01_ja.mp3', en:'vehicles/audio/01_en.mp3' } },
    { i:1, box:{x:28,y:316,w:579,h:138}, ja:'vehicles/audio/02_ne.mp3', l1:{ ja:'vehicles/audio/02_ja.mp3', en:'vehicles/audio/02_en.mp3' } },

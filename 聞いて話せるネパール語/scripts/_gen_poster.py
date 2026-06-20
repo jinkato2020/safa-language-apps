@@ -137,7 +137,9 @@ def build_page(key, folder, sub, png, dst_dir, tasks):
         if os.path.exists(ts):
             tasks.append((ts, os.path.join(aud_dir, f"title_{L}.mp3")))
     bx, W, H = boxes_for(png, n)
-    has_title = os.path.exists(os.path.join(aud_dir, f"title_{TARGET}.mp3"))
+    # タイトル音声(テーマ名)の有無は【音源側】で判定(出力先は未エンコードで空のため誤判定していた)。
+    #  数字=targetOnly はネパール語のテーマ名(title_ne)を先頭で読む。
+    has_title = os.path.exists(os.path.join(aud_src_ne, f"title_{TARGET}.mp3"))
     # 画像コピー(母語別)。各母語ポスターは POSTER_SRC/<L1>/ 配下にある。
     #  ※以前は ja パスの末尾 _ja→_en 置換だけで /ja/ ディレクトリのままになり en画像を取りこぼす不具合があった
     #    (→英語で真っ白)。ディレクトリも母語別に組み立てて確実にコピーする。

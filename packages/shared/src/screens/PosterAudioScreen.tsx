@@ -86,8 +86,9 @@ export default function PosterAudioScreen({ route }: any) {
     if (wdRef.current) clearTimeout(wdRef.current);
     try { pA.pause(); pB.pause(); } catch {}
     scrollRef.current?.scrollTo({ y: 0, animated: false });
+  // 連続再生中はページ跨ぎで pageIdx が変わるため、リセットはテーマ変更時のみ(pageIdx は含めない)。
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lessonId, pageIdx]);
+  }, [lessonId]);
 
   // ポスターパック(ja + 現在の母語)をDL/展開してから再生可能にする。
   //  資源は同梱でなくDLパックなので、端末に音声/画像が無ければ再生・表示できない。
@@ -108,20 +109,23 @@ export default function PosterAudioScreen({ route }: any) {
   // 再生キュー(このテーマ・母語の全クリップを再生順に平坦化): タイトル母語→タイトル日→
   //  カード0母語→カード0日→カード1母語→… 各要素は表示カード idx / phase / 音源 src(file:// uri)。
   //  ready 後に資源が端末に在る→キーを uri へ解決して保持。ready 前は src 未解決(空)で再生不可。
+  // 再生キュー: 多ページ(数字)は全ページを1本に連結し、ページ跨ぎで停止せず連続再生する(20→21で止まらない)。
+  //  タイトルは先頭(page0)で1回だけ。各要素は表示ページ page / カード idx / phase / 音源 src。
   const queue = useMemo(() => {
-    const q: { idx: number; phase: 'ja' | 'l1'; src?: string }[] = [];
-    if (!page) return q;
-    if (page.titleAudio) {
-      if (!targetOnly) q.push({ idx: -1, phase: 'l1', src: toUri(pickByLang(page.titleAudio.l1) ?? page.titleAudio.ja) });
-      q.push({ idx: -1, phase: 'ja', src: toUri(page.titleAudio.ja) });
-    }
-    page.cards.forEach((c: any, i: number) => {
-      if (!targetOnly) q.push({ idx: i, phase: 'l1', src: toUri(l1AudioOf(c) ?? c.ja) });
-      q.push({ idx: i, phase: 'ja', src: toUri(c.ja) });
+    const q: { page: number; idx: number; phase: 'ja' | 'l1'; src?: string }[] = [];
+    pages.forEach((pg: any, pi: number) => {
+      if (pi === 0 && pg?.titleAudio) {
+        if (!targetOnly) q.push({ page: 0, idx: -1, phase: 'l1', src: toUri(pickByLang(pg.titleAudio.l1) ?? pg.titleAudio.ja) });
+        q.push({ page: 0, idx: -1, phase: 'ja', src: toUri(pg.titleAudio.ja) });
+      }
+      (pg?.cards || []).forEach((c: any, i: number) => {
+        if (!targetOnly) q.push({ page: pi, idx: i, phase: 'l1', src: toUri(l1AudioOf(c) ?? c.ja) });
+        q.push({ page: pi, idx: i, phase: 'ja', src: toUri(c.ja) });
+      });
     });
     return q;
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lessonId, lang, ready, pageIdx]);
+  }, [lessonId, lang, ready]);
   const queueRef = useRef(queue); queueRef.current = queue;
 
   // 指定プレイヤーへ次クリップを「読み込みだけ」しておく(再生はしない=ダブルバッファの先読み)。
@@ -138,6 +142,7 @@ export default function PosterAudioScreen({ route }: any) {
     if (qi < 0 || qi >= q.length) { stop(); return; }
     const tok = ++tokRef.current;
     qiRef.current = qi; activeRef.current = activate; startedRef.current = false;
+    if (typeof q[qi].page === 'number') setPageIdx(q[qi].page);  // ページ跨ぎで表示ポスターも追従
     setIdx(q[qi].idx); setPhase(q[qi].phase);
     if (wdRef.current) clearTimeout(wdRef.current);
     // ① 音源が未解決(欠落/DL漏れ)なら無音で詰まる→ほぼ即座に次へ(沈黙を作らない)。
@@ -194,10 +199,19 @@ export default function PosterAudioScreen({ route }: any) {
   }, []);
 
   // カード index → キュー位置(タイトル分2件を考慮)
-  const per = targetOnly ? 1 : 2;  // targetOnly はカード/タイトルとも1クリップ(ターゲットのみ)
-  const cardToQi = (cardIdx: number) => (page?.titleAudio ? per : 0) + cardIdx * per;
-  // 未ready(パックDL未完)の間は再生開始しない(資源が端末に無いため)。
-  const start = (from = 0) => { if (!ready) return; startSeq(from === 0 && page?.titleAudio ? 0 : cardToQi(from)); };
+  // カード(現在表示ページ内の index)→ グローバルキュー位置。
+  const cardToQi = (cardIdx: number) => {
+    const q = queueRef.current;
+    for (let i = 0; i < q.length; i++) if (q[i].page === pageIdx && q[i].idx === cardIdx) return i;
+    return 0;
+  };
+  // 未ready(パックDL未完)の間は再生開始しない。先頭(page0)タップ時はタイトルから。
+  const start = (from = 0) => {
+    if (!ready) return;
+    const q = queueRef.current;
+    if (from === 0 && pageIdx === 0 && q[0]?.idx === -1) startSeq(0);
+    else startSeq(cardToQi(from));
+  };
   const stop = () => {
     tokRef.current++; playingRef.current = false; setPlaying(false);
     try { pA.pause(); pB.pause(); } catch {}
@@ -213,8 +227,11 @@ export default function PosterAudioScreen({ route }: any) {
   // 多ページテーマ内はページ送り。端(先頭で戻る/末尾で進む)を越えたら隣のテーマへ。
   const goPageOrTheme = (d: number) => {
     const np = pageIdx + d;
-    if (np >= 0 && np < pages.length) setPageIdx(np);
-    else goTheme(d);
+    if (np >= 0 && np < pages.length) {
+      if (playingRef.current) stop();   // 手動ページ送りは再生を止める(連続再生の自動送りとは別)
+      setPageIdx(np); setIdx(0); setPhase('l1');
+      scrollRef.current?.scrollTo({ y: 0, animated: false });
+    } else goTheme(d);
   };
   const swipe = useHorizontalSwipe(() => goPageOrTheme(1), () => goPageOrTheme(-1));
 

@@ -201,7 +201,7 @@
     "jaToNeDesc": "日本語が表示され、タップでネパール語を確認。瞬発力を鍛えます。",
     "modeFlashcard": "シャッフルカード",
     "modeFlashcardDesc": "カードをめくって単語を覚える",
-    "modePoster": "音声朗読(ポスター)",
+    "modePoster": "単語音声",
     "modePosterDesc": "ポスターを見ながら音声を聞く"
   },
   "settings": {

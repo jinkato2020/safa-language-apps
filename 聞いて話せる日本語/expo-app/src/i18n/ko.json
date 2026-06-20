@@ -201,7 +201,7 @@
     "jaToNeDesc": "일본어가 표시되면 탭하여 영어를 확인하세요. 읽기 실력을 길러줍니다.",
     "modeFlashcard": "카드 섞기",
     "modeFlashcardDesc": "카드를 뒤집으며 단어 학습하기",
-    "modePoster": "오디오 읽기 (포스터)",
+    "modePoster": "단어 음성",
     "modePosterDesc": "포스터를 보며 들어보세요"
   },
   "settings": {
