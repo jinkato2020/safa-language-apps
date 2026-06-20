@@ -16,7 +16,7 @@ POSTER = os.path.join(APP_DIR, "expo-app", "assets", "poster")
 DIST = os.path.join(APP_DIR, "dist-poster")
 REL = f"https://github.com/{REPO}/releases/download/{TAG}"
 LANGS = ["ne", "ja", "en"]   # ne=ターゲット(画像なし) / ja・en=母語(音声+画像)。
-VERSION = 3   # 2026-06-20: en母語を追加(enポスター+共通EN/固有EN音声)。版上げで端末側の再DLを強制。
+VERSION = 4   # 2026-06-20: enポスター画像の取りこぼし(パス組み立てバグ)修正で再パック。版上げで端末再DL強制。
 
 
 def build_lang(L):

@@ -138,11 +138,16 @@ def build_page(key, folder, sub, png, dst_dir, tasks):
             tasks.append((ts, os.path.join(aud_dir, f"title_{L}.mp3")))
     bx, W, H = boxes_for(png, n)
     has_title = os.path.exists(os.path.join(aud_dir, f"title_{TARGET}.mp3"))
-    # 画像コピー(母語別。現状 ja のみ)
+    # 画像コピー(母語別)。各母語ポスターは POSTER_SRC/<L1>/ 配下にある。
+    #  ※以前は ja パスの末尾 _ja→_en 置換だけで /ja/ ディレクトリのままになり en画像を取りこぼす不具合があった
+    #    (→英語で真っ白)。ディレクトリも母語別に組み立てて確実にコピーする。
+    base = f"{folder}_{sub}_広告なし" if sub else f"{folder}_広告なし"
     for L1 in L1S:
-        src_png = png if L1 == DETECT_L1 else png.replace(f"_{DETECT_L1}.png", f"_{L1}.png")
+        src_png = os.path.join(POSTER_SRC, L1, f"{base}_{L1}.png")
         if os.path.exists(src_png):
             shutil.copyfile(src_png, os.path.join(dst_dir, f"poster_{L1}.png"))
+        elif L1 == DETECT_L1:
+            raise RuntimeError(f"{key}/{folder}/{sub}: 代表母語画像なし {src_png}")
     return {"pref": pref, "n": n, "boxes": bx, "W": W, "H": H, "has_title": has_title}
 
 def main():
