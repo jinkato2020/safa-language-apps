@@ -162,6 +162,11 @@ export default function PosterAudioScreen({ route }: any) {
     const q = queueRef.current;
     if (!q.length) return;
     const qi = Math.max(0, Math.min(fromQi, q.length - 1));
+    // 再生中に別カードをタップしても音が重ならないよう、まず両プレイヤーを必ず停止し
+    //  進行中の watchdog/advance を無効化してから、新セグメントを単一プレイヤーで開始する。
+    tokRef.current++;
+    if (wdRef.current) clearTimeout(wdRef.current);
+    try { pA.pause(); pB.pause(); } catch {}
     playingRef.current = true; setPlaying(true);
     try { players[0].replace((q[qi].src ?? undefined) as any); } catch {}   // 最初の1本だけは読み込み発生(以降は先読み済み)
     goSegment(qi, 0);
