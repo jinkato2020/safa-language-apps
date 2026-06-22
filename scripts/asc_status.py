@@ -210,6 +210,56 @@ def cmd_set_privacy_url(tok, args):
             print("  ※設定できたロケールなし（権限/状態/Web専用の可能性）")
 
 
+def cmd_add_tester(tok, args):
+    """TestFlight にテスターを追加（内部グループ優先＝即時／無ければ作成、ダメなら既存/外部）。"""
+    email = (args.email or "").strip()
+    if not email:
+        sys.exit("ERROR: --email が空です")
+    first = (args.first or "Beta").strip()
+    last = (args.last or email.split("@")[0]).strip()
+    for key in resolve_apps(args.app):
+        bundle, label = BUNDLES[key]
+        print(f"\n=== {label} ({bundle}) ===")
+        app = find_app(tok, bundle)
+        if not app:
+            print("  アプリ未検出"); continue
+        aid = app["id"]
+        groups = api(tok, f"/apps/{aid}/betaGroups",
+                     {"fields[betaGroups]": "name,isInternalGroup,hasAccessToAllBuilds", "limit": 50}).get("data", [])
+        for g in groups:
+            ga = g["attributes"]
+            print(f"  既存グループ: {ga.get('name')} ({'内部' if ga.get('isInternalGroup') else '外部'})")
+        target = next((g for g in groups if g["attributes"].get("isInternalGroup")), None)
+        if not target:
+            for attempt in ({"name": "Internal", "isInternalGroup": True, "hasAccessToAllBuilds": True},
+                            {"name": "Internal", "hasAccessToAllBuilds": True}):
+                try:
+                    created = api_post(tok, "/betaGroups", {"data": {"type": "betaGroups",
+                        "attributes": attempt,
+                        "relationships": {"app": {"data": {"type": "apps", "id": aid}}}}})
+                    target = created["data"]
+                    print(f"  グループ作成: {target['attributes'].get('name')} "
+                          f"({'内部' if target['attributes'].get('isInternalGroup') else '外部'})")
+                    break
+                except RuntimeError as e:
+                    print(f"  グループ作成試行失敗: {e}")
+        if not target and groups:
+            target = groups[0]
+            print(f"  既存グループを使用: {target['attributes'].get('name')}")
+        if not target:
+            print("  使えるグループなし→中止"); continue
+        gid = target["id"]
+        is_internal = bool(target["attributes"].get("isInternalGroup"))
+        try:
+            api_post(tok, "/betaTesters", {"data": {"type": "betaTesters",
+                "attributes": {"firstName": first, "lastName": last, "email": email},
+                "relationships": {"betaGroups": {"data": [{"type": "betaGroups", "id": gid}]}}}})
+            kind = "内部=即時インストール可" if is_internal else "外部=初回はBeta審査が必要"
+            print(f"  ✅ テスター追加: {email} → 「{target['attributes'].get('name')}」({kind})")
+        except RuntimeError as e:
+            print(f"  テスター追加失敗(既に登録済の可能性含む): {e}")
+
+
 def main():
     p = argparse.ArgumentParser(description="App Store Connect 状態取得 CLI")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -221,6 +271,7 @@ def main():
     sp.set_defaults(fn=cmd_set_release_type)
     sp = sub.add_parser("release"); sp.add_argument("--app", default="ALL"); sp.set_defaults(fn=cmd_release)
     sp = sub.add_parser("set-privacy-url"); sp.add_argument("--app", default="ALL"); sp.add_argument("--url", default=""); sp.set_defaults(fn=cmd_set_privacy_url)
+    sp = sub.add_parser("add-tester"); sp.add_argument("--app", default="ALL"); sp.add_argument("--email", default=""); sp.add_argument("--first", default=""); sp.add_argument("--last", default=""); sp.set_defaults(fn=cmd_add_tester)
     args = p.parse_args()
     tok = token()
     args.fn(tok, args)
