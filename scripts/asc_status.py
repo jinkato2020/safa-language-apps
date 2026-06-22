@@ -178,6 +178,38 @@ def cmd_release(tok, args):
         print(f"  版 {vs} をリリースしました(公開処理開始 → まもなく READY_FOR_SALE)")
 
 
+def cmd_set_privacy_url(tok, args):
+    """App情報(appInfoLocalizations)の privacyPolicyUrl を全ロケールに設定する。"""
+    url = (args.url or "").strip()
+    if not url:
+        sys.exit("ERROR: --url が空です")
+    for key in resolve_apps(args.app):
+        bundle, label = BUNDLES[key]
+        print(f"\n=== {label} ({bundle}) ===")
+        app = find_app(tok, bundle)
+        if not app:
+            print("  アプリ未検出"); continue
+        infos = api(tok, f"/apps/{app['id']}/appInfos").get("data", [])
+        if not infos:
+            print("  appInfo なし"); continue
+        done = 0
+        for info in infos:
+            locs = api(tok, f"/appInfos/{info['id']}/appInfoLocalizations",
+                       {"fields[appInfoLocalizations]": "locale,privacyPolicyUrl", "limit": 50}).get("data", [])
+            for loc in locs:
+                lc = loc["attributes"].get("locale")
+                try:
+                    api_patch(tok, f"/appInfoLocalizations/{loc['id']}",
+                              {"data": {"type": "appInfoLocalizations", "id": loc["id"],
+                                        "attributes": {"privacyPolicyUrl": url}}})
+                    print(f"  [{lc}] privacyPolicyUrl ← {url}")
+                    done += 1
+                except RuntimeError as e:
+                    print(f"  [{lc}] 失敗: {e}")
+        if done == 0:
+            print("  ※設定できたロケールなし（権限/状態/Web専用の可能性）")
+
+
 def main():
     p = argparse.ArgumentParser(description="App Store Connect 状態取得 CLI")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -188,6 +220,7 @@ def main():
     sp.add_argument("--release-type", default="MANUAL", choices=["MANUAL", "AFTER_APPROVAL"])
     sp.set_defaults(fn=cmd_set_release_type)
     sp = sub.add_parser("release"); sp.add_argument("--app", default="ALL"); sp.set_defaults(fn=cmd_release)
+    sp = sub.add_parser("set-privacy-url"); sp.add_argument("--app", default="ALL"); sp.add_argument("--url", default=""); sp.set_defaults(fn=cmd_set_privacy_url)
     args = p.parse_args()
     tok = token()
     args.fn(tok, args)
