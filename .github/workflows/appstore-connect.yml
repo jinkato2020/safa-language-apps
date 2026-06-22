@@ -22,11 +22,11 @@ on:
           - metadata-inspect  # App B のバージョン/ローカライズ現状を表示(読取専用)
           - metadata-apply    # App B のメタデータ(名前/サブ/説明/KW/プロモ)をen/ja/zh/viに投入
       app:
-        description: 対象アプリ (A=ネパール語 / B=日本語 / C=英語 / ALL)
+        description: 対象アプリ (A=ネパール語 / B=日本語 / C=英語 / J=まいにちJLPT / ALL)
         type: choice
         required: true
         default: ALL
-        options: [A, B, C, ALL]
+        options: [A, B, C, J, ALL]
 
 jobs:
   asc:

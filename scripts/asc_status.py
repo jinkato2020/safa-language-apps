@@ -24,6 +24,7 @@ BUNDLES = {
     "A": ("com.safa.nepali.jp", "App A・ネパール語"),
     "B": ("com.safa.japanese", "App B・日本語"),
     "C": ("com.safa.english", "App C・英語"),
+    "J": ("com.safa.jlpt", "まいにちJLPT"),  # iOS新規(別Expoプロジェクト)。ALL(=A,B,C)には含めず app=J で個別照会。
 }
 
 
