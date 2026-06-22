@@ -66,6 +66,13 @@ def api_post(tok, path, body):
     return r.json()
 
 
+def api_delete(tok, path):
+    r = requests.delete(f"{BASE}{path}", headers={"Authorization": f"Bearer {tok}"}, timeout=30)
+    if r.status_code >= 400:
+        raise RuntimeError(f"{r.status_code} {path}: {r.text[:300]}")
+    return r.status_code
+
+
 # リリース方法を変更できる(まだ公開前の)状態
 EDITABLE_STATES = {
     "PREPARE_FOR_SUBMISSION", "WAITING_FOR_REVIEW", "IN_REVIEW",
@@ -260,6 +267,42 @@ def cmd_add_tester(tok, args):
             print(f"  テスター追加失敗(既に登録済の可能性含む): {e}")
 
 
+def cmd_create_profile(tok, args):
+    """App Store 配布用プロビジョニングプロファイルを生成し base64(profileContent)を出力。
+    全配布証明書を紐づける(手元の.p12がどれでも署名可)。同名は削除して作り直し(最新化)。"""
+    for key in resolve_apps(args.app):
+        bundle, label = BUNDLES[key]
+        print(f"\n=== {label} ({bundle}) ===")
+        bids = api(tok, "/bundleIds", {"filter[identifier]": bundle, "limit": 1}).get("data", [])
+        if not bids:
+            print(f"  bundleId {bundle} 未登録"); continue
+        bid = bids[0]["id"]
+        certs = api(tok, "/certificates",
+                    {"limit": 100, "fields[certificates]": "certificateType,displayName,expirationDate"}).get("data", [])
+        dist = [c for c in certs if c["attributes"].get("certificateType") in ("DISTRIBUTION", "IOS_DISTRIBUTION")]
+        if not dist:
+            print("  配布証明書なし"); continue
+        cert_ids = [c["id"] for c in dist]
+        print(f"  bundleId={bid} / 配布証明書 {len(cert_ids)}件")
+        name = args.profile_name or f"{key} App Store CI"
+        existing = api(tok, "/profiles", {"filter[name]": name, "limit": 10}).get("data", [])
+        for p in existing:
+            try:
+                api_delete(tok, f"/profiles/{p['id']}")
+                print(f"  既存プロファイル削除: {name}")
+            except RuntimeError as e:
+                print(f"  既存削除失敗(無視): {e}")
+        created = api_post(tok, "/profiles", {"data": {"type": "profiles",
+            "attributes": {"name": name, "profileType": "IOS_APP_STORE"},
+            "relationships": {
+                "bundleId": {"data": {"type": "bundleIds", "id": bid}},
+                "certificates": {"data": [{"type": "certificates", "id": cid} for cid in cert_ids]},
+            }}})
+        content = created["data"]["attributes"].get("profileContent", "")
+        print(f"  ✅ プロファイル生成: {name} (profileType=IOS_APP_STORE)")
+        print(f"PROFILE_B64:{content}")
+
+
 def main():
     p = argparse.ArgumentParser(description="App Store Connect 状態取得 CLI")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -272,6 +315,7 @@ def main():
     sp = sub.add_parser("release"); sp.add_argument("--app", default="ALL"); sp.set_defaults(fn=cmd_release)
     sp = sub.add_parser("set-privacy-url"); sp.add_argument("--app", default="ALL"); sp.add_argument("--url", default=""); sp.set_defaults(fn=cmd_set_privacy_url)
     sp = sub.add_parser("add-tester"); sp.add_argument("--app", default="ALL"); sp.add_argument("--email", default=""); sp.add_argument("--first", default=""); sp.add_argument("--last", default=""); sp.set_defaults(fn=cmd_add_tester)
+    sp = sub.add_parser("create-profile"); sp.add_argument("--app", default="ALL"); sp.add_argument("--profile-name", default=""); sp.set_defaults(fn=cmd_create_profile)
     args = p.parse_args()
     tok = token()
     args.fn(tok, args)

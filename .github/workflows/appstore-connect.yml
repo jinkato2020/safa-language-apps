@@ -21,6 +21,7 @@ on:
           - release               # 承認済(PENDING_DEVELOPER_RELEASE)を手動リリース=公開
           - set-privacy-url   # App情報の プライバシーポリシーURL を設定(value=URL)
           - add-tester        # TestFlightテスター追加(value=email・内部優先)
+          - create-profile    # App Store配布プロファイル生成(base64出力・app=J等)
           - metadata-inspect  # App B のバージョン/ローカライズ現状を表示(読取専用)
           - metadata-apply    # App B のメタデータ(名前/サブ/説明/KW/プロモ)をen/ja/zh/viに投入
       app:
@@ -74,6 +75,7 @@ jobs:
             release)             python scripts/asc_status.py release --app "$APP" | tee -a "$GITHUB_STEP_SUMMARY" ;;
             set-privacy-url)     python scripts/asc_status.py set-privacy-url --app "$APP" --url "$VALUE" | tee -a "$GITHUB_STEP_SUMMARY" ;;
             add-tester)          python scripts/asc_status.py add-tester --app "$APP" --email "$VALUE" | tee -a "$GITHUB_STEP_SUMMARY" ;;
+            create-profile)      python scripts/asc_status.py create-profile --app "$APP" | tee -a "$GITHUB_STEP_SUMMARY" ;;
             metadata-inspect)    python scripts/asc_metadata.py inspect | tee -a "$GITHUB_STEP_SUMMARY" ;;
             metadata-apply)      python scripts/asc_metadata.py apply 1.3.0 | tee -a "$GITHUB_STEP_SUMMARY" ;;
             *) echo "::error::unknown op $OP"; exit 1 ;;
