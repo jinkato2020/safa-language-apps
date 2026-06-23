@@ -24,7 +24,8 @@
     "conversation": "Hội thoại",
     "grammar": "Ngữ pháp",
     "listening": "Nghe thụ động",
-    "vocabulary": "Từ vựng"
+    "vocabulary": "Từ vựng",
+    "home": "Trang chủ"
   },
   "directions": {
     "ja2ne": "Tiếng Anh → Tiếng Nhật",
@@ -262,5 +263,32 @@
     "mailSubject": "Nghe & Nói Tiếng Nhật — Liên hệ",
     "privacyError": "Không thể mở Chính sách bảo mật.",
     "mailError": "Không thể mở ứng dụng email."
+  },
+  "home": {
+    "title": "Trang chủ",
+    "streak_days": "Liên tiếp",
+    "total_days": "Ngày học",
+    "longest": "Dài nhất",
+    "section_streak": "Duy trì",
+    "section_growth": "Tiến bộ",
+    "section_badges": "Huy hiệu",
+    "growth_title": "Ngày đã học (14 ngày gần nhất)",
+    "cal_caption": "5 tuần gần nhất (tô màu ngày có học)",
+    "wd_sun": "CN",
+    "wd_mon": "T2",
+    "wd_tue": "T3",
+    "wd_wed": "T4",
+    "wd_thu": "T5",
+    "wd_fri": "T6",
+    "wd_sat": "T7",
+    "badge_first": "Bước đầu tiên",
+    "badge_first_hint": "Bắt đầu học",
+    "badge_3": "3 ngày liên tiếp",
+    "badge_3_hint": "Học liên tục 3 ngày",
+    "badge_7": "7 ngày liên tiếp",
+    "badge_7_hint": "Học liên tục 7 ngày",
+    "badge_30": "30 ngày liên tiếp",
+    "badge_30_hint": "Học liên tục 30 ngày",
+    "badge_achieved": "Đạt được"
   }
 }

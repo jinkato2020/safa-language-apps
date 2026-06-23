@@ -126,7 +126,7 @@ export default function App() {
         storageKey="@english_app/settings_v1"
       >
         <PackGate>
-          <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={[]} />
+          <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={[]} progressStorageKey="@english_app/progress_v1" />
         </PackGate>
       </SettingsProvider>
     </I18nProvider>

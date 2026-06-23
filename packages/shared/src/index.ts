@@ -23,6 +23,17 @@ export { colors, spacing, radius } from './theme';
 export { toRomaji, sentenceToRomaji } from './transliterate';
 export { getL1, L1_REGISTRY, type L1Config, type L1Code } from './l1';
 
+// ── 共有デザインシステム (継続/成長/バッジ等の props駆動部品。単一ソース・JLPTへは subtree 共有) ──
+// spacing/radius/fontSize は衝突回避のため再公開しない。各部品内部で useTokens() が供給する。
+export {
+  DesignThemeProvider, useTokens,
+  Card, StatRow, StreakWeek, StreakCalendar, GrowthBars, BadgeGrid,
+  lightPalette, darkPalette,
+  useDailyProgress, todayStr, addDays, lastNDays,
+  type Palette, type Scheme, type DesignTokens,
+  type Stat, type WeekDay, type CalDay, type BadgeItem, type DailyProgress,
+} from './design';
+
 // ── 型 ──
 export type {
   Mode, ThemeMeta, LevelMeta, Example, WordCategoryMeta, Word, GrammarThemeMeta,
@@ -33,6 +44,7 @@ export type {
 export { AppShell, type AppShellProps } from './AppShell';
 
 // ── 画面 (個別利用する場合のみ。通常は AppShell 経由) ──
+export { default as HomeScreen } from './screens/HomeScreen';
 export { default as ListenSourceScreen } from './screens/ListenSourceScreen';
 export { default as ThemeScreen } from './screens/ThemeScreen';
 export { default as LevelScreen } from './screens/LevelScreen';

@@ -24,7 +24,8 @@
     "conversation": "会話",
     "grammar": "文法",
     "listening": "聞き流し",
-    "vocabulary": "単語"
+    "vocabulary": "単語",
+    "home": "ホーム"
   },
   "directions": {
     "ja2ne": "英語 → 日本語",
@@ -262,5 +263,32 @@
     "mailSubject": "聞いて話せる英語 お問い合わせ",
     "privacyError": "プライバシーポリシーを開けませんでした。",
     "mailError": "メールアプリを開けませんでした。"
+  },
+  "home": {
+    "title": "ホーム",
+    "streak_days": "連続",
+    "total_days": "学習日",
+    "longest": "最長",
+    "section_streak": "継続",
+    "section_growth": "成長",
+    "section_badges": "バッジ",
+    "growth_title": "学習した日（直近14日）",
+    "cal_caption": "直近5週（学習した日に色）",
+    "wd_sun": "日",
+    "wd_mon": "月",
+    "wd_tue": "火",
+    "wd_wed": "水",
+    "wd_thu": "木",
+    "wd_fri": "金",
+    "wd_sat": "土",
+    "badge_first": "はじめの一歩",
+    "badge_first_hint": "学習を開始",
+    "badge_3": "3日連続",
+    "badge_3_hint": "3日続ける",
+    "badge_7": "7日連続",
+    "badge_7_hint": "7日続ける",
+    "badge_30": "30日連続",
+    "badge_30_hint": "30日続ける",
+    "badge_achieved": "達成"
   }
 }

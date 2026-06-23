@@ -83,7 +83,8 @@
     "conversation": "对话",
     "grammar": "语法",
     "listening": "泛听",
-    "vocabulary": "单词"
+    "vocabulary": "单词",
+    "home": "主页"
   },
   "directions": {
     "ja2ne": "日语 → 中文",
@@ -266,5 +267,32 @@
   "poster": {
     "hint": "点按：播放/暂停 · 滑动：切换主题",
     "preparing": "准备中…"
+  },
+  "home": {
+    "title": "主页",
+    "streak_days": "连续",
+    "total_days": "学习天数",
+    "longest": "最长",
+    "section_streak": "坚持",
+    "section_growth": "成长",
+    "section_badges": "徽章",
+    "growth_title": "学习天数（近14天）",
+    "cal_caption": "近5周（学习日标色）",
+    "wd_sun": "日",
+    "wd_mon": "一",
+    "wd_tue": "二",
+    "wd_wed": "三",
+    "wd_thu": "四",
+    "wd_fri": "五",
+    "wd_sat": "六",
+    "badge_first": "第一步",
+    "badge_first_hint": "开始学习",
+    "badge_3": "连续3天",
+    "badge_3_hint": "坚持3天",
+    "badge_7": "连续7天",
+    "badge_7_hint": "坚持7天",
+    "badge_30": "连续30天",
+    "badge_30_hint": "坚持30天",
+    "badge_achieved": "已达成"
   }
 }

@@ -230,7 +230,7 @@ export default function App() {
       >
         <FirstRunGate>
           <PackGate>
-            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={POSTER_LESSONS} posterResolveUri={posterUri} posterEnsure={ensurePosterPack} />
+            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={POSTER_LESSONS} posterResolveUri={posterUri} posterEnsure={ensurePosterPack} progressStorageKey="@nepali_app/progress_v1" />
           </PackGate>
         </FirstRunGate>
       </SettingsProvider>

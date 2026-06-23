@@ -24,7 +24,8 @@
     "conversation": "Hội thoại",
     "grammar": "Ngữ pháp",
     "listening": "Nghe thụ động",
-    "vocabulary": "Từ vựng"
+    "vocabulary": "Từ vựng",
+    "home": "Trang chủ"
   },
   "directions": {
     "ja2ne": "Tiếng Nhật → Tiếng Việt",
@@ -177,12 +178,12 @@
   "listening": {
     "exampleCounter": "Ví dụ",
     "tagJa": "JA · Tiếng Nhật",
-    "tagNe": "EN · Tiếng Anh",
+    "tagNe": "VI · Tiếng Việt",
     "nonstop": "Liên tục",
     "speed": "Tốc độ ×{{speed}}"
   },
   "flashcard": {
-    "tagNe": "EN · Tiếng Anh",
+    "tagNe": "VI · Tiếng Việt",
     "tagJa": "JA · Tiếng Nhật",
     "tapToFlip": "Chạm để {{action}}",
     "flip": "Lật",
@@ -195,10 +196,10 @@
     "themeSelectDesc": "Chọn chủ đề và mở rộng vốn từ vựng tiếng Nhật của bạn.",
     "directionTitle": "Chọn hướng kiểm tra",
     "directionDesc": "Bạn muốn học thẻ {{category}} theo hướng nào?",
-    "neLang": "Tiếng Anh",
+    "neLang": "Tiếng Việt",
     "jaLang": "Tiếng Nhật",
-    "neToJaDesc": "Hiển thị tiếng Anh; chạm để hiện tiếng Nhật. Giúp ghi nhớ nhanh.",
-    "jaToNeDesc": "Hiển thị tiếng Nhật; chạm để hiện tiếng Anh. Rèn kỹ năng đọc.",
+    "neToJaDesc": "Hiển thị tiếng Việt; chạm để hiện tiếng Nhật. Giúp ghi nhớ nhanh.",
+    "jaToNeDesc": "Hiển thị tiếng Nhật; chạm để hiện tiếng Việt. Rèn kỹ năng đọc.",
     "modeFlashcard": "Thẻ xáo trộn",
     "modeFlashcardDesc": "Lật thẻ để học từ",
     "modePoster": "Phát âm từ",
@@ -266,5 +267,32 @@
   "poster": {
     "hint": "Chạm: phát/dừng · Vuốt: đổi chủ đề",
     "preparing": "Đang chuẩn bị…"
+  },
+  "home": {
+    "title": "Trang chủ",
+    "streak_days": "Liên tiếp",
+    "total_days": "Ngày học",
+    "longest": "Dài nhất",
+    "section_streak": "Duy trì",
+    "section_growth": "Tiến bộ",
+    "section_badges": "Huy hiệu",
+    "growth_title": "Ngày đã học (14 ngày gần nhất)",
+    "cal_caption": "5 tuần gần nhất (tô màu ngày có học)",
+    "wd_sun": "CN",
+    "wd_mon": "T2",
+    "wd_tue": "T3",
+    "wd_wed": "T4",
+    "wd_thu": "T5",
+    "wd_fri": "T6",
+    "wd_sat": "T7",
+    "badge_first": "Bước đầu tiên",
+    "badge_first_hint": "Bắt đầu học",
+    "badge_3": "3 ngày liên tiếp",
+    "badge_3_hint": "Học liên tục 3 ngày",
+    "badge_7": "7 ngày liên tiếp",
+    "badge_7_hint": "Học liên tục 7 ngày",
+    "badge_30": "30 ngày liên tiếp",
+    "badge_30_hint": "Học liên tục 30 ngày",
+    "badge_achieved": "Đạt được"
   }
 }

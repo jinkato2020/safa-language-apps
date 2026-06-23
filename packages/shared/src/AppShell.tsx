@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Animated, Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Dimensions, Pressable, StyleSheet, Text, View, useColorScheme } from 'react-native';
 import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { setAudioModeAsync } from 'expo-audio';
@@ -27,10 +27,12 @@ import PosterAudioScreen from './screens/PosterAudioScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { PosterProvider, usePosterLessons, type PosterLesson, type PosterResolver } from './PosterContext';
 import { colors } from './theme';
-import { useGlobalScaleStyle } from './SettingsContext';
+import { useGlobalScaleStyle, useSettings } from './SettingsContext';
 import { useI18n } from './i18n';
 import { ListeningAudioProvider } from './ListeningAudioContext';
 import type { RootStackParamList } from './types';
+import HomeScreen from './screens/HomeScreen';
+import { DesignThemeProvider } from './design';
 
 const Tab = createBottomTabNavigator();
 const ConvStack = createNativeStackNavigator();
@@ -57,6 +59,9 @@ function HeadphonesIcon({ color, focused }: { color: string; focused: boolean })
 }
 function CardsIcon({ color, focused }: { color: string; focused: boolean }) {
   return <TabIcon color={color} focused={focused}><Rect x={3} y={3} width={14} height={14} rx={2} /><Rect x={7} y={7} width={14} height={14} rx={2} /></TabIcon>;
+}
+function HomeIcon({ color, focused }: { color: string; focused: boolean }) {
+  return <TabIcon color={color} focused={focused}><Path d="M3 11.5 12 4l9 7.5" /><Path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9" /></TabIcon>;
 }
 
 // ─── ヘッダー右の歯車ボタン ─────────────────────
@@ -151,7 +156,7 @@ function VocabularyStackNav({ defaultStackOptions }: { defaultStackOptions: any 
 }
 
 // ─── ボトムタブ ─────────────────────────────
-function MainTabs({ defaultStackOptions }: { defaultStackOptions: any }) {
+function MainTabs({ defaultStackOptions, progressStorageKey }: { defaultStackOptions: any; progressStorageKey: string }) {
   const { bottom } = useSafeAreaInsets();
   const { t } = useI18n();
   const ss = useGlobalScaleStyle();
@@ -165,6 +170,12 @@ function MainTabs({ defaultStackOptions }: { defaultStackOptions: any }) {
         tabBarLabelStyle: { ...ss(11), fontWeight: '500' },
       }}
     >
+      <Tab.Screen
+        name="HomeTab"
+        options={{ title: t('nav.home'), tabBarIcon: HomeIcon }}
+      >
+        {() => <HomeScreen storageKey={progressStorageKey} />}
+      </Tab.Screen>
       <Tab.Screen
         name="ConversationTab"
         options={{ title: t('nav.conversation'), tabBarIcon: ChatIcon }}
@@ -255,6 +266,8 @@ export type AppShellProps = {
   posterResolveUri?: PosterResolver['resolveUri'];
   /** ポスターパック(ja+母語)をDL/展開する関数(アプリ固有ローダの ensurePosterPack を注入)。 */
   posterEnsure?: PosterResolver['ensure'];
+  /** 共有ホーム(継続/成長/バッジ)の進捗保存キー。アプリ毎に固有(例 '@japanese_app/progress_v1')。 */
+  progressStorageKey: string;
 };
 
 // スプラッシュは「アプリ起動時の1回だけ」。言語切替で PackGate が data=null にして
@@ -262,9 +275,12 @@ export type AppShellProps = {
 // (毎回スプラッシュ動画が再生されて白画面で固まって見えるのを防ぐ)。
 let splashShownOnce = false;
 
-export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure }: AppShellProps) {
+export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure, progressStorageKey }: AppShellProps) {
   const [splashDone, setSplashDone] = useState(splashShownOnce);
   const defaultStackOptions = useRef(makeDefaultStackOptions(HeaderTitle)).current;
+  const { themeMode } = useSettings();
+  const sys = useColorScheme();
+  const scheme = themeMode === 'system' ? (sys ?? 'light') : themeMode;
 
   useEffect(() => {
     setAudioModeAsync({
@@ -295,7 +311,9 @@ export function AppShell({ splashSource, posterLessons, posterResolveUri, poster
         <StatusBar style="dark" />
         <PosterProvider lessons={posterLessons || []} resolveUri={posterResolveUri} ensure={posterEnsure}>
           <ListeningAudioProvider>
-            <MainTabs defaultStackOptions={defaultStackOptions} />
+            <DesignThemeProvider scheme={scheme}>
+              <MainTabs defaultStackOptions={defaultStackOptions} progressStorageKey={progressStorageKey} />
+            </DesignThemeProvider>
           </ListeningAudioProvider>
         </PosterProvider>
       </NavigationContainer>

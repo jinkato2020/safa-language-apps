@@ -24,7 +24,8 @@
     "conversation": "Conversation",
     "grammar": "Grammar",
     "listening": "Passive listening",
-    "vocabulary": "Vocabulary"
+    "vocabulary": "Vocabulary",
+    "home": "Home"
   },
   "directions": {
     "ja2ne": "Japanese → English",
@@ -266,5 +267,32 @@
   "poster": {
     "hint": "Tap to play/pause · Swipe to switch themes",
     "preparing": "Preparing…"
+  },
+  "home": {
+    "title": "Home",
+    "streak_days": "Streak",
+    "total_days": "Days",
+    "longest": "Best",
+    "section_streak": "Streak",
+    "section_growth": "Growth",
+    "section_badges": "Badges",
+    "growth_title": "Days studied (last 14 days)",
+    "cal_caption": "Last 5 weeks (studied days colored)",
+    "wd_sun": "Sun",
+    "wd_mon": "Mon",
+    "wd_tue": "Tue",
+    "wd_wed": "Wed",
+    "wd_thu": "Thu",
+    "wd_fri": "Fri",
+    "wd_sat": "Sat",
+    "badge_first": "First Step",
+    "badge_first_hint": "Start learning",
+    "badge_3": "3-Day Streak",
+    "badge_3_hint": "Keep 3 days",
+    "badge_7": "7-Day Streak",
+    "badge_7_hint": "Keep 7 days",
+    "badge_30": "30-Day Streak",
+    "badge_30_hint": "Keep 30 days",
+    "badge_achieved": "Done"
   }
 }

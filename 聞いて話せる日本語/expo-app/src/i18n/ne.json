@@ -24,7 +24,8 @@
     "conversation": "कुराकानी मोड",
     "grammar": "व्याकरण मोड",
     "listening": "सुन्ने मोड",
-    "vocabulary": "शब्दावली मोड"
+    "vocabulary": "शब्दावली मोड",
+    "home": "होम"
   },
   "directions": {
     "ja2ne": "जापानी → नेपाली",
@@ -266,5 +267,32 @@
   "poster": {
     "hint": "ट्याप: बजाउने/रोक्ने · स्वाइप: विषय बदल्ने",
     "preparing": "तयार पारिँदै…"
+  },
+  "home": {
+    "title": "होम",
+    "streak_days": "लगातार",
+    "total_days": "अध्ययन दिन",
+    "longest": "सबैभन्दा लामो",
+    "section_streak": "निरन्तरता",
+    "section_growth": "प्रगति",
+    "section_badges": "ब्याज",
+    "growth_title": "अध्ययन गरेका दिन (पछिल्लो १४ दिन)",
+    "cal_caption": "पछिल्लो ५ हप्ता (अध्ययन गरेका दिन रंगिन)",
+    "wd_sun": "आइ",
+    "wd_mon": "सोम",
+    "wd_tue": "मंग",
+    "wd_wed": "बुध",
+    "wd_thu": "बिही",
+    "wd_fri": "शुक",
+    "wd_sat": "शनि",
+    "badge_first": "पहिलो कदम",
+    "badge_first_hint": "अध्ययन सुरु गर्नुस्",
+    "badge_3": "३ दिन लगातार",
+    "badge_3_hint": "३ दिन जारी राख्नुस्",
+    "badge_7": "७ दिन लगातार",
+    "badge_7_hint": "७ दिन जारी राख्नुस्",
+    "badge_30": "३० दिन लगातार",
+    "badge_30_hint": "३० दिन जारी राख्नुस्",
+    "badge_achieved": "हासिल"
   }
 }

@@ -24,7 +24,8 @@
     "conversation": "কথোপকথন",
     "grammar": "ব্যাকরণ",
     "listening": "শুনে শেখা",
-    "vocabulary": "শব্দ"
+    "vocabulary": "শব্দ",
+    "home": "হোম"
   },
   "directions": {
     "ja2ne": "ইংরেজি → জাপানি",
@@ -262,5 +263,32 @@
     "mailSubject": "শুনে বলা জাপানি — যোগাযোগ",
     "privacyError": "গোপনীয়তা নীতি খোলা যায়নি।",
     "mailError": "মেইল অ্যাপ খোলা যায়নি।"
+  },
+  "home": {
+    "title": "হোম",
+    "streak_days": "ধারাবাহিক",
+    "total_days": "শেখার দিন",
+    "longest": "সর্বোচ্চ",
+    "section_streak": "ধারাবাহিকতা",
+    "section_growth": "অগ্রগতি",
+    "section_badges": "ব্যাজ",
+    "growth_title": "শেখার দিন (সাম্প্রতিক ১৪ দিন)",
+    "cal_caption": "সাম্প্রতিক ৫ সপ্তাহ (শেখার দিন রঙিন)",
+    "wd_sun": "রবি",
+    "wd_mon": "সোম",
+    "wd_tue": "মঙ্গ",
+    "wd_wed": "বুধ",
+    "wd_thu": "বৃহ",
+    "wd_fri": "শুক্র",
+    "wd_sat": "শনি",
+    "badge_first": "প্রথম পদক্ষেপ",
+    "badge_first_hint": "শেখা শুরু করো",
+    "badge_3": "৩ দিন ধারাবাহিক",
+    "badge_3_hint": "৩ দিন চালিয়ে যাও",
+    "badge_7": "৭ দিন ধারাবাহিক",
+    "badge_7_hint": "৭ দিন চালিয়ে যাও",
+    "badge_30": "৩০ দিন ধারাবাহিক",
+    "badge_30_hint": "৩০ দিন চালিয়ে যাও",
+    "badge_achieved": "অর্জিত"
   }
 }
