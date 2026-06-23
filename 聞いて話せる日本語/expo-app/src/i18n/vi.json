@@ -26,7 +26,9 @@
     "listening": "Nghe thụ động",
     "vocabulary": "Từ vựng",
     "home": "Trang chủ",
-    "vocation": "Nghề nghiệp"
+    "vocation": "Nghề nghiệp",
+    "short": "Câu ngắn",
+    "long": "Đoạn dài"
   },
   "directions": {
     "ja2ne": "Tiếng Nhật → Tiếng Việt",
@@ -306,6 +308,28 @@
     "title": "Tiếng Nhật nghề nghiệp",
     "body": "Cụm từ theo ngành nghề cho lao động kỹ năng đặc định (bắt đầu với điều dưỡng).",
     "kaigoTitle": "Điều dưỡng",
+    "comingSoon": "Sắp ra mắt"
+  },
+  "shortHub": {
+    "study": "Học",
+    "studyDesc": "Ghi nhớ tiếng Nhật từ tiếng mẹ đẻ (có âm thanh)",
+    "hearing": "Nghe",
+    "hearingDesc": "Nghe hội thoại + âm thanh từ vựng",
+    "answer": "Trả lời",
+    "answerDesc": "Nói tiếng Nhật bằng micro",
+    "comingSoon": "Sắp ra mắt"
+  },
+  "sakubun": {
+    "title": "Soạn câu",
+    "promptHint": "Hãy nói câu này bằng tiếng Nhật",
+    "answerHint": "Đáp án",
+    "showAnswer": "Xem đáp án",
+    "again": "Lại",
+    "gotIt": "Được rồi"
+  },
+  "chobun": {
+    "title": "Đoạn văn dài",
+    "body": "Nghe và soạn câu cho tin tức, thông báo và đoạn văn dài.",
     "comingSoon": "Sắp ra mắt"
   }
 }

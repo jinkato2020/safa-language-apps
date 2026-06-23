@@ -1,6 +1,6 @@
 // データモデル
 
-export type Mode = 'conversation' | 'listening' | 'grammar' | 'vocabulary';
+export type Mode = 'conversation' | 'listening' | 'grammar' | 'vocabulary' | 'sakubun' | 'answer';
 
 export interface ThemeMeta {
   id: number;
@@ -66,6 +66,8 @@ export type RootStackParamList = {
     source?: 'grammar';
   };
   ListeningHub: undefined;
+  ShortHub: undefined;
+  Sakubun: { themeId: number; levelId: number; startIndex?: number };
   VocabCategory: { posterOnly?: boolean } | undefined;
   VocabDirection: { categoryId: number };
   Flashcard: { categoryId: number; direction: 'ne2ja' | 'ja2ne' };

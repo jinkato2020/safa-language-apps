@@ -26,7 +26,9 @@
     "listening": "흘려듣기",
     "vocabulary": "어휘",
     "home": "홈",
-    "vocation": "직업"
+    "vocation": "직업",
+    "short": "단문",
+    "long": "장문"
   },
   "directions": {
     "ja2ne": "일본어 → 한국어",
@@ -306,6 +308,28 @@
     "title": "직업 일본어",
     "body": "특정기능 직종별 표현(요양 우선)을 배울 수 있습니다.",
     "kaigoTitle": "요양(개호)",
+    "comingSoon": "준비 중"
+  },
+  "shortHub": {
+    "study": "학습",
+    "studyDesc": "모국어→일본어를 음성과 함께 익히기",
+    "hearing": "듣기",
+    "hearingDesc": "회화 흘려듣기＋단어 음성",
+    "answer": "응답",
+    "answerDesc": "마이크로 일본어로 답하기",
+    "comingSoon": "준비 중"
+  },
+  "sakubun": {
+    "title": "작문",
+    "promptHint": "이 문장을 일본어로",
+    "answerHint": "정답",
+    "showAnswer": "정답 보기",
+    "again": "다시",
+    "gotIt": "완료"
+  },
+  "chobun": {
+    "title": "장문",
+    "body": "뉴스·안내방송·긴 글의 듣기와 작문.",
     "comingSoon": "준비 중"
   }
 }

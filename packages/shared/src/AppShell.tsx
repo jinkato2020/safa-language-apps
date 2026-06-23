@@ -32,12 +32,15 @@ import { useI18n } from './i18n';
 import { ListeningAudioProvider } from './ListeningAudioContext';
 import type { RootStackParamList } from './types';
 import HomeScreen from './screens/HomeScreen';
-import VocationScreen from './screens/VocationScreen';
 import ListeningHubScreen from './screens/ListeningHubScreen';
+import ShortHubScreen from './screens/ShortHubScreen';
+import SakubunScreen from './screens/SakubunScreen';
+import ScaffoldScreen from './screens/ScaffoldScreen';
 import { DesignThemeProvider } from './design';
 
 const Tab = createBottomTabNavigator();
 const ConvStack = createNativeStackNavigator();
+const ShortStack = createNativeStackNavigator();
 const GramStack = createNativeStackNavigator();
 const ListenStack = createNativeStackNavigator();
 const VocabStack = createNativeStackNavigator();
@@ -161,16 +164,40 @@ function VocabularyStackNav({ defaultStackOptions }: { defaultStackOptions: any 
   );
 }
 
+// 短文タブ(App B): ハブ(学習/ヒアリング/回答)＋作文学習(Sakubun)＋聞き流し＋ポスター。
+// answerScreen(マイク回答=ネイティブ依存・App側注入)があれば回答を登録(増分2)。
+function ShortStackNav({ defaultStackOptions, answerScreen }: { defaultStackOptions: any; answerScreen?: any }) {
+  return (
+    <ShortStack.Navigator screenOptions={defaultStackOptions}>
+      <ShortStack.Screen name="ShortHub">{() => <ShortHubScreen answerReady={!!answerScreen} />}</ShortStack.Screen>
+      <ShortStack.Screen name="Theme" component={ThemeScreen} initialParams={{ mode: 'sakubun' }} />
+      <ShortStack.Screen name="Sakubun" component={SakubunScreen} />
+      <ShortStack.Screen name="ListeningHub" component={ListeningHubScreen} />
+      <ShortStack.Screen name="Listening" component={ListeningScreen} />
+      <ShortStack.Screen name="VocabCategory" component={VocabCategoryScreen} initialParams={{ posterOnly: true }} />
+      <ShortStack.Screen name="PosterAudio" component={PosterAudioScreen} />
+      {answerScreen && <ShortStack.Screen name="Answer" component={answerScreen} />}
+      <ShortStack.Screen name="SettingsMain" component={SettingsScreen} />
+    </ShortStack.Navigator>
+  );
+}
+
 // ─── ボトムタブ ─────────────────────────────
+function ShortIcon({ color, focused }: { color: string; focused: boolean }) {
+  return <TabIcon color={color} focused={focused}><Line x1={4} y1={8} x2={16} y2={8} /><Line x1={4} y1={13} x2={11} y2={13} /></TabIcon>;
+}
+function LongIcon({ color, focused }: { color: string; focused: boolean }) {
+  return <TabIcon color={color} focused={focused}><Rect x={4} y={3} width={16} height={18} rx={2} /><Line x1={8} y1={9} x2={16} y2={9} /><Line x1={8} y1={13} x2={16} y2={13} /><Line x1={8} y1={17} x2={13} y2={17} /></TabIcon>;
+}
 function VocationIcon({ color, focused }: { color: string; focused: boolean }) {
   return <TabIcon color={color} focused={focused}><Rect x={3} y={7} width={18} height={13} rx={2} /><Path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></TabIcon>;
 }
 
 // アプリ別タブ構成。tabs 未指定なら現状の5タブ(App A/C はこのまま=無改修)。
-export type TabKey = 'home' | 'conversation' | 'grammar' | 'listening' | 'vocabulary' | 'vocation';
+export type TabKey = 'home' | 'conversation' | 'grammar' | 'listening' | 'vocabulary' | 'vocation' | 'short' | 'long';
 const DEFAULT_TABS: TabKey[] = ['home', 'conversation', 'grammar', 'listening', 'vocabulary'];
 
-function MainTabs({ defaultStackOptions, progressStorageKey, tabs, posterInListening }: { defaultStackOptions: any; progressStorageKey: string; tabs?: TabKey[]; posterInListening?: boolean }) {
+function MainTabs({ defaultStackOptions, progressStorageKey, tabs, posterInListening, answerScreen }: { defaultStackOptions: any; progressStorageKey: string; tabs?: TabKey[]; posterInListening?: boolean; answerScreen?: any }) {
   const { bottom } = useSafeAreaInsets();
   const { t } = useI18n();
   const ss = useGlobalScaleStyle();
@@ -181,7 +208,9 @@ function MainTabs({ defaultStackOptions, progressStorageKey, tabs, posterInListe
     grammar:      { name: 'GrammarTab',      title: t('nav.grammar'),      icon: GrammarIcon,    render: () => <GrammarStackNav defaultStackOptions={defaultStackOptions} /> },
     listening:    { name: 'ListeningTab',    title: t('nav.listening'),    icon: HeadphonesIcon, render: () => <ListeningStackNav defaultStackOptions={defaultStackOptions} posterInListening={posterInListening} /> },
     vocabulary:   { name: 'VocabularyTab',   title: t('nav.vocabulary'),   icon: CardsIcon,      render: () => <VocabularyStackNav defaultStackOptions={defaultStackOptions} /> },
-    vocation:     { name: 'VocationTab',     title: t('nav.vocation'),     icon: VocationIcon,   render: () => <VocationScreen /> },
+    short:        { name: 'ShortTab',        title: t('nav.short'),        icon: ShortIcon,      render: () => <ShortStackNav defaultStackOptions={defaultStackOptions} answerScreen={answerScreen} /> },
+    long:         { name: 'LongTab',         title: t('nav.long'),         icon: LongIcon,       render: () => <ScaffoldScreen area="chobun" /> },
+    vocation:     { name: 'VocationTab',     title: t('nav.vocation'),     icon: VocationIcon,   render: () => <ScaffoldScreen area="vocation" /> },
   };
   return (
     <Tab.Navigator
@@ -273,6 +302,8 @@ export type AppShellProps = {
   tabs?: TabKey[];
   /** true で聞き流しタブにハブ(会話聞き流し/単語音声ポスター)を統合(App B。単語タブを廃した分のポスターをここへ)。 */
   posterInListening?: boolean;
+  /** 短文タブの「回答(マイク)」画面。ネイティブ音声認識依存のためApp側が注入(増分2)。未注入なら回答は「準備中」。 */
+  answerScreen?: any;
 };
 
 // スプラッシュは「アプリ起動時の1回だけ」。言語切替で PackGate が data=null にして
@@ -280,7 +311,7 @@ export type AppShellProps = {
 // (毎回スプラッシュ動画が再生されて白画面で固まって見えるのを防ぐ)。
 let splashShownOnce = false;
 
-export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure, progressStorageKey, tabs, posterInListening }: AppShellProps) {
+export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure, progressStorageKey, tabs, posterInListening, answerScreen }: AppShellProps) {
   const [splashDone, setSplashDone] = useState(splashShownOnce);
   const defaultStackOptions = useRef(makeDefaultStackOptions(HeaderTitle)).current;
   const { themeMode } = useSettings();
@@ -317,7 +348,7 @@ export function AppShell({ splashSource, posterLessons, posterResolveUri, poster
         <PosterProvider lessons={posterLessons || []} resolveUri={posterResolveUri} ensure={posterEnsure}>
           <ListeningAudioProvider>
             <DesignThemeProvider scheme={scheme}>
-              <MainTabs defaultStackOptions={defaultStackOptions} progressStorageKey={progressStorageKey} tabs={tabs} posterInListening={posterInListening} />
+              <MainTabs defaultStackOptions={defaultStackOptions} progressStorageKey={progressStorageKey} tabs={tabs} posterInListening={posterInListening} answerScreen={answerScreen} />
             </DesignThemeProvider>
           </ListeningAudioProvider>
         </PosterProvider>

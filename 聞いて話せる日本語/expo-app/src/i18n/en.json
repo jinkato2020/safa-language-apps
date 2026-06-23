@@ -26,7 +26,9 @@
     "listening": "Passive listening",
     "vocabulary": "Vocabulary",
     "home": "Home",
-    "vocation": "Vocation"
+    "vocation": "Vocation",
+    "short": "Short",
+    "long": "Long"
   },
   "directions": {
     "ja2ne": "Japanese → English",
@@ -306,6 +308,28 @@
     "title": "Vocational Japanese",
     "body": "Job-specific phrases for Specified Skilled Worker fields (caregiving first).",
     "kaigoTitle": "Caregiving",
+    "comingSoon": "Coming soon"
+  },
+  "shortHub": {
+    "study": "Study",
+    "studyDesc": "Recall Japanese from your language, with audio",
+    "hearing": "Listening",
+    "hearingDesc": "Conversation listening + word voice",
+    "answer": "Speak",
+    "answerDesc": "Speak Japanese with the mic",
+    "comingSoon": "Coming soon"
+  },
+  "sakubun": {
+    "title": "Compose",
+    "promptHint": "Say this in Japanese",
+    "answerHint": "Answer",
+    "showAnswer": "Show answer",
+    "again": "Again",
+    "gotIt": "Got it"
+  },
+  "chobun": {
+    "title": "Long passages",
+    "body": "Listening & composition for news, announcements and longer texts.",
     "comingSoon": "Coming soon"
   }
 }

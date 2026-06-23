@@ -26,7 +26,9 @@
     "listening": "聞き流し",
     "vocabulary": "単語",
     "home": "ホーム",
-    "vocation": "職業"
+    "vocation": "職業",
+    "short": "短文",
+    "long": "長文"
   },
   "directions": {
     "ja2ne": "日本語 → ネパール語",
@@ -306,6 +308,28 @@
     "title": "職業日本語",
     "body": "特定技能の職種別フレーズ(介護など)を学べます。",
     "kaigoTitle": "介護",
+    "comingSoon": "準備中"
+  },
+  "shortHub": {
+    "study": "学習",
+    "studyDesc": "母語→日本語＋音声で覚える",
+    "hearing": "ヒアリング",
+    "hearingDesc": "会話の聞き流し＋単語音声",
+    "answer": "回答",
+    "answerDesc": "マイクで日本語を話して答える",
+    "comingSoon": "準備中"
+  },
+  "sakubun": {
+    "title": "作文",
+    "promptHint": "この文を日本語で",
+    "answerHint": "答え",
+    "showAnswer": "答えを見る",
+    "again": "もう一度",
+    "gotIt": "できた"
+  },
+  "chobun": {
+    "title": "長文",
+    "body": "ニュース・アナウンス・長めの文章のヒアリングと作文。",
     "comingSoon": "準備中"
   }
 }

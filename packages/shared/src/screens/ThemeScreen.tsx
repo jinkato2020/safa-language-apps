@@ -34,7 +34,7 @@ export default function ThemeScreen() {
   const items = useGrammarThemes ? GRAMMAR_THEMES : THEMES;
 
   // 会話モードおよび聞き流し×会話モードでレベルピルを表示
-  const showLevelPills = mode === 'conversation' || isConversationListen;
+  const showLevelPills = mode === 'conversation' || isConversationListen || mode === 'sakubun';
   const [selectedLevel, setSelectedLevel] = useState(1);
 
   const titleText = t('themeScreen.title');
@@ -58,6 +58,8 @@ export default function ThemeScreen() {
     modeTitle = t('themeScreen.modeTitleGrammar');
   } else if (mode === 'listening') {
     modeTitle = t('themeScreen.modeTitleListen');
+  } else if (mode === 'sakubun') {
+    modeTitle = t('sakubun.title');
   } else {
     modeTitle = t('themeScreen.modeTitleConv');
   }
@@ -67,7 +69,9 @@ export default function ThemeScreen() {
   };
 
   const onPressItem = (id: number) => {
-    if (mode === 'grammar') {
+    if (mode === 'sakubun') {
+      navigation.navigate('Sakubun', { themeId: id, levelId: selectedLevel, startIndex: 0 });
+    } else if (mode === 'grammar') {
       navigation.navigate('Practice', { themeId: id, mode: 'grammar' });
     } else if (isGrammarListen) {
       navigation.navigate('Listening', { themeId: id, source: 'grammar' });

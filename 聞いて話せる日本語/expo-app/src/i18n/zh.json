@@ -85,7 +85,9 @@
     "listening": "泛听",
     "vocabulary": "单词",
     "home": "主页",
-    "vocation": "职业"
+    "vocation": "职业",
+    "short": "短句",
+    "long": "长文"
   },
   "directions": {
     "ja2ne": "日语 → 中文",
@@ -306,6 +308,28 @@
     "title": "职业日语",
     "body": "可学习特定技能各职业的常用语句(先从护理开始)。",
     "kaigoTitle": "护理",
+    "comingSoon": "即将推出"
+  },
+  "shortHub": {
+    "study": "学习",
+    "studyDesc": "从母语回忆日语（含音频）",
+    "hearing": "听力",
+    "hearingDesc": "会话听力＋单词发音",
+    "answer": "回答",
+    "answerDesc": "用麦克风说日语作答",
+    "comingSoon": "即将推出"
+  },
+  "sakubun": {
+    "title": "造句",
+    "promptHint": "用日语表达这句话",
+    "answerHint": "答案",
+    "showAnswer": "查看答案",
+    "again": "再来",
+    "gotIt": "会了"
+  },
+  "chobun": {
+    "title": "长文",
+    "body": "新闻、广播、长篇文章的听力与造句。",
     "comingSoon": "即将推出"
   }
 }
