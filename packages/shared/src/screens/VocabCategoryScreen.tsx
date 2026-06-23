@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { Text } from '../Text';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { colors, spacing, radius } from '../theme';
 import type { RootStackParamList } from '../types';
@@ -17,17 +17,20 @@ export default function VocabCategoryScreen() {
   const { WORD_CATEGORIES } = useAppData();
   const lessons = usePosterLessons();
   const navigation = useNavigation<Nav>();
+  const route = useRoute<any>();
+  // App B: 聞き流しタブ経由は posterOnly=true で単語カード(flash)を出さずポスターのみ
+  const posterOnly = !!route.params?.posterOnly;
   const { t, lang } = useI18n();
   const titleOf = (l: any) => (l?.titleL1 ? (l.titleL1[lang] ?? l.titleL1.en ?? l.title) : l?.title);
   const ss = useScaleStyle();
-  const [mode, setMode] = useState<'flash' | 'poster'>('flash');
+  const [mode, setMode] = useState<'flash' | 'poster'>(posterOnly ? 'poster' : 'flash');
   const hasPoster = lessons.length > 0;
-  const showPoster = hasPoster && mode === 'poster';
+  const showPoster = hasPoster && (posterOnly || mode === 'poster');
 
   const Header = (
     <View style={styles.head}>
-      <Text style={[styles.modeTitle, ss(20)]}>{t('vocab.modeTitle')}</Text>
-      {hasPoster && (
+      <Text style={[styles.modeTitle, ss(20)]}>{posterOnly ? t('vocab.modePoster') : t('vocab.modeTitle')}</Text>
+      {hasPoster && !posterOnly && (
         <View style={styles.seg}>
           <Pressable onPress={() => setMode('flash')} style={[styles.segBtn, mode === 'flash' && styles.segOn]}>
             <Text style={[styles.segTx, mode === 'flash' && styles.segTxOn]}>{t('vocab.modeFlashcard')}</Text>

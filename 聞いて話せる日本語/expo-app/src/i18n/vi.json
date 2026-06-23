@@ -25,7 +25,8 @@
     "grammar": "Ngữ pháp",
     "listening": "Nghe thụ động",
     "vocabulary": "Từ vựng",
-    "home": "Trang chủ"
+    "home": "Trang chủ",
+    "vocation": "Nghề nghiệp"
   },
   "directions": {
     "ja2ne": "Tiếng Nhật → Tiếng Việt",
@@ -294,5 +295,17 @@
     "badge_30": "30 ngày liên tiếp",
     "badge_30_hint": "Học liên tục 30 ngày",
     "badge_achieved": "Đạt được"
+  },
+  "listeningHub": {
+    "nagashi": "Nghe hội thoại",
+    "nagashiDesc": "Phát hội thoại liên tục",
+    "poster": "Âm thanh từ vựng",
+    "posterDesc": "Nghe từ vựng qua áp phích"
+  },
+  "vocation": {
+    "title": "Tiếng Nhật nghề nghiệp",
+    "body": "Cụm từ theo ngành nghề cho lao động kỹ năng đặc định (bắt đầu với điều dưỡng).",
+    "kaigoTitle": "Điều dưỡng",
+    "comingSoon": "Sắp ra mắt"
   }
 }

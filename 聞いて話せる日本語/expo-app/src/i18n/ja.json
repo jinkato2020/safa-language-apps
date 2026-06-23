@@ -25,7 +25,8 @@
     "grammar": "文法",
     "listening": "聞き流し",
     "vocabulary": "単語",
-    "home": "ホーム"
+    "home": "ホーム",
+    "vocation": "職業"
   },
   "directions": {
     "ja2ne": "日本語 → ネパール語",
@@ -294,5 +295,17 @@
     "badge_30": "30日連続",
     "badge_30_hint": "30日続ける",
     "badge_achieved": "達成"
+  },
+  "listeningHub": {
+    "nagashi": "会話の聞き流し",
+    "nagashiDesc": "会話を連続再生",
+    "poster": "単語音声",
+    "posterDesc": "ポスターで単語を聞く"
+  },
+  "vocation": {
+    "title": "職業日本語",
+    "body": "特定技能の職種別フレーズ(介護など)を学べます。",
+    "kaigoTitle": "介護",
+    "comingSoon": "準備中"
   }
 }

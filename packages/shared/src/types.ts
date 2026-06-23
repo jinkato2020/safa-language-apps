@@ -65,7 +65,8 @@ export type RootStackParamList = {
     startIndex?: number;
     source?: 'grammar';
   };
-  VocabCategory: undefined;
+  ListeningHub: undefined;
+  VocabCategory: { posterOnly?: boolean } | undefined;
   VocabDirection: { categoryId: number };
   Flashcard: { categoryId: number; direction: 'ne2ja' | 'ja2ne' };
   SettingsMain: undefined;

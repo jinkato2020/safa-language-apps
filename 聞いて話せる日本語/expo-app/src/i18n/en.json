@@ -25,7 +25,8 @@
     "grammar": "Grammar",
     "listening": "Passive listening",
     "vocabulary": "Vocabulary",
-    "home": "Home"
+    "home": "Home",
+    "vocation": "Vocation"
   },
   "directions": {
     "ja2ne": "Japanese → English",
@@ -294,5 +295,17 @@
     "badge_30": "30-Day Streak",
     "badge_30_hint": "Keep 30 days",
     "badge_achieved": "Done"
+  },
+  "listeningHub": {
+    "nagashi": "Conversation",
+    "nagashiDesc": "Play conversations continuously",
+    "poster": "Word voice",
+    "posterDesc": "Listen to words with posters"
+  },
+  "vocation": {
+    "title": "Vocational Japanese",
+    "body": "Job-specific phrases for Specified Skilled Worker fields (caregiving first).",
+    "kaigoTitle": "Caregiving",
+    "comingSoon": "Coming soon"
   }
 }

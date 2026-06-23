@@ -32,6 +32,8 @@ import { useI18n } from './i18n';
 import { ListeningAudioProvider } from './ListeningAudioContext';
 import type { RootStackParamList } from './types';
 import HomeScreen from './screens/HomeScreen';
+import VocationScreen from './screens/VocationScreen';
+import ListeningHubScreen from './screens/ListeningHubScreen';
 import { DesignThemeProvider } from './design';
 
 const Tab = createBottomTabNavigator();
@@ -132,11 +134,15 @@ function GrammarStackNav({ defaultStackOptions }: { defaultStackOptions: any }) 
   );
 }
 
-function ListeningStackNav({ defaultStackOptions }: { defaultStackOptions: any }) {
+function ListeningStackNav({ defaultStackOptions, posterInListening }: { defaultStackOptions: any; posterInListening?: boolean }) {
   return (
     <ListenStack.Navigator screenOptions={defaultStackOptions}>
+      {/* App B: 聞き流しタブにハブ(会話聞き流し/単語音声ポスター)を統合。ハブを初期画面に。 */}
+      {posterInListening && <ListenStack.Screen name="ListeningHub" component={ListeningHubScreen} />}
       <ListenStack.Screen name="Theme" component={ThemeScreen} initialParams={{ mode: 'listening' }} />
       <ListenStack.Screen name="Listening" component={ListeningScreen} />
+      {posterInListening && <ListenStack.Screen name="VocabCategory" component={VocabCategoryScreen} initialParams={{ posterOnly: true }} />}
+      {posterInListening && <ListenStack.Screen name="PosterAudio" component={PosterAudioScreen} />}
       <ListenStack.Screen name="SettingsMain" component={SettingsScreen} />
     </ListenStack.Navigator>
   );
@@ -156,10 +162,27 @@ function VocabularyStackNav({ defaultStackOptions }: { defaultStackOptions: any 
 }
 
 // ─── ボトムタブ ─────────────────────────────
-function MainTabs({ defaultStackOptions, progressStorageKey }: { defaultStackOptions: any; progressStorageKey: string }) {
+function VocationIcon({ color, focused }: { color: string; focused: boolean }) {
+  return <TabIcon color={color} focused={focused}><Rect x={3} y={7} width={18} height={13} rx={2} /><Path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></TabIcon>;
+}
+
+// アプリ別タブ構成。tabs 未指定なら現状の5タブ(App A/C はこのまま=無改修)。
+export type TabKey = 'home' | 'conversation' | 'grammar' | 'listening' | 'vocabulary' | 'vocation';
+const DEFAULT_TABS: TabKey[] = ['home', 'conversation', 'grammar', 'listening', 'vocabulary'];
+
+function MainTabs({ defaultStackOptions, progressStorageKey, tabs, posterInListening }: { defaultStackOptions: any; progressStorageKey: string; tabs?: TabKey[]; posterInListening?: boolean }) {
   const { bottom } = useSafeAreaInsets();
   const { t } = useI18n();
   const ss = useGlobalScaleStyle();
+  const list = tabs && tabs.length ? tabs : DEFAULT_TABS;
+  const defs = {
+    home:         { name: 'HomeTab',         title: t('nav.home'),         icon: HomeIcon,       render: () => <HomeScreen storageKey={progressStorageKey} /> },
+    conversation: { name: 'ConversationTab', title: t('nav.conversation'), icon: ChatIcon,       render: () => <ConversationStackNav defaultStackOptions={defaultStackOptions} /> },
+    grammar:      { name: 'GrammarTab',      title: t('nav.grammar'),      icon: GrammarIcon,    render: () => <GrammarStackNav defaultStackOptions={defaultStackOptions} /> },
+    listening:    { name: 'ListeningTab',    title: t('nav.listening'),    icon: HeadphonesIcon, render: () => <ListeningStackNav defaultStackOptions={defaultStackOptions} posterInListening={posterInListening} /> },
+    vocabulary:   { name: 'VocabularyTab',   title: t('nav.vocabulary'),   icon: CardsIcon,      render: () => <VocabularyStackNav defaultStackOptions={defaultStackOptions} /> },
+    vocation:     { name: 'VocationTab',     title: t('nav.vocation'),     icon: VocationIcon,   render: () => <VocationScreen /> },
+  };
   return (
     <Tab.Navigator
       screenOptions={{
@@ -170,36 +193,14 @@ function MainTabs({ defaultStackOptions, progressStorageKey }: { defaultStackOpt
         tabBarLabelStyle: { ...ss(11), fontWeight: '500' },
       }}
     >
-      <Tab.Screen
-        name="HomeTab"
-        options={{ title: t('nav.home'), tabBarIcon: HomeIcon }}
-      >
-        {() => <HomeScreen storageKey={progressStorageKey} />}
-      </Tab.Screen>
-      <Tab.Screen
-        name="ConversationTab"
-        options={{ title: t('nav.conversation'), tabBarIcon: ChatIcon }}
-      >
-        {() => <ConversationStackNav defaultStackOptions={defaultStackOptions} />}
-      </Tab.Screen>
-      <Tab.Screen
-        name="GrammarTab"
-        options={{ title: t('nav.grammar'), tabBarIcon: GrammarIcon }}
-      >
-        {() => <GrammarStackNav defaultStackOptions={defaultStackOptions} />}
-      </Tab.Screen>
-      <Tab.Screen
-        name="ListeningTab"
-        options={{ title: t('nav.listening'), tabBarIcon: HeadphonesIcon }}
-      >
-        {() => <ListeningStackNav defaultStackOptions={defaultStackOptions} />}
-      </Tab.Screen>
-      <Tab.Screen
-        name="VocabularyTab"
-        options={{ title: t('nav.vocabulary'), tabBarIcon: CardsIcon }}
-      >
-        {() => <VocabularyStackNav defaultStackOptions={defaultStackOptions} />}
-      </Tab.Screen>
+      {list.map((k) => {
+        const d = defs[k];
+        return (
+          <Tab.Screen key={k} name={d.name} options={{ title: d.title, tabBarIcon: d.icon }}>
+            {d.render}
+          </Tab.Screen>
+        );
+      })}
     </Tab.Navigator>
   );
 }
@@ -268,6 +269,10 @@ export type AppShellProps = {
   posterEnsure?: PosterResolver['ensure'];
   /** 共有ホーム(継続/成長/バッジ)の進捗保存キー。アプリ毎に固有(例 '@japanese_app/progress_v1')。 */
   progressStorageKey: string;
+  /** アプリ別タブ構成。未指定なら現状5タブ(home/conversation/grammar/listening/vocabulary)。App B のみ ['home','conversation','vocation','listening'] 等を渡す。 */
+  tabs?: TabKey[];
+  /** true で聞き流しタブにハブ(会話聞き流し/単語音声ポスター)を統合(App B。単語タブを廃した分のポスターをここへ)。 */
+  posterInListening?: boolean;
 };
 
 // スプラッシュは「アプリ起動時の1回だけ」。言語切替で PackGate が data=null にして
@@ -275,7 +280,7 @@ export type AppShellProps = {
 // (毎回スプラッシュ動画が再生されて白画面で固まって見えるのを防ぐ)。
 let splashShownOnce = false;
 
-export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure, progressStorageKey }: AppShellProps) {
+export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure, progressStorageKey, tabs, posterInListening }: AppShellProps) {
   const [splashDone, setSplashDone] = useState(splashShownOnce);
   const defaultStackOptions = useRef(makeDefaultStackOptions(HeaderTitle)).current;
   const { themeMode } = useSettings();
@@ -312,7 +317,7 @@ export function AppShell({ splashSource, posterLessons, posterResolveUri, poster
         <PosterProvider lessons={posterLessons || []} resolveUri={posterResolveUri} ensure={posterEnsure}>
           <ListeningAudioProvider>
             <DesignThemeProvider scheme={scheme}>
-              <MainTabs defaultStackOptions={defaultStackOptions} progressStorageKey={progressStorageKey} />
+              <MainTabs defaultStackOptions={defaultStackOptions} progressStorageKey={progressStorageKey} tabs={tabs} posterInListening={posterInListening} />
             </DesignThemeProvider>
           </ListeningAudioProvider>
         </PosterProvider>

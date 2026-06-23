@@ -25,7 +25,8 @@
     "grammar": "문법",
     "listening": "흘려듣기",
     "vocabulary": "어휘",
-    "home": "홈"
+    "home": "홈",
+    "vocation": "직업"
   },
   "directions": {
     "ja2ne": "일본어 → 한국어",
@@ -294,5 +295,17 @@
     "badge_30": "30일 연속",
     "badge_30_hint": "30일 계속하기",
     "badge_achieved": "달성"
+  },
+  "listeningHub": {
+    "nagashi": "회화 듣기",
+    "nagashiDesc": "회화 연속 재생",
+    "poster": "단어 음성",
+    "posterDesc": "포스터로 단어 듣기"
+  },
+  "vocation": {
+    "title": "직업 일본어",
+    "body": "특정기능 직종별 표현(요양 우선)을 배울 수 있습니다.",
+    "kaigoTitle": "요양(개호)",
+    "comingSoon": "준비 중"
   }
 }

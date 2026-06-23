@@ -264,7 +264,9 @@ export default function App() {
           <PackGate>
             {/* ポスター音声学習: テーマ1〜5(家族/数字/体/色と形/食べ物)を多言語(bn/en/ne/vi)対応で再有効化。実機検証用。
                 資源(音声/画像)は packs-poster からDL: posterUri(file://解決)/ensurePosterPack(DL)を注入。 */}
-            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={POSTER_LESSONS} posterResolveUri={posterUri} posterEnsure={ensurePosterPack} progressStorageKey="@japanese_app/progress_v1" />
+            {/* App B 構造大改定(2026-06-23): ホーム/会話/職業(新設)/聞き流し の4タブ。
+                文法・単語カードは削除、ポスター単語音声は posterInListening で聞き流しタブへ統合。 */}
+            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={POSTER_LESSONS} posterResolveUri={posterUri} posterEnsure={ensurePosterPack} progressStorageKey="@japanese_app/progress_v1" tabs={['home', 'conversation', 'vocation', 'listening']} posterInListening />
           </PackGate>
         </FirstRunGate>
       </SettingsProvider>
