@@ -1,6 +1,6 @@
 // データモデル
 
-export type Mode = 'conversation' | 'listening' | 'grammar' | 'vocabulary' | 'sakubun' | 'answer';
+export type Mode = 'conversation' | 'listening' | 'grammar' | 'vocabulary' | 'sakubun';
 
 export interface ThemeMeta {
   id: number;

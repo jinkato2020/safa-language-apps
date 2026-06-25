@@ -316,9 +316,6 @@
     "studyDesc": "Recall Japanese from your language, with audio",
     "hearing": "Listening",
     "hearingDesc": "Conversation listening + word voice",
-    "answer": "Speak",
-    "answerDesc": "Speak Japanese with the mic",
-    "comingSoon": "Coming soon"
   },
   "sakubun": {
     "title": "Compose",

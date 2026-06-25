@@ -138,6 +138,16 @@ function DownloadView(
 //  (音声プレイヤー解放等)で固まる/スプラッシュ再生で白画面になる問題があった。
 //  そこで「旧データを保持したまま新パックを読み込み、完了で差し替え」、読み込み中/
 //  失敗は AppShell の上にオーバーレイで重ねる方式に変更(再マウントしない)。
+// ─── パック設定 ─────────────────────────────────────────────────────────────
+// 短文パック(会話例文+日本語音声+母語音声)。
+// 長文と切り分けるため一時オフ。再有効化: false → true に変えてビルド。
+/* 有効時: 言語選択後に短文パック(short-{lang}.zip)をDL → 短文タブが完全動作 */
+const SHORT_PACK_ENABLED = false;
+
+// 長文パック(長文テキスト+音声)。コンテンツ追加時に SHORT_PACK_ENABLED と並列で実装。
+// 有効時: 言語選択後に長文パック(long-{lang}.zip)を SHORT パックと同時にDL。
+// const LONG_PACK_ENABLED = false;
+
 // セッション中に一度ロードした言語パックをメモリ保持。再切替を即時化(再DL/再チェック/再composeなし)。
 //  最新版チェックは初回ロード時とアプリ再起動時に行えば十分。
 const sessionPackCache: Record<string, AppData> = {};
@@ -145,7 +155,10 @@ const sessionPackCache: Record<string, AppData> = {};
 function PackGate({ children }: { children: ReactNode }) {
   const { lang, setLang } = useI18n();
   const packLang = toPackLang(lang); // ja等→ne。実際にDL/同梱判定するL1。
-  const [data, setData] = useState<AppData | null>(() => bundledPack(packLang));
+  // 短文パックオフ時 or Web dev ?skip_pack=1 → ダウンロードなしで空データで起動
+  const skipPack = !SHORT_PACK_ENABLED || (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('skip_pack') === '1');
+  const emptyData: AppData = { version: 'dev', THEMES: [], LEVELS: [], EXAMPLES: {}, WORD_CATEGORIES: [], WORDS: {}, GRAMMAR_THEMES: [], GRAMMAR_EXAMPLES: {}, VOCAB: {}, audio: {} as any, getExamples: () => [], getWords: () => [], getGrammarExamples: () => [] };
+  const [data, setData] = useState<AppData | null>(() => skipPack ? emptyData : bundledPack(packLang));
   const dataLangRef = useRef<string | null>(data ? packLang : null); // dataがどの言語のものか
   const shownLangRef = useRef<string>(lang); // 現在表示中データのUI言語(DL拒否時の戻り先)
   const [progress, setProgress] = useState<{ done: number; total: number; label?: string; step?: number; steps?: number }>({ done: 0, total: 0 });
@@ -157,6 +170,7 @@ function PackGate({ children }: { children: ReactNode }) {
   const confirmedLangRef = useRef<string | null>(null); // ユーザーがDL同意した言語
   const skipUpdateLangRef = useRef<string | null>(null); // 「後で」で更新を見送った言語(既存音声で起動)
   useEffect(() => {
+    if (skipPack) return; // 短文パックオフ(SHORT_PACK_ENABLED = false)
     let alive = true;
     const bundled = bundledPack(packLang);
     if (bundled) { setData(bundled); dataLangRef.current = packLang; shownLangRef.current = lang; setLoading(false); setError(false); setConfirm(null); return; }
@@ -242,6 +256,14 @@ function FirstRunGate({ children }: { children: ReactNode }) {
   const [needSelect, setNeedSelect] = useState(false);
   useEffect(() => {
     let alive = true;
+    // Web dev: ?lang=ja 等でファーストランをスキップ(ブラウザ確認用)
+    const devLang = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('lang') : null;
+    if (devLang && PACK_LANGS.concat(['ja']).includes(devLang)) {
+      setLang(devLang);
+      AsyncStorage.setItem(L1_CHOSEN_KEY, devLang).catch(() => {});
+      setChecked(true);
+      return;
+    }
     AsyncStorage.getItem(L1_CHOSEN_KEY)
       .then(v => { if (alive) { setNeedSelect(!v); setChecked(true); } })
       .catch(() => { if (alive) { setNeedSelect(true); setChecked(true); } });

@@ -165,19 +165,17 @@ function VocabularyStackNav({ defaultStackOptions }: { defaultStackOptions: any 
   );
 }
 
-// 短文タブ(App B): ハブ(学習/ヒアリング/回答)＋作文学習(Sakubun)＋聞き流し＋ポスター。
-// answerScreen(マイク回答=ネイティブ依存・App側注入)があれば回答を登録(増分2)。
-function ShortStackNav({ defaultStackOptions, answerScreen }: { defaultStackOptions: any; answerScreen?: any }) {
+// 短文タブ(App B): ハブ(学習/ヒアリング)＋作文学習(Sakubun)＋聞き流し＋ポスター。
+function ShortStackNav({ defaultStackOptions }: { defaultStackOptions: any }) {
   return (
     <ShortStack.Navigator screenOptions={defaultStackOptions}>
-      <ShortStack.Screen name="ShortHub">{() => <ShortHubScreen answerReady={!!answerScreen} />}</ShortStack.Screen>
+      <ShortStack.Screen name="ShortHub" component={ShortHubScreen} />
       <ShortStack.Screen name="Theme" component={ThemeScreen} initialParams={{ mode: 'sakubun' }} />
       <ShortStack.Screen name="Sakubun" component={SakubunScreen} />
       <ShortStack.Screen name="ListeningHub" component={ListeningHubScreen} />
       <ShortStack.Screen name="Listening" component={ListeningScreen} />
       <ShortStack.Screen name="VocabCategory" component={VocabCategoryScreen} initialParams={{ posterOnly: true }} />
       <ShortStack.Screen name="PosterAudio" component={PosterAudioScreen} />
-      {answerScreen && <ShortStack.Screen name="Answer" component={answerScreen} />}
       <ShortStack.Screen name="SettingsMain" component={SettingsScreen} />
     </ShortStack.Navigator>
   );
@@ -202,7 +200,7 @@ function DictIcon({ color, focused }: { color: string; focused: boolean }) {
 export type TabKey = 'home' | 'conversation' | 'grammar' | 'listening' | 'vocabulary' | 'vocation' | 'short' | 'long' | 'dict';
 const DEFAULT_TABS: TabKey[] = ['home', 'conversation', 'grammar', 'listening', 'vocabulary'];
 
-function MainTabs({ defaultStackOptions, progressStorageKey, tabs, posterInListening, answerScreen, dictData }: { defaultStackOptions: any; progressStorageKey: string; tabs?: TabKey[]; posterInListening?: boolean; answerScreen?: any; dictData?: DictData }) {
+function MainTabs({ defaultStackOptions, progressStorageKey, tabs, posterInListening, dictData }: { defaultStackOptions: any; progressStorageKey: string; tabs?: TabKey[]; posterInListening?: boolean; dictData?: DictData }) {
   const { bottom } = useSafeAreaInsets();
   const { t } = useI18n();
   const ss = useGlobalScaleStyle();
@@ -213,7 +211,7 @@ function MainTabs({ defaultStackOptions, progressStorageKey, tabs, posterInListe
     grammar:      { name: 'GrammarTab',      title: t('nav.grammar'),      icon: GrammarIcon,    render: () => <GrammarStackNav defaultStackOptions={defaultStackOptions} /> },
     listening:    { name: 'ListeningTab',    title: t('nav.listening'),    icon: HeadphonesIcon, render: () => <ListeningStackNav defaultStackOptions={defaultStackOptions} posterInListening={posterInListening} /> },
     vocabulary:   { name: 'VocabularyTab',   title: t('nav.vocabulary'),   icon: CardsIcon,      render: () => <VocabularyStackNav defaultStackOptions={defaultStackOptions} /> },
-    short:        { name: 'ShortTab',        title: t('nav.short'),        icon: ShortIcon,      render: () => <ShortStackNav defaultStackOptions={defaultStackOptions} answerScreen={answerScreen} /> },
+    short:        { name: 'ShortTab',        title: t('nav.short'),        icon: ShortIcon,      render: () => <ShortStackNav defaultStackOptions={defaultStackOptions} /> },
     long:         { name: 'LongTab',         title: t('nav.long'),         icon: LongIcon,       render: () => <ScaffoldScreen area="chobun" /> },
     vocation:     { name: 'VocationTab',     title: t('nav.vocation'),     icon: VocationIcon,   render: () => <ScaffoldScreen area="vocation" /> },
     dict:         { name: 'DictTab',         title: t('nav.dict'),         icon: DictIcon,       render: () => <DictScreen data={dictData} /> },
@@ -308,8 +306,6 @@ export type AppShellProps = {
   tabs?: TabKey[];
   /** true で聞き流しタブにハブ(会話聞き流し/単語音声ポスター)を統合(App B。単語タブを廃した分のポスターをここへ)。 */
   posterInListening?: boolean;
-  /** 短文タブの「回答(マイク)」画面。ネイティブ音声認識依存のためApp側が注入(増分2)。未注入なら回答は「準備中」。 */
-  answerScreen?: any;
   /** 辞書タブ用データ(JLPT同期の共有辞書 ja-vocab/ja-kanji)。アプリ固有(各 data/dict)なので注入する。未注入なら辞書は空。 */
   dictData?: DictData;
 };
@@ -318,8 +314,10 @@ export type AppShellProps = {
 // AppShell が再マウントされても、このモジュールレベルのフラグで再生をスキップする
 // (毎回スプラッシュ動画が再生されて白画面で固まって見えるのを防ぐ)。
 let splashShownOnce = false;
+// Web dev: ?skip_splash=1 でスプラッシュをスキップ(ブラウザUI確認用)
+if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('skip_splash') === '1') splashShownOnce = true;
 
-export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure, progressStorageKey, tabs, posterInListening, answerScreen, dictData }: AppShellProps) {
+export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure, progressStorageKey, tabs, posterInListening, dictData }: AppShellProps) {
   const [splashDone, setSplashDone] = useState(splashShownOnce);
   const defaultStackOptions = useRef(makeDefaultStackOptions(HeaderTitle)).current;
   const { themeMode } = useSettings();
@@ -356,7 +354,7 @@ export function AppShell({ splashSource, posterLessons, posterResolveUri, poster
         <PosterProvider lessons={posterLessons || []} resolveUri={posterResolveUri} ensure={posterEnsure}>
           <ListeningAudioProvider>
             <DesignThemeProvider scheme={scheme}>
-              <MainTabs defaultStackOptions={defaultStackOptions} progressStorageKey={progressStorageKey} tabs={tabs} posterInListening={posterInListening} answerScreen={answerScreen} dictData={dictData} />
+              <MainTabs defaultStackOptions={defaultStackOptions} progressStorageKey={progressStorageKey} tabs={tabs} posterInListening={posterInListening} dictData={dictData} />
             </DesignThemeProvider>
           </ListeningAudioProvider>
         </PosterProvider>
