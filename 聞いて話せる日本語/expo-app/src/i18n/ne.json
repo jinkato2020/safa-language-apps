@@ -29,6 +29,7 @@
     "vocation": "पेशा",
     "short": "छोटो वाक्य",
     "long": "लामो पाठ",
+    "appendix": "परिशिष्ट",
     "dict": "शब्दकोश"
   },
   "directions": {
@@ -339,5 +340,16 @@
     "noResults": "फेला परेन",
     "tooMany": "माथिल्ला {n} देखाइँदै",
     "attribution": "शब्द र कान्जी: JMdict/KANJIDIC2 © EDRDG (CC BY-SA). पर्यायवाची: Japanese WordNet © NICT."
+  },
+  "appendix": {
+    "jlpt": "JLPT पढाइ र सुनाइ",
+    "jlptDesc": "परीक्षा अनुकूल पढाइ र सुनाइका प्रश्नहरू",
+    "poster": "पोस्टर श्रवण",
+    "posterDesc": "पोस्टर हेर्दै अडियो सुन्नुहोस्"
+  },
+  "jlpt": {
+    "title": "JLPT पढाइ र सुनाइ",
+    "body": "परीक्षा अनुकूल पढाइ र सुनाइका प्रश्नहरू समावेश गर्दछ।",
+    "comingSoon": "तयारी हुँदैछ"
   }
 }

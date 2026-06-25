@@ -88,6 +88,7 @@
     "vocation": "职业",
     "short": "短句",
     "long": "长文",
+    "appendix": "附录",
     "dict": "词典"
   },
   "directions": {
@@ -339,5 +340,16 @@
     "noResults": "未找到结果",
     "tooMany": "显示前 {n} 条",
     "attribution": "词汇与汉字：JMdict/KANJIDIC2 © EDRDG (CC BY-SA)。近义词：日本語WordNet © NICT。"
+  },
+  "appendix": {
+    "jlpt": "JLPT 阅读与听力",
+    "jlptDesc": "考试准备的阅读与听力练习",
+    "poster": "海报朗读",
+    "posterDesc": "看海报同时收听音频"
+  },
+  "jlpt": {
+    "title": "JLPT 阅读与听力",
+    "body": "收录考试准备的阅读与听力练习题。",
+    "comingSoon": "即将推出"
   }
 }

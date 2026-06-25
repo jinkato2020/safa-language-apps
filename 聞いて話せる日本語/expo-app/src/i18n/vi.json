@@ -29,6 +29,7 @@
     "vocation": "Nghề nghiệp",
     "short": "Câu ngắn",
     "long": "Đoạn dài",
+    "appendix": "Bổ sung",
     "dict": "Từ điển"
   },
   "directions": {
@@ -339,5 +340,16 @@
     "noResults": "Không tìm thấy",
     "tooMany": "Hiển thị {n} mục đầu",
     "attribution": "Từ vựng & Kanji: JMdict/KANJIDIC2 © EDRDG (CC BY-SA). Từ đồng nghĩa: Japanese WordNet © NICT."
+  },
+  "appendix": {
+    "jlpt": "JLPT Đọc & Nghe",
+    "jlptDesc": "Bài tập đọc & nghe theo chuẩn thi",
+    "poster": "Nghe poster",
+    "posterDesc": "Nghe âm thanh khi xem poster"
+  },
+  "jlpt": {
+    "title": "JLPT Đọc & Nghe",
+    "body": "Câu hỏi đọc và nghe theo chuẩn thi JLPT.",
+    "comingSoon": "Sắp có"
   }
 }

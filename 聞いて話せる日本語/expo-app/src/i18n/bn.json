@@ -29,6 +29,7 @@
     "vocation": "পেশা",
     "short": "ছোট বাক্য",
     "long": "দীর্ঘ পাঠ",
+    "appendix": "পরিশিষ্ট",
     "dict": "অভিধান"
   },
   "directions": {
@@ -339,5 +340,16 @@
     "noResults": "কিছু পাওয়া যায়নি",
     "tooMany": "শীর্ষ {n}টি দেখানো হচ্ছে",
     "attribution": "শব্দ ও কাঞ্জি: JMdict/KANJIDIC2 © EDRDG (CC BY-SA). সমার্থক: Japanese WordNet © NICT."
+  },
+  "appendix": {
+    "jlpt": "JLPT পঠন ও শ্রবণ",
+    "jlptDesc": "পরীক্ষামুখী পঠন ও শ্রবণ অনুশীলন",
+    "poster": "পোস্টার শ্রবণ",
+    "posterDesc": "পোস্টার দেখতে দেখতে অডিও শুনুন"
+  },
+  "jlpt": {
+    "title": "JLPT পঠন ও শ্রবণ",
+    "body": "পরীক্ষা অনুযায়ী পঠন ও শ্রবণ প্রশ্ন।",
+    "comingSoon": "শীঘ্রই আসছে"
   }
 }

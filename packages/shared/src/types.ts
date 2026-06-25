@@ -67,6 +67,8 @@ export type RootStackParamList = {
   };
   ListeningHub: undefined;
   ShortHub: undefined;
+  AppendixHub: undefined;
+  JlptExercise: undefined;
   Sakubun: { themeId: number; levelId: number; startIndex?: number };
   VocabCategory: { posterOnly?: boolean } | undefined;
   VocabDirection: { categoryId: number };

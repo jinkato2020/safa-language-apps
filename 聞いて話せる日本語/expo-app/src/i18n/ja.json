@@ -29,6 +29,7 @@
     "vocation": "職業",
     "short": "短文",
     "long": "長文",
+    "appendix": "付録",
     "dict": "辞書"
   },
   "directions": {
@@ -328,6 +329,17 @@
   "chobun": {
     "title": "長文",
     "body": "ニュース・アナウンス・長めの文章のヒアリングと作文。",
+    "comingSoon": "これから"
+  },
+  "appendix": {
+    "jlpt": "JLPT 読解・聴解",
+    "jlptDesc": "試験準拠の読解・聴解問題",
+    "poster": "ポスター朗読",
+    "posterDesc": "ポスターを見ながら音声を聞く"
+  },
+  "jlpt": {
+    "title": "JLPT 読解・聴解",
+    "body": "試験準拠の読解・聴解練習問題を収録します。",
     "comingSoon": "準備中"
   },
   "dict": {

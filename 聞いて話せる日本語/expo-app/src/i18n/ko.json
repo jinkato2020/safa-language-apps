@@ -29,6 +29,7 @@
     "vocation": "직업",
     "short": "단문",
     "long": "장문",
+    "appendix": "부록",
     "dict": "사전"
   },
   "directions": {
@@ -339,5 +340,16 @@
     "noResults": "결과가 없습니다",
     "tooMany": "상위 {n}개 표시",
     "attribution": "어휘·한자: JMdict/KANJIDIC2 © EDRDG (CC BY-SA). 유의어: 일본어 WordNet © NICT."
+  },
+  "appendix": {
+    "jlpt": "JLPT 독해 & 청해",
+    "jlptDesc": "시험 기반 독해 & 청해 문제",
+    "poster": "포스터 듣기",
+    "posterDesc": "포스터를 보면서 음성 듣기"
+  },
+  "jlpt": {
+    "title": "JLPT 독해 & 청해",
+    "body": "시험 기반 독해 및 청해 연습 문제를 수록합니다.",
+    "comingSoon": "준비 중"
   }
 }

@@ -29,6 +29,7 @@
     "vocation": "Vocation",
     "short": "Short",
     "long": "Long",
+    "appendix": "Extras",
     "dict": "Dictionary"
   },
   "directions": {
@@ -339,5 +340,16 @@
     "noResults": "No results found",
     "tooMany": "Showing top {n}",
     "attribution": "Vocabulary & kanji: JMdict/KANJIDIC2 © EDRDG (CC BY-SA). Synonyms: Japanese WordNet © NICT."
+  },
+  "appendix": {
+    "jlpt": "JLPT Reading & Listening",
+    "jlptDesc": "Exam-aligned reading & listening practice",
+    "poster": "Poster Audio",
+    "posterDesc": "Listen to audio while viewing poster"
+  },
+  "jlpt": {
+    "title": "JLPT Reading & Listening",
+    "body": "Exam-aligned reading and listening practice questions.",
+    "comingSoon": "Coming Soon"
   }
 }
