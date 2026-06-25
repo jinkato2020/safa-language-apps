@@ -319,7 +319,7 @@ export type AppShellProps = {
 // (毎回スプラッシュ動画が再生されて白画面で固まって見えるのを防ぐ)。
 let splashShownOnce = false;
 
-export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure, progressStorageKey, tabs, posterInListening, answerScreen }: AppShellProps) {
+export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure, progressStorageKey, tabs, posterInListening, answerScreen, dictData }: AppShellProps) {
   const [splashDone, setSplashDone] = useState(splashShownOnce);
   const defaultStackOptions = useRef(makeDefaultStackOptions(HeaderTitle)).current;
   const { themeMode } = useSettings();
@@ -356,7 +356,7 @@ export function AppShell({ splashSource, posterLessons, posterResolveUri, poster
         <PosterProvider lessons={posterLessons || []} resolveUri={posterResolveUri} ensure={posterEnsure}>
           <ListeningAudioProvider>
             <DesignThemeProvider scheme={scheme}>
-              <MainTabs defaultStackOptions={defaultStackOptions} progressStorageKey={progressStorageKey} tabs={tabs} posterInListening={posterInListening} answerScreen={answerScreen} />
+              <MainTabs defaultStackOptions={defaultStackOptions} progressStorageKey={progressStorageKey} tabs={tabs} posterInListening={posterInListening} answerScreen={answerScreen} dictData={dictData} />
             </DesignThemeProvider>
           </ListeningAudioProvider>
         </PosterProvider>
