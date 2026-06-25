@@ -54,7 +54,8 @@ on:
           - 'ios'
           - 'android'
 
-  # main に push されたら自動ビルド（App C の本体 + @safa/shared 経由でも反応）
+  # main に push されたら自動ビルド（App C 本体のみ。shared 変更では起動しない）
+  # shared を変えても App C を同時ビルドしない方針。必要なら workflow_dispatch で手動実行。
   # コミットメッセージに [skip ci] を含めるとスキップ可能
   push:
     branches:
@@ -62,7 +63,6 @@ on:
     paths:
       - '聞いて話せる英語/expo-app/**'
       - '聞いて話せる英語/audio/**'
-      - 'packages/shared/**'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/ios-build-english.yml'

@@ -23,14 +23,14 @@ on:
           - 'both'
           - 'ios'
           - 'android'
-  # main に push されたら自動ビルド（App A の本体 + @safa/shared 経由でも反応）
+  # main に push されたら自動ビルド（App A 本体のみ。shared 変更では起動しない）
+  # shared を変えても App A を同時ビルドしない方針。必要なら workflow_dispatch で手動実行。
   # コミットメッセージに [skip ci] を含めるとスキップ可能
   push:
     branches:
       - main
     paths:
       - '聞いて話せるネパール語/expo-app/**'
-      - 'packages/shared/**'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/ios-build-nepali.yml'
