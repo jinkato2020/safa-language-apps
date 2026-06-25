@@ -36,6 +36,7 @@ import ListeningHubScreen from './screens/ListeningHubScreen';
 import ShortHubScreen from './screens/ShortHubScreen';
 import SakubunScreen from './screens/SakubunScreen';
 import ScaffoldScreen from './screens/ScaffoldScreen';
+import DictScreen, { type DictData } from './screens/DictScreen';
 import { DesignThemeProvider } from './design';
 
 const Tab = createBottomTabNavigator();
@@ -192,12 +193,16 @@ function LongIcon({ color, focused }: { color: string; focused: boolean }) {
 function VocationIcon({ color, focused }: { color: string; focused: boolean }) {
   return <TabIcon color={color} focused={focused}><Rect x={3} y={7} width={18} height={13} rx={2} /><Path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></TabIcon>;
 }
+function DictIcon({ color, focused }: { color: string; focused: boolean }) {
+  // 開いた本(辞書)
+  return <TabIcon color={color} focused={focused}><Path d="M12 6.5C10.5 5 8 4.5 4 5v13c4-.5 6.5 0 8 1.5" /><Path d="M12 6.5C13.5 5 16 4.5 20 5v13c-4-.5-6.5 0-8 1.5z" /></TabIcon>;
+}
 
 // アプリ別タブ構成。tabs 未指定なら現状の5タブ(App A/C はこのまま=無改修)。
-export type TabKey = 'home' | 'conversation' | 'grammar' | 'listening' | 'vocabulary' | 'vocation' | 'short' | 'long';
+export type TabKey = 'home' | 'conversation' | 'grammar' | 'listening' | 'vocabulary' | 'vocation' | 'short' | 'long' | 'dict';
 const DEFAULT_TABS: TabKey[] = ['home', 'conversation', 'grammar', 'listening', 'vocabulary'];
 
-function MainTabs({ defaultStackOptions, progressStorageKey, tabs, posterInListening, answerScreen }: { defaultStackOptions: any; progressStorageKey: string; tabs?: TabKey[]; posterInListening?: boolean; answerScreen?: any }) {
+function MainTabs({ defaultStackOptions, progressStorageKey, tabs, posterInListening, answerScreen, dictData }: { defaultStackOptions: any; progressStorageKey: string; tabs?: TabKey[]; posterInListening?: boolean; answerScreen?: any; dictData?: DictData }) {
   const { bottom } = useSafeAreaInsets();
   const { t } = useI18n();
   const ss = useGlobalScaleStyle();
@@ -211,6 +216,7 @@ function MainTabs({ defaultStackOptions, progressStorageKey, tabs, posterInListe
     short:        { name: 'ShortTab',        title: t('nav.short'),        icon: ShortIcon,      render: () => <ShortStackNav defaultStackOptions={defaultStackOptions} answerScreen={answerScreen} /> },
     long:         { name: 'LongTab',         title: t('nav.long'),         icon: LongIcon,       render: () => <ScaffoldScreen area="chobun" /> },
     vocation:     { name: 'VocationTab',     title: t('nav.vocation'),     icon: VocationIcon,   render: () => <ScaffoldScreen area="vocation" /> },
+    dict:         { name: 'DictTab',         title: t('nav.dict'),         icon: DictIcon,       render: () => <DictScreen data={dictData} /> },
   };
   return (
     <Tab.Navigator
@@ -304,6 +310,8 @@ export type AppShellProps = {
   posterInListening?: boolean;
   /** 短文タブの「回答(マイク)」画面。ネイティブ音声認識依存のためApp側が注入(増分2)。未注入なら回答は「準備中」。 */
   answerScreen?: any;
+  /** 辞書タブ用データ(JLPT同期の共有辞書 ja-vocab/ja-kanji)。アプリ固有(各 data/dict)なので注入する。未注入なら辞書は空。 */
+  dictData?: DictData;
 };
 
 // スプラッシュは「アプリ起動時の1回だけ」。言語切替で PackGate が data=null にして

@@ -28,7 +28,8 @@
     "home": "Trang chủ",
     "vocation": "Nghề nghiệp",
     "short": "Câu ngắn",
-    "long": "Đoạn dài"
+    "long": "Đoạn dài",
+    "dict": "Từ điển"
   },
   "directions": {
     "ja2ne": "Tiếng Nhật → Tiếng Việt",
@@ -331,5 +332,15 @@
     "title": "Đoạn văn dài",
     "body": "Nghe và soạn câu cho tin tức, thông báo và đoạn văn dài.",
     "comingSoon": "Sắp ra mắt"
+  },
+  "dict": {
+    "searchPlaceholder": "Tìm theo từ, cách đọc, nghĩa",
+    "all": "Tất cả",
+    "hint": "Tìm theo từ, cách đọc (hiragana) hoặc nghĩa tiếng Anh.\nCó thể lọc theo cấp độ N5–N1.",
+    "count": "{n} mục",
+    "kanji": "Kanji (Hán tự)",
+    "noResults": "Không tìm thấy",
+    "tooMany": "Hiển thị {n} mục đầu",
+    "attribution": "Từ vựng & Kanji: JMdict/KANJIDIC2 © EDRDG (CC BY-SA). Từ đồng nghĩa: Japanese WordNet © NICT."
   }
 }

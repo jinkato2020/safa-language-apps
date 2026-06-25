@@ -28,7 +28,8 @@
     "home": "ホーム",
     "vocation": "職業",
     "short": "短文",
-    "long": "長文"
+    "long": "長文",
+    "dict": "辞書"
   },
   "directions": {
     "ja2ne": "日本語 → ネパール語",
@@ -331,5 +332,15 @@
     "title": "長文",
     "body": "ニュース・アナウンス・長めの文章のヒアリングと作文。",
     "comingSoon": "準備中"
+  },
+  "dict": {
+    "searchPlaceholder": "語・読み・意味で検索",
+    "all": "すべて",
+    "hint": "語や読み（ひらがな）、英語の意味で検索できます。\nN5〜N1のレベルで絞り込みも可能。",
+    "count": "{n} 語収録",
+    "kanji": "漢字",
+    "noResults": "見つかりませんでした",
+    "tooMany": "上位 {n} 件を表示",
+    "attribution": "語彙・漢字: JMdict/KANJIDIC2 © EDRDG (CC BY-SA). 類義語: 日本語WordNet © NICT."
   }
 }

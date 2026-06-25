@@ -29,6 +29,18 @@ import { posterUri, ensurePosterPack } from './src/posterPackLoader';
 const splashSource = require('./assets/safa-splash.mp4');
 const headerIconSource = require('./assets/icon.png');
 
+// 共有辞書(まいにちJLPTから同期: data/dict)。辞書タブに注入する。
+import jaVocab from './data/dict/ja-vocab.json';
+import jaKanji from './data/dict/ja-kanji.json';
+import jaExamples from './data/dict/ja-examples.json';
+import jaKanjiExamples from './data/dict/ja-kanji-examples.json';
+const dictData = {
+  vocab: jaVocab as any,
+  kanji: jaKanji as any,
+  examples: jaExamples as any,
+  kanjiExamples: jaKanjiExamples as any,
+};
+
 // L1(母語=パック)になり得る言語。ja は学習対象=共通コアなのでパックは無い。
 // UI言語が ja 等の場合はパックを ne にフォールバック。
 const PACK_LANGS = ['bn', 'en', 'vi', 'ne', 'zh', 'ko'];
@@ -266,7 +278,7 @@ export default function App() {
                 資源(音声/画像)は packs-poster からDL: posterUri(file://解決)/ensurePosterPack(DL)を注入。 */}
             {/* App B 構造(2026-06-23 改): ホーム/短文/長文/職業 の4タブ。
                 短文=学習(作文リコール)+ヒアリング(聞き流し+ポスター)+回答(マイク・増分2)。長文/職業=新規コンテンツ待ちスキャフォルド。 */}
-            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={POSTER_LESSONS} posterResolveUri={posterUri} posterEnsure={ensurePosterPack} progressStorageKey="@japanese_app/progress_v1" tabs={['home', 'short', 'long', 'vocation']} />
+            <AppShell splashSource={splashSource} headerIconSource={headerIconSource} posterLessons={POSTER_LESSONS} posterResolveUri={posterUri} posterEnsure={ensurePosterPack} progressStorageKey="@japanese_app/progress_v1" tabs={['home', 'short', 'long', 'dict']} dictData={dictData} />
           </PackGate>
         </FirstRunGate>
       </SettingsProvider>

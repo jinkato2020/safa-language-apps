@@ -1,0 +1,28 @@
+{
+  "name": "safa-ja-dictionary",
+  "version": "93b5d29b3d7f",
+  "syncedAt": "2026-06-24",
+  "source": "JLPTアプリ/data-build/dict (JMdict / KANJIDIC2 / 日本語WordNet)",
+  "counts": {
+    "vocab": 8033,
+    "vocabByLevel": {
+      "N5": 718,
+      "N4": 668,
+      "N3": 2139,
+      "N2": 1809,
+      "N1": 2699
+    },
+    "kanji": 1974,
+    "synonyms": 2317,
+    "examples": 7528,
+    "kanjiExamples": 1946
+  },
+  "files": [
+    "ja-vocab.json",
+    "ja-kanji.json",
+    "ja-synonyms.json",
+    "ja-examples.json",
+    "ja-kanji-examples.json"
+  ],
+  "license": "JMdict/KANJIDIC2=CC BY-SA (EDRDG), 日本語WordNet=NICT, 例文=Tatoeba/田中コーパス CC-BY. 帰属表示必須."
+}

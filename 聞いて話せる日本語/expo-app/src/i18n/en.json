@@ -28,7 +28,8 @@
     "home": "Home",
     "vocation": "Vocation",
     "short": "Short",
-    "long": "Long"
+    "long": "Long",
+    "dict": "Dictionary"
   },
   "directions": {
     "ja2ne": "Japanese → English",
@@ -331,5 +332,15 @@
     "title": "Long passages",
     "body": "Listening & composition for news, announcements and longer texts.",
     "comingSoon": "Coming soon"
+  },
+  "dict": {
+    "searchPlaceholder": "Search word, reading, or meaning",
+    "all": "All",
+    "hint": "Search by word, reading (hiragana), or English meaning.\nFilter by level (N5–N1).",
+    "count": "{n} entries",
+    "kanji": "Kanji",
+    "noResults": "No results found",
+    "tooMany": "Showing top {n}",
+    "attribution": "Vocabulary & kanji: JMdict/KANJIDIC2 © EDRDG (CC BY-SA). Synonyms: Japanese WordNet © NICT."
   }
 }

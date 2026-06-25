@@ -28,7 +28,8 @@
     "home": "홈",
     "vocation": "직업",
     "short": "단문",
-    "long": "장문"
+    "long": "장문",
+    "dict": "사전"
   },
   "directions": {
     "ja2ne": "일본어 → 한국어",
@@ -331,5 +332,15 @@
     "title": "장문",
     "body": "뉴스·안내방송·긴 글의 듣기와 작문.",
     "comingSoon": "준비 중"
+  },
+  "dict": {
+    "searchPlaceholder": "단어·읽기·뜻으로 검색",
+    "all": "전체",
+    "hint": "단어, 읽기(히라가나), 영어 뜻으로 검색할 수 있습니다.\nN5~N1 레벨로 필터링도 가능합니다.",
+    "count": "{n}개 단어",
+    "kanji": "한자",
+    "noResults": "결과가 없습니다",
+    "tooMany": "상위 {n}개 표시",
+    "attribution": "어휘·한자: JMdict/KANJIDIC2 © EDRDG (CC BY-SA). 유의어: 일본어 WordNet © NICT."
   }
 }

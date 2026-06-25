@@ -1,17 +1,31 @@
 {
   "_about": "App家族(聞いて話せるシリーズ)の横断状態ファイル。セッション分離の調整レイヤ。各セッションは開始時に読み、節目で更新する。安定仕様(不変)は『ポスター成果物契約.md』、本ファイルは動的状態。",
-  "updated": "2026-06-19",
+  "updated": "2026-06-25",
   "coordinationModel": {
     "mode": "session-separation + app-state.json",
     "rule": "App固有作業はApp別セッションで並行可。共有コードは sharedLock を取得した1セッションだけが編集する。司令塔(全集約)モデルは廃止(=1セッションにコンテキストが肥大して上限に達する原因だった)。真に横断的な一括処理が要る時だけ workflow で一時的に起動する。",
     "writeRule": "【必須】各セッションは節目(成果物生成/方針変更/ビルド・公開)ごとに本ファイルを自分で更新する。指示待ち不可。受動的な掲示板では誰も書かず無意味になる。両CLAUDE.md(聞いて話せるシリーズ/多言語教材)に常設ルールとして記載済(2026-06-19)。",
-    "sharedPaths": ["packages/shared", "多言語教材/00_共通/tools (render_pair.mjs 等)"]
+    "sharedPaths": [
+      "packages/shared",
+      "多言語教材/00_共通/tools (render_pair.mjs 等)"
+    ]
   },
   "sharedLock": {
     "path": null,
     "owner": null,
     "since": null,
-    "_note": "共有コードを編集する前にここを確認/取得し、終わったら解放する。実績: 並行セッションが render_pair.mjs を編集中に競合が発生した(ファイルが読み込み後に変化)。共有編集は必ず一度に1セッション。【2026-06-19 解放】多言語教材セッションのrender_pair新レイアウト一括展開は完了(render_pair/render_endcard_pair/render_opening_pair + 図形gen系)。次に動画ビルド(共有コード編集なし)。"
+    "_note": "【2026-06-25 解放=JLPTアプリ】App B 辞書タブ配線＋DictScreen強化 完了。①App B側配線=i18n7言語(nav.dict+dict.*8キー)/App.tsx tabs vocation→dict/dictData注入。②DictScreen(packages/shared)強化=DictData型に examples?/kanjiExamples?追加・語彙展開に例文＋該当語下線・漢字展開に音訓の例語(複数読み)。3アプリ(B/A/C)tsc全緑。結合率=語彙94%(7528/8033)・漢字99%(1946/1974)。dict_wiring_handoff 全消化。"
+  },
+  "sharedDesignSystem_JLPT主導_2026-06-23": {
+    "_from": "JLPTアプリセッション",
+    "status": "正本部品 構築完了(tsc緑)・採用フェーズ(Y=各アプリのホームに配線)着手 2026-06-23。",
+    "根拠": "app-state『共有デザインシステム_2026-06-21』=JLPTがオーナー・App Bが採用。App Bモチベ機能実装依頼(継続/成長/バッジ/ライト・ダーク)に対応。",
+    "方式": "単一ソース=git subtree(ユーザー決定 2026-06-23・案1)。正本=packages/shared/src/design/(props駆動の純表示部品)。別repoのJLPTへはsubtree取込でコピーを作らず『片方だけ採用』のずれを構造的に排除。",
+    "共有部品(枠)": "継続(週ドット/カレンダー/週間バー)・成長カーブ・バッジグリッド・カード様式・ボトムナビ枠・ライト/ダークのカラートークン・タイポ/spacing。各アプリは自前データをpropsで供給(中身は固有)。",
+    "共有しない": "準備度ゲージ(JLPT固有・App B home非搭載)・読解/聴解/模試/SRS/語彙文法(JLPT領分)。",
+    "対象": "App A(ne)・App B(ja)・App C(en)・JLPT が採用(App Cはユーザー追加 2026-06-23=Android枠転用とは別にiOSアプリとして共有デザイン採用)。",
+    "進捗_2026-06-23": "✅ 正本部品=packages/shared/src/design/(tokens.ts ライト/ダーク・theme.tsx DesignThemeProvider/useTokens・components.tsx Card/StatRow/StreakWeek/StreakCalendar/GrowthBars/BadgeGrid)構築。@safa/shared から export(spacing/radius/fontSizeは衝突回避でuseTokens経由)。shared tsc緑。 ★A/B/C採用完了(2026-06-23): 共有AppShellに『ホーム』タブ追加(3アプリ先頭・既存タブ削除なし・HomeIcon)＋共有HomeScreen(継続週ドット/カレンダー・成長バー・バッジ。useDailyProgress=『学習した日』ベースの最小実装。App側が実学習イベントで markStudied(n) を足せば精緻化可)＋DesignThemeProvider(themeMode→scheme連動。現シェルはライト固定なのでホームから段階導入)＋i18n nav.home/home.*(27キー)を全アプリ全言語にネスト注入(ja/en＋ne/bn/vi/zh/ko翻訳)。各App.tsxに progressStorageKey 配線。3アプリ tsc全緑。⚠実機の見た目確認はApp-session側で(聞いて話せるはvideo splash/packLoaderでWeb起動が不向き)。残=JLPTをsubtreeで同一ソース化。【ユーザー決定 2026-06-23】JLPT subtree(JLPT自身が共有部品を採用=真の単一ソース)を実施=【✅完了 2026-06-23】JLPT subtree取込(JLPT repo src/shared-design ← 聞いて話せる packages/shared/src/design を git subtree)+JLPTホームを共有部品化(StreakWeek/StreakCalendar/GrowthBars/BadgeGrid・DesignThemeProvider連動)。色実測一致で視覚回帰なし(Web検証済)・OTA配信(6241a7d9)。**真の単一ソース達成**(聞いて話せる正本 ↔ JLPT subtree)。⚠維持注意: A後JLPTホームは『JLPT自前テーマ(ゲージ/リング)＋共有トークン(継続/成長/バッジ)』の2系統同居=今後どちらかの色を変える時は両方一致させること。A/B/C採用=価値本体も完了済。sharedLock解放済。",
+    "手順": "①✅正本部品構築(完了・tsc緑) ②採用=各アプリ(A/B/C)のホームに共有部品を配線(Y:データは最小ローカル/既存。A/B/Cは継続/成長データ層が未実装のため最小実装) ③JLPT repoへsubtree取込で同一ソース化+JLPT採用 ④各app tsc/Web検証→sharedLock解放。"
   },
   "currentPlan_多言語教材": {
     "updated": "2026-06-19",
@@ -26,23 +40,49 @@
       "共通イラスト=00_共通/イラスト/{04_色と形,13_時曜日}/NN_romaji.png(384px)。両App・両母語で再利用。生成器: 04/13の _imgspec.json(nano-banana, ref=12_天気季節/19_taiyo.png) + 13_時曜日/gen_weekstrip.mjs(7セル週帯・曜日/週/毎日/週末) + gen_datecal.mjs(相対日カレンダー+矢印・年12か月グリッド)。⚠️AIは7セルや矢印付きカレンダーを正確に描けない→カレンダー系はコード描画が必須",
       "図形ジェネレータ: App A=00_共通/語彙/<t>/gen_poster.mjs(→02_ネパール語教材/02_ポスター/{ja,en}, buildHtml第3引数nat) / App B=同/genB_poster.mjs(→01_日本語教材/02_ポスター/<L1>, 全6母語)。データ: gen_words.mjs(App A)/genB_words.mjs(App B)。bn/vi/zh図形語彙=旧App Bポスターから回収・ko=新規(要確認)",
       "★用語訂正: 04色と形・13時曜日 は標準テーマ化(語彙データ+共通イラスト+同レイアウト)。特殊構造は02数字のみ=【標準30テーマ＋数字1】(01-31)。旧称『標準28』は廃止",
-      "★音声 全完備: 標準30テーマ+02数字 とも全7言語(JA/NE/EN/BN/VI/ZH/KO)音声あり(_正規化/<LANG>/<theme>/{NN,title}_<l>.mp3)。ko図形音声(02数字/04色と形/13時曜日)を 2026-06-19 生成(gen_tts_ko_figure.py, Google ko-KR-Chirp3-HD-Aoede)→これでkoの未生成ゼロ。App A(ne/ja/en)・App B(全6母語)とも音声面の欠落なし"
+      "★音声 全完備: 標準30テーマ+02数字 とも全7言語(JA/NE/EN/BN/VI/ZH/KO)音声あり(_正規化/<LANG>/<theme>/{NN,title}_<l>.mp3)。ko図形音声(02数字/04色と形/13時曜日)を 2026-06-19 生成(gen_tts_ko_figure.py, Google ko-KR-Chirp3-HD-Aoede)→これでkoの未生成ゼロ。App A(ne/ja/en)・App B(全6母語)とも音声面の欠落なし",
+      "★【全成果物完成 2026-06-20】producer(多言語教材)完了: ①ポスター=標準30+図形3(App B全6母語+App A ja/en, 新レイアウト/グレー枠/共通イラスト) ②音声=全7言語×全テーマ ③動画=492本(App B 372 + App A 120, 全て新レイアウト/イラスト/BGMあり・なし)。旧サムネ/旧図形/ステイル動画は全削除。教材側の残タスク=なし(2026-06-20 App A en数字動画02_数字_1-100_enを追加しja/en対称化。図形動画のアプリ取込は任意/将来)"
     ],
     "planNext": [
-      "1) 【進行中 2026-06-19】App B動画ビルド起動(6母語ne/en/bn/vi/zh/ko×標準28テーマ=336本, BGMあり/なし, 新レイアウト/グレー枠)。汎用 _build_new_ja.sh <L1> <theme...> 作成済。残=App A(02_ネパール語教材,target=ne,ja/en)動画 + 図形3動画(02/04/13はframes mode未整備=別途)",
+      "1) 【動画=完全完成 2026-06-20】総計492本(全て新レイアウト/グレー枠/イラスト, BGMあり/なし)。App B=372(標準28×6母語=336 + 図形3×6母語=36, 各母語62)。App A=120(ja:標準27×2=54+図形6 / en:標準27×2=54+図形6。04色と形/13時曜日=ja/en + 02数字1-100=ja/en(5p結合,ne targetOnly))。旧サムネ/旧図形動画は削除済。固有9のen音声も生成済。ツール: _build_new_ja.sh(B標準)/_build_new_ne_l1.sh(A標準)/genB・gen_poster frames mode/render_opening_simple(フォント引数化)/_build_figure_b.mjs(B図形)/_build_figure_a.mjs(A図形04・13)/build_combined.sh(A数字, nat引数でja/en両対応)。⚠️図形動画はアプリ取込とは別=教材の配布用成果物",
       "2) 【完了・訂正 2026-06-19 アプリ側】消費側パック化はこのTODOではなく完了済。実態は apps.* / inFlight を正とする(グレー#e6e8ec枠検出+新レイアウト→posterLessons→パックv2公開→A/Bビルド submit=false)"
     ],
     "notesForOtherSessions": "【訂正 2026-06-19】producer(多言語教材)は標準30+図形3を新レイアウトで全面再生成済=正しい。ただし★アプリ取込(consumer)は『ポスターモード=テーマ1〜10のみ』。よって 04色と形=収録 / 13時曜日=未収録(範囲外) / 02数字=5p。消費側のbox検出グレー化→posterLessons→パックv2公開→ビルド(submit=false)は完了。13時曜日や11-31のアプリ収録・図形動画は将来タスク。"
   },
-  "contracts": ["聞いて話せるシリーズ/ポスター成果物契約.md"],
+  "contracts": [
+    "聞いて話せるシリーズ/ポスター成果物契約.md"
+  ],
+  "newApp_JLPTアプリ_2026-06-21": {
+    "_from": "販売戦略セッション → 聞いて話せるシリーズ(App A/B/C)セッションへ通知",
+    "decision": "JLPT準備度アプリ『JLPTアプリ』は App B とは別アプリ・別セッションで開発する(ユーザー決定 2026-06-21)。開発場所= ../JLPTアプリ/ (CLAUDE.md + JLPTアプリ掲示板.md + JLPT_N5-N3_完全データ.xlsx + UIモックPDF3種)。以降このアプリの実装/仕様は当該セッションが担当。",
+    "訂正": "以前『JLPTレディネス機能をApp Bに統合/実装仕様はApp Bセッションへ』という案があったが撤回。App Bには統合しない。",
+    "AppB構造変更_2026-06-21": "App Bは『聞いて話せる(ヒアリング)×職種別×多言語×オフライン』に集中。①会話モード=30テーマ×初級/中級/上級×各20例題 ②職業モード(新設・差別化の核)=特定技能の職種別フレーズ(介護先行→外食/製造/建設) ③聞き流し=看板(連続再生/オフライン/BGM)。★文法モード・単語モードはJLPTアプリへ移管しApp Bから外す(語彙/文法/SRSはJLPTアプリの領分。App Bは会話/職業に文脈内包)。ボトムナビ確定=ホーム/会話/職業/聞き流し(自分=ホーム右上アバター)。ホームは『続きから即再生＋成長(streak/カレンダー/覚えた語/テーマ進捗/バッジ)』でモチベ設計。仕様=../販売戦略/ のホームリデザインPDF群＋販売戦略掲示板§3。実装はApp Bセッション。",
+    "App Bへの影響": "コードは完全に別。ただしJLPTアプリは App B/多言語教材のデータ・音声資産(TTS/単語音声等)を流用する想定→共有資産(packages/shared, 多言語教材tools)に変更を入れる場合のみ sharedLock/ポスター成果物契約に準拠。App B本体の開発方針・ロードマップに変更なし。",
+    "概要": "JLPTアプリ=合格『準備度』を1スコア+信頼バンドで可視化→毎日のSRS/読解聴解学習で上げ→本番形式テストで補正→弱点を自動ドリル→B2B団体に合格率ダッシュボードを販売。仕様の正は ../JLPTアプリ/JLPTアプリ掲示板.md、市場/競合/価格の根拠は ../販売戦略/販売戦略掲示板.md §6。",
+    "連携": "JLPTアプリセッションから App B の音声/データ流用について問い合わせが来たら連携する。",
+    "AppC流用_Android枠_2026-06-22": "JLPTアプリの公開方式=iOS新規(com.safa.jlpt)／Android=App C(C_english 聞いて話せる英語)の既存Play枠を流用してJLPTを載せる(ユーザー決定)。狙い=Google新規アプリの12人×14日クローズドテストを回避(App Cの枠は既にテスト進行/通過済)。★App Cは据え置き=Play appレコード/package/署名を保持(Deleteしない・棚下げもしない=Androidの土台に使う)。実体はJLPTアプリセッションが android.package をApp Cの値に合わせて中身をJLPTへ置換し、内部テスト中に差し替え→本番申請。App C旧コードは破棄。署名はApp Cの継続(Play App Signing想定)。要: App Cの正確なpackage名/署名方式の確認。詳細=../JLPTアプリ/JLPTアプリ掲示板.md §13・../販売戦略/販売戦略掲示板.md §4。",
+    "関連リマインド": "App A・App B の一時非公開化(Remove from Sale/Unpublish・Deleteしない・既存ユーザー保持)はユーザー決定済(../販売戦略/販売戦略掲示板.md §4)。先にTestFlight/クローズドテスト有効化→棚下げ。実行はユーザーの合図後。"
+  },
+  "AppB_モチベ機能実装依頼_2026-06-21": {
+    "_from": "販売戦略セッション → 聞いて話せるシリーズ(App B)セッションへ実装依頼",
+    "決定": "App Bホームのモチベ6機能のうち ①聞き流しファースト ②継続(streak/カレンダー/週間バー) ③成長(覚えた語カーブ/30テーマ進捗) ④バッジ/ごほうび =【実装する】。⑤ライト/ダークテーマ切替(OS連動) =【機能として追加】。⑥B2B同意ベースの組織共有 =【保留】(団体ライセンス着手時の後フェーズ・唯一サーバ要)。",
+    "実装条件": "①〜⑤は端末ローカル(AsyncStorage等)＋既存資産(音声再生/オフラインDL/二言語交互)で完結＝新規バックエンド不要。★着手前に『覚えた語』『テーマ完了』の定義を1つ確定すること(③④の土台。例: テーマの全フレーズを1回再生で完了/語は会話で出た語をカウント)。実装順の推奨=②③→④→⑤→①。",
+    "仕様": "../販売戦略/聞き流しアプリ/ の3PDF(AppB_ホーム_リデザイン=ライト/ダークのホーム, AppB_6機能_スクリーン=6機能の実画面+実装可否, AppB_モチベ機能_実装検討=feasibility表)。差別化=ホームに準備度ゲージは置かない(JLPTアプリの領分)。App Bは『続きから即再生＋成長』が主役。詳細仕様は ../販売戦略/販売戦略掲示板.md §3/§4。",
+    "注": "ボトムナビ確定=ホーム/会話/職業/聞き流し。文法/単語モードはJLPTアプリへ移管しApp Bから外す(既記載)。職業モード=特定技能・介護先行(介護日本語評価試験3分野対応)。",
+    "アカウント決済方針_2026-06-21": "両アプリ共通(自分タブ)。匿名ファースト・ログイン任意・カードは自前で扱わない。【ログイン】MVP不要(端末ローカル)。要るのは①端末間同期/バックアップ ②B2B組織参加 ③将来ソーシャル のみ。方式=Sign in with Apple/Google(メール非公開可)。自前パスワード管理なし。Pro購入はログイン不要(レシート復元)。【個人情報】最小収集・MVPは匿名で動く・同期は同意ベース・APPI/GDPR・削除権(App Bは privacy-policy.md 既存)。【決済】カードは自前で扱わない/登録画面なし。Apple IAP/Google Play Billing必須(カード/課金/税/返金/PCIは全部ストア)。RevenueCatで権利/復元一元管理。B2B団体ライセンスはストア外(請求書/オファーコード)＝ここだけ将来Stripe。【自分タブ構成】①アカウント(任意ログイン) ②Pro(購入/復元) ③組織B2B(コード参加・共有同意) ④成長実績(ローカル) ⑤設定(テーマ/母語/通知) ⑥データ(エクスポート/削除) ⑦情報(規約/プライバシー/EDRDG謝辞)。両アプリ共通=共有デザインシステムに入れる。",
+    "共有デザインシステム_2026-06-21": "ホーム・自分・ボトムナビは2アプリでUIを揃える(UX向上)。★ただし共有するのは『枠(システム)』=ナビ様式/3階層レイアウト/カード/streak/カレンダー/バッジ/週間バー/成長カーブの部品/ライト・ダークのカラートークン/タイポ余白。中身は各アプリ固有(App B=タブはホーム/会話/職業/聞き流し・ヒーローは続きから即再生・準備度ゲージは置かない)。★オーナー=JLPTアプリセッションが共有デザインシステムを主導・確定→App Bが採用する。両アプリExpo/RNなら共有部品はpackages/shared(編集前にsharedLock取得)。②継続③成長④バッジは両アプリほぼ同一部品=共有化の最有力。差別化(聞き流しファースト)は維持。"
+  },
   "apps": {
     "A_nepali": {
       "name": "聞いて話せるネパール語",
       "target": "ne",
-      "l1": ["ja", "en(整備中)"],
+      "l1": [
+        "ja",
+        "en(整備中)"
+      ],
       "prodVersion": "iOS 1.7.6 公開済",
       "poster": {
-        "status": "【2026-06-19 消費側実装完了(アプリ側セッション)】ポスターモードは テーマ1〜10のみ(ユーザー指示。他モードは全テーマ別系統)。box検出を新レイアウト+グレー#e6e8ecに再調整済(色#d9cfb6→#e6e8ec / 最下罫線切れ対策で bot=30→12 / top=110。実測で family20/body24/numbers各ページOK)。posterLessons.ts 再生成(10テーマ, numbers=5p/104カード, targetOnly)。tsc green。パックv2公開済=poster-ne.zip 1.8MB / poster-ja.zip 7.5MB(packs-poster-appa)。App A v1.7.8 ビルド起動済(submit=false)。ハイライト枠は既にsafa青#2563eb(colors.accentJa)=変更不要。",
+        "status": "【2026-06-20 最新 v1.7.11 / TestFlight配信(iOSのみ)】ポスター=テーマ1〜10、母語=ja+en(en配線済)。box=グレー#e6e8ec枠検出(top=110/bot=12)。真っ白修正(画像をready+key=uriでゲート=DL前マウント回避)。英語=enポスター画像をpack v4で修正(以前は画像取りこぼしで英語真っ白だった)。数字=先頭でネパール語テーマ名を読む+全5ページ連続再生(20→21停止せず・表示追従)。単語モードのモード名『単語音声/Word voice』。パックpacks-poster-appa=v4(ne1.8/ja6.8/en6.4MB, title音声・en画像収録)。tsc green。ハイライト枠=safa青#2563eb。",
         "themes": "ポスター=10(他モードは全テーマ)",
         "figureBoxes": "図形(numbers/colors)も同じグレー枠検出で2R本一致(実測)。numbers=5pはtargetOnly(neのみ)。time(13)はポスター10超のため今回対象外",
         "numbers": "5ページ(1-100=104カード)・targetOnly(ネパール語neのみ朗読・母語helper音声なし=元設計)",
@@ -57,20 +97,35 @@
         "enPosters": "全30描画済(02_ネパール語教材/02_ポスター/en, 1240x1754)。固有9のen訳もwords.jsonに追加済。※en母語のアプリ統合は別途(L1S=jaのまま=今回はja単独)",
         "producerReady_2026-06-19": "(producer=多言語教材の供給状況。consumerの取込範囲とは別)ja/enとも標準30+図形3(02数字5p/04色と形/13時曜日)を新レイアウト・グレー枠で全面再生成済。図形ジェネレータ ja/en両対応。en CTA=ne_en。広告なしが取込対象。★consumerが実際にアプリへ収録したのは テーマ1〜10のみ(04収録/13未収録)=下記consumerDone参照。",
         "consumerDone_2026-06-19": "アプリ取込=完了。box検出をグレー#e6e8ec枠検出+新レイアウト(top=110/bot=12)に更新→posterLessons再生成(10テーマ:family/numbers/body/colors/food/emotions/buildings/animals/stationery/vehicles)→パックv2公開→A v1.7.8 ビルド起動(submit=false)。13時曜日は範囲外で未収録。",
-        "pending": ["CI完走→内部テストで実機確認→OKなら審査提出(ユーザー合図後・厳守)", "en母語のアプリ統合(別途・固有9のen音声未生成=多言語教材で生成要)", "13時曜日/ポスター11-30の収録は将来判断"]
+        "pending": [
+          "CI完走→内部テストで実機確認→OKなら審査提出(ユーザー合図後・厳守)",
+          "en母語のアプリ統合(別途。★固有9のen音声=2026-06-20生成済 gen_tts_en_kuyu.py(en-US-Chirp3-HD-Aoede)→02_ネパール語教材/00_固有/音声/_正規化/EN。教材側のApp A en動画も生成中)",
+          "13時曜日/ポスター11-30の収録は将来判断"
+        ]
       }
     },
     "B_japanese": {
       "name": "聞いて話せる日本語",
       "target": "ja",
-      "l1": ["bn", "en", "ne", "vi", "zh", "ko"],
+      "l1": [
+        "bn",
+        "en",
+        "ne",
+        "vi",
+        "zh",
+        "ko"
+      ],
       "prodVersion": "iOS 1.3.3 公開済(同梱2480ポスター)。未公開: 1.3.22(ポスターパック化)",
       "poster": {
-        "status": "【2026-06-19 消費側実装完了(アプリ側セッション)】ポスターモード=テーマ1〜10、母語=bn/en/ne/vi/zh(ko除外=ユーザー指示)。box検出を旧nonwhite→グレー#e6e8ec枠検出に刷新+新レイアウト対応(top=110/bot=12。旧top=200では詰めヘッダーで先頭行が隠れる不具合を解消)。posterLessons.ts 再生成(10テーマ・全box OK)。tsc green。パックv2公開済=ja1.2MB/bn6.3/en6.1/ne6.2/vi6.1/zh6.3MB(packs-poster)。App B v1.3.23 ビルド起動済(submit=false)。ハイライト枠は既にsafa青#2563eb=変更不要。",
+        "status": "【2026-06-20 最新 v1.3.26 / TestFlight配信(iOSのみ)】ポスター=テーマ1〜10、母語=bn/en/ne/vi/zh(ko除外)。box=グレー#e6e8ec枠検出(top=110/bot=12)。真っ白修正(画像をready+key=uriでゲート)。単語モードのモード名『単語音声/Word voice』(全L1訳)。音声沈黙短縮(12s→クリップ長+1.5s)+拡大窓ガード。パックpacks-poster=v2(ja1.2/bn6.3/en6.1/ne6.2/vi6.1/zh6.3MB)。tsc green。ハイライト枠=safa青#2563eb。",
         "themes": "ポスター=10(他モードは全テーマ)",
         "producerReady_2026-06-19": "(producer供給状況)全6母語(bn/en/ne/vi/zh/ko)の標準30+図形3(04色と形/13時曜日=共通イラスト, 02数字=アラビア数字1p20項目)を新レイアウト・グレー枠で全面再生成済。場所=01_日本語教材/02_ポスター/<L1>/。生成器=genB_poster.mjs。★consumerの取込は テーマ1〜10・母語5(ko除外)のみ=下記consumerDone参照。",
         "consumerDone_2026-06-19": "アプリ取込=完了。母語=bn/en/ne/vi/zh(ko除外=ユーザー指示)。box検出を旧nonwhite→グレー#e6e8ec枠検出+新レイアウト(top=110/bot=12)に刷新→posterLessons再生成(10テーマ)→パックv2公開→B v1.3.23 ビルド起動(submit=false)。収録は1〜10(04色と形=収録/13時曜日=未収録/02数字=単一ページ20項目)。",
-        "pending": ["CI完走→内部テストで実機確認→OKなら審査提出(ユーザー合図後・厳守。版coordination=本体とパックは同時公開済)", "13時曜日/ポスター11-31の収録は将来判断(その際 time英語キー確定+THEMES追記)", "ko母語をポスターに復帰する場合は LANGS に ko追加+ko画像/音声(揃済)取込"]
+        "pending": [
+          "CI完走→内部テストで実機確認→OKなら審査提出(ユーザー合図後・厳守。版coordination=本体とパックは同時公開済)",
+          "13時曜日/ポスター11-31の収録は将来判断(その際 time英語キー確定+THEMES追記)",
+          "ko母語をポスターに復帰する場合は LANGS に ko追加+ko画像/音声(揃済)取込"
+        ]
       },
       "koLabel": "packages/shared/src/l1.ts の L1_REGISTRY に ko='한국어' 追加済(修正完了)",
       "enNumbers": "00_共通/音声/EN から pack化・six修正済(末尾/s/を63→185ms復活)。Neural2-F上書き(旧 build-poster-numbers-en.mjs)は契約違反として廃止済"
@@ -78,28 +133,146 @@
     "C_english": {
       "name": "聞いて話せる英語",
       "target": "en",
-      "l1": ["ja"],
+      "l1": [
+        "ja"
+      ],
       "prodVersion": "iOS 1.1.5 公開済",
       "poster": "未着手"
     }
   },
   "inFlight": {
+    "kazoku_family_update_2026-06-20": {
+      "decision": "01_家族(family, theme1=アプリ収録範囲内)を内容修正。ユーザー指示。",
+      "what": "①お父さん/お母さん(ネパール語で父/母と同語बुबा/आमा=重複)を削除し【伯父(おじ,काका,uncle)/叔母(おば,काकी,aunt)】に差替(年配イラスト04_oji.png/06_oba.png新規=旧04_otosan/06_okasan削除) ②単語を論理順に再配置(新順:家族,両親,父,母,兄,姉,弟,妹,兄弟,伯父,叔母,祖父,祖母,夫,妻,息子,娘,子ども,孫,赤ちゃん) ③赤ちゃんのネパール語を बच्चा→शिशु(子どもबच्चाと区別)。en/bn/vi/zh/ko/jaは伯父/叔母の各訳も更新。",
+      "producerDone": "【完了 2026-06-20 producer=多言語教材】words.json更新 / イラスト(04_oji,06_oba) / ★ポスター=App B全6母語+App A ja/en 再生成済(01_日本語教材/02_ポスター/<L1>/01_家族, 02_ネパール語教材/02_ポスター/{ja,en}/01_家族) / ★音声=全7言語×20語 更新済(17語は既存正規化音声を新slotへ並べ替え=声完全保持, 伯父/叔母/赤ちゃんneのみ新規TTS同声: ja/ne=edge(Nanami/Hemkala), en/bn/vi/zh/ko=<lang>-Chirp3-HD-Aoede)→_正規化/<LANG>/01_家族/。★動画=01_家族 を新内容で再ビルド(2026-06-20, App B 6母語+App A ja/en=16本, BGMあり/なし, 旧版上書き)。教材側の01_家族成果物(ポスター/音声/動画)は全て新内容に更新済。",
+      "consumerTODO": "★App A/Bセッションへ: 01_家族(family)はポスターモード1〜10の収録対象。posterLessons再生成(語数20で不変だが画像差替04_oji/06_oba・新順)+01_家族の画像/音声をパック再取込→版上げ→再ビルド(submit/公開はユーザー合図後)。card.l1音声マップ・imageL1も新順・新ファイルに追従。",
+      "consumerDone_2026-06-20": "【完了 アプリ側】両アプリ再生成で01_家族の新画像/音声をassets取込。posterLessons.tsはキー/box座標とも不変=差分なし→アプリ再ビルド不要。パック版上げ再公開で端末が自動再DL: packs-poster-appa=v5(ne1.8/ja6.8/en6.4MB) / packs-poster=v3(ja1.2/bn6.3/en6.1/ne6.2/vi6.1/zh6.3MB)。現行TestFlightビルド(A1.7.12/B1.3.27)のまま、ポスターを開き直せば新family反映。"
+    },
     "posterCardBorderColor_DONE": {
       "decision": "#e6e8ec 薄グレーに統一。ユーザー確定(2026-06-19)。",
       "status": "【完了 2026-06-19】render_pair側=多言語教材が実装(.row #e6e8ec)。消費側=アプリ側セッションが App A/B とも _gen_poster.py の box検出をグレー#e6e8ec枠検出へ刷新+新レイアウト(top=110/bot=12)対応→posterLessons再生成→パックlocal構築。tsc green。残=公開/ビルド(ユーザー合図後)のみ。アプリ内ハイライト枠は元から safa青#2563eb(colors.accentJa)。"
     }
   },
   "pending": [
-    "【進行中 2026-06-19】A/Bビルド起動済(submit=false=審査提出なし)。branch=test/appa-renumber。A=v1.7.8 / B=v1.3.23。CI完走→内部テストで実機チェック→OKなら審査提出(ユーザー合図後・厳守)",
-    "パック公開=完了(v2: packs-poster-appa ne1.8/ja7.5MB, packs-poster ja1.2/bn6.3/en6.1/ne6.2/vi6.1/zh6.3MB。版上げで端末再DL強制)",
-    "en母語統合(App A): L1S+en, en音声=共通EN(固有9は未生成=多言語教材で生成要), enポスター取込→再生成・pack",
-    "②en広告ありポスター → ③en動画(教材サブエージェント順次)",
-    "App B テーマ11-31拡張 / ポスター11-31の解放判断"
+    "【2026-06-24 App B 長文タブ“読み物”コンテンツ 日本語起案完成】claude直下『楽しい長文コンテンツ案.xlsx』に10シリーズ130話を起案→【2026-06-24 採用整理(ユーザー決定)】読み物棚で採用=①日本の昔話20②カイの日常20③カイの日本旅20④ニッポンこよみ10⑤ニッポンなんで10=計80話。⑥ふしぎ夜話/⑦やっちゃった日本語/⑧食べてみた/⑨どうするニッポン/⑩ことわざ物語=『1人説明型』のため不採用(⑦⑨は会話棚に移行済)。さらに『会話コンテンツ案.xlsx』=会話棚7シリーズ70話を新設(①シットコム カイたちの休憩室/②ラジオ風ふたりごと/③ボケ・ツッコミ劇場/④クイズ番組どうするニッポン/⑤どっち派トーク/⑥ロールプレイ会話/⑦家族のしょくたく・全ターン形式=多声TTS/ロールプレイ向け)。設計指針=『感情×続き×わかる』(楽しくないと続かない)・主人公カイ(無国籍名/出身国は明示しない/②③共有/笑いの矛先は人でなく文化ギャップ)・毎回ひとつ実用フレーズを密輸。別ファイル『長文コンテンツ案.xlsx』=実用棚(アナウンス14/ニュース7/電話6場面/生活の手続き8/職場6/会話5場面/物語文化5/観光4)。長文タブは“実用棚+読み物棚”の二本立て。次工程=日本語確定→ふりがな付与→多言語訳(bn/en/ne/vi/zh/ko)+TTS(要見積→承認・多言語教材セッションへ依頼)→長文タブへ配信。④季節は毎月更新で再訪動機に。",
+    "【2026-06-23 方針変更: 職業タブ保留→個人版は『短文/長文/辞書』】ユーザー決定。①職業タブ=保留(削除でなく凍結)。理由=BtoCでは出さず『将来パートナー会社(B2B団体)へ広告する時に再検討』。温存(破棄しない)=介護コンテンツ案.xlsx(54フレーズ8場面＋会話7場面49ターン・声かけ/移乗/食事(嚥下・むせ・とろみ)/排泄/入浴/体調報告(バイタル)/転倒/申し送り・用具/身体/症状/敬語/記録を具体化)＋contentRoadmapの介護パック確定設計≈590項目=B2B着手時の素材。②個人向けApp Bタブ=【ホーム/短文/長文/辞書】。辞書=JLPTアプリと同一(EDRDGベース辞書を流用=共有化候補)。③要実装(次段・未着手): 共有AppShell tabs を 職業→辞書 に差替(['home','short','long','dict']想定)。辞書スクリーン/データはJLPTアプリから移植(packages/shared経由=sharedLock要)。長文は準備中スキャフォルド継続。ホーム3リングの『職業』は短文/長文の2リング(or 辞書は参照系でリング無し)に調整。マイク回答モード(増分2)は短文側で継続。",
+    "【2026-06-23 App B構造 再編(短文/長文/職業)＋介護日本語案 起案】App B 4タブを ホーム/短文/長文/職業 に変更(ユーザー指定)。短文=ハブ(学習=母語→日本語リビール自己採点/ヒアリング=聞き流し+ポスター/回答=マイクASR・増分2準備中)。長文・職業=準備中スキャフォルド。コミットb6774aa1→App B v1.3.30 ビルドsuccess(TF+Play内部)。★回答モード=マイク音声→文字起こし→編集→提出→模範解答との一致率→リング(ユーザー承認・expo-speech-recognition@sdk-54でApp側注入=増分2でネイティブ追加＋dev/EASビルド)。★ホーム3リング(短文/長文/職業)=増分2。★介護コンテンツ=日本語案v1起案済(claude/介護コンテンツ案.xlsx・54フレーズ8場面+会話4場面・ふりがな付・レベル分けず短文→長文)→ユーザーレビュー後に多言語教材へ翻訳+TTS(id/my/vi優先・要見積→承認)→職業タブへ配線。",
+    "【2026-06-23 iOS棚下げ完了(ユーザー実施)】App A・App B を App Store Connect で Remove from Sale(全地域解除)。Delete не可・可逆・既存ユーザー保持。Android本番は未公開のため棚下げ不要(対象外)。App C は温存(JLPTのAndroid枠)。以後 A/B は TestFlight/Playクローズド・内部テストで反復改善(掲示板§4のローンチ順序=コンテンツ+料金+法人化が揃うまで正式再公開しない)。App B v1.3.29(4タブ構造)実機4タブOK確認済。",
+    "【2026-06-23 App B構造大改定 実装→ビルド&投入完了】共有AppShellをアプリ別タブ構成へ後方互換拡張(props tabs/posterInListening・未指定=現状5タブ→App A/Cは無改修)。App B=4タブ(ホーム/会話/職業/聞き流し): 職業タブ新設(VocationScreen=介護スキャフォルド準備中)・文法/単語カード廃止・ポスター単語音声はListeningHub経由で聞き流しタブへ統合(VocabCategory posterOnly)。i18n7言語にnav.vocation/listeningHub/vocation注入(CRLF直し最小diff)。3アプリtsc全緑→コミット62760faa→push→App B v1.3.29 ビルドsuccess(TF+Play内部投入)。→実機で4タブ構造の見た目確認待ち。職業タブの中身=介護コンテンツ生成(別途・見積→承認)で充填。残=自分タブ/アカウント決済UI(将来)。",
+    "【2026-06-23 共有DSホームタブ 採用→ビルド&投入完了】JLPTセッション構築の共有デザインシステム(packages/shared/src/design + HomeScreen=継続/成長/バッジ・ライト/ダーク)を App A/B/C が採用(先頭『ホーム』タブ追加・既存タブ削除なし)。DS関連のみ選択コミット(d647c65d)→push。版+1: A1.7.13/B1.3.28/C1.1.7(run-name同期)。CIビルド3本success: A=TF+Play内部, B=TF+Play内部, C=TFのみ(App C AndroidはJLPT枠流用のため不触)。3アプリtsc緑(ローカル確認)。→実機で新ホームタブの見た目確認待ち(App-session)。次=App B固有の大改定(職業モード/文法・単語移管/会話・職業ナビ中身/聞き流しファースト)。",
+    "【2026-06-22 Android内部テスト投入完了】A v1.7.12 / B v1.3.27 (versionCode=1000+commit=1260) を Play 内部テストへアップロード(track:internal / status:completed=自動ロールアウト)。App Bは初回Google 502(一時障害)で失敗→失敗ジョブ再実行で成功。iOSはTestFlight既出。→Android実機で内部テスト確認可能に。棚下げ対象はA/Bのみ(App Cは温存=JLPTのAndroid土台)。",
+    "【最新ビルド 2026-06-20】A=v1.7.12 / B=v1.3.27 (BUILD 1259) を iOS→TestFlightのみ配信(Android/Play内部テストは出さない=指示)。直近修正=朗読中のカードタップで音声が重なる不具合(startSeqで両player停止してから開始・母語→ターゲット順保持)。実機確認済OK項目: 真っ白解消/英語ポスター/数字連続(20→21→…シームレス)+先頭ネパール語タイトル/モード名『単語音声』/5音声沈黙/6拡大窓。審査(ストア公開)提出は実機チェック後・合図後(厳守)。",
+    "実機確認待ち項目: ①真っ白解消(ready+key=uriゲート) ②App A英語ポスター表示(pack v4でen画像修正済) ③数字=先頭ネパール語タイトル+20→21連続再生 ④モード名『単語音声/Word voice』 ⑤音声沈黙短縮(12s→クリップ長+1.5s)の効き ⑥拡大窓ガード。5/6が残れば実機挙動から根本特定→最終修正。",
+    "パック状況: packs-poster-appa=v4(ne1.8/ja6.8/en6.4MB, en画像修正済・title音声収録) / packs-poster=v2(App B, ja1.2/bn6.3/en6.1/ne6.2/vi6.1/zh6.3MB)。版上げで端末再DL。",
+    "完了: App A英語母語配線(多母語generator/en題名/enポスター/共通EN・固有EN音声) / 言語UI共通化(英語プロンプト・Selectドロップダウン・LANG_ORDER順・App Aからne除外) / ポスター一覧フォント統一(14/500) / 青枠ズレ解消(新box検出overlay実証)。",
+    "残・将来: ②en広告ありポスター→③en動画(教材) / App B テーマ11-31拡張・ポスター11-31やtime(13時曜日)の収録判断 / DL進捗カウンタ"
   ],
+  "monetization_model_draft_2026-06-20": {
+    "_status": "【仮・暫定 / 未確定】アプリ側セッションでの方針議論メモ。確定ではない。実装着手前に再確認すること。",
+    "model": "フロー型(短寿命・高意欲・毎年入替)と認識→『広く開けて各コホートを早期に薄く刈る』。スケール(Android一般公開+多言語SNS)を先行し、課金は並行・早期・軽量。『長く無料→後で課金』は離脱が速いこの市場では非現実的(去る前に課金窓を逃す)。",
+    "ads": "アプリ内広告なし(維持)。収益=Proコンテンツ解放のみ。無料も広告なしなので『広告なし』はProの売りにしない。",
+    "free_vs_pro": "ゲートはコンテンツ量(テーマ)で区切る。核(音声の反復再生/速度変更/DL後オフライン)は無料死守=機能を壊すゲートにしない。仮の線: ポスター=全10無料(SNS集客の主役) / 会話・文法・単語(シャッフル)=各5テーマ無料で開始(将来3へ絞り調整可)。Pro=各モード残り(〜30)を解放。無料枠は最も役立つ基礎テーマを置く。",
+    "remote_threshold": "無料テーマ数はリモート設定で可変(再審査・再ビルドなしで調整)を推奨。初期はハードコードでも可。フロー型は線の微調整が肝。",
+    "grandfather": "既存iOS約30人=永久無料。ローカルフラグ(既存データ有=旧ユーザー判定)で自動付与。任意でApple offerコード併用すると再インストール/機種変更にも耐性。",
+    "platforms": "Android=プレミアム込みで一般公開 / iOS=既存30人grandfather+プレミアム実装。ゲート判定はshared。",
+    "price_form_未定": "買い切り or 短期パス優先の仮説(フロー型=去り際に月額解約されやすい)。¥480/月案あり。価格・形態・トライアル有無は未確定。地域別価格はストア標準で本国を安く(Stripe/Razorpay不可)。",
+    "heavy_pro_defer": "AI発音チェック・進捗ダッシュボード等の重いProは当面作らない。",
+    "primary_app": "App B(日本語学習=在日外国人/本国渡日予定者, 就労・ビザ・JLPTの動機大・母数大)を主軸。App Aはニッチ(日本人/英語話者がネパール語学習)。",
+    "marketing": "有料広告は当面なし(低LTVで採算困難)。オーガニックSNS=動画492本+全言語ポスターをFacebookグループ(在日/本国渡日準備)/TikTok/YouTube Shorts/Reelsへ毎日投稿。送り出し機関・日本語学校・監理団体と提携。ASOを言語別ローカライズ。無料枠がそのまま集客の着地点。クリエイティブ詳細は marketing_monetization 参照。",
+    "impl_order": "①grandfatherローカルフラグ(既存保護・最初に・軽い) ②エンタイトルメント+テーマゲート(shared/リモート閾値) ③IAP1商品(買い切りorパス)+購入復元+審査。重いProは後。",
+    "open_items": [
+      "課金形態(買い切り/短期パス/サブスク)",
+      "無料テーマ数の最終値(仮:ポスター10/他5)",
+      "価格",
+      "どの言語・どのアプリから着手",
+      "無料トライアル有無",
+      "リモート閾値の実装方式"
+    ]
+  },
+  "marketing_monetization": {
+    "_about": "マネタイズ=無料アプリDL誘導(広告)。教材ポスター/動画は集客クリエイティブ。ランディングは safa-lang.com/<target>/<native>(視聴者の母語ページ)。",
+    "URL規則": "safa-lang.com/<target>/<native>。target=学習対象言語, native=視聴者の母語。例: 日本語を英語話者に=safa-lang.com/ja/en, ネパール語を日本語話者に=safa-lang.com/ne/ja。",
+    "ポスター広告文(広告ありポスター右上=4行: アプリ名/ダウンロード/URL/📥オフライン。視聴者の母語で表記)": {
+      "App_B_聞いて話せる日本語(target=ja)": {
+        "en": "Free Japanese learning app / Download here ↓↓↓ / safa-lang.com/ja/en / 📥 Replay offline anytime!",
+        "ne": "नि:शुल्क जापानी सिक्ने एप / यहाँबाट डाउनलोड गर्नुहोस् ↓↓↓ / safa-lang.com/ja/ne / 📥 अफलाइनमा पनि दोहोर्‍याएर सुन्न सकिन्छ!",
+        "bn": "ফ্রি জাপানি শেখার অ্যাপ / এখান থেকে ডাউনলোড করুন ↓↓↓ / safa-lang.com/ja/bn / 📥 অফলাইনেও বারবার শুনুন!",
+        "vi": "Ứng dụng học tiếng Nhật miễn phí / Tải xuống tại đây ↓↓↓ / safa-lang.com/ja/vi / 📥 Nghe lại offline mọi lúc!",
+        "zh": "免费日语学习App / 在这里下载 ↓↓↓ / safa-lang.com/ja/zh / 📥 离线也能反复收听！",
+        "ko": "무료 일본어 학습 앱 / 여기서 다운로드 ↓↓↓ / safa-lang.com/ja/ko / 📥 오프라인에서도 반복 재생!"
+      },
+      "App_A_聞いて話せるネパール語(target=ne)": {
+        "ja": "無料ネパール語アプリ / ここからダウンロード ↓↓↓ / safa-lang.com/ne/ja / 📥 オフラインでも繰り返し聞ける！",
+        "en": "Free Nepali learning app / Download here ↓↓↓ / safa-lang.com/ne/en / 📥 Replay offline anytime!"
+      }
+    },
+    "SNS動画広告計画": {
+      "総数": "492本(教材の配布用成果物。SNS(YouTube/TikTok/Reels等)で集客→アプリDL誘導)。各動画末尾endcardに アプリ実スクショ(3D iPhone)+CTA(視聴者母語)+URL。",
+      "App_B_日本語学習": "母語6言語(en/bn/vi/zh/ko/ne)×31テーマ(標準30+数字1)×BGMあり/なし=372本。視聴者=英語/ベンガル語/ベトナム語/中国語/韓国語/ネパール語の各話者。",
+      "App_A_ネパール語学習": "母語ja/en×30テーマ(標準29+数字1)×BGMあり/なし=120本(ja60+en60)。視聴者=日本語/英語話者。2026-06-20: 欠落していたen数字動画(02_数字_1-100_en, ne音声target-only/英語題・広告)を追加し ja/en対称化。",
+      "広告対象言語数": "7言語(ja/ne/en/bn/vi/zh/ko)。日本語学習を6母語へ, ネパール語学習を2母語へ訴求。",
+      "テーマ構成": "【標準30+数字1】(01-31)。01家族 02数字(特殊) 03体 04色と形 05食べ物 06感情 07建物 08動物 09文房具 10乗り物 11家具家電 12天気季節 13時曜日 14衣服 15生活用品 16植物 17飲み物 18楽器 19野菜 20肉魚 21-25動詞1-5 26-29形容詞1-4 30-31副詞1-2(App Aは30副詞統合で30テーマ)。★04色と形・13時曜日は語彙データ+共通イラストの標準テーマ化済(旧称『図形3』は廃止)。特殊構造は02数字のみ(アラビア数字)。",
+      "動画構成": "opening(都市hero+テーマ題) → 各語 母語→対象言語の朗読+カードハイライト → endcard(hero+アプリスクショ+CTA+URL)。BGMあり/なし2版。"
+    }
+  },
+  "contentRoadmap_多言語教材_2026-06-21": {
+    "_from": "販売戦略セッション → 多言語教材セッションへ(今後の教材の参考)。詳細設計と市場根拠は 販売戦略/販売戦略掲示板.md §6 参照。",
+    "_status": "★設計は確定(2026-06-21・下記『介護パック確定設計』)。生成着手は承認後(見積もり提示→承認の手順厳守)。【2026-06-23 保留】職業モードは個人版App Bには非搭載に変更(職業タブ凍結・個人版は短文/長文/辞書)。介護パック設計と介護コンテンツ案.xlsxは破棄せず温存し、将来パートナー会社(B2B団体)向けに展開する時に再開する。",
+    "優先順": "①職種別(特定技能14分野: 介護/建設/外食/農業/工場…) ②JLPT対策(N5→N3) ③生活サバイバル(病院/役所/銀行/賃貸/ゴミ出し)。いずれもPro/団体ライセンス向けの深掘り(無料tierには入れない想定)。",
+    "第一弾": "介護(kaigo)。理由=会話/声かけ/報告が業務の核でリスニング教材と最適合・特定技能で最大級・介護日本語評価試験で軸&学習動機・B2B買い手(介護施設運営法人/監理団体)が強い。建設は会話比重が低いので後。",
+    "介護パック確定設計(2026-06-21・詳細は販売戦略掲示板§6)": "介護日本語評価試験の3分野(各5問/全15問・合格73%)に対応する3コンポーネント＋横断文法。【A.介護のことば(試験①)=語彙】6カテゴリ(用具/身体・部位/症状・状態/体位・動作/ケア行為/施設・職種)×約20語≈120語(ポスター＋音声・既存資産流用)。【B.会話・声かけ(試験②)=職業モード本体】8テーマ×初級/中級/上級×各約18例≈432例。8テーマ=①出勤・身支度・申し送り(受け) ②声かけ・移乗/移動介助 ③食事介助 ④入浴・排泄・清潔介助 ⑤体調確認・バイタル・ナース報告 ⑥レク・コミュ・雑談 ⑦緊急・事故・転倒対応 ⑧記録・申し送り(送り)・報告。【C.介護の文書(試験③)】申し送り表/ケース記録/ヒヤリハット報告 の読解＋穴埋め≈24(3種×約8)。【横断】敬語・声かけミニ文法≈15。レベル=初級≈N5-N4(基本声かけ)/中級≈N4-N3(手順・依頼)/上級≈N3(報告・敬語複文)。総計≈590項目(会話432が主)。言語的差別化=敬語/丁寧語必須・声かけ定型・報告語彙(POROに無い専門性)。訳の作法=利用者ông/bà・介護者自称cháu。配置=Pro/団体(無料tier外=課金の核)・14日味見で体験可。サンプル『声かけ・移乗介助』初級10文(JP+ふりがな+vi)は作成済。",
+    "★介護L1優先(2026-06-21掲示板で判明・要注意)": "介護分野の国籍は越が少数派=インドネシア21,139/ミャンマー19,803/ベトナム10,401(令和7末・介護67,871中)。介護パックの優先L1=【id・my・vi】の順。⚠️App B現状L1=bn/en/ne/vi/zh/ko で id/my は未対応=介護の本展開には新規L1(id/my)パックが前提。品質確認用サンプルはvi(既存pipeline+QA済)で可だが、viだけでは介護層に届かない。出典=販売戦略/在留資格とJLPT_App B教材設計.pdf。",
+    "差別化の根拠": "VN競合(PORO=会話リスニングで看板機能を実装済/Mazii=辞書/Migii=JLPT/Dungmori=講座)は職種別を手薄。職種別=競合の隙間+B2Bの購入動機(実習生が現場で即使える)。",
+    "生成手順(1000円ルール厳守)": "①テーマ/レベル/項目数を確定 → ②vi先行でサンプル1テーマを実生成し品質確認(低コスト・概算1,000-1,500円) → ③OKなら全体見積もり提示→ユーザー承認→全6母語生成(概算4,000-6,000円, +辞書なら+数千円)。★生成前に必ず円換算見積もりを提示し承認を得る。無断課金しない。",
+    "未確定": "テーマ最終数・項目数・先行言語・無料/Pro境界(介護はPro想定)はユーザー確認後に確定。既存パイプライン(genB_words.mjs/words.json/render_pair/gtts_google.py)を流用可。"
+  },
+  "辞書同期_JLPT発_2026-06-24": {
+    "_from": "JLPTアプリセッション → App家族(特にApp B 辞書タブ)へ 事後報告",
+    "決定対応": "pending『2026-06-23 個人版App Bタブ=ホーム/短文/長文/辞書・辞書=JLPTと同一を流用』の辞書データを供給。",
+    "成果物": "JLPTで構築した汎用日本語辞書(JMdict/KANJIDIC2/日本語WordNet由来)を正本化し、このrepo直下『聞いて話せるシリーズ/dict/』へ push 済(ミラー)。正本=JLPTアプリ/dict/。",
+    "ファイル": "dict/ja-vocab.json(語彙8034=N5 718/N4 668/N3 2140/N2 1809/N1 2699) / ja-kanji.json(漢字1974) / ja-synonyms.json(類義語2317 N5-N3検証済) / manifest.json(version=内容ハッシュ) / README.md。",
+    "用途注意": "既存 vocab.json/dict.json は『教材文に紐づくグロサリ』で用途が別。本辞書は『汎用参照辞書』=置き換えず追加(辞書タブの引ける辞書)として読むこと。",
+    "強制同期(通信非依存)": "JLPT側で `node data-build/dict/sync-dict.mjs` を実行すると本dict/へ冪等push(内容ハッシュが同じなら no-op)。相手セッションの稼働・返事は不要。manifest.json.version で最新判定。",
+    "現バージョン": "93b5d29b3d7f (2026-06-25・フル機能＋する誤読み根治込み)",
+    "★フル同期_2026-06-25_配線中のApp Bセッションへ": "辞書タブを“まいにちJLPTと同等”にするため、例文と漢字の音訓(複数読み)を同期積荷に追加済。App Bバンドル `聞いて話せる日本語/expo-app/data/dict/` に【新】`ja-examples.json`(7528件・word|reading→{ja,en}・語彙例文/下線用) と `ja-kanji-examples.json`(1946字・char→{on:[{reading,word,wordReading}],kun:[…]}・音訓 複数読み 頻度順) が入っている。結合方法=語彙は `jaExamples[ v.word + '|' + v.reading ]`、漢字は `jaKanjiExamples[ char ]`。DictScreenに以下を足すと まいにちJLPT と同じ見え方に: ①語彙行に例文(該当語を下線=highlight) ②漢字行に『音 セイ:学生／…』『訓 …』の複数読み例。注意=`ja-examples`の値の`en`は英語(多言語意味は別途)。また する誤読み根治(運動=うんどう 等)で ja-vocab の読みが正しくなった(version更新)→再import推奨。類義語は語彙にid無で結合不可(JLPT出題専用)＝辞書タブでは不要。",
+    "棲み分け_2026-06-25": "packages/shared(DictScreen/AppShell/App.tsx/i18n)の配線は【App BセッションがsharedLock取得済で実施中】。JLPT側は触らない(競合回避)。JLPT側の責務=データ(ja-vocab/kanji/synonyms/examples/kanji-examples)の生成・同期のみ。データ更新時は `node JLPTアプリ/data-build/dict/sync-dict.mjs` 一発で本バンドルへ冪等反映。",
+    "ドロップイン部品_2026-06-24": "辞書タブをすぐ載せられる部品を同梱。①データは App Bバンドル位置 `聞いて話せる日本語/expo-app/data/dict/`(ja-vocab/ja-kanji/ja-synonyms/manifest)へ自動配布済=metroでimport可。②画面=`dict/integration/DictScreen.tsx`(JLPTのBrowseScreen移植・SRS依存除去・props駆動/テーマ可変・自己完結=react/react-native/safe-area-contextのみ)。packages/shared tsc で型エラー無し検証済。③手順=`dict/integration/INTEGRATE.md`(DictScreenをexpo-app/src/screensへ→DictTabでデータ注入→AppShellに'dict'タブ追加=answerScreen同型のprops注入で共有汚さず→App.tsxで tabs=['home','short','long','dict']+dictScreen配線→i18n7言語)。",
+    "注意": "意味(gloss)はJMdict=英語。多言語の意味は別途翻訳(要コスト)。漢字はKANJIDIC2でJLPT級なし=DictScreenは漢字時に級フィルタ非表示。辞書データ計~1.9MB(バンドル可。抑えるならpack方式へ)。",
+    "実装側TODO(App Bセッション)": "INTEGRATE.md の手順③④(AppShellにdictタブ＋App.tsx配線)を実施。sharedLock取得はAppShell編集の時だけ(DictScreen/DictTab/データはApp Bローカル=ロック不要)。"
+  },
   "keyFacts": {
     "教材EN声": "en-US-Chirp3-HD-Aoede(動画/教材系)。アプリ確定enはNeural2-F(別系統)",
     "posterAudioFormat": "32k mono 24kHz + 末尾0.25s pad。posterLessons: card.ja=ターゲット音声 / card.l1=母語音声マップ / imageL1=母語別画像。targetOnly=母語スキップ",
     "boxDetection": "ポスター画像のカード枠色を行検出。【2026-06-19完了】クリーム#d9cfb6→グレー#e6e8ec枠検出に更新済(App A/B消費側で実装・検証)。新レイアウトに合わせ top=110/bot=12 も調整済",
-    "build": "BUILD_NUMBER=1000+commit数。版は毎ビルド末尾+1。審査提出はユーザー実機チェック後(厳守)"
+    "build": "BUILD_NUMBER=1000+commit数。版は毎ビルド末尾+1。審査提出はユーザー実機チェック後(厳守)",
+    "runbook": "【2026-06-22】全アプリ共通のビルド/ストア操作手順=『ビルド・ストア操作_Runbook.md』(claude直下)。販売戦略/JLPTセッションも自前でビルド可(gh認証マシン共通・scopes workflow/repo・--repo指定で叩ける)。版+1/公開はユーザー合図後/1000円ルールは厳守。gh権限の許可リスト追加はsettings自己改変ガードでセッションから不可=ユーザーが手動追加。"
+  },
+  "dict_wiring_handoff_2026-06-25": {
+    "_from": "聞いて話せるシリーズ(App)セッション",
+    "_to": "JLPTアプリセッション",
+    "status": "✅完了(2026-06-25 JLPTアプリ実施)=packages/shared(DictScreen/AppShell)＋App B配線(i18n7言語/tabs→dict/dictData)＋DictScreen強化(例文＋漢字複数読み)。3アプリtsc全緑。残=実機確認＋リリースのみ(ユーザー合図後)。",
+    "done": {
+      "DictScreen": "packages/shared/src/screens/DictScreen.tsx 新規作成。語彙(DictVocab)/漢字(DictKanji)検索UI。日英両方向検索・N5〜N1レベル絞り込み・漢字展開表示・EDRDG帰属表示。props: data?:DictData",
+      "AppShell": "DictIcon追加・TabKey='dict'追加・dict defs登録(t('nav.dict')でラベル・DictScreenをrender)・AppShellProps/MainTabs に dictData?:DictData prop追加"
+    },
+    "todo_for_jlpt": {
+      "1_i18n": "expo-app/src/i18n の ja/en/vi/ne/bn/zh/ko.json に以下を追加: nav.dict(各言語のタブラベル) + dict.searchPlaceholder/all/hint/count/kanji/noResults/tooMany/attribution",
+      "2_App_tabs": "expo-app/App.tsx の tabs={['home','short','long','vocation']} を tabs={['home','short','long','dict']} に変更",
+      "3_dictData": "expo-app/App.tsx で data/dict/ja-vocab.json + ja-kanji.json を import(require)し、DictData型で AppShell の dictData prop に渡す",
+      "4_tsc": "3アプリ tsc -p tsconfig.json でエラーなし確認",
+      "note_synonyms": "ja-synonyms.json は語彙にidフィールドが無く確実なリンク不可のため v1では配線しない"
+    },
+    "i18n_ja_reference": {
+      "nav.dict": "辞書",
+      "dict.searchPlaceholder": "語・読み・意味で検索",
+      "dict.all": "すべて",
+      "dict.hint": "語や読み（ひらがな）、英語の意味で検索できます。\nN5〜N1のレベルで絞り込みも可能。",
+      "dict.count": "{n} 語収録",
+      "dict.kanji": "漢字",
+      "dict.noResults": "見つかりませんでした",
+      "dict.tooMany": "上位 {n} 件を表示",
+      "dict.attribution": "語彙・漢字: JMdict/KANJIDIC2 © EDRDG (CC BY-SA). 類義語: 日本語WordNet © NICT."
+    },
+    "dict_data_pattern": "import jaVocab from './data/dict/ja-vocab.json'; import jaKanji from './data/dict/ja-kanji.json'; const dictData = { vocab: jaVocab, kanji: jaKanji }; // AppShell に dictData={dictData} で渡す"
   }
 }

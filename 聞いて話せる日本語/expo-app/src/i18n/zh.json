@@ -87,7 +87,8 @@
     "home": "主页",
     "vocation": "职业",
     "short": "短句",
-    "long": "长文"
+    "long": "长文",
+    "dict": "词典"
   },
   "directions": {
     "ja2ne": "日语 → 中文",
@@ -331,5 +332,15 @@
     "title": "长文",
     "body": "新闻、广播、长篇文章的听力与造句。",
     "comingSoon": "即将推出"
+  },
+  "dict": {
+    "searchPlaceholder": "按单词、读音或释义搜索",
+    "all": "全部",
+    "hint": "可按单词、读音（平假名）或英文释义搜索。\n可按 N5–N1 级别筛选。",
+    "count": "收录 {n} 词",
+    "kanji": "汉字",
+    "noResults": "未找到结果",
+    "tooMany": "显示前 {n} 条",
+    "attribution": "词汇与汉字：JMdict/KANJIDIC2 © EDRDG (CC BY-SA)。近义词：日本語WordNet © NICT。"
   }
 }
