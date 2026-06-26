@@ -2,8 +2,37 @@
 // UI / ナビゲーション / 画面は @safa/shared に集約。
 // アプリ固有: ne UI を Primary、方向は ne→ja を デフォルトに。
 
-import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { ActivityIndicator, Pressable, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState, type ReactNode } from 'react';
+import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
+
+class ErrorBoundary extends React.Component<
+  { children: ReactNode },
+  { error: Error | null }
+> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { error: null };
+  }
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+  render() {
+    const { error } = this.state;
+    if (error) {
+      return (
+        <ScrollView style={{ flex: 1, padding: 24, paddingTop: 60, backgroundColor: '#fff' }}>
+          <Text style={{ fontSize: 16, fontWeight: '700', color: '#dc2626', marginBottom: 12 }}>
+            App Error (v1.3.35)
+          </Text>
+          <Text style={{ fontSize: 12, color: '#18181b' }} selectable>
+            {error.stack ?? error.message}
+          </Text>
+        </ScrollView>
+      );
+    }
+    return this.props.children;
+  }
+}
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   AppShell,
@@ -284,6 +313,7 @@ function FirstRunGate({ children }: { children: ReactNode }) {
 
 export default function App() {
   return (
+    <ErrorBoundary>
     <I18nProvider
       translations={{ ja, ne, bn, en, vi, zh, ko }}
       fallbackLang="en"
@@ -304,5 +334,6 @@ export default function App() {
         </FirstRunGate>
       </SettingsProvider>
     </I18nProvider>
+    </ErrorBoundary>
   );
 }
