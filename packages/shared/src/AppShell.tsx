@@ -14,7 +14,6 @@ import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { setAudioModeAsync } from 'expo-audio';
 import { useVideoPlayer, VideoView } from 'expo-video';
-import * as SplashScreen from 'expo-splash-screen';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import ThemeScreen from './screens/ThemeScreen';
@@ -340,7 +339,6 @@ export function AppShell({ splashSource, posterLessons, posterResolveUri, poster
   const scheme = themeMode === 'system' ? (sys ?? 'light') : themeMode;
 
   useEffect(() => {
-    SplashScreen.hideAsync().catch(() => {});
     setAudioModeAsync({
       playsInSilentMode: true,
       shouldPlayInBackground: true,
