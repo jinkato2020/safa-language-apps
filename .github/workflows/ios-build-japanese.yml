@@ -411,6 +411,21 @@ jobs:
           path: ${{ env.APP_DIR }}/android/app/build/outputs/bundle/release/*.aab
           retention-days: 30
 
+      - name: Build debug APK (for adb install / logcat diagnostics)
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          cd android
+          ./gradlew assembleDebug --no-daemon -x lint -x lintDebug
+          APK_PATH=$(find app/build/outputs/apk/debug -name "*.apk" | head -1)
+          echo "::notice::Debug APK: android/$APK_PATH"
+
+      - name: Upload debug APK artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: android-debug-apk-japanese-${{ env.VERSION_CODE }}
+          path: ${{ env.APP_DIR }}/android/app/build/outputs/apk/debug/*.apk
+          retention-days: 7
+
       - name: Decode service account JSON
         if: ${{ github.event.inputs.submit != 'false' }}
         env:
