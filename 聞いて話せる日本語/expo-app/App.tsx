@@ -2,30 +2,28 @@
 // UI / ナビゲーション / 画面は @safa/shared に集約。
 // アプリ固有: ne UI を Primary、方向は ne→ja を デフォルトに。
 
-// ── v1.3.38 診断: 全importを最小化してネイティブクラッシュか否かを確定 ──────────
+// ── v1.3.39 診断: @safa/shared をimportするだけ(renderしない)で落ちるか確認 ──────
 import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
+// @safa/shared をimport (renderはしない)
+import { AppShell, I18nProvider, SettingsProvider } from '@safa/shared';
 
-// ネイティブスプラッシュを確実に保持してuseEffectで制御
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function App() {
   useEffect(() => {
-    // コンポーネントがマウントされた確実な後に非表示
     SplashScreen.hideAsync().catch(() => {});
   }, []);
 
+  // @safa/shared をimportしているが使わない → import だけでクラッシュするか確認
+  void AppShell; void I18nProvider; void SettingsProvider;
+
   return (
-    <View style={{ flex: 1, backgroundColor: '#ff0000', alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ color: '#fff', fontSize: 28, fontWeight: '700' }}>v1.3.38</Text>
-      <Text style={{ color: '#fff', fontSize: 15, marginTop: 8 }}>最小診断: @safa/shared なし</Text>
-      <Text style={{ color: '#fff', fontSize: 13, marginTop: 4 }}>赤→JS動作OK / 白→native crash</Text>
+    <View style={{ flex: 1, backgroundColor: '#ff6600', alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{ color: '#fff', fontSize: 28, fontWeight: '700' }}>v1.3.39</Text>
+      <Text style={{ color: '#fff', fontSize: 15, marginTop: 8 }}>@safa/shared import済み・render無し</Text>
+      <Text style={{ color: '#fff', fontSize: 13, marginTop: 4 }}>橙→importはOK / 白→import時crash</Text>
     </View>
   );
 }
-
-// ── 本来のApp実装(診断中は無効化) ──────────────────────────────────────────────
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { AppShell, I18nProvider, SettingsProvider, ... } from '@safa/shared';
-// ... (全実装はgit履歴に保存)
