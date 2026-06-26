@@ -14,6 +14,7 @@ import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { setAudioModeAsync } from 'expo-audio';
 import { useVideoPlayer, VideoView } from 'expo-video';
+import * as SplashScreen from 'expo-splash-screen';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import ThemeScreen from './screens/ThemeScreen';
@@ -34,6 +35,7 @@ import type { RootStackParamList } from './types';
 import HomeScreen from './screens/HomeScreen';
 import ListeningHubScreen from './screens/ListeningHubScreen';
 import ShortHubScreen from './screens/ShortHubScreen';
+import AppendixHubScreen from './screens/AppendixHubScreen';
 import SakubunScreen from './screens/SakubunScreen';
 import ScaffoldScreen from './screens/ScaffoldScreen';
 import DictScreen, { type DictData } from './screens/DictScreen';
@@ -42,6 +44,7 @@ import { DesignThemeProvider } from './design';
 const Tab = createBottomTabNavigator();
 const ConvStack = createNativeStackNavigator();
 const ShortStack = createNativeStackNavigator();
+const AppendixStack = createNativeStackNavigator();
 const GramStack = createNativeStackNavigator();
 const ListenStack = createNativeStackNavigator();
 const VocabStack = createNativeStackNavigator();
@@ -165,19 +168,28 @@ function VocabularyStackNav({ defaultStackOptions }: { defaultStackOptions: any 
   );
 }
 
-// 短文タブ(App B): ハブ(学習/ヒアリング)＋作文学習(Sakubun)＋聞き流し＋ポスター。
+// 短文タブ(App B): 会話文(旧会話モード)。テーマ選択 → レベル → 練習。
 function ShortStackNav({ defaultStackOptions }: { defaultStackOptions: any }) {
   return (
     <ShortStack.Navigator screenOptions={defaultStackOptions}>
-      <ShortStack.Screen name="ShortHub" component={ShortHubScreen} />
-      <ShortStack.Screen name="Theme" component={ThemeScreen} initialParams={{ mode: 'sakubun' }} />
-      <ShortStack.Screen name="Sakubun" component={SakubunScreen} />
-      <ShortStack.Screen name="ListeningHub" component={ListeningHubScreen} />
-      <ShortStack.Screen name="Listening" component={ListeningScreen} />
-      <ShortStack.Screen name="VocabCategory" component={VocabCategoryScreen} initialParams={{ posterOnly: true }} />
-      <ShortStack.Screen name="PosterAudio" component={PosterAudioScreen} />
+      <ShortStack.Screen name="Theme" component={ThemeScreen} initialParams={{ mode: 'conversation' }} />
+      <ShortStack.Screen name="Level" component={LevelScreen} initialParams={{ mode: 'conversation' }} />
+      <ShortStack.Screen name="Practice" component={PracticeScreen} />
       <ShortStack.Screen name="SettingsMain" component={SettingsScreen} />
     </ShortStack.Navigator>
+  );
+}
+
+// 付録タブ(App B): JLPT読解・聴解 + ポスター朗読。
+function AppendixStackNav({ defaultStackOptions }: { defaultStackOptions: any }) {
+  return (
+    <AppendixStack.Navigator screenOptions={defaultStackOptions}>
+      <AppendixStack.Screen name="AppendixHub" component={AppendixHubScreen} />
+      <AppendixStack.Screen name="JlptExercise">{() => <ScaffoldScreen area="jlpt" />}</AppendixStack.Screen>
+      <AppendixStack.Screen name="VocabCategory" component={VocabCategoryScreen} initialParams={{ posterOnly: true }} />
+      <AppendixStack.Screen name="PosterAudio" component={PosterAudioScreen} />
+      <AppendixStack.Screen name="SettingsMain" component={SettingsScreen} />
+    </AppendixStack.Navigator>
   );
 }
 
@@ -195,9 +207,13 @@ function DictIcon({ color, focused }: { color: string; focused: boolean }) {
   // 開いた本(辞書)
   return <TabIcon color={color} focused={focused}><Path d="M12 6.5C10.5 5 8 4.5 4 5v13c4-.5 6.5 0 8 1.5" /><Path d="M12 6.5C13.5 5 16 4.5 20 5v13c-4-.5-6.5 0-8 1.5z" /></TabIcon>;
 }
+function AppendixIcon({ color, focused }: { color: string; focused: boolean }) {
+  // ブックマーク(付録/補足)
+  return <TabIcon color={color} focused={focused}><Path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></TabIcon>;
+}
 
 // アプリ別タブ構成。tabs 未指定なら現状の5タブ(App A/C はこのまま=無改修)。
-export type TabKey = 'home' | 'conversation' | 'grammar' | 'listening' | 'vocabulary' | 'vocation' | 'short' | 'long' | 'dict';
+export type TabKey = 'home' | 'conversation' | 'grammar' | 'listening' | 'vocabulary' | 'vocation' | 'short' | 'long' | 'dict' | 'appendix';
 const DEFAULT_TABS: TabKey[] = ['home', 'conversation', 'grammar', 'listening', 'vocabulary'];
 
 function MainTabs({ defaultStackOptions, progressStorageKey, tabs, posterInListening, dictData }: { defaultStackOptions: any; progressStorageKey: string; tabs?: TabKey[]; posterInListening?: boolean; dictData?: DictData }) {
@@ -214,6 +230,7 @@ function MainTabs({ defaultStackOptions, progressStorageKey, tabs, posterInListe
     short:        { name: 'ShortTab',        title: t('nav.short'),        icon: ShortIcon,      render: () => <ShortStackNav defaultStackOptions={defaultStackOptions} /> },
     long:         { name: 'LongTab',         title: t('nav.long'),         icon: LongIcon,       render: () => <ScaffoldScreen area="chobun" /> },
     vocation:     { name: 'VocationTab',     title: t('nav.vocation'),     icon: VocationIcon,   render: () => <ScaffoldScreen area="vocation" /> },
+    appendix:     { name: 'AppendixTab',     title: t('nav.appendix'),     icon: AppendixIcon,   render: () => <AppendixStackNav defaultStackOptions={defaultStackOptions} /> },
     dict:         { name: 'DictTab',         title: t('nav.dict'),         icon: DictIcon,       render: () => <DictScreen data={dictData} /> },
   };
   return (
@@ -315,7 +332,8 @@ export type AppShellProps = {
 // (毎回スプラッシュ動画が再生されて白画面で固まって見えるのを防ぐ)。
 let splashShownOnce = false;
 // Web dev: ?skip_splash=1 でスプラッシュをスキップ(ブラウザUI確認用)
-if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('skip_splash') === '1') splashShownOnce = true;
+// window.location は React Native では undefined になるため null ガード必須
+if (typeof window !== 'undefined' && window.location != null && new URLSearchParams(window.location.search ?? '').get('skip_splash') === '1') splashShownOnce = true;
 
 export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure, progressStorageKey, tabs, posterInListening, dictData }: AppShellProps) {
   const [splashDone, setSplashDone] = useState(splashShownOnce);
@@ -325,6 +343,7 @@ export function AppShell({ splashSource, posterLessons, posterResolveUri, poster
   const scheme = themeMode === 'system' ? (sys ?? 'light') : themeMode;
 
   useEffect(() => {
+    SplashScreen.hideAsync().catch(() => {});
     setAudioModeAsync({
       playsInSilentMode: true,
       shouldPlayInBackground: true,
