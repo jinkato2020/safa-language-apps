@@ -331,9 +331,6 @@ export type AppShellProps = {
 // AppShell が再マウントされても、このモジュールレベルのフラグで再生をスキップする
 // (毎回スプラッシュ動画が再生されて白画面で固まって見えるのを防ぐ)。
 let splashShownOnce = false;
-// Web dev: ?skip_splash=1 でスプラッシュをスキップ(ブラウザUI確認用)
-// window.location は React Native では undefined になるため null ガード必須
-if (typeof window !== 'undefined' && window.location != null && new URLSearchParams(window.location.search ?? '').get('skip_splash') === '1') splashShownOnce = true;
 
 export function AppShell({ splashSource, posterLessons, posterResolveUri, posterEnsure, progressStorageKey, tabs, posterInListening, dictData }: AppShellProps) {
   const [splashDone, setSplashDone] = useState(splashShownOnce);

@@ -158,8 +158,7 @@ const sessionPackCache: Record<string, AppData> = {};
 function PackGate({ children }: { children: ReactNode }) {
   const { lang, setLang } = useI18n();
   const packLang = toPackLang(lang); // ja等→ne。実際にDL/同梱判定するL1。
-  // 短文パックオフ時 or Web dev ?skip_pack=1 → ダウンロードなしで空データで起動
-  const skipPack = !SHORT_PACK_ENABLED || (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('skip_pack') === '1');
+  const skipPack = !SHORT_PACK_ENABLED;
   const emptyData: AppData = { version: 'dev', THEMES: [], LEVELS: [], EXAMPLES: {}, WORD_CATEGORIES: [], WORDS: {}, GRAMMAR_THEMES: [], GRAMMAR_EXAMPLES: {}, VOCAB: {}, audio: {} as any, getExamples: () => [], getWords: () => [], getGrammarExamples: () => [] };
   const [data, setData] = useState<AppData | null>(() => skipPack ? emptyData : bundledPack(packLang));
   const dataLangRef = useRef<string | null>(data ? packLang : null); // dataがどの言語のものか
@@ -259,8 +258,7 @@ function FirstRunGate({ children }: { children: ReactNode }) {
   const [needSelect, setNeedSelect] = useState(false);
   useEffect(() => {
     let alive = true;
-    // Web dev: ?lang=ja 等でファーストランをスキップ(ブラウザ確認用)
-    const devLang = typeof window !== 'undefined' && window.location != null ? new URLSearchParams(window.location.search ?? '').get('lang') : null;
+    const devLang = null;
     if (devLang && PACK_LANGS.concat(['ja']).includes(devLang)) {
       setLang(devLang);
       AsyncStorage.setItem(L1_CHOSEN_KEY, devLang).catch(() => {});
