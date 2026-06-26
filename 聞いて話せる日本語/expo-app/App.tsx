@@ -312,6 +312,19 @@ function FirstRunGate({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
+  const [diagReady, setDiagReady] = React.useState(false);
+  React.useEffect(() => {
+    const t = setTimeout(() => setDiagReady(true), 2000);
+    return () => clearTimeout(t);
+  }, []);
+  if (!diagReady) {
+    return (
+      <View style={{ flex: 1, backgroundColor: '#cc0000', alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={{ color: '#fff', fontSize: 22, fontWeight: '700' }}>v1.3.36 JS OK</Text>
+        <Text style={{ color: '#fff', fontSize: 14, marginTop: 8 }}>2秒後にアプリ起動...</Text>
+      </View>
+    );
+  }
   return (
     <ErrorBoundary>
     <I18nProvider
