@@ -4,6 +4,7 @@
 
 import React, { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
 
 class ErrorBoundary extends React.Component<
   { children: ReactNode },
@@ -311,20 +312,22 @@ function FirstRunGate({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
+// ── v1.3.37 診断: hooks/provider ゼロで赤画面が出るか確認 ──────────────────
+// ネイティブスプラッシュを強制非表示(module level)
+SplashScreen.hideAsync().catch(() => {});
+
 export default function App() {
-  const [diagReady, setDiagReady] = React.useState(false);
-  React.useEffect(() => {
-    const t = setTimeout(() => setDiagReady(true), 2000);
-    return () => clearTimeout(t);
-  }, []);
-  if (!diagReady) {
-    return (
-      <View style={{ flex: 1, backgroundColor: '#cc0000', alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: '#fff', fontSize: 22, fontWeight: '700' }}>v1.3.36 JS OK</Text>
-        <Text style={{ color: '#fff', fontSize: 14, marginTop: 8 }}>2秒後にアプリ起動...</Text>
-      </View>
-    );
-  }
+  // 赤画面のみ返す。hooks/providerは一切使わない。
+  // 赤が出る → JS動作OK / 白のまま → module crash or native crash
+  return (
+    <View style={{ flex: 1, backgroundColor: '#ff0000', alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{ color: '#fff', fontSize: 26, fontWeight: '700' }}>v1.3.37 BARE</Text>
+      <Text style={{ color: '#fff', fontSize: 15, marginTop: 8 }}>hooks/providerなし</Text>
+    </View>
+  );
+}
+
+function _DisabledApp_() {
   return (
     <ErrorBoundary>
     <I18nProvider

@@ -1,6 +1,6 @@
 name: Build iOS and Android (Japanese)
 # ↓ run-name は app.json を読めない(github/inputs/varsのみ)。版はリテラル。app.json の version を上げたらここも更新。
-run-name: "App B・日本語・v1.3.36 (com.safa.japanese) — ${{ github.event.head_commit.message || github.ref_name }}"
+run-name: "App B・日本語・v1.3.37 (com.safa.japanese) — ${{ github.event.head_commit.message || github.ref_name }}"
 
 # =============================================================================
 # App B: 聞いて話せる日本語 (com.safa.japanese)
